@@ -1,0 +1,8 @@
+
+*.dll
+*.txt
+*.pdb
+*.xml
+Smartflow/Program.cs
+Smartflow/bin/Debug/Smartflow.dll.config
+Dapper/obj/Debug/DesignTimeResolveAssemblyReferencesInput.cache
