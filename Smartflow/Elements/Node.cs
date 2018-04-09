@@ -68,5 +68,19 @@ namespace Smartflow.Elements
                 }
             }
         }
+
+        internal ASTNode GetNode(string ID)
+        {
+            string query = "SELECT * FROM T_NODE WHERE ID=@ID AND INSTANCEID=@INSTANCEID";
+
+            ASTNode node = DapperFactory.CreateWorkflowConnection().Query<ASTNode>(query, new
+            {
+                ID = ID,
+                INSTANCEID = INSTANCEID
+
+            }).FirstOrDefault();
+
+            return node;
+        }
     }
 }

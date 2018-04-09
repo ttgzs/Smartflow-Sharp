@@ -14,7 +14,7 @@ namespace Smartflow
         public static WorkflowDecision GetNodeInstance(ASTNode node)
         {
             WorkflowDecision wfNode = new WorkflowDecision();
-            wfNode.InstanceID = node.InstanceID;
+            wfNode.INSTANCEID = node.INSTANCEID;
             wfNode.NID = node.NID;
             wfNode.ID = node.ID;
             wfNode.NAME = node.NAME;

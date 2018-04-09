@@ -36,7 +36,7 @@ namespace Smartflow.Elements
 
 
         [XmlIgnore]
-        public virtual string InstanceID
+        public virtual string INSTANCEID
         {
             get;
             set;

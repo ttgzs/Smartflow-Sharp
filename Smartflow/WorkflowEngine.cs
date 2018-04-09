@@ -90,7 +90,7 @@ namespace Smartflow
                 if (CheckAuthorization(instance, actorID) == false) return;
 
                 instance.Jump(transitionTo);
-                ASTNode to =WorkflowNode.GetNode(instance.InstanceID, transitionTo);
+                ASTNode to = instance.Current.GetNode(transitionTo);
 
                 if (to.NodeType == WorkflowNodeCategeory.End)
                 {
