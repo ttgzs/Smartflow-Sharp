@@ -75,7 +75,7 @@ namespace Smartflow
         public static WorkflowProcess GetWorkflowProcessInstance(string instanceID, long NID)
         {
             WorkflowProcess instance = new WorkflowProcess();
-            string query = " SELECT TOP 1 * FROM T_PROCESS WHERE INSTANCEID=@INSTANCEID AND RNID=@NID ORDER BY CREATEDATE DESC ";
+            string query = " SELECT TOP 1 * FROM T_PROCESS WHERE INSTANCEID=@INSTANCEID AND RNID=@NID ORDER BY CREATEDATETIME DESC ";
             instance = instance.Connection.Query<WorkflowProcess>(query, new
             {
                 INSTANCEID = instanceID,

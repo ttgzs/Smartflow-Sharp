@@ -45,6 +45,7 @@ namespace Smartflow.Elements
                 foreach (Transition transition in Transitions)
                 {
                     transition.RNID = this.NID;
+                    transition.FROM = this.ID;
                     transition.Persistent(instanceID);
                 }
             }

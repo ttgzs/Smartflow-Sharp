@@ -71,7 +71,7 @@ namespace Smartflow
         /// <param name="instance">实例</param>
         /// <param name="actorID">审批人</param>
         /// <returns>true：授权 false：未授权</returns>
-        protected bool CheckAuthorization(WorkflowInstance instance, long actorID)
+        protected virtual bool CheckAuthorization(WorkflowInstance instance, long actorID)
         {
             return instance.Current.CheckActor(actorID);
         }
