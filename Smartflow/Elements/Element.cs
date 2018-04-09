@@ -34,6 +34,14 @@ namespace Smartflow.Elements
             set;
         }
 
+
+        [XmlIgnore]
+        public virtual string InstanceID
+        {
+            get;
+            set;
+        }
+
         internal abstract void Persistent(string instanceID);
 
         protected IDbConnection Connection

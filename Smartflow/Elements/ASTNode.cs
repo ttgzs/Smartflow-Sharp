@@ -26,6 +26,7 @@ namespace Smartflow.Elements
             set;
         }
 
+
         internal override void Persistent(string instanceID)
         {
             string sql = "INSERT INTO T_NODE(ID,NAME,NODETYPE,INSTANCEID) VALUES(@ID,@NAME,@NODETYPE,@INSTANCEID);SELECT @@IDENTITY";

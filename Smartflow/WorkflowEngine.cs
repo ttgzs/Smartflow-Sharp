@@ -45,17 +45,6 @@ namespace Smartflow
         }
 
         /// <summary>
-        /// 获取节点
-        /// </summary>
-        /// <param name="instanceID">实例ID</param>
-        /// <param name="to">跳转节点</param>
-        /// <returns>返回节点</returns>
-        private ASTNode GetNode(string instanceID, string to)
-        {
-            return workflowService.GetNode(instanceID, to);
-        }
-
-        /// <summary>
         /// 启动工作流
         /// </summary>
         /// <param name="flowID">文件ID</param>
@@ -73,7 +62,7 @@ namespace Smartflow
         /// <returns>工作流程实例</returns>
         public WorkflowInstance GetWorkflowInstance(string instanceID)
         {
-            return workflowService.Instance(instanceID);
+            return  workflowService.Instance(instanceID);
         }
 
         /// <summary>
@@ -84,7 +73,7 @@ namespace Smartflow
         /// <returns>true：授权 false：未授权</returns>
         protected bool CheckAuthorization(WorkflowInstance instance, long actorID)
         {
-            return true;//instance.Current.CheckActor(actorID);
+            return instance.Current.CheckActor(actorID);
         }
 
         /// <summary>
@@ -101,7 +90,7 @@ namespace Smartflow
                 if (CheckAuthorization(instance, actorID) == false) return;
 
                 instance.Jump(transitionTo);
-                ASTNode to = GetNode(instance.InstanceID, transitionTo);
+                ASTNode to =WorkflowNode.GetNode(instance.InstanceID, transitionTo);
 
                 if (to.NodeType == WorkflowNodeCategeory.End)
                 {
@@ -111,8 +100,7 @@ namespace Smartflow
                 else if (to.NodeType == WorkflowNodeCategeory.Decision)
                 {
                     WorkflowDecision wfDecision = WorkflowDecision.GetNodeInstance(to);
-                    IDecision decision = (wfDecision as IDecision);
-                    Transition tran = decision.GetTransition(instance.InstanceID);
+                    Transition tran = wfDecision.GetTransition(instance.InstanceID);
 
                     if (tran == null) return;
                     Jump(instance, TID, tran.TO, actorID);
@@ -136,6 +124,7 @@ namespace Smartflow
         {
             workflowService.Processing(new WorkflowProcess()
             {
+                RNID = executeContext.To.NID,
                 FROM = executeContext.From.ID,
                 TO = executeContext.To.ID,
                 TID = executeContext.TID,

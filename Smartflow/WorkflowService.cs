@@ -40,19 +40,7 @@ namespace Smartflow
             return instaceID;
         }
 
-        public ASTNode GetNode(string instanceID, string ID)
-        {
-            string query = "SELECT * FROM T_NODE WHERE ID=@ID AND INSTANCEID=@INSTANCEID";
-
-            ASTNode node = conn.Query<ASTNode>(query, new
-            {
-                ID = ID,
-                INSTANCEID = instanceID
-
-            }).FirstOrDefault();
-
-            return node;
-        }
+  
 
         public void Kill(WorkflowInstance instance)
         {

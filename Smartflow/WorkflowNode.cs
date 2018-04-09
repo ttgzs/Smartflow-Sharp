@@ -10,20 +10,20 @@ using Smartflow.Enums;
 
 namespace Smartflow
 {
-    public class WorkflowNode :Node,IActor
+    public class WorkflowNode : Node, IActor
     {
         protected WorkflowNode()
         {
 
         }
 
-        public Node PreviousSibling
+        public ASTNode PreviousSibling
         {
             get;
             set;
         }
 
-        public Node NnextSibling
+        public ASTNode NextSibling
         {
             get;
             set;
@@ -34,10 +34,17 @@ namespace Smartflow
         public static WorkflowNode GetWorkflowNodeInstance(ASTNode node)
         {
             WorkflowNode wfNode = new WorkflowNode();
+            wfNode.NID = node.NID;
             wfNode.ID = node.ID;
             wfNode.NAME = node.NAME;
-            wfNode.NodeType= node.NodeType;
+            wfNode.NodeType = node.NodeType;
+            wfNode.InstanceID = node.InstanceID;
             wfNode.Transitions = wfNode.QueryWorkflowNode(node.NID);
+
+            WorkflowProcess process = WorkflowProcess.GetWorkflowProcessInstance(wfNode.InstanceID, wfNode.NID);
+            wfNode.PreviousSibling = (process == null || wfNode.NodeType == WorkflowNodeCategeory.Start) ? null :
+                WorkflowNode.GetNode(wfNode.InstanceID, process.FROM);
+
             return wfNode;
         }
 
@@ -67,7 +74,24 @@ namespace Smartflow
 
         public List<Actor> GetActorListByRole()
         {
+
+
+
             return new List<Actor>();
+        }
+
+        public static ASTNode GetNode(string instanceID, string ID)
+        {
+            string query = "SELECT * FROM T_NODE WHERE ID=@ID AND INSTANCEID=@INSTANCEID";
+
+            ASTNode node = DapperFactory.CreateWorkflowConnection().Query<ASTNode>(query, new
+            {
+                ID = ID,
+                INSTANCEID = instanceID
+
+            }).FirstOrDefault();
+
+            return node;
         }
         #endregion
     }

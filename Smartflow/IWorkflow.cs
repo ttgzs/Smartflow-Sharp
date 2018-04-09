@@ -48,14 +48,9 @@ namespace Smartflow
         WorkflowXml GetWorkflowXml(string flowID);
 
         /// <summary>
-        /// 获取节点实例
+        /// 监控跳转过程
         /// </summary>
-        /// <param name="instanceID">流程实例ID</param>
-        /// <param name="ID">节点ID</param>
-        /// <returns>节点实例</returns>
-        ASTNode GetNode(string instanceID, string ID);
-
-
+        /// <param name="persistent">持久化接口</param>
         void Processing(IPersistent persistent);
     }
 }
