@@ -23,11 +23,11 @@ namespace Smartflow
             set;
         }
 
-        public ASTNode NextSibling
-        {
-            get;
-            set;
-        }
+        //public ASTNode NextSibling
+        //{
+        //    get;
+        //    set;
+        //}
 
         #region 节点方法
 
