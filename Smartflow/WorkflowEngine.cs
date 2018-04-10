@@ -8,6 +8,9 @@ using Smartflow.Enums;
 
 namespace Smartflow
 {
+    /// <summary>
+    /// 工作流引擎
+    /// </summary>
     public class WorkflowEngine
     {
         protected IWorkflow workflowService = WorkflowFactoryProvider.OfType<IWorkflow>();
@@ -51,6 +54,18 @@ namespace Smartflow
         }
 
         /// <summary>
+        /// 检查是否授权
+        /// </summary>
+        /// <param name="instance">实例</param>
+        /// <param name="actorID">审批人</param>
+        /// <returns>true：授权 false：未授权</returns>
+        protected virtual bool CheckAuthorization(WorkflowInstance instance, long actorID)
+        {
+            return instance.Current.CheckActor(actorID);
+        }
+
+
+        /// <summary>
         /// 启动工作流
         /// </summary>
         /// <param name="flowID">文件ID</param>
@@ -60,6 +75,34 @@ namespace Smartflow
             WorkflowXml workflowXml = workflowService.GetWorkflowXml(flowID);
             return workflowService.Start(workflowXml);
         }
+
+        /// <summary>
+        /// 终止流程
+        /// </summary>
+        /// <param name="instance">工作流实例</param>
+        public void Kill(WorkflowInstance instance)
+        {
+            workflowService.Kill(instance);
+        }
+
+        /// <summary>
+        /// 中断流程
+        /// </summary>
+        /// <param name="instance">工作流实例</param>
+        public void Terminate(WorkflowInstance instance)
+        {
+            workflowService.Terminate(instance);
+        }
+
+        /// <summary>
+        /// 恢复流程
+        /// </summary>
+        /// <param name="instance">工作流实例</param>
+        public void Revert(WorkflowInstance instance)
+        {
+            workflowService.Revert(instance);
+        }
+
 
         /// <summary>
         /// 获取流程实例
@@ -72,22 +115,11 @@ namespace Smartflow
         }
 
         /// <summary>
-        /// 检查是否授权
-        /// </summary>
-        /// <param name="instance">实例</param>
-        /// <param name="actorID">审批人</param>
-        /// <returns>true：授权 false：未授权</returns>
-        protected virtual bool CheckAuthorization(WorkflowInstance instance, long actorID)
-        {
-            return instance.Current.CheckActor(actorID);
-        }
-
-        /// <summary>
         /// 进行流程跳转
         /// </summary>
         /// <param name="instance">工作流实例</param>
         /// <param name="transition">选择跳转路线</param>
-        public void Jump(WorkflowInstance instance, long TID, string transitionTo, long actorID = 0)
+        public void Jump(WorkflowInstance instance, long TID, string transitionTo, long actorID = 0,dynamic data=null)
         {
             if (instance.State == WorkflowInstanceState.Running)
             {
@@ -117,13 +149,14 @@ namespace Smartflow
                     From = instance.Current,
                     To = to,
                     TID = TID,
-                    Instance = instance
+                    Instance = instance,
+                    Data = data
                 });
             }
         }
 
         /// <summary>
-        /// 跳转节点中过程处理入库
+        /// 跳转过程处理入库
         /// </summary>
         /// <param name="executeContext">执行上下文</param>
         protected void Processing(ExecutingContext executeContext)
