@@ -35,9 +35,9 @@ namespace Smartflow.Elements
             set;
         }
 
-        internal override void Persistent(string instanceID)
+        internal override void Persistent()
         {
-            base.Persistent(instanceID);
+            base.Persistent();
 
             if (Transitions != null)
             {
@@ -45,7 +45,7 @@ namespace Smartflow.Elements
                 {
                     transition.RNID = this.NID;
                     transition.FROM = this.ID;
-                    transition.Persistent(instanceID);
+                    transition.Persistent();
                 }
             }
 
@@ -54,7 +54,7 @@ namespace Smartflow.Elements
                 foreach (Actor actor in Actors)
                 {
                     actor.RNID = this.NID;
-                    actor.Persistent(instanceID);
+                    actor.Persistent();
                 }
             }
 
@@ -63,7 +63,7 @@ namespace Smartflow.Elements
                 foreach (Role r in Roles)
                 {
                     r.RNID = this.NID;
-                    r.Persistent(instanceID);
+                    r.Persistent();
                 }
             }
         }

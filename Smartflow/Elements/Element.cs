@@ -8,7 +8,7 @@ using System.Xml.Serialization;
 
 namespace Smartflow.Elements
 {
-    public abstract class Element 
+    public abstract class Element
     {
         [XmlAttribute("id")]
         public virtual string ID
@@ -42,7 +42,7 @@ namespace Smartflow.Elements
             set;
         }
 
-        internal abstract void Persistent(string instanceID);
+        internal abstract void Persistent();
 
         protected IDbConnection Connection
         {

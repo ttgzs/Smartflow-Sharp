@@ -31,7 +31,7 @@ namespace Smartflow.Elements
             set;
         }
 
-        internal override void Persistent(string instanceID)
+        internal override void Persistent()
         {
             string sql = "INSERT INTO T_TRANSITION(ID,RNID,NAME,[TO],[FROM],INSTANCEID) VALUES(@ID,@RNID,@NAME,@TO,@FROM,@INSTANCEID)";
             Connection.Execute(sql, new
@@ -41,7 +41,7 @@ namespace Smartflow.Elements
                 NAME = NAME,
                 TO = TO,
                 FROM=FROM,
-                INSTANCEID = instanceID
+                INSTANCEID = INSTANCEID
             });
         }
     }

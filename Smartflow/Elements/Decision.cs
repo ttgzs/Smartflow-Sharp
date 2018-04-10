@@ -36,21 +36,21 @@ namespace Smartflow.Elements
         }
   
 
-        internal override void Persistent(string instanceID)
+        internal override void Persistent()
         {
-            base.Persistent(instanceID);
+            base.Persistent();
 
             if (Command != null)
             {
                 Command.RNID = this.NID;
-                Command.Persistent(instanceID);
+                Command.Persistent();
             }
             if (Rules != null)
             {
                 foreach (Rule r in Rules)
                 {
                     r.RNID = this.NID;
-                    r.Persistent(instanceID);
+                    r.Persistent();
                 }
             }
         }

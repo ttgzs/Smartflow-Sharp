@@ -56,7 +56,7 @@ namespace Smartflow.Elements
             set;
         }
 
-        internal override void Persistent(string instanceID)
+        internal override void Persistent()
         {
             string sql = "INSERT INTO T_COMMAND(RNID,NAME,TEXT,CONNECTION,INSTANCEID,DSID,DBCATEGORY) VALUES(@RNID,@NAME,@TEXT,@CONNECTION,@INSTANCEID,@DSID,@DBCATEGORY)";
             Connection.Execute(sql, new
@@ -66,7 +66,7 @@ namespace Smartflow.Elements
                 TEXT = Text,
                 DSID = DSID,
                 CONNECTION = CONNECTION,
-                INSTANCEID = instanceID,
+                INSTANCEID = INSTANCEID,
                 DBCATEGORY = DBCATEGORY.ToString()
             });
         }

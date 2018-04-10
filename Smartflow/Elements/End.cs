@@ -29,10 +29,5 @@ namespace Smartflow.Elements
         {
             get{return WorkflowNodeCategeory.End;}
         }
-
-        internal override void Persistent(string instanceID)
-        {
-            base.Persistent(instanceID);
-        }
     }
 }

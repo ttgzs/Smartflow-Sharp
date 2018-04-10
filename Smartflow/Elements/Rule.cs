@@ -30,7 +30,7 @@ namespace Smartflow.Elements
             set;
         }
 
-        internal override void Persistent(string instanceID)
+        internal override void Persistent()
         {
             string sql = "INSERT INTO T_RULE(RNID,NAME,TO,EXPRESSION,INSTANCEID) VALUES(@RNID,@NAME,@TO,@EXPRESSION,@INSTANCEID)";
 
@@ -40,7 +40,7 @@ namespace Smartflow.Elements
                 NAME = NAME,
                 TO = TO,
                 EXPRESSION = Expression,
-                INSTANCEID = instanceID
+                INSTANCEID = INSTANCEID
             });
         }
     }

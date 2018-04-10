@@ -35,7 +35,8 @@ namespace Smartflow
             string instaceID = CreateWorkflowInstance(workflow.StartNode.ID, workflowXml.ID);
             foreach (Element element in elements)
             {
-                element.Persistent(instaceID);
+                element.INSTANCEID = instaceID;
+                element.Persistent();
             }
             return instaceID;
         }

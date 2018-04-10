@@ -16,15 +16,15 @@ namespace Smartflow.Elements
             set;
         }
 
-        internal override void Persistent(string instanceID)
+        internal override void Persistent()
         {
-            string sql = "INSERT INTO T_ACTOR(ID,RNID,NAME) VALUES(@ID,@RNID,@NAME)";
+            string sql = "INSERT INTO T_ACTOR(ID,RNID,NAME,INSTANCEID) VALUES(@ID,@RNID,@NAME,@INSTANCEID)";
             Connection.Execute(sql, new
             {
                 RNID = RNID,
                 ID = ID,
                 NAME = NAME,
-                INSTANCEID = instanceID
+                INSTANCEID = INSTANCEID
             });
 
         }

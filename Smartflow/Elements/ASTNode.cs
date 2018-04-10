@@ -27,7 +27,7 @@ namespace Smartflow.Elements
         }
 
 
-        internal override void Persistent(string instanceID)
+        internal override void Persistent()
         {
             string sql = "INSERT INTO T_NODE(ID,NAME,NODETYPE,INSTANCEID) VALUES(@ID,@NAME,@NODETYPE,@INSTANCEID);SELECT @@IDENTITY";
             this.NID = Connection.ExecuteScalar<long>(sql, new
@@ -35,7 +35,7 @@ namespace Smartflow.Elements
                 ID = ID,
                 NAME = NAME,
                 NODETYPE = NodeType.ToString(),
-                INSTANCEID = instanceID
+                INSTANCEID = INSTANCEID
             });
         }
 
