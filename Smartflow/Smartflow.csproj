@@ -77,7 +77,6 @@
     <Compile Include="WorkflowService.Process.cs" />
     <Compile Include="WorkflowService.Xml.cs" />
     <Compile Include="WorkflowServiceFactory.cs" />
-    <Compile Include="WorkflowUtils.cs" />
     <Compile Include="WorkflowXml.cs" />
     <Compile Include="XmlConfiguration.cs" />
   </ItemGroup>
