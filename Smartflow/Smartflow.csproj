@@ -42,6 +42,7 @@
   <ItemGroup>
     <Compile Include="DapperFactory.cs" />
     <Compile Include="DatabaseService.cs" />
+    <Compile Include="DelegatingCompletedHandle.cs" />
     <Compile Include="DelegatingProcessHandle.cs" />
     <Compile Include="Elements\Actor.cs" />
     <Compile Include="Elements\ASTNode.cs" />
@@ -61,10 +62,9 @@
     <Compile Include="Enums\WorkflowNodeCategeory.cs" />
     <Compile Include="ExecutingContext.cs" />
     <Compile Include="IActor.cs" />
-    <Compile Include="IDescition.cs" />
+    <Compile Include="ITransition.cs" />
     <Compile Include="IFactory.cs" />
     <Compile Include="IPersistent.cs" />
-    <Compile Include="IQuery.cs" />
     <Compile Include="IWorkflow.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WorkflowDecision.cs" />

@@ -13,7 +13,6 @@ namespace Smartflow.Elements
     [XmlInclude(typeof(List<Transition>))]
     public class Node : ASTNode
     {
-
         private WorkflowNodeCategeory _nodeType = WorkflowNodeCategeory.Normal;
 
         public override WorkflowNodeCategeory NodeType
@@ -23,14 +22,14 @@ namespace Smartflow.Elements
         }
 
         [XmlElement(ElementName = "actor")]
-        public virtual List<Actor> Actors
+        internal virtual List<Actor> Actors
         {
             get;
             set;
         }
 
         [XmlElement(ElementName = "role")]
-        public virtual List<Role> Roles
+        internal virtual List<Role> Roles
         {
             get;
             set;

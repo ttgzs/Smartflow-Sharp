@@ -17,17 +17,11 @@ namespace Smartflow
 
         }
 
-        public ASTNode PreviousSibling
+        public Transition PreviousTransition
         {
             get;
             set;
         }
-
-        //public ASTNode NextSibling
-        //{
-        //    get;
-        //    set;
-        //}
 
         #region 节点方法
 
@@ -40,12 +34,51 @@ namespace Smartflow
             wfNode.NodeType = node.NodeType;
             wfNode.INSTANCEID = node.INSTANCEID;
             wfNode.Transitions = wfNode.QueryWorkflowNode(node.NID);
-
-            WorkflowProcess process = WorkflowProcess.GetWorkflowProcessInstance(wfNode.INSTANCEID, wfNode.NID);
-            wfNode.PreviousSibling = (process == null || wfNode.NodeType == WorkflowNodeCategeory.Start) ? null :
-                wfNode.GetNode(process.FROM);
-
+            wfNode.PreviousTransition = wfNode.GetHistoryTransition();
             return wfNode;
+        }
+
+        /// <summary>
+        /// 获取回退线路
+        /// </summary>
+        /// <returns>路线</returns>
+        protected Transition GetHistoryTransition()
+        {
+            Transition transition = null;
+            WorkflowProcess process = WorkflowProcess.GetWorkflowProcessInstance(INSTANCEID, NID);
+            if (process != null || NodeType != WorkflowNodeCategeory.Start)
+            {
+                ASTNode n = GetNode(process.FROM);
+                while (n.NodeType == WorkflowNodeCategeory.Decision)
+                {
+                    process = WorkflowProcess.GetWorkflowProcessInstance(INSTANCEID, n.NID);
+                    n = GetNode(process.FROM);
+
+                    if (n.NodeType == WorkflowNodeCategeory.Start)
+                        break;
+                }
+                transition = GetTransition(process.TID);
+            }
+
+            return transition;
+        }
+
+        /// <summary>
+        /// 依据主键获取路线
+        /// </summary>
+        /// <param name="TID">路线主键</param>
+        /// <returns>路线</returns>
+        protected Transition GetTransition(long TID)
+        {
+            string query = "SELECT * FROM T_TRANSITION WHERE NID=@TID AND INSTANCEID=@INSTANCEID";
+            Transition transition = Connection.Query<Transition>(query, new
+            {
+                TID = TID,
+                INSTANCEID = INSTANCEID
+
+            }).FirstOrDefault();
+
+            return transition;
         }
 
         public List<Actor> GetActorList()

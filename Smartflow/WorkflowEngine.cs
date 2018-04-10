@@ -14,6 +14,8 @@ namespace Smartflow
 
         public DelegatingProcessHandle OnProcess;
 
+        public DelegatingCompletedHandle OnCompleted;
+
         protected WorkflowEngine()
         {
 
@@ -38,7 +40,11 @@ namespace Smartflow
         protected void OnExecuteProcess(ExecutingContext executeContext)
         {
             Processing(executeContext);
-            if (OnProcess != null)
+            if (OnCompleted != null && executeContext.To.NodeType == WorkflowNodeCategeory.End)
+            {
+                OnCompleted(executeContext);
+            }
+            else if (OnProcess != null)
             {
                 OnProcess(executeContext);
             }
@@ -62,7 +68,7 @@ namespace Smartflow
         /// <returns>工作流程实例</returns>
         public WorkflowInstance GetWorkflowInstance(string instanceID)
         {
-            return  workflowService.Instance(instanceID);
+            return workflowService.Instance(instanceID);
         }
 
         /// <summary>
@@ -86,7 +92,7 @@ namespace Smartflow
             if (instance.State == WorkflowInstanceState.Running)
             {
                 ASTNode currentNode = instance.Current;
-
+           
                 if (CheckAuthorization(instance, actorID) == false) return;
 
                 instance.Jump(transitionTo);

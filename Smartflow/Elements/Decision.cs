@@ -35,19 +35,6 @@ namespace Smartflow.Elements
             set;
         }
   
-        [XmlIgnore]
-        public override List<Actor> Actors
-        {
-            get;
-            set;
-        }
-
-        [XmlIgnore]
-        public override List<Role> Roles
-        {
-            get;
-            set;
-        }
 
         internal override void Persistent(string instanceID)
         {

@@ -10,7 +10,7 @@ using System.Data;
 namespace Smartflow.Elements
 {
     //Element->ASTNode
-    public class ASTNode : Element, IQuery<Transition>
+    public class ASTNode : Element
     {
         [XmlElement(ElementName = "transition")]
         public virtual List<Transition> Transitions
@@ -40,7 +40,7 @@ namespace Smartflow.Elements
         }
 
 
-        public List<Transition> QueryWorkflowNode(long nodeID)
+        internal virtual List<Transition> QueryWorkflowNode(long nodeID)
         {
             IDbConnection connection = Connection;
             string query = "SELECT * FROM T_TRANSITION WHERE RNID=@RNID";

@@ -6,8 +6,8 @@ using System.Text;
 
 namespace Smartflow
 {
-    public interface IQuery<T>
+    public interface ITransition
     {
-        List<T> QueryWorkflowNode(long nodeID);
+        Transition GetTransition(string instanceID);
     }
 }

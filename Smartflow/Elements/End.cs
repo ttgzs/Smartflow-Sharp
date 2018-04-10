@@ -17,20 +17,7 @@ namespace Smartflow.Elements
         }
 
 
-        [XmlIgnore]
-        public override List<Actor> Actors
-        {
-            get;
-            set;
-        }
-
-        [XmlIgnore]
-        public override List<Role> Roles
-        {
-            get;
-            set;
-        }
-
+   
         [XmlIgnore]
         public override List<Transition> Transitions
         {

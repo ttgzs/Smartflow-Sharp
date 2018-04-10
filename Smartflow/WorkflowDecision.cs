@@ -9,7 +9,7 @@ using Smartflow.Elements;
 
 namespace Smartflow
 {
-    public class WorkflowDecision : Decision, IDecision
+    public class WorkflowDecision : Decision, ITransition
     {
         public static WorkflowDecision GetNodeInstance(ASTNode node)
         {

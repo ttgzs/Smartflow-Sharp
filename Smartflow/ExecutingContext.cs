@@ -14,7 +14,7 @@ namespace Smartflow
             set;
         }
 
-        public Element To
+        public ASTNode To
         {
             get;
             set;
