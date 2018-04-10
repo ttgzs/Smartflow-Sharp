@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Smartflow", "Smartflow\Smar
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dapper", "Dapper\Dapper.csproj", "{97983236-A85F-4DA6-8518-5E9A788E08E8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApplication.Test", "..\ConsoleApplication.Test\ConsoleApplication.Test.csproj", "{24A9343B-8195-4C75-B4DF-C85561347E36}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApplication.Test", "ConsoleApplication.Test\ConsoleApplication.Test.csproj", "{24A9343B-8195-4C75-B4DF-C85561347E36}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

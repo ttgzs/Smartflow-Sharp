@@ -46,7 +46,7 @@
     <Compile Include="WorkflowEngineExt.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Smartflow\Smartflow\Smartflow.csproj">
+    <ProjectReference Include="..\Smartflow\Smartflow.csproj">
       <Project>{c77dd279-74f0-4a0a-b534-2cf858ede21d}</Project>
       <Name>Smartflow</Name>
     </ProjectReference>
