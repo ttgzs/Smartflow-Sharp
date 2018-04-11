@@ -48,5 +48,15 @@ namespace Smartflow.Elements
             return connection.Query<Transition>(query, new { RNID = nodeID })
                   .ToList();
         }
+
+        internal virtual void SetActor(List<Actor> actors)
+        {
+            foreach (Actor actor in actors)
+            {
+                actor.RNID = NID;
+                actor.INSTANCEID = INSTANCEID;
+                actor.Persistent();
+            }
+        }
     }
 }

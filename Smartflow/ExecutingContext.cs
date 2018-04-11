@@ -55,5 +55,10 @@ namespace Smartflow
             get;
             set;
         }
+
+        public void SetActor(List<Actor> actors)
+        {
+            To.SetActor(actors);
+        }
     }
 }

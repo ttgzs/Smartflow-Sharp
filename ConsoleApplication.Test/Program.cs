@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Configuration;
 
 namespace ConsoleApplication.Test
 {
@@ -11,6 +12,7 @@ namespace ConsoleApplication.Test
     {
         static void Main(string[] args)
         {
+            /*
             //首次启动工作流程
             //WorkflowEngine engine = WorkflowEngine.CreateWorkflowEngine("1");
             WorkflowEngine engine = WorkflowEngineExt.CreateWorkflowEngine();
@@ -40,7 +42,7 @@ namespace ConsoleApplication.Test
                 engine.Jump(instance, tran.NID, tran.TO, data:new { Name="程德忍" });
 
                // engine.Jump(instance, tran.NID, instance.Current.PreviousTransition.FROM);
-            }
+            }*/
             Console.ReadKey();
         }
     }

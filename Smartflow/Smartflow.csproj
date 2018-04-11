@@ -67,6 +67,7 @@
     <Compile Include="IPersistent.cs" />
     <Compile Include="IWorkflow.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SmartflowConfigHandle.cs" />
     <Compile Include="WorkflowDecision.cs" />
     <Compile Include="WorkflowEngine.cs" />
     <Compile Include="WorkflowFactoryProvider.cs" />
