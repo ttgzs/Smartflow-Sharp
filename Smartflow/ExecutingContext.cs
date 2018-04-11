@@ -56,8 +56,18 @@ namespace Smartflow
             set;
         }
 
-        public void SetActor(List<Actor> actors)
+        public void SetActor(List<WorkflowActor> wfActors)
         {
+            List<Actor> actors = new List<Actor>();
+            foreach (WorkflowActor wfActor in wfActors)
+            {
+                actors.Add(new Actor()
+                {
+                    NAME = wfActor.Name,
+                    ID = wfActor.ID
+                });
+            }
+
             To.SetActor(actors);
         }
     }
