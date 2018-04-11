@@ -12,14 +12,12 @@ namespace Smartflow
         public string ConnectionString
         {
             get { return this["connectionString"].ToString(); }
-            private set { }
         }
 
         [ConfigurationProperty("category", IsRequired = true, DefaultValue = "SQLServer")]
         public string DatabaseCategory
         {
             get { return this["category"].ToString(); }
-            private set { }
         }
     }
 }
