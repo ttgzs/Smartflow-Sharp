@@ -32,7 +32,7 @@ namespace ConsoleApplication.Test
                 Console.WriteLine("流程结束");
             };
 
-            WorkflowInstance instance = engine.GetWorkflowInstance("5ccd9e58-76a8-4796-a8f2-5c3f4f86c50f");
+            WorkflowInstance instance = engine.GetWorkflowInstance("1111fffd-a06e-4dc0-92ae-7994783628bb");
             ASTNode currentNode = instance.Current;
 
             if (instance.Current.NodeType == Smartflow.Enums.WorkflowNodeCategeory.End)
