@@ -14,13 +14,13 @@ namespace Smartflow
         {
             SmartflowConfigHandle config = ConfigurationManager.GetSection("smartflowConfig") as SmartflowConfigHandle;
             DatabaseCategory dbc;
-            if (Enum.TryParse(config.DatabaseCategory, out dbc) || String.IsNullOrEmpty(config.ConnectionString))
+            if (Enum.TryParse(config.DatabaseCategory,true,out dbc) || String.IsNullOrEmpty(config.ConnectionString))
             {
                 return DapperFactory.CreateConnection(dbc, config.ConnectionString);
             }
             else
             {
-                throw new Exception("请检查数据库连接配置");
+                throw new WorkflowException(MessageResource.CONNECTION_CONFIG);
             }
         }
 
