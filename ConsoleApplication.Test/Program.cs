@@ -12,7 +12,7 @@ namespace ConsoleApplication.Test
     {
         static void Main(string[] args)
         {
-            /*
+            
             //首次启动工作流程
             //WorkflowEngine engine = WorkflowEngine.CreateWorkflowEngine("1");
             WorkflowEngine engine = WorkflowEngineExt.CreateWorkflowEngine();
@@ -21,7 +21,10 @@ namespace ConsoleApplication.Test
 
                  Console.WriteLine(exectionContext.Data.Name);
 
-                 Console.WriteLine(string.Format("instanceID:{0} From:{1} To:{2}", exectionContext.Instance.InstanceID, exectionContext.From.NAME, exectionContext.To.NAME));
+                 Console.WriteLine(string.Format("instanceID:{0} From:{1} To:{2}",
+                     exectionContext.Instance.InstanceID,
+                     exectionContext.From.NAME, 
+                     exectionContext.To.NAME));
              };
 
             engine.OnCompleted = (exectionContext) =>
@@ -29,7 +32,7 @@ namespace ConsoleApplication.Test
                 Console.WriteLine("流程结束");
             };
 
-            WorkflowInstance instance = engine.GetWorkflowInstance("8accf23a-48d7-4e9f-8e3a-ed05fb102fe4");
+            WorkflowInstance instance = engine.GetWorkflowInstance("5ccd9e58-76a8-4796-a8f2-5c3f4f86c50f");
             ASTNode currentNode = instance.Current;
 
             if (instance.Current.NodeType == Smartflow.Enums.WorkflowNodeCategeory.End)
@@ -42,7 +45,7 @@ namespace ConsoleApplication.Test
                 engine.Jump(instance, tran.NID, tran.TO, data:new { Name="程德忍" });
 
                // engine.Jump(instance, tran.NID, instance.Current.PreviousTransition.FROM);
-            }*/
+            }
             Console.ReadKey();
         }
     }

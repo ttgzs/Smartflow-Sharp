@@ -17,7 +17,7 @@ namespace Smartflow.Elements
 
         internal override void Persistent()
         {
-            string sql = "INSERT INTO T_ACTOR(ID,RNID,NAME) VALUES(@ID,@RNID,@NAME)";
+            string sql = "INSERT INTO T_ACTOR(ID,RNID,NAME,INSTANCEID) VALUES(@ID,@RNID,@NAME,@INSTANCEID)";
             DapperFactory.CreateWorkflowConnection().Execute(sql, new
             {
                 RNID = RNID,

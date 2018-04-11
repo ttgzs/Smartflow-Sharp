@@ -45,6 +45,7 @@ namespace Smartflow.Elements
                 {
                     transition.RNID = this.NID;
                     transition.FROM = this.ID;
+                    transition.INSTANCEID = INSTANCEID;
                     transition.Persistent();
                 }
             }
@@ -54,6 +55,7 @@ namespace Smartflow.Elements
                 foreach (Actor actor in Actors)
                 {
                     actor.RNID = this.NID;
+                    actor.INSTANCEID = INSTANCEID;
                     actor.Persistent();
                 }
             }
@@ -63,6 +65,7 @@ namespace Smartflow.Elements
                 foreach (Role r in Roles)
                 {
                     r.RNID = this.NID;
+                    r.INSTANCEID = INSTANCEID;
                     r.Persistent();
                 }
             }
