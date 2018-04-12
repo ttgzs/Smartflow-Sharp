@@ -13,8 +13,9 @@ namespace Smartflow
     /// </summary>
     public class WorkflowEngine
     {
-        protected IWorkflow workflowService = WorkflowFactoryProvider.OfType<IWorkflow>();
-
+        protected IWorkflow workflowService = WorkflowFactoryProvider.OfType<IFactory>()
+            .CreateWorkflowSerivce();
+        
         public DelegatingProcessHandle OnProcess;
 
         public DelegatingCompletedHandle OnCompleted;

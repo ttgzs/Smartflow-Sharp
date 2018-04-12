@@ -15,7 +15,7 @@ namespace Smartflow
 
         private static IList<object> _collection = new List<object>() 
         { 
-            new WorkflowServiceFactory().CreateWorkflowSerivce()
+            new WorkflowServiceFactory()
         };
 
         public static IList<object> Collection
