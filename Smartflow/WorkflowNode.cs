@@ -116,7 +116,7 @@ namespace Smartflow
         /// </summary>
         /// <param name="ID">下一节点ID</param>
         /// <returns>列表</returns>
-        public List<WorkflowActor> GetNextActors(string ID)
+        public List<WorkflowActor> GetNextActors(long ID)
         {
             ASTNode node = this.GetNode(ID);
             return new List<WorkflowActor>();

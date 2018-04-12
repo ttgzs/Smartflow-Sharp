@@ -10,7 +10,7 @@ namespace Smartflow
     {
         List<WorkflowActor> GetActors();
 
-        List<WorkflowActor> GetNextActors(string ID);
+        List<WorkflowActor> GetNextActors(long ID);
 
         bool CheckActor(long actorID);
     }

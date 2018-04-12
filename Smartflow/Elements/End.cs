@@ -7,7 +7,6 @@ using System.Xml.Serialization;
 using Dapper;
 namespace Smartflow.Elements
 {
-    //Element->XElement
     public class End :Node
     {
         [XmlIgnore]

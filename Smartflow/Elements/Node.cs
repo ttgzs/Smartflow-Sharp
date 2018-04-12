@@ -71,7 +71,7 @@ namespace Smartflow.Elements
             }
         }
 
-        internal ASTNode GetNode(string ID)
+        internal ASTNode GetNode(long ID)
         {
             string query = "SELECT * FROM T_NODE WHERE ID=@ID AND INSTANCEID=@INSTANCEID";
 

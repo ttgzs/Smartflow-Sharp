@@ -17,7 +17,7 @@ namespace Smartflow.Elements
         }
 
         [XmlAttribute("to")]
-        public string TO
+        public long TO
         {
             get;
             set;

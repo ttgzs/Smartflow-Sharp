@@ -72,7 +72,7 @@ namespace Smartflow
 
    
 
-        protected string CreateWorkflowInstance(string startNID, long flowID)
+        protected string CreateWorkflowInstance(long startNID, long flowID)
         {
             return WorkflowInstance.CreateWorkflowInstance(startNID, flowID);
         }

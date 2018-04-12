@@ -34,7 +34,8 @@ namespace Smartflow
                 resultSet.Load(reader);
                 reader.Close();
             }
-            string transitionID = string.Empty;
+
+            long transitionID =0;
             if (resultSet.Rows.Count > 0)
             {
                 foreach (Smartflow.Elements.Rule rule in rules)
@@ -46,6 +47,7 @@ namespace Smartflow
                     }
                 }
             }
+
             List<Transition> transitions =QueryWorkflowNode(this.NID);
             return transitions.FirstOrDefault(t => t.ID == transitionID);
         }

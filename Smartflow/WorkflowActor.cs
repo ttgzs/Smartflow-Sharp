@@ -7,7 +7,7 @@ namespace Smartflow
 {
     public class WorkflowActor
     {
-        public string ID
+        public long ID
         {
             get;
             set;

@@ -6,14 +6,11 @@ using System.Text;
 
 namespace ConsoleApplication.Test
 {
-    class WorkflowEngineExt : WorkflowEngine
+    public class WorkflowEngineExt : WorkflowEngine
     {
-
         protected override bool CheckAuthorization(WorkflowInstance instance, long actorID)
         {
-
             return true;
-
         }
 
         public static WorkflowEngine CreateWorkflowEngine()

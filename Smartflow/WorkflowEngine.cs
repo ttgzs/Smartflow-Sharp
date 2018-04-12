@@ -118,7 +118,7 @@ namespace Smartflow
         /// </summary>
         /// <param name="instance">工作流实例</param>
         /// <param name="transition">选择跳转路线</param>
-        public void Jump(WorkflowInstance instance, long TID, string transitionTo, long actorID = 0,dynamic data=null)
+        public void Jump(WorkflowInstance instance, long TID, long transitionTo, long actorID = 0,dynamic data=null)
         {
             if (instance.State == WorkflowInstanceState.Running)
             {

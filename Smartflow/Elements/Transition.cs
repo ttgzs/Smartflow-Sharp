@@ -18,14 +18,14 @@ namespace Smartflow.Elements
             set;
         }
 
-        public string FROM
+        public long FROM
         {
             get;
             set;
         }
      
         [XmlAttribute("to")]
-        public string TO
+        public long TO
         {
             get;
             set;

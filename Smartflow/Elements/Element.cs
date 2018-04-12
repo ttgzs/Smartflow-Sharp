@@ -11,7 +11,7 @@ namespace Smartflow.Elements
     public abstract class Element
     {
         [XmlAttribute("id")]
-        public virtual string ID
+        public virtual long ID
         {
             get;
             set;
