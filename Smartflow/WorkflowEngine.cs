@@ -140,7 +140,7 @@ namespace Smartflow
                     Transition tran = wfDecision.GetTransition(instance.InstanceID);
 
                     if (tran == null) return;
-                    Jump(instance, TID, tran.TO, actorID);
+                    Jump(instance, TID, tran.TO, actorID,data);
                 }
 
                 OnExecuteProcess(new ExecutingContext()

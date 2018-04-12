@@ -1,11 +1,11 @@
-﻿using Smartflow.Elements;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Text;
 
 using Dapper;
+using Smartflow.Elements;
 using Smartflow.Enums;
 
 namespace Smartflow
@@ -81,6 +81,10 @@ namespace Smartflow
             return transition;
         }
 
+        /// <summary>
+        /// 获取当前节点所有审批人
+        /// </summary>
+        /// <returns></returns>
         public List<WorkflowActor> GetActors()
         {
             string query = " SELECT * FROM T_ACTOR WHERE RNID=@RNID AND INSTANCEID=@INSTANCEID ";

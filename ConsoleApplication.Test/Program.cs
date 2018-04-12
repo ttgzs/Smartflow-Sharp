@@ -12,41 +12,41 @@ namespace ConsoleApplication.Test
     {
         static void Main(string[] args)
         {
-            
+
             //首次启动工作流程
-            //WorkflowEngine engine = WorkflowEngine.CreateWorkflowEngine("1");
+            //WorkflowEngine engine = WorkflowEngine.CreateWorkflowEngine("2");
             WorkflowEngine engine = WorkflowEngineExt.CreateWorkflowEngine();
-            engine.OnProcess = (exectionContext) =>
+             engine.OnProcess = (exectionContext) =>
+              {
+
+                  Console.WriteLine(exectionContext.Data.Name);
+
+                  Console.WriteLine(string.Format("instanceID:{0} From:{1} To:{2}",
+                      exectionContext.Instance.InstanceID,
+                      exectionContext.From.NAME,
+                      exectionContext.To.NAME));
+              };
+
+             engine.OnCompleted = (exectionContext) =>
              {
-
-                 Console.WriteLine(exectionContext.Data.Name);
-
-                 Console.WriteLine(string.Format("instanceID:{0} From:{1} To:{2}",
-                     exectionContext.Instance.InstanceID,
-                     exectionContext.From.NAME, 
-                     exectionContext.To.NAME));
+                 Console.WriteLine("流程结束");
              };
 
-            engine.OnCompleted = (exectionContext) =>
-            {
-                Console.WriteLine("流程结束");
-            };
-
-            WorkflowInstance instance = engine.GetWorkflowInstance("1111fffd-a06e-4dc0-92ae-7994783628bb");
-            ASTNode currentNode = instance.Current;
+             WorkflowInstance instance = engine.GetWorkflowInstance("c5de7cc1-65f1-4f79-8d0d-709101ce18f1");
+             ASTNode currentNode = instance.Current;
 
 
-            if (instance.Current.NodeType == Smartflow.Enums.WorkflowNodeCategeory.End)
-            {
-                Console.WriteLine("流程结束");
-            }
-            else
-            {
-                Transition tran = currentNode.Transitions.First();
-                engine.Jump(instance, tran.NID, tran.TO, data:new { Name="程德忍" });
+             if (instance.Current.NodeType == Smartflow.Enums.WorkflowNodeCategeory.End)
+             {
+                 //Console.WriteLine("流程结束");
+             }
+             else
+             {
+                 Transition tran = currentNode.Transitions.First();
+                 engine.Jump(instance, tran.NID, tran.TO, data: new { Name = "程德忍" });
 
-               // engine.Jump(instance, tran.NID, instance.Current.PreviousTransition.FROM);
-            }
+                 // engine.Jump(instance, tran.NID, instance.Current.PreviousTransition.FROM);
+             }
             Console.ReadKey();
         }
     }

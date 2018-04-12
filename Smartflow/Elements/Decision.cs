@@ -42,14 +42,16 @@ namespace Smartflow.Elements
 
             if (Command != null)
             {
-                Command.RNID = this.NID;
+                Command.INSTANCEID = INSTANCEID;
+                Command.RNID = NID;
                 Command.Persistent();
             }
             if (Rules != null)
             {
                 foreach (Rule r in Rules)
                 {
-                    r.RNID = this.NID;
+                    r.INSTANCEID = INSTANCEID;
+                    r.RNID = NID;
                     r.Persistent();
                 }
             }

@@ -32,7 +32,7 @@ namespace Smartflow.Elements
 
         internal override void Persistent()
         {
-            string sql = "INSERT INTO T_RULE(RNID,NAME,TO,EXPRESSION,INSTANCEID) VALUES(@RNID,@NAME,@TO,@EXPRESSION,@INSTANCEID)";
+            string sql = "INSERT INTO T_RULE(RNID,NAME,[TO],EXPRESSION,INSTANCEID) VALUES(@RNID,@NAME,@TO,@EXPRESSION,@INSTANCEID)";
 
             Connection.Execute(sql, new
             {
