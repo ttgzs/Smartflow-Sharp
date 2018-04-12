@@ -8,10 +8,10 @@ namespace Smartflow
 {
     public interface IActor
     {
-        List<Actor> GetActorList();
+        List<WorkflowActor> GetActors();
+
+        List<WorkflowActor> GetNextActors(string ID);
 
         bool CheckActor(long actorID);
-
-        List<Actor> GetActorListByRole();
     }
 }

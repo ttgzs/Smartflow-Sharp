@@ -13,6 +13,11 @@ namespace Smartflow
         public static IDbConnection CreateWorkflowConnection()
         {
             SmartflowConfigHandle config = ConfigurationManager.GetSection("smartflowConfig") as SmartflowConfigHandle;
+            
+            Assert.CheckNull(config, "SmartflowConfigHandle");
+            Assert.StringNull(config.ConnectionString, "ConnectionString");
+            Assert.StringNull(config.DatabaseCategory, "DatabaseCategory");
+            
             DatabaseCategory dbc;
             if (Enum.TryParse(config.DatabaseCategory,true,out dbc) || String.IsNullOrEmpty(config.ConnectionString))
             {

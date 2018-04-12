@@ -35,6 +35,7 @@ namespace ConsoleApplication.Test
             WorkflowInstance instance = engine.GetWorkflowInstance("1111fffd-a06e-4dc0-92ae-7994783628bb");
             ASTNode currentNode = instance.Current;
 
+
             if (instance.Current.NodeType == Smartflow.Enums.WorkflowNodeCategeory.End)
             {
                 Console.WriteLine("流程结束");

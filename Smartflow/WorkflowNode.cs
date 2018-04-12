@@ -17,7 +17,7 @@ namespace Smartflow
 
         }
 
-        public Transition PreviousTransition
+        public Transition Previous
         {
             get;
             set;
@@ -34,7 +34,7 @@ namespace Smartflow
             wfNode.NodeType = node.NodeType;
             wfNode.INSTANCEID = node.INSTANCEID;
             wfNode.Transitions = wfNode.QueryWorkflowNode(node.NID);
-            wfNode.PreviousTransition = wfNode.GetHistoryTransition();
+            wfNode.Previous = wfNode.GetHistoryTransition();
             return wfNode;
         }
 
@@ -81,33 +81,45 @@ namespace Smartflow
             return transition;
         }
 
-        public List<Actor> GetActorList()
+        public List<WorkflowActor> GetActors()
         {
-            string query = "SELECT * FROM T_ACTOR WHERE RNID=@RNID";
+            string query = " SELECT * FROM T_ACTOR WHERE RNID=@RNID AND INSTANCEID=@INSTANCEID ";
+            return Connection.Query<WorkflowActor>(query, new
+            {
+                RNID = NID,
+                INSTANCEID = INSTANCEID
 
-            return Connection.Query<Actor>(query, new { RNID = NID })
-                  .ToList();
+            }).ToList();
         }
 
+        /// <summary>
+        /// 检测当前节点是否有审批权限
+        /// </summary>
+        /// <param name="actorID">当前审批人ID</param>
+        /// <returns>true：有 false：没有</returns>
         public bool CheckActor(long actorID)
         {
             if (NodeType == WorkflowNodeCategeory.Start || NodeType == WorkflowNodeCategeory.Decision) return true;
-
-            string sql = "SELECT Count(*) FROM T_ACTOR WHERE ID=@ID AND RNID=@RNID";
-
-            IList<Actor> actors = GetActorListByRole();
+            string sql = " SELECT COUNT(*) FROM T_ACTOR WHERE ID=@ID AND RNID=@RNID AND INSTANCEID=@INSTANCEID ";
 
             return Connection.ExecuteScalar<int>(sql, new
             {
                 RNID = NID,
-                ID = actorID
-
-            }) > 0 || actors.Count(actor => actor.ID == actorID.ToString()) > 0;
+                ID = actorID,
+                INSTANCEID = INSTANCEID
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       
+            }) > 0;
         }
 
-        public List<Actor> GetActorListByRole()
+        /// <summary>
+        /// 获取下一节点审批人员列表
+        /// </summary>
+        /// <param name="ID">下一节点ID</param>
+        /// <returns>列表</returns>
+        public List<WorkflowActor> GetNextActors(string ID)
         {
-            return new List<Actor>();
+            ASTNode node = this.GetNode(ID);
+            return new List<WorkflowActor>();
         }
         #endregion
     }

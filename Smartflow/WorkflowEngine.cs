@@ -64,7 +64,6 @@ namespace Smartflow
             return instance.Current.CheckActor(actorID);
         }
 
-
         /// <summary>
         /// 启动工作流
         /// </summary>
@@ -102,7 +101,6 @@ namespace Smartflow
         {
             workflowService.Revert(instance);
         }
-
 
         /// <summary>
         /// 获取流程实例
