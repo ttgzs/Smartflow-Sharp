@@ -35,8 +35,8 @@ namespace Smartflow.Elements
             set;
         }
 
-        [XmlElement(ElementName = "role")]
-        internal virtual List<Role> Roles
+        [XmlElement(ElementName = "group")]
+        internal virtual List<Group> MultiGroup
         {
             get;
             set;
@@ -67,9 +67,9 @@ namespace Smartflow.Elements
                 }
             }
 
-            if (Roles != null)
+            if (MultiGroup != null)
             {
-                foreach (Role r in Roles)
+                foreach (Group r in MultiGroup)
                 {
                     r.RNID = this.NID;
                     r.INSTANCEID = INSTANCEID;

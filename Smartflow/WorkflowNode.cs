@@ -111,12 +111,12 @@ namespace Smartflow
         public bool CheckActor(long actorID)
         {
             if (NodeType == WorkflowNodeCategeory.Start || NodeType == WorkflowNodeCategeory.Decision) return true;
-            
+
             string sql = " SELECT COUNT(*) FROM T_ACTOR WHERE ID=@ID AND RNID=@RNID AND INSTANCEID=@INSTANCEID ",
                    entrustsql = "SELECT COUNT(*) FROM T_ENTRUST WHERE TRUSTID=@ACTORID AND ACTORID IN ( SELECT ID FROM T_ACTOR WHERE RNID=@RNID AND INSTANCEID=@INSTANCEID)";
-            
+
             int selfAuthorization = Connection.ExecuteScalar<int>(sql, new { RNID = NID, ID = actorID, INSTANCEID = INSTANCEID }),
-                entrustAuthorization= Connection.ExecuteScalar<int>(entrustsql, new { RNID = NID, ACTORID = actorID, INSTANCEID = INSTANCEID });
+                entrustAuthorization = Connection.ExecuteScalar<int>(entrustsql, new { RNID = NID, ACTORID = actorID, INSTANCEID = INSTANCEID });
             return (selfAuthorization > 0 || entrustAuthorization > 0);
         }
 
@@ -128,7 +128,13 @@ namespace Smartflow
         public List<WorkflowActor> GetNextActors(long ID)
         {
             ASTNode node = this.GetNode(ID);
-            return new List<WorkflowActor>();
+            string query = " SELECT * FROM T_USER WHERE ID IN (SELECT UUID FROM T_UMR WHERE RID IN (SELECT ID FROM T_GROUP WHERE RNID=@RNID AND INSTANCEID=@INSTANCEID)) ";
+            return Connection.Query<WorkflowActor>(query, new
+            {
+                RNID = node.NID,
+                INSTANCEID = INSTANCEID
+
+            }).ToList();
         }
         #endregion
     }

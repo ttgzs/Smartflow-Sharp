@@ -14,7 +14,7 @@ using Smartflow.Enums;
 
 namespace Smartflow.Elements
 {
-    public class Role : Element, IRelationShip
+    public class Group : Element, IRelationShip
     {
         public string RNID
         {
@@ -24,7 +24,7 @@ namespace Smartflow.Elements
 
         internal override void Persistent()
         {
-            string sql = "INSERT INTO T_ACTOR(NID,ID,RNID,NAME,INSTANCEID) VALUES(@NID,@ID,@RNID,@NAME,@INSTANCEID)";
+            string sql = "INSERT INTO T_GROUP(NID,ID,RNID,NAME,INSTANCEID) VALUES(@NID,@ID,@RNID,@NAME,@INSTANCEID)";
             Connection.Execute(sql, new
             {
                 NID=Guid.NewGuid().ToString(),
@@ -33,7 +33,6 @@ namespace Smartflow.Elements
                 NAME = NAME,
                 INSTANCEID = INSTANCEID
             });
-
         }
     }
 }
