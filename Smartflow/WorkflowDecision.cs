@@ -1,4 +1,12 @@
-﻿using System;
+﻿/*
+ License: https://github.com/chengderen/Smartflow/blob/master/LICENSE 
+ Home page: https://github.com/chengderen/Smartflow
+
+ Note: to build on C# 3.0 + .NET 4.0
+ Author:chengderen
+ Email:237552006@qq.com
+ */
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -9,8 +17,16 @@ using Smartflow.Elements;
 
 namespace Smartflow
 {
+    /// <summary>
+    /// 扩展决策节点，并对外提供服务
+    /// </summary>
     public class WorkflowDecision : Decision, ITransition
     {
+        /// <summary>
+        /// 获取决策节点实例 
+        /// </summary>
+        /// <param name="node">抽象节点</param>
+        /// <returns>决策节点实例</returns>
         public static WorkflowDecision GetNodeInstance(ASTNode node)
         {
             WorkflowDecision wfNode = new WorkflowDecision();
@@ -22,14 +38,18 @@ namespace Smartflow
             return wfNode;
         }
 
-        public Transition GetTransition(string instanceID)
+        /// <summary>
+        /// 动态获取路线，根据决策节点设置条件表达式，自动去判断流转的路线
+        /// </summary>
+        /// <returns>路线</returns>
+        public Transition GetTransition()
         {
             Command cmd = GetExecuteCmd();
             List<Smartflow.Elements.Rule> rules = GetRuleList();
 
             IDbConnection connect = DapperFactory.CreateConnection(cmd.DBCATEGORY, cmd.CONNECTION);
             DataTable resultSet = new DataTable(Guid.NewGuid().ToString());
-            using (IDataReader reader = connect.ExecuteReader(cmd.Text, new { INSTANCEID = instanceID }))
+            using (IDataReader reader = connect.ExecuteReader(cmd.Text, new { INSTANCEID = INSTANCEID }))
             {
                 resultSet.Load(reader);
                 reader.Close();
@@ -48,10 +68,14 @@ namespace Smartflow
                 }
             }
 
-            List<Transition> transitions =QueryWorkflowNode(this.NID);
+            List<Transition> transitions =QueryWorkflowNode(NID);
             return transitions.FirstOrDefault(t => t.ID == transitionID);
         }
 
+        /// <summary>
+        /// 获取执行SQL命令的对象
+        /// </summary>
+        /// <returns>SQL命令的对象</returns>
         protected Command GetExecuteCmd()
         {
             string query = "SELECT * FROM T_COMMAND WHERE RNID=@RNID";
@@ -60,6 +84,10 @@ namespace Smartflow
                   .FirstOrDefault();
         }
 
+        /// <summary>
+        /// 获取规则列表，规则中定义表达式，并指定跳转跳线
+        /// </summary>
+        /// <returns>规则列表</returns>
         protected List<Smartflow.Elements.Rule> GetRuleList()
         {
             string query = "SELECT * FROM T_RULE WHERE RNID=@RNID";

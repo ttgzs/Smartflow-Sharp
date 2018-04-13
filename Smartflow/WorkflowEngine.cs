@@ -1,4 +1,12 @@
-﻿using System;
+﻿/*
+ License: https://github.com/chengderen/Smartflow/blob/master/LICENSE 
+ Home page: https://github.com/chengderen/Smartflow
+
+ Note: to build on C# 3.0 + .NET 4.0
+ Author:chengderen
+ Email:237552006@qq.com
+ */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,7 +17,7 @@ using Smartflow.Enums;
 namespace Smartflow
 {
     /// <summary>
-    /// 工作流引擎
+    /// 工作流引擎，由工作流引擎统一提供对外服务接口，以此来驱动流程跳转
     /// </summary>
     public class WorkflowEngine
     {
@@ -114,11 +122,14 @@ namespace Smartflow
         }
 
         /// <summary>
-        /// 进行流程跳转
+        /// 进行流程跳转（流程跳转对外提供统一的接口服务，该接口服务包括跳转、回退、撤销）
         /// </summary>
         /// <param name="instance">工作流实例</param>
-        /// <param name="transition">选择跳转路线</param>
-        public void Jump(WorkflowInstance instance, string TID, long transitionTo, long actorID = 0,dynamic data=null)
+        /// <param name="transitionID">路线NID</param>
+        /// <param name="transitionTo">跳转节点ID</param>
+        /// <param name="actorID">审批人ID</param>
+        /// <param name="data">附加数据</param>
+        public void Jump(WorkflowInstance instance, string transitionID, long transitionTo, long actorID = 0, dynamic data = null)
         {
             if (instance.State == WorkflowInstanceState.Running)
             {
@@ -137,17 +148,17 @@ namespace Smartflow
                 else if (to.NodeType == WorkflowNodeCategeory.Decision)
                 {
                     WorkflowDecision wfDecision = WorkflowDecision.GetNodeInstance(to);
-                    Transition tran = wfDecision.GetTransition(instance.InstanceID);
+                    Transition tran = wfDecision.GetTransition();
 
                     if (tran == null) return;
-                    Jump(instance, TID, tran.TO, actorID,data);
+                    Jump(instance, transitionID, tran.TO, actorID, data);
                 }
 
                 OnExecuteProcess(new ExecutingContext()
                 {
                     From = instance.Current,
                     To = to,
-                    TID = TID,
+                    TID = transitionID,
                     Instance = instance,
                     Data = data
                 });
