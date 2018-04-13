@@ -50,7 +50,7 @@ namespace Smartflow.Elements
         }
 
         [XmlIgnore]
-        public long RNID
+        public string RNID
         {
             get;
             set;
@@ -58,9 +58,10 @@ namespace Smartflow.Elements
 
         internal override void Persistent()
         {
-            string sql = "INSERT INTO T_COMMAND(RNID,NAME,TEXT,CONNECTION,INSTANCEID,DSID,DBCATEGORY) VALUES(@RNID,@NAME,@TEXT,@CONNECTION,@INSTANCEID,@DSID,@DBCATEGORY)";
+            string sql = "INSERT INTO T_COMMAND(NID,RNID,NAME,TEXT,CONNECTION,INSTANCEID,DSID,DBCATEGORY) VALUES(@NID,@RNID,@NAME,@TEXT,@CONNECTION,@INSTANCEID,@DSID,@DBCATEGORY)";
             Connection.Execute(sql, new
             {
+                NID=Guid.NewGuid().ToString(),
                 RNID = RNID,
                 NAME = NAME,
                 TEXT = Text,

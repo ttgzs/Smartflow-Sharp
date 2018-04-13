@@ -10,7 +10,7 @@ namespace Smartflow.Elements
     //Element
     public class Role : Element, IRelationShip
     {
-        public long RNID
+        public string RNID
         {
             get;
             set;
@@ -18,9 +18,10 @@ namespace Smartflow.Elements
 
         internal override void Persistent()
         {
-            string sql = "INSERT INTO T_ACTOR(ID,RNID,NAME,INSTANCEID) VALUES(@ID,@RNID,@NAME,@INSTANCEID)";
+            string sql = "INSERT INTO T_ACTOR(NID,ID,RNID,NAME,INSTANCEID) VALUES(@NID,@ID,@RNID,@NAME,@INSTANCEID)";
             Connection.Execute(sql, new
             {
+                NID=Guid.NewGuid().ToString(),
                 RNID = RNID,
                 ID = ID,
                 NAME = NAME,

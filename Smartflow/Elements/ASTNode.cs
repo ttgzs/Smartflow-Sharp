@@ -29,9 +29,11 @@ namespace Smartflow.Elements
 
         internal override void Persistent()
         {
-            string sql = "INSERT INTO T_NODE(ID,NAME,NODETYPE,INSTANCEID) VALUES(@ID,@NAME,@NODETYPE,@INSTANCEID);SELECT @@IDENTITY";
-            this.NID = Connection.ExecuteScalar<long>(sql, new
+            NID = Guid.NewGuid().ToString();
+            string sql = "INSERT INTO T_NODE(NID,ID,NAME,NODETYPE,INSTANCEID) VALUES(@NID,@ID,@NAME,@NODETYPE,@INSTANCEID)";
+            Connection.ExecuteScalar<long>(sql, new
             {
+                NID=NID,
                 ID = ID,
                 NAME = NAME,
                 NODETYPE = NodeType.ToString(),
@@ -40,12 +42,12 @@ namespace Smartflow.Elements
         }
 
 
-        internal virtual List<Transition> QueryWorkflowNode(long nodeID)
+        internal virtual List<Transition> QueryWorkflowNode(string NID)
         {
             IDbConnection connection = Connection;
             string query = "SELECT * FROM T_TRANSITION WHERE RNID=@RNID";
 
-            return connection.Query<Transition>(query, new { RNID = nodeID })
+            return connection.Query<Transition>(query, new { RNID = NID })
                   .ToList();
         }
 

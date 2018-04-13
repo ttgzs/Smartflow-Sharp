@@ -32,7 +32,7 @@ namespace Smartflow
         /// <summary>
         /// 跳转路线ID
         /// </summary>
-        public long TID
+        public string TID
         {
             get;
             set;

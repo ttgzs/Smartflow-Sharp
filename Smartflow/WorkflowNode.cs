@@ -68,7 +68,7 @@ namespace Smartflow
         /// </summary>
         /// <param name="TID">路线主键</param>
         /// <returns>路线</returns>
-        protected Transition GetTransition(long TID)
+        protected Transition GetTransition(string TID)
         {
             string query = "SELECT * FROM T_TRANSITION WHERE NID=@TID AND INSTANCEID=@INSTANCEID";
             Transition transition = Connection.Query<Transition>(query, new

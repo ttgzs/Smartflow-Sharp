@@ -21,7 +21,7 @@ namespace Smartflow.Elements
         /// 节点唯一标识
         /// </summary>
         [XmlIgnore]
-        public long NID
+        public string NID
         {
             get;
             set;

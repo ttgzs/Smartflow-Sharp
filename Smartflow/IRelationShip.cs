@@ -10,7 +10,7 @@ namespace Smartflow
 {
     public interface IRelationShip
     {
-        long RNID
+        string RNID
         {
             get;
             set;

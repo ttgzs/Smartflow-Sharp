@@ -12,7 +12,7 @@ namespace Smartflow.Elements
     [XmlInclude(typeof(Node))]
     public class Transition : Element, IRelationShip
     {
-        public long RNID
+        public string RNID
         {
             get;
             set;
@@ -33,9 +33,10 @@ namespace Smartflow.Elements
 
         internal override void Persistent()
         {
-            string sql = "INSERT INTO T_TRANSITION(ID,RNID,NAME,[TO],[FROM],INSTANCEID) VALUES(@ID,@RNID,@NAME,@TO,@FROM,@INSTANCEID)";
+            string sql = "INSERT INTO T_TRANSITION(NID,ID,RNID,NAME,[TO],[FROM],INSTANCEID) VALUES(@NID,@ID,@RNID,@NAME,@TO,@FROM,@INSTANCEID)";
             Connection.Execute(sql, new
             {
+                NID=Guid.NewGuid().ToString(),
                 ID = ID,
                 RNID = RNID,
                 NAME = NAME,

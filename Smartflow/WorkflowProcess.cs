@@ -18,7 +18,7 @@ namespace Smartflow
         /// <summary>
         /// 外键
         /// </summary>
-        public long RNID
+        public string RNID
         {
             get;
             set;
@@ -27,7 +27,7 @@ namespace Smartflow
         /// <summary>
         /// 唯一标识
         /// </summary>
-        public long NID
+        public string NID
         {
             get;
             set;
@@ -54,7 +54,7 @@ namespace Smartflow
         /// <summary>
         /// 路线ID
         /// </summary>
-        public long TID
+        public string TID
         {
             get;
             set;
@@ -93,9 +93,10 @@ namespace Smartflow
         /// </summary>
         public void Persistent()
         {
-            string sql = "INSERT INTO T_PROCESS([FROM],[TO],TID,INSTANCEID,NODETYPE,RNID) VALUES(@FROM,@TO,@TID,@INSTANCEID,@NODETYPE,@RNID)";
+            string sql = "INSERT INTO T_PROCESS(NID,[FROM],[TO],TID,INSTANCEID,NODETYPE,RNID) VALUES(@NID,@FROM,@TO,@TID,@INSTANCEID,@NODETYPE,@RNID)";
             Connection.Execute(sql, new
             {
+                NID=Guid.NewGuid().ToString(),
                 FROM = FROM,
                 TO = TO,
                 TID = TID,
@@ -105,7 +106,7 @@ namespace Smartflow
             });
         }
 
-        public static WorkflowProcess GetWorkflowProcessInstance(string instanceID, long NID)
+        public static WorkflowProcess GetWorkflowProcessInstance(string instanceID, string NID)
         {
             WorkflowProcess instance = new WorkflowProcess();
             //兼容其它数据库
