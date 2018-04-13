@@ -110,13 +110,13 @@ namespace Smartflow
         {
             WorkflowProcess instance = new WorkflowProcess();
             //兼容其它数据库
-            string query = " SELECT * FROM T_PROCESS WHERE INSTANCEID=@INSTANCEID AND RNID=@NID ORDER BY CREATEDATETIME DESC ";
+            string query = " SELECT * FROM T_PROCESS WHERE INSTANCEID=@INSTANCEID AND RNID=@NID  ";
             instance = instance.Connection.Query<WorkflowProcess>(query, new
             {
                 INSTANCEID = instanceID,
                 NID = NID
 
-            }).OrderByDescending(order => order.CREATEDATETIME).FirstOrDefault();
+            }).OrderBy(order => order.CREATEDATETIME).FirstOrDefault();
 
             return instance;
         }

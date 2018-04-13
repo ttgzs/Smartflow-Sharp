@@ -15,7 +15,7 @@ namespace ConsoleApplication.Test
 
             //首次启动工作流程
             //WorkflowEngine engine = WorkflowEngine.CreateWorkflowEngine("1");
-            WorkflowEngine engine = WorkflowEngineExt.CreateWorkflowEngine();
+           WorkflowEngine engine = WorkflowEngineExt.CreateWorkflowEngine();
              engine.OnProcess = (exectionContext) =>
               {
 
@@ -38,7 +38,7 @@ namespace ConsoleApplication.Test
                  Console.WriteLine("流程结束");
              };
 
-             WorkflowInstance instance = engine.GetWorkflowInstance("2253aa14-2570-4e66-9236-b1ac4a43af3d");
+             WorkflowInstance instance = engine.GetWorkflowInstance("bce7b336-943a-4798-a289-6b2f8da90634");
              ASTNode currentNode = instance.Current;
 
 
@@ -48,11 +48,11 @@ namespace ConsoleApplication.Test
              }
              else
              {
-                  //Transition tran = currentNode.Transitions.First();
+                 Transition tran = currentNode.Transitions.First();
                  
                  
-                  Transition tran = instance.Current.Previous;
-                  engine.Jump(instance, tran.NID, tran.FROM, data: new { Name = "程德忍" });
+                  //Transition tran = instance.Current.Previous;
+                  engine.Jump(instance, tran.NID, tran.TO, data: new { Name = "程德忍" });
              }
             Console.ReadKey();
         }
