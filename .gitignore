@@ -28,3 +28,4 @@ ConsoleApplication.Test/bin/Debug/ConsoleApplication.Test.exe.config
 ConsoleApplication.Test/bin/Debug/ConsoleApplication.Test.exe
 ConsoleApplication.Test/bin/Debug/ConsoleApplication.Test.vshost.exe.manifest
 ConsoleApplication.Test/obj/Debug/ConsoleApplication.Test.exe
+*.cache

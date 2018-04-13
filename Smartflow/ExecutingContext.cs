@@ -56,6 +56,10 @@ namespace Smartflow
             set;
         }
 
+        /// <summary>
+        /// 设置下一节点审批人
+        /// </summary>
+        /// <param name="wfActors"></param>
         public void SetActor(List<WorkflowActor> wfActors)
         {
             List<Actor> actors = new List<Actor>();
