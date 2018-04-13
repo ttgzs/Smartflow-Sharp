@@ -13,7 +13,7 @@ namespace ConsoleApplication.Test
             return true;
         }
 
-        public static WorkflowEngine CreateWorkflowEngine()
+        public new static WorkflowEngine CreateWorkflowEngine()
         {
             return new WorkflowEngineExt();
         }

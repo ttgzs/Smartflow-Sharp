@@ -3,8 +3,7 @@
  Home page: https://github.com/chengderen/Smartflow
 
  Note: to build on C# 3.0 + .NET 4.0
- Author:chengderen
- Email:237552006@qq.com
+ Author:chengderen-237552006@qq.com
  */
 using System;
 using System.Configuration;
