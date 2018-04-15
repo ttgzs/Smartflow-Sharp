@@ -1,0 +1,79 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+
+    <script type="text/javascript">
+
+        function init() {
+
+            var canvas = document.getElementById("flowCanvas"),
+                cxt = canvas.getContext("2d");
+           
+
+            var draw = {
+                x: 25,
+                y: 25,
+                draw: function () {
+
+                    cxt.fillStyle = "#0000ff";
+                    // cxt.font = "48px serif #ffffff";
+                    //  cxt.fillText("Hello world", 10, 50);
+                    cxt.fillRect(this.x, this.y, 100, 100);
+                }
+            }
+
+        
+
+            doRequestAnimationFrame();
+            function doRequestAnimationFrame() {
+
+               // cxt.clearRect(0, 0, canvas.offsetWidth, canvas.offsetHeight);
+                draw.draw();
+                //window.requestAnimationFrame(doRequestAnimationFrame);
+            }
+
+            var stop = true;
+
+            canvas.addEventListener('mousemove', function (e) {
+                //raf = window.requestAnimationFrame(draw);
+
+                if (stop) {
+                    draw.x = e.clientX - 100 / 2;
+                    draw.y = e.clientY - 100 / 2;
+                    cxt.clearRect(0, 0, canvas.offsetWidth, canvas.offsetHeight);
+                    draw.draw();
+                    document.getElementById("biv").innerHTML = "X:" + e.clientX + "Y:" + e.clientY;
+                    // alert('mouseover')
+                }
+            });
+
+
+
+            canvas.addEventListener('mouseup', function (e) {
+                //raf = window.requestAnimationFrame(draw);
+                stop = false;
+            });
+
+            canvas.addEventListener('click', function (e) {
+                // window.cancelAnimationFrame(raf);
+                //alert('mouseout')
+                stop = true;
+            });
+
+
+        }
+
+        window.onload = init;
+
+    </script>
+
+</head>
+<body>
+    <div id="biv"></div>
+    <canvas id="flowCanvas" width="400px" height="500px" style="border:solid 1px #eee;"></canvas>
+
+
+</body>
+</html>

@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dapper", "Dapper\Dapper.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApplication.Test", "ConsoleApplication.Test\ConsoleApplication.Test.csproj", "{24A9343B-8195-4C75-B4DF-C85561347E36}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Smartflow.Web", "Smartflow.Web\Smartflow.Web.csproj", "{1FC0C010-8E09-4DD5-97EF-1AC8095ADAC5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{24A9343B-8195-4C75-B4DF-C85561347E36}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{24A9343B-8195-4C75-B4DF-C85561347E36}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{24A9343B-8195-4C75-B4DF-C85561347E36}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1FC0C010-8E09-4DD5-97EF-1AC8095ADAC5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1FC0C010-8E09-4DD5-97EF-1AC8095ADAC5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1FC0C010-8E09-4DD5-97EF-1AC8095ADAC5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1FC0C010-8E09-4DD5-97EF-1AC8095ADAC5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
