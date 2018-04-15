@@ -1,79 +1,211 @@
 ﻿<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title></title>
+    <script src="jquery-1.6.4.min.js"></script>
+    <script src="svg.js"></script>
 
-    <script type="text/javascript">
-
-        function init() {
-
-            var canvas = document.getElementById("flowCanvas"),
-                cxt = canvas.getContext("2d");
-           
-
-            var draw = {
-                x: 25,
-                y: 25,
-                draw: function () {
-
-                    cxt.fillStyle = "#0000ff";
-                    // cxt.font = "48px serif #ffffff";
-                    //  cxt.fillText("Hello world", 10, 50);
-                    cxt.fillRect(this.x, this.y, 100, 100);
-                }
-            }
-
-        
-
-            doRequestAnimationFrame();
-            function doRequestAnimationFrame() {
-
-               // cxt.clearRect(0, 0, canvas.offsetWidth, canvas.offsetHeight);
-                draw.draw();
-                //window.requestAnimationFrame(doRequestAnimationFrame);
-            }
-
-            var stop = true;
-
-            canvas.addEventListener('mousemove', function (e) {
-                //raf = window.requestAnimationFrame(draw);
-
-                if (stop) {
-                    draw.x = e.clientX - 100 / 2;
-                    draw.y = e.clientY - 100 / 2;
-                    cxt.clearRect(0, 0, canvas.offsetWidth, canvas.offsetHeight);
-                    draw.draw();
-                    document.getElementById("biv").innerHTML = "X:" + e.clientX + "Y:" + e.clientY;
-                    // alert('mouseover')
-                }
-            });
-
-
-
-            canvas.addEventListener('mouseup', function (e) {
-                //raf = window.requestAnimationFrame(draw);
-                stop = false;
-            });
-
-            canvas.addEventListener('click', function (e) {
-                // window.cancelAnimationFrame(raf);
-                //alert('mouseout')
-                stop = true;
-            });
-
-
+    <style type="text/css">
+        html, body, div, ul {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
-        window.onload = init;
+        ul {
+            list-style-type: none;
+        }
+
+        html, body {
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .container {
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .tools {
+            width: 120px;
+            float: left;
+            background-color: #eee;
+            height: 100%;
+        }
+
+            .tools::after {
+                content: ".";
+                display: block;
+                visibility: hidden;
+                height: 1%;
+                clear: both;
+            }
+
+        #drawing {
+            width: 100%;
+            height: 100%;
+        }
+
+        .tools-menu li {
+            line-height: 25px;
+            text-align: center;
+        }
+    </style>
+    <script type="text/javascript">
+        var draw;
+
+        window.onload = function () {
+            if (SVG.supported) {
+                draw = SVG('drawing');
+
+                draw.mouseup(function (e) {
+                    draw.off('mousemove');
+                });
+
+            } else {
+                alert('SVG not supported')
+            }
+        }
+
+        function select() {
+            $(document).unbind('mousedown');
+            $(document).unbind('mouseup');
+
+            draw.each(function (i, child) {
+                if (this.type === 'rect') {
+                    this.mousedown(function (e) {
+                        rectDrag.apply(this, [node]);
+                    });
+                }
+            });
+        }
+
+
+        function connect() {
+
+            draw.each(function (i, child) {
+                if (this.type === 'rect') {
+                    this.off('mousedown');
+                }
+            });
+
+            $(document).bind('mousedown', function (e) {
+                var nodeName = $(e.target).get(0).nodeName,
+                    nid = $(e.target).get(0).id;
+                if (nodeName === 'rect') {
+                    var rect = SVG.get(nid);
+                    line.x = rect.width() / 2 + rect.x();
+                    line.y = rect.height() + rect.y();
+                    line.fromElement = rect;
+                    rect.attr({lX:line.x,lY:line.y });
+                }
+            });
+
+            $(document).bind('mouseup', function (e) {
+                var nodeName = $(e.target).get(0).nodeName,
+                       nid = $(e.target).get(0).id;
+                if (nodeName === 'rect') {
+                    var rect = SVG.get(nid);
+                    line.toX = rect.width() / 2 + rect.x();
+                    line.toY = rect.y();
+
+                    rect.attr({ lX: line.x, lY: line.y });
+                    line.toElement = rect;
+                    line.draw(rect);
+
+                    
+                }
+            });
+        }
+
+
+        function createNode() {
+            node.draw();
+        }
+
+        var line = {
+            x: 0,
+            y: 0,
+            toX: 0,
+            toY: 0,
+            fromElement: null,
+            toElement:null,
+            draw: function (target) {
+               var l=draw.line(this.x, this.y, this.toX, this.toY).stroke({ width: 1 });
+
+               
+               this.fromElement.attr({ lineid: l.attr("id") });
+               this.toElement.attr({ lineid: l.attr("id") });
+
+
+            }
+        }
+
+        var node = {
+            w: 100,
+            h: 100,
+            x: 10,
+            y: 10,
+            cx: 80,
+            cy: 0,
+            disX: 0,
+            disY: 0,
+            draw: function () {
+                var n = this;
+                var rect = draw.rect(n.w, n.h)
+                     .attr({ fill: '#f06', x: n.x, y: n.y });
+
+                rect.mousedown(function (e) {
+                    n.disX = e.clientX - this.x() - n.cx;
+                    n.disY = e.clientY - this.y() - n.cy;
+                    rectDrag.apply(this, [n]);
+                });
+            }
+        }
+
+        function rectDrag(n) {
+            var self = this;
+            draw.on('mousemove', function (d) {
+                self.attr({
+                    x: d.clientX - n.disX - n.cx,
+                    y: d.clientY - n.disY - n.cy
+                });
+
+              
+                if (self.attr("lineid")) {
+
+                  var line=SVG.get(self.attr("lineid"));
+
+                  line.attr({ x2: d.clientX - n.disX - n.cx, y2: d.clientY - n.disY - n.cy });
+
+                }
+
+                //alert();
+
+               // self.attr("lX");
+
+            });
+        }
 
     </script>
-
 </head>
 <body>
-    <div id="biv"></div>
-    <canvas id="flowCanvas" width="400px" height="500px" style="border:solid 1px #eee;"></canvas>
-
-
+    <div class="tools">
+        <ul class="tools-menu">
+            <li>
+                <a href="#" onclick="select()">选择</a>
+            </li>
+            <li>
+                <a href="#" onclick="connect()">连接</a>
+            </li>
+            <li>
+                <a href="#" onclick="createNode()">节点</a>
+            </li>
+        </ul>
+    </div>
+    <div class="container">
+        <div id="drawing"></div>
+    </div>
 </body>
 </html>

@@ -57,9 +57,11 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="2.html" />
-    <Content Include="flowImage - 副本.html" />
-    <Content Include="flowImage.html" />
+    <Content Include="flow.js" />
+    <Content Include="jquery-1.6.4.min.js" />
+    <Content Include="jsplumb.js" />
+    <Content Include="svg.js" />
+    <Content Include="test.html" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
