@@ -53,16 +53,13 @@
         }
     </style>
     <script type="text/javascript">
-        var draw;
-
+        var draw, nodeArray = {};
         window.onload = function () {
             if (SVG.supported) {
                 draw = SVG('drawing');
-
                 draw.mouseup(function (e) {
                     draw.off('mousemove');
                 });
-
             } else {
                 alert('SVG not supported')
             }
@@ -71,34 +68,30 @@
         function select() {
             $(document).unbind('mousedown');
             $(document).unbind('mouseup');
-
             draw.each(function (i, child) {
                 if (this.type === 'rect') {
                     this.mousedown(function (e) {
-                        rectDrag.apply(this, [node]);
+                        var n = nodeArray[this.attr("id")];
+                        rectDrag.apply(this, [n]);
                     });
                 }
             });
         }
 
-
         function connect() {
-
             draw.each(function (i, child) {
                 if (this.type === 'rect') {
                     this.off('mousedown');
                 }
             });
-
             $(document).bind('mousedown', function (e) {
                 var nodeName = $(e.target).get(0).nodeName,
                     nid = $(e.target).get(0).id;
                 if (nodeName === 'rect') {
                     var rect = SVG.get(nid);
-                    line.x = rect.width() / 2 + rect.x();
-                    line.y = rect.height() + rect.y();
-                    line.fromElement = rect;
-                    rect.attr({lX:line.x,lY:line.y });
+                    line.x1 = rect.width() / 2 + rect.x();
+                    line.y1 = rect.height() + rect.y();
+                    line.from = rect.id();
                 }
             });
 
@@ -107,38 +100,33 @@
                        nid = $(e.target).get(0).id;
                 if (nodeName === 'rect') {
                     var rect = SVG.get(nid);
-                    line.toX = rect.width() / 2 + rect.x();
-                    line.toY = rect.y();
+                    line.x2 = rect.width() / 2 + rect.x();
+                    line.y2 = rect.y();
+                    line.to = rect.id();
+                    var lid=line.draw();
 
-                    rect.attr({ lX: line.x, lY: line.y });
-                    line.toElement = rect;
-                    line.draw(rect);
+                    var nx = nodeArray[nid];
 
-                    
+                    nx.to.push(lid);
+
                 }
             });
         }
-
 
         function createNode() {
             node.draw();
         }
 
         var line = {
-            x: 0,
-            y: 0,
-            toX: 0,
-            toY: 0,
-            fromElement: null,
-            toElement:null,
-            draw: function (target) {
-               var l=draw.line(this.x, this.y, this.toX, this.toY).stroke({ width: 1 });
-
-               
-               this.fromElement.attr({ lineid: l.attr("id") });
-               this.toElement.attr({ lineid: l.attr("id") });
-
-
+            x1: 0,
+            y1: 0,
+            x2: 0,
+            y2: 0,
+            from: '',
+            to:'',
+            draw: function () {
+                var l=draw.line(this.x1, this.y1, this.x2, this.y2).stroke({ width: 1 });
+                return l.id();
             }
         }
 
@@ -151,43 +139,42 @@
             cy: 0,
             disX: 0,
             disY: 0,
+            from: [],
+            to:[],
             draw: function () {
                 var n = this;
                 var rect = draw.rect(n.w, n.h)
                      .attr({ fill: '#f06', x: n.x, y: n.y });
+                nodeArray[rect.id()] = n;
 
                 rect.mousedown(function (e) {
-                    n.disX = e.clientX - this.x() - n.cx;
-                    n.disY = e.clientY - this.y() - n.cy;
-                    rectDrag.apply(this, [n]);
+                   // alert(this.id());
+                    var nx = nodeArray[this.id()];
+                    nx.disX = e.clientX - this.x() - nx.cx;
+                    nx.disY = e.clientY - this.y() - nx.cy;
+                    rectDrag.apply(this, [nx]);
                 });
+            
             }
         }
 
         function rectDrag(n) {
             var self = this;
+
             draw.on('mousemove', function (d) {
                 self.attr({
                     x: d.clientX - n.disX - n.cx,
                     y: d.clientY - n.disY - n.cy
                 });
 
-              
-                if (self.attr("lineid")) {
+                var nx=nodeArray[self.id()];
 
-                  var line=SVG.get(self.attr("lineid"));
-
-                  line.attr({ x2: d.clientX - n.disX - n.cx, y2: d.clientY - n.disY - n.cy });
-
-                }
-
-                //alert();
-
-               // self.attr("lX");
-
+                $.each(nx.to, function (i,id) {
+                    var ele = SVG.get(id);
+                    ele.attr({ x2: d.clientX - n.disX - n.cx, y2: d.clientY - n.disY - n.cy });
+                });
             });
         }
-
     </script>
 </head>
 <body>
