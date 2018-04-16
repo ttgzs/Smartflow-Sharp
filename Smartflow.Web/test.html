@@ -92,6 +92,8 @@
                     line.x1 = rect.width() / 2 + rect.x();
                     line.y1 = rect.height() + rect.y();
                     line.from = rect.id();
+
+                 ;
                 }
             });
 
@@ -107,7 +109,9 @@
 
                     var nx = nodeArray[nid];
 
-                    nx.to.push(lid);
+                    nx.to.push({id:lid,x2:0,y1:0});
+
+                    nx.from.push({ id: lid, x1: 0, y1: 0 });
 
                 }
             });
@@ -169,9 +173,14 @@
 
                 var nx=nodeArray[self.id()];
 
-                $.each(nx.to, function (i,id) {
-                    var ele = SVG.get(id);
+                $.each(nx.to, function (i,o) {
+                    var ele = SVG.get(o.id);
                     ele.attr({ x2: d.clientX - n.disX - n.cx, y2: d.clientY - n.disY - n.cy });
+                });
+
+                $.each(nx.from, function (i, o) {
+                    var ele = SVG.get(o.id);
+                    ele.attr({ x1: d.clientX - n.disX - n.cx, y1: d.clientY - n.disY - n.cy });
                 });
             });
         }
