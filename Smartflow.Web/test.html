@@ -53,6 +53,14 @@
         }
     </style>
     <script type="text/javascript">
+
+        Function.prototype.extend = function (parent) {
+            function f() { }
+            f.prototype = parent;
+            this.prototype.constructor = this;
+            this.prototype = new f();
+        }
+
         var draw, nodeArray = {};
         window.onload = function () {
             if (SVG.supported) {
@@ -71,7 +79,7 @@
             draw.each(function (i, child) {
                 if (this.type === 'rect') {
                     this.mousedown(function (e) {
-                        var n = nodeArray[this.attr("id")];
+                        var n = nodeArray[this.id()];
                         rectDrag.apply(this, [n]);
                     });
                 }
@@ -92,8 +100,6 @@
                     line.x1 = rect.width() / 2 + rect.x();
                     line.y1 = rect.height() + rect.y();
                     line.from = rect.id();
-
-                 ;
                 }
             });
 
@@ -105,20 +111,23 @@
                     line.x2 = rect.width() / 2 + rect.x();
                     line.y2 = rect.y();
                     line.to = rect.id();
-                    var lid=line.draw();
 
-                    var nx = nodeArray[nid];
-
-                    nx.to.push({id:lid,x2:0,y1:0});
-
-                    nx.from.push({ id: lid, x1: 0, y1: 0 });
-
+                    if (line.from !== line.to) {
+                        var lid = line.draw();
+                        var nt = nodeArray[nid];
+                        nt.to.push({ id: lid, x2: 0, y2: 0, rectId: nid });
+                        var nf = nodeArray[line.from];
+                        nf.from.push({ id: lid, x1: 0, y1: 0, rectId: line.from });
+                    }
                 }
             });
         }
 
         function createNode() {
-            node.draw();
+
+            var n = new Node(),
+                id = n.draw();
+            nodeArray[id] = n;
         }
 
         var line = {
@@ -127,61 +136,71 @@
             x2: 0,
             y2: 0,
             from: '',
-            to:'',
+            to: '',
             draw: function () {
-                var l=draw.line(this.x1, this.y1, this.x2, this.y2).stroke({ width: 1 });
+                var l = draw.line(this.x1, this.y1, this.x2, this.y2).stroke({ width: 1 });
                 return l.id();
             }
         }
 
-        var node = {
-            w: 100,
-            h: 100,
-            x: 10,
-            y: 10,
-            cx: 80,
-            cy: 0,
-            disX: 0,
-            disY: 0,
-            from: [],
-            to:[],
+        function Node() {
+            this.w = 100;
+            this.h = 100;
+            this.x = 10;
+            this.y = 10;
+            this.cx = 80;
+            this.cy = 0;
+            this.disX = 0;
+            this.disY = 0;
+            this.from = [];
+            this.to = [];
+        }
+
+        Node.prototype = {
+            constructor: Node,
             draw: function () {
                 var n = this;
                 var rect = draw.rect(n.w, n.h)
                      .attr({ fill: '#f06', x: n.x, y: n.y });
                 nodeArray[rect.id()] = n;
 
+
+                var text = draw.text('hello world');
+                text.attr({ dy: n.y + rect.height()/2, x: n.x + rect.width()/2 });
+
                 rect.mousedown(function (e) {
-                   // alert(this.id());
                     var nx = nodeArray[this.id()];
                     nx.disX = e.clientX - this.x() - nx.cx;
                     nx.disY = e.clientY - this.y() - nx.cy;
                     rectDrag.apply(this, [nx]);
                 });
-            
+                return rect.id();
             }
-        }
+        };
 
         function rectDrag(n) {
             var self = this;
 
+            var nx = nodeArray[self.id()];
             draw.on('mousemove', function (d) {
                 self.attr({
                     x: d.clientX - n.disX - n.cx,
                     y: d.clientY - n.disY - n.cy
                 });
 
-                var nx=nodeArray[self.id()];
+                if (nx.to.length > 0) {
+                    $.each(nx.to, function (i, o) {
+                        var ele = SVG.get(o.id);
+                        ele.attr({ x2: d.clientX - n.disX - n.cx, y2: d.clientY - n.disY - n.cy });
+                    });
+                }
 
-                $.each(nx.to, function (i,o) {
-                    var ele = SVG.get(o.id);
-                    ele.attr({ x2: d.clientX - n.disX - n.cx, y2: d.clientY - n.disY - n.cy });
-                });
-
-                $.each(nx.from, function (i, o) {
-                    var ele = SVG.get(o.id);
-                    ele.attr({ x1: d.clientX - n.disX - n.cx, y1: d.clientY - n.disY - n.cy });
-                });
+                if (nx.from.length > 0) {
+                    $.each(nx.from, function (i, o) {
+                        var ele = SVG.get(o.id);
+                        ele.attr({ x1: d.clientX - n.disX - n.cx, y1: d.clientY - n.disY - n.cy });
+                    });
+                }
             });
         }
     </script>
