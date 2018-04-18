@@ -51,20 +51,34 @@
             line-height: 25px;
             text-align: center;
         }
-    </style>
-    <script type="text/javascript">
 
-        Function.prototype.extend = function (parent) {
-            function f() { }
-            f.prototype = parent;
-            this.prototype.constructor = this;
-            this.prototype = new f();
+        div {
+            -moz-user-select: none;
+            -webkit-user-select: none;
+            user-select: none;
         }
 
-        var draw, nodeArray = {};
+        text {
+            font-size: 16px;
+            text-anchor: middle; /* 文本水平居中 */
+        }
+    </style>
+    <script type="text/javascript">
+        var draw, nodeArray = {}, LineArray = {},
+        line = {
+            x1: 0,
+            y1: 0,
+            x2: 0,
+            y2: 0,
+            ox: 0,
+            oy: 0
+        };
+
         window.onload = function () {
             if (SVG.supported) {
                 draw = SVG('drawing');
+
+
                 draw.mouseup(function (e) {
                     draw.off('mousemove');
                 });
@@ -73,6 +87,7 @@
             }
         }
 
+        //选择
         function select() {
             $(document).unbind('mousedown');
             $(document).unbind('mouseup');
@@ -86,12 +101,19 @@
             });
         }
 
+
+
+        //连接节点
         function connect() {
+            $(document).unbind('mousedown');
+            $(document).unbind('mouseup');
+
             draw.each(function (i, child) {
                 if (this.type === 'rect') {
                     this.off('mousedown');
                 }
             });
+
             $(document).bind('mousedown', function (e) {
                 var nodeName = $(e.target).get(0).nodeName,
                     nid = $(e.target).get(0).id;
@@ -99,50 +121,76 @@
                     var rect = SVG.get(nid);
                     line.x1 = rect.width() / 2 + rect.x();
                     line.y1 = rect.height() + rect.y();
-                    line.from = rect.id();
+                    line['from'] = rect.id();
                 }
+                e.preventDefault();//阻止默认事件，取消文字选中
+                return false;
             });
-
             $(document).bind('mouseup', function (e) {
                 var nodeName = $(e.target).get(0).nodeName,
                        nid = $(e.target).get(0).id;
+
                 if (nodeName === 'rect') {
                     var rect = SVG.get(nid);
                     line.x2 = rect.width() / 2 + rect.x();
                     line.y2 = rect.y();
-                    line.to = rect.id();
+                    line['to'] = rect.id();
+                    if (line.from !== line.to&&line.from) {
+                        var instance = new Line();
+                        for (var propertyName in line) {
+                            instance[propertyName] = line[propertyName];
+                        }
 
-                    if (line.from !== line.to) {
-                        var lid = line.draw();
-                        var nt = nodeArray[nid];
-                        nt.to.push({ id: lid, x2: 0, y2: 0, rectId: nid });
-                        var nf = nodeArray[line.from];
-                        nf.from.push({ id: lid, x1: 0, y1: 0, rectId: line.from });
+                        var nt = nodeArray[nid],
+                            id = instance.draw(),
+                            nf = nodeArray[line.from];
+
+
+                        nt.to.push({ id: id, rectId: nid });
+                        nf.from.push({ id: id, rectId: line.from });
+                        LineArray[id] = instance;
+
+                        nt.ox = 0;
+                        nt.oy = 0;
+
                     }
                 }
+                return false;
             });
         }
 
+        //创建节点
         function createNode() {
-
             var n = new Node(),
                 id = n.draw();
             nodeArray[id] = n;
         }
 
-        var line = {
-            x1: 0,
-            y1: 0,
-            x2: 0,
-            y2: 0,
-            from: '',
-            to: '',
+        //线条
+        function Line() {
+            this.x1 = 0;
+            this.y1 = 0;
+            this.x2 = 0;
+            this.y2 = 0;
+       
+        }
+
+        Line.prototype = {
+            constructor: Line,
             draw: function () {
-                var l = draw.line(this.x1, this.y1, this.x2, this.y2).stroke({ width: 1 });
+                var l = draw.line(this.x1,
+                                  this.y1,
+                                  this.x2,
+                                  this.y2)
+                    .stroke({ width: 1 });
+
+                
+
                 return l.id();
             }
         }
 
+        //节点
         function Node() {
             this.w = 100;
             this.h = 100;
@@ -154,6 +202,10 @@
             this.disY = 0;
             this.from = [];
             this.to = [];
+            this.text = '';
+            this.ox = 0;
+            this.oy = 0;
+            this.name = 'node';
         }
 
         Node.prototype = {
@@ -162,11 +214,12 @@
                 var n = this;
                 var rect = draw.rect(n.w, n.h)
                      .attr({ fill: '#f06', x: n.x, y: n.y });
+
                 nodeArray[rect.id()] = n;
-
-
-                var text = draw.text('hello world');
-                text.attr({ dy: n.y + rect.height()/2, x: n.x + rect.width()/2 });
+                n.text = draw.text(function (add) {
+                    add.tspan(n.name);
+                });
+                n.text.attr({ x: n.x + rect.width() / 2, y: n.y + rect.height() / 2 });
 
                 rect.mousedown(function (e) {
                     var nx = nodeArray[this.id()];
@@ -174,40 +227,63 @@
                     nx.disY = e.clientY - this.y() - nx.cy;
                     rectDrag.apply(this, [nx]);
                 });
+
+                rect.dblclick(function () {
+                    var nx = nodeArray[this.id()],
+                        nodeName = prompt("请输入节点名称", nx.name);
+                    if (nodeName) {
+                        nx.name = nodeName;
+                        nx.text.clear();
+                        nx.text.text(function (add) {
+                            add.tspan(nx.name);
+                        });
+                    }
+                });
                 return rect.id();
             }
         };
 
+        //节点移动
         function rectDrag(n) {
             var self = this;
-
             var nx = nodeArray[self.id()];
             draw.on('mousemove', function (d) {
-                self.attr({
-                    x: d.clientX - n.disX - n.cx,
-                    y: d.clientY - n.disY - n.cy
-                });
+
+                nx.x = d.clientX - n.disX - n.cx;
+                nx.y = d.clientY - n.disY - n.cy;
+                self.attr({x:nx.x,y: n.y});
+
+                if (nx.text) {
+                    nx.text.attr({ x: (self.x() + (self.width() / 2)), y: self.y() + (self.height() / 2) });
+                }
 
                 if (nx.to.length > 0) {
                     $.each(nx.to, function (i, o) {
                         var ele = SVG.get(o.id);
-                        ele.attr({ x2: d.clientX - n.disX - n.cx, y2: d.clientY - n.disY - n.cy });
+                        ele.attr({ x2: d.clientX - n.disX - n.cx + self.width() / 2, y2: d.clientY - n.disY - n.cy  });
                     });
                 }
 
                 if (nx.from.length > 0) {
                     $.each(nx.from, function (i, o) {
                         var ele = SVG.get(o.id);
-                        ele.attr({ x1: d.clientX - n.disX - n.cx, y1: d.clientY - n.disY - n.cy });
+                        ele.attr({ x1: d.clientX - n.disX - n.cx/2, y1: d.clientY - n.disY - n.cy });
                     });
                 }
             });
+        }
+
+        function save() {
+            alert(JSON.stringify(nodeArray));
         }
     </script>
 </head>
 <body>
     <div class="tools">
         <ul class="tools-menu">
+            <li>
+                <a href="#" onclick="save()">保存</a>
+            </li>
             <li>
                 <a href="#" onclick="select()">选择</a>
             </li>
