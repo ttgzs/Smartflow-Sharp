@@ -58,6 +58,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="jquery-1.6.4.min.js" />
+    <Content Include="json2.js" />
     <Content Include="svg.js" />
     <Content Include="test.html" />
     <Content Include="test2.html" />
