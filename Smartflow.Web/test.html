@@ -69,16 +69,10 @@
         }
     </style>
     <script type="text/javascript">
-
-        // Array Remove - By John Resig (MIT Licensed)
         Array.prototype.remove = function (dx, to) {
-            /* var rest = this.slice((to || from) + 1 || this.length);
-             this.length = from < 0 ? this.length + from : from;
-             return this.push.apply(this, rest);*/
             if (isNaN(dx) || dx > this.length) { return false; }
-            this.splice(dx, 1);
+            this.splice(dx, (to || 1));
         };
-
         Function.prototype.extend = function (Parent, Override) {
             function F() { }
             F.prototype = Parent.prototype;
@@ -108,6 +102,8 @@
                 draw.mouseup(function (e) {
                     draw.off('mousemove');
                 });
+                new Start().draw();
+                new End().draw();
             } else {
                 alert('SVG not supported')
             }
@@ -134,7 +130,6 @@
                     line.x1 = rect.width() / 2 + rect.x();
                     line.y1 = rect.height() + rect.y();
                     line.from = rect.id();
-
                 }
                 e.preventDefault();//阻止默认事件，取消文字选中
                 return false;
@@ -145,25 +140,22 @@
 
                 if (nodeName === 'rect' && line.from) {
 
-                    var rect = SVG.get(nid);
+                    var rect = SVG.get(nid),
+                        nt = nodeArray[nid];
                     line.x2 = rect.width() / 2 + rect.x();
                     line.y2 = rect.y();
                     line.to = rect.id();
                     if (line.from !== line.to && line.from) {
-
-                        //LineArray[]
-
+                        var nf = nodeArray[line.from]
+                        if ((nf.type === 'end' || nt.type === 'start') || (nf.type === 'start' && nt.type === 'end')) {
+                            reset();
+                            return;
+                        }
                         var instance = new Line();
                         $.extend(instance, line);
-                        var nt = nodeArray[nid],
-                            id = instance.draw(),
-                            nf = nodeArray[line.from];
-
-                        var l = SVG.get(id),
+                        var id = instance.draw(),
+                            l = SVG.get(id),
                             r = SVG.get(instance.from);
-
-
-
                         nt.to.push({ id: id, rectId: nid });
                         nf.from.push({ id: id, rectId: line.from });
 
@@ -172,10 +164,20 @@
                         nf.ox1 = l.attr("x1") - r.x();
                         nf.oy1 = l.attr("y1") - r.y();
                     }
-                } else {
-                    line.from = '';
                 }
+                reset();
                 return false;
+            });
+        }
+
+        function reset() {
+            $.extend(line, {
+                x1: 0,
+                y1: 0,
+                x2: 0,
+                y2: 0,
+                from: undefined,
+                to: undefined
             });
         }
 
@@ -193,13 +195,11 @@
 
         //创建节点
         function createNode() {
-            var n = new Node();
-            n.draw();
+            new Node().draw();
         }
 
         function createDecision() {
-            var n = new Decision();
-            n.draw();
+            new Decision().draw();
         }
 
         function Element(name, category) {
@@ -212,16 +212,24 @@
         Element.prototype = {
             constructor: Element,
             draw: function () {
-                this.bindEvent.apply(SVG.get(this.id));
+                this.bindEvent.apply(SVG.get(this.id), [this]);
                 return this.id;
             },
             bindEvent: function () {
                 this.mouseout(function () {
-                    this.attr({ fill: '#f06' });
+                    if (this.type === 'rect') {
+                        this.attr({ fill: '#f06' });
+                    } else {
+                        this.stroke({ color: '#f06' })
+                    }
                 });
 
                 this.mouseover(function (e) {
-                    this.attr({ fill: '#f8e233' });
+                    if (this.type === 'rect') {
+                        this.attr({ fill: '#f8e233' });
+                    } else {
+                        this.stroke({ color: '#f8e233' })
+                    }
                 });
             }
         };
@@ -256,13 +264,6 @@
                 return Line.base.Parent.prototype.draw.call(self);
             },
             bindEvent: function () {
-                this.mouseout(function () {
-                    this.stroke({ color: '#f06' });
-                });
-
-                this.mouseover(function (e) {
-                    this.stroke({ color: '#f8e233' });
-                });
                 this.dblclick(function (evt) {
                     //删除
                     var lA = LineArray[this.id()];
@@ -290,6 +291,7 @@
                         }
                     }
                 });
+                return Line.base.Parent.prototype.bindEvent.call(this);
             }
         });
 
@@ -328,7 +330,7 @@
                 n.text.attr({ x: n.x + rect.width() / 2, y: n.y + rect.height() / 2 + 5 });
                 return Node.base.Parent.prototype.draw.call(this);
             },
-            bindEvent:function(){
+            bindEvent: function (n) {
                 this.mousedown(rectMousedown);
                 this.dblclick(function (evt) {
                     var node = nodeArray[this.id()];
@@ -400,6 +402,34 @@
             }
         });
 
+        function Start() {
+            Start.base.Constructor.call(this);
+            this.type = "start";
+            this.name = "开始";
+        }
+
+        Start.extend(Node, {
+            constructor: Start,
+            bindEvent: function () {
+                Start.base.Parent.prototype.bindEvent.call(this);
+                this.off('dblclick');
+            }
+        });
+
+        function End() {
+            End.base.Constructor.call(this);
+            this.type = "end";
+            this.name = "结束";
+        }
+
+        End.extend(Node, {
+            constructor: Start,
+            bindEvent: function () {
+                Start.base.Parent.prototype.bindEvent.call(this);
+                this.off('dblclick');
+            }
+        });
+
         //决策节点
         function Decision() {
             Decision.base.Constructor.call(this);
@@ -437,6 +467,9 @@
                 $.each(self.circles, function (i) {
                     this.attr({ fill: '#09dd1a', cx: self.x + i * 20, cy: self.y + self.h });
                 });
+            },
+            bindEvent: function (decision) {
+                Decision.base.Parent.prototype.bindEvent.call(this);
             }
         });
 
@@ -523,9 +556,7 @@
             $.each(LineArray, function () {
                 var instance = new Line();
                 $.extend(instance, this);
-                //alert(JSON.stringify(instance));
                 pathCollection.push(instance);
-
                 var ele = SVG.get(instance.id);
                 if (ele) {
                     ele.remove();
@@ -540,8 +571,6 @@
                 var instance = new Node();
                 $.extend(instance, this);
                 var rectId = instance.draw();
-                //changeRelationShip(rectId, this.id, 'rectId');
-
                 var from = instance.from || [],
                      to = instance.to || [];
 
@@ -584,7 +613,7 @@
     <div class="tools">
         <ul class="tools-menu">
             <li>
-                <a href="#" onclick="exportJson()">保存</a>
+                <a href="#" onclick="exportJson()">导出</a>
             </li>
             <li>
                 <a href="#" onclick="select()">选择</a>

@@ -61,7 +61,6 @@
     <Content Include="json2.js" />
     <Content Include="svg.js" />
     <Content Include="test.html" />
-    <Content Include="test2.html" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
