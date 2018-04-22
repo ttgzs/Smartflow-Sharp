@@ -61,28 +61,38 @@
         text {
             font-size: 16px;
             text-anchor: middle; /* 文本水平居中 */
-            pointer-events:none;
+            pointer-events: none;
         }
-        rect:hover{
-            background-color:#00ff90;
+
+        rect:hover {
+            background-color: #00ff90;
         }
     </style>
     <script type="text/javascript">
+
+        // Array Remove - By John Resig (MIT Licensed)
+        Array.prototype.remove = function (dx, to) {
+            /* var rest = this.slice((to || from) + 1 || this.length);
+             this.length = from < 0 ? this.length + from : from;
+             return this.push.apply(this, rest);*/
+
+            if (isNaN(dx) || dx > this.length) { return false; }
+            this.splice(dx, 1);
+        };
+
         var draw, nodeArray = {}, LineArray = {},
         line = {
             x1: 0,
             y1: 0,
             x2: 0,
             y2: 0,
-            ox: 0,
-            oy: 0
+            from: undefined,
+            to: undefined
         };
 
         window.onload = function () {
             if (SVG.supported) {
                 draw = SVG('drawing');
-
-
                 draw.mouseup(function (e) {
                     draw.off('mousemove');
                 });
@@ -93,30 +103,17 @@
 
         //选择
         function select() {
-            $(document).unbind('mousedown');
-            $(document).unbind('mouseup');
+            initEvent();
             draw.each(function (i, child) {
                 if (this.type === 'rect') {
-                    this.mousedown(function (e) {
-                        var n = nodeArray[this.id()];
-                        rectDrag.apply(this, [n]);
-                    });
+                    this.mousedown(rectMousedown);
                 }
             });
         }
 
-
         //连接节点
         function connect() {
-            $(document).unbind('mousedown');
-            $(document).unbind('mouseup');
-
-            draw.each(function (i, child) {
-                if (this.type === 'rect') {
-                    this.off('mousedown');
-                }
-            });
-
+            initEvent();
             $(document).bind('mousedown', function (e) {
                 var nodeName = $(e.target).get(0).nodeName,
                     nid = $(e.target).get(0).id;
@@ -124,7 +121,7 @@
                     var rect = SVG.get(nid);
                     line.x1 = rect.width() / 2 + rect.x();
                     line.y1 = rect.height() + rect.y();
-                    line['from'] = rect.id();
+                    line.from = rect.id();
                 }
                 e.preventDefault();//阻止默认事件，取消文字选中
                 return false;
@@ -133,12 +130,13 @@
                 var nodeName = $(e.target).get(0).nodeName,
                        nid = $(e.target).get(0).id;
 
-                if (nodeName === 'rect') {
+                if (nodeName === 'rect' && line.from) {
+
                     var rect = SVG.get(nid);
                     line.x2 = rect.width() / 2 + rect.x();
                     line.y2 = rect.y();
-                    line['to'] = rect.id();
-                    if (line.from !== line.to&&line.from) {
+                    line.to = rect.id();
+                    if (line.from !== line.to && line.from) {
                         var instance = new Line();
                         $.extend(instance, line);
                         var nt = nodeArray[nid],
@@ -148,17 +146,30 @@
                         var l = SVG.get(id),
                             r = SVG.get(instance.from);
 
-
                         nt.to.push({ id: id, rectId: nid });
                         nf.from.push({ id: id, rectId: line.from });
-                        LineArray[id] = instance;
+
                         nt.ox2 = l.attr("x2") - rect.x();
                         nt.oy2 = l.attr("y2") - rect.y();
                         nf.ox1 = l.attr("x1") - r.x();
-                        nf.oy1 = l.attr("y1")- r.y();
+                        nf.oy1 = l.attr("y1") - r.y();
                     }
+                } else {
+                    line.from = '';
                 }
                 return false;
+            });
+        }
+
+        //初始化事件
+        function initEvent() {
+            $(document).unbind('mousedown');
+            $(document).unbind('mouseup');
+
+            draw.each(function (i, child) {
+                if (this.type === 'rect') {
+                    this.off('mousedown');
+                }
             });
         }
 
@@ -175,20 +186,55 @@
             this.y1 = 0;
             this.x2 = 0;
             this.y2 = 0;
-       
+            this.color = '#f06';
+            this.border = 3;
+            this.from = undefined;
+            this.to = undefined;
+            this.id = undefined;
         }
 
         Line.prototype = {
             constructor: Line,
             draw: function () {
-                var l = draw.line(this.x1,
-                                  this.y1,
-                                  this.x2,
-                                  this.y2)
-                    .stroke({ width: 1 });
+                var l = draw.line(this.x1, this.y1, this.x2, this.y2)
+                       .stroke({ width: this.border, color: this.color });
+
+                this.id = l.id();
+                LineArray[this.id] = this;
+
+                l.mouseout(function () {
+                    //this.attr({ fill: '#f06' });
+                    //this.data('select', { select: false });
+                    this.stroke({ color: '#f06' });
+                });
+                l.mouseover(function (e) {
+                    //this.attr({ fill: '#f8e233' });
+                    //this.data('select', { select: true });
+                    this.stroke({ color: '#f8e233' });
+                });
+
+                l.dblclick(function (evt) {
+                    //alert(evt.ctrlKey + ":" + evt.altKey);
+                    //删除
+                    if (evt.ctrlKey && evt.altKey) {
+                        var lA = LineArray[this.id()];
+                        if (lA.from) {
+                            eachElements(nodeArray[lA.from], this.id());
+                        }
+
+                        if (lA.to) {
+                            eachElements(nodeArray[lA.to], this.id());
+                        }
+
+                        this.off('dblclick');
+                        this.remove();
+                        delete LineArray[this.id()];
+                    }
+                });
                 return l.id();
             }
         }
+
 
         //节点
         function Node() {
@@ -208,7 +254,7 @@
             this.ox2 = 0;
             this.oy2 = 0;
             this.name = 'node';
-            this.enable = false;
+            this.id = undefined;
         }
 
         Node.prototype = {
@@ -218,107 +264,214 @@
                 var rect = draw.rect(n.w, n.h)
                      .attr({ fill: '#f06', x: n.x, y: n.y });
 
-                nodeArray[rect.id()] = n;
+                n.id = rect.id();
+                nodeArray[n.id] = n;
                 n.text = draw.text(function (add) {
                     add.tspan(n.name);
                 });
-                n.text.attr({ x: n.x + rect.width() / 2, y: n.y + rect.height() / 2 });
 
-                rect.mousedown(function (e) {
-                    var nx = nodeArray[this.id()];
-                    nx.disX = e.clientX - this.x() - nx.cx;
-                    nx.disY = e.clientY - this.y() - nx.cy;
-                    rectDrag.apply(this, [nx]);
-                });
-                rect.dblclick(function () {
-                    var nx = nodeArray[this.id()],
-                        nodeName = prompt("请输入节点名称", nx.name);
-                    if (nodeName) {
-                        nx.name = nodeName;
-                        nx.text.clear();
-                        nx.text.text(function (add) {
-                            add.tspan(nx.name);
-                        });
+                n.text.attr({ x: n.x + rect.width() / 2, y: n.y + rect.height() / 2 + 5 });
+                rect.mousedown(rectMousedown);
+                rect.dblclick(function (evt) {
+                    if (evt.ctrlKey && evt.altKey) {
+                        var selfId = this.id();
+                        var node = nodeArray[selfId],
+                               rect = SVG.get(selfId);
+
+                        delElement(node.from, selfId);
+                        delElement(node.to, selfId);
+
+                        rect.remove();
+                        node.text.remove();
+                        delete nodeArray[selfId];
+
+                    } else {
+                        var nx = nodeArray[this.id()], nodeName = prompt("请输入节点名称", nx.name);
+                        if (nodeName) {
+                            nx.name = nodeName;
+                            nx.text.clear();
+                            nx.text.text(function (add) {
+                                add.tspan(nx.name);
+                            });
+                        }
                     }
                 });
+
                 rect.mouseout(function () {
                     this.attr({ fill: '#f06' });
-                    this.data('select', { select: false });
                 });
                 rect.mouseover(function (e) {
                     this.attr({ fill: '#f8e233' });
-                    this.data('select',{ select: true });
                 });
                 return rect.id();
             }
         };
 
-        window.document.onkeydown = removeElement;
-        function removeElement(evt) {
-            evt = (evt) ? evt : window.event
-            if (evt.keyCode===46) {
+        function rectMousedown(evt) {
+            var nx = nodeArray[this.id()];
+            nx.disX = evt.clientX - this.x() - nx.cx;
+            nx.disY = evt.clientY - this.y() - nx.cy;
+            dragElement.apply(this, [nx]);
+        }
 
-                for (var p in nodeArray) {
-                    var node = nodeArray[p],
-                        rect = SVG.get(p);
+        //删除与当前节点的连接线
+        function delElement(elements, rectId) {
+            if (elements && elements.length > 0) {
+                for (var i = 0; i < elements.length; i++) {
+                    var ele = elements[i];
+                    SVG.get(ele.id).remove();
+                    var instance = LineArray[ele.id];
 
-                    if (!rect.data('select')) return;
-                    var data = rect.data('select');
-                    if (!data) continue;
-                    if (data && data.select) {
-                        rect.remove();
-                        node.text.remove();
-                        delElement(node.from);
-                        delElement(node.to);
-                        delete nodeArray[p];
+                    if (instance.to == rectId) {
+                        eachElements(nodeArray[instance.from], ele.id);
                     }
+                    if (instance.from == rectId) {
+                        eachElements(nodeArray[instance.to], ele.id);
+                    }
+                    delete LineArray[ele.id];
                 }
             }
         }
 
-        function delElement(elements) {
-            if (elements && elements.length > 0) {
-                $.each(elements, function () {
-                    SVG.get(this.id).remove();
+        //清空与线交接另一头的引用
+        function eachElements(node, id) {
+            for (var i = 0; i < node.from.length; i++) {
+                var l = node.from[i];
+                if (l.id == id) {
+                    node.from.remove(i);
+                    break;
+                }
+            }
 
-                    nodeArray[this.rectId].from = [];
-                    nodeArray[this.rectId].to = [];
-
-                });
+            for (var i = 0; i < node.to.length; i++) {
+                var l = node.to[i];
+                if (l.id == id) {
+                    node.to.remove(i);
+                    break;
+                }
             }
         }
 
         //节点移动
-        function rectDrag(n) {
+        function dragElement(n) {
             var self = this;
             var nx = nodeArray[self.id()];
             draw.on('mousemove', function (d) {
-                nx.x =d.clientX - n.disX - n.cx;
+                nx.x = d.clientX - n.disX - n.cx;
                 nx.y = d.clientY - n.disY - n.cy;
-                self.attr({x:nx.x,y: n.y});
+                self.attr({ x: nx.x, y: n.y });
 
                 if (nx.text) {
-                    nx.text.attr({ x: (self.x() + (self.width() / 2)), y: self.y() + (self.height() / 2) });
+                    nx.text.attr({ x: (self.x() + (self.width() / 2)), y: self.y() + (self.height() / 2) + 5 });
                 }
 
                 if (nx.to.length > 0) {
                     $.each(nx.to, function (i, o) {
-                        var ele = SVG.get(o.id);
-                        ele.attr({ x2: nx.x+nx.ox2, y2: nx.y+nx.oy2 });
+                        var ele = SVG.get(o.id),
+                            line = LineArray[o.id];
+
+                        if (ele && line) {
+                            line.x2 = nx.x + nx.ox2;
+                            line.y2 = nx.y + nx.oy2;
+                            ele.attr({ x2: line.x2, y2: line.y2 });
+                        }
                     });
                 }
 
                 if (nx.from.length > 0) {
                     $.each(nx.from, function (i, o) {
                         var ele = SVG.get(o.id);
-                        ele.attr({ x1: nx.x + nx.ox1, y1: nx.y + nx.oy1 });
+                        line = LineArray[o.id];
+                        if (ele && line) {
+                            line.x1 = nx.x + nx.ox1;
+                            line.y1 = nx.y + nx.oy1;
+                            ele.attr({ x1: line.x1, y1: line.y1 });
+                        }
                     });
                 }
             });
         }
 
-        function save() {
-            alert(JSON.stringify(nodeArray));
+        //保存元素
+        function saveElement() {
+            //draw.clear();
+
+            var nodeCollection = [], pathCollection = [];
+            $.each(nodeArray, function () {
+                var instance = new Node();
+                $.extend(instance, this);
+
+
+
+
+                var ele = SVG.get(instance.id);
+                if (ele) {
+                    ele.remove();
+                }
+
+                if (instance.text) {
+                    instance.text.remove();
+                }
+                delete instance['text'];
+                nodeCollection.push(instance);
+                delete this;
+            });
+
+            $.each(LineArray, function () {
+                var instance = new Line();
+                $.extend(instance, this);
+                //alert(JSON.stringify(instance));
+                pathCollection.push(instance);
+
+                var ele = SVG.get(instance.id);
+                if (ele) {
+                    ele.remove();
+                }
+                if (instance.text) {
+                    instance.text.remove();
+                }
+                delete this;
+            });
+
+            $.each(nodeCollection, function () {
+                var instance = new Node();
+                $.extend(instance, this);
+                var rectId=instance.draw();
+                //changeRelationShip(rectId, this.id, 'rectId');
+
+                var from = instance.from || [],
+                     to = instance.to || [];
+
+                eachNode(from, rectId, this.id, 'rectId');
+                eachNode(to, rectId, this.id, 'rectId');
+
+            });
+
+            $.each(pathCollection, function () {
+                var instance = new Line();
+                $.extend(instance, this);
+                var lid = instance.draw();
+                changeRelationShip(lid, this.id,'id');
+            });
+
+            function changeRelationShip(id, originId,nid) {
+                $.each(nodeArray, function () {
+                    var from = this.from || [],
+                          to = this.to || [];
+
+                    eachNode(from, id, originId, nid);
+                    eachNode(to, id, originId, nid);
+                });
+            }
+
+            function eachNode(elements,id,originId, nid) {
+                $.each(elements, function () {
+                    if (this[nid] === originId) {
+                        this[nid] = id;
+                    }
+                });
+            }
+
         }
     </script>
 </head>
@@ -326,7 +479,7 @@
     <div class="tools">
         <ul class="tools-menu">
             <li>
-                <a href="#" onclick="save()">保存</a>
+                <a href="#" onclick="saveElement()">保存</a>
             </li>
             <li>
                 <a href="#" onclick="select()">选择</a>
