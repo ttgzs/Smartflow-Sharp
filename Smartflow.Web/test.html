@@ -87,7 +87,8 @@
             x2: 0,
             y2: 0,
             from: undefined,
-            to: undefined
+            to: undefined,
+            name:'line'
         };
 
         window.onload = function () {
@@ -137,6 +138,9 @@
                     line.y2 = rect.y();
                     line.to = rect.id();
                     if (line.from !== line.to && line.from) {
+
+                        //LineArray[]
+
                         var instance = new Line();
                         $.extend(instance, line);
                         var nt = nodeArray[nid],
@@ -146,6 +150,8 @@
                         var l = SVG.get(id),
                             r = SVG.get(instance.from);
 
+
+                       
                         nt.to.push({ id: id, rectId: nid });
                         nf.from.push({ id: id, rectId: line.from });
 
@@ -175,9 +181,13 @@
 
         //创建节点
         function createNode() {
-            var n = new Node(),
-                id = n.draw();
-            nodeArray[id] = n;
+            var n = new Node();
+            n.draw();
+        }
+
+        function createDecision() {
+            var n = new Decision();
+            n.draw();
         }
 
         //线条
@@ -186,21 +196,30 @@
             this.y1 = 0;
             this.x2 = 0;
             this.y2 = 0;
+            this.text = undefined;
             this.color = '#f06';
             this.border = 3;
             this.from = undefined;
             this.to = undefined;
             this.id = undefined;
+            this.name = "line";
         }
 
         Line.prototype = {
             constructor: Line,
             draw: function () {
-                var l = draw.line(this.x1, this.y1, this.x2, this.y2)
-                       .stroke({ width: this.border, color: this.color });
+                var self = this;
+                var l = draw.line(self.x1, self.y1, self.x2, self.y2)
+                       .stroke({ width: self.border, color: self.color });
 
-                this.id = l.id();
-                LineArray[this.id] = this;
+                self.text = draw.text(function (add) {
+                    add.tspan(self.name);
+                });
+
+                self.text.attr({ x: (self.x2 - self.x1) / 2 + self.x1, y: (self.y2 - self.y1) / 2 + self.y1});
+                self.id = l.id();
+
+                LineArray[self.id] = this;
 
                 l.mouseout(function () {
                     //this.attr({ fill: '#f06' });
@@ -216,8 +235,8 @@
                 l.dblclick(function (evt) {
                     //alert(evt.ctrlKey + ":" + evt.altKey);
                     //删除
+                    var lA = LineArray[this.id()];
                     if (evt.ctrlKey && evt.altKey) {
-                        var lA = LineArray[this.id()];
                         if (lA.from) {
                             eachElements(nodeArray[lA.from], this.id());
                         }
@@ -228,7 +247,17 @@
 
                         this.off('dblclick');
                         this.remove();
+                        lA.text.remove();
                         delete LineArray[this.id()];
+                    } else {
+                        var nodeName = prompt("请输入节点名称", lA.name);
+                        if (nodeName) {
+                            lA.name = nodeName;
+                            lA.text.clear();
+                            lA.text.text(function (add) {
+                                add.tspan(lA.name);
+                            });
+                        }
                     }
                 });
                 return l.id();
@@ -248,7 +277,7 @@
             this.disY = 0;
             this.from = [];
             this.to = [];
-            this.text = '';
+            this.text = undefined;
             this.ox1 = 0;
             this.oy1 = 0;
             this.ox2 = 0;
@@ -256,6 +285,23 @@
             this.name = 'node';
             this.id = undefined;
         }
+
+        //决策节点
+        function Decision() {
+            this.points = '100,100 175,50 250,100 175,150';
+        }
+
+        Decision.prototype = {
+            constructor: Decision,
+            draw: function () {
+                var polygon = draw.polygon(this.points)
+                             .fill('#f06').stroke({ width: 1 });
+                
+                nodeArray[polygon.id] = this;
+            }
+        };
+
+
 
         Node.prototype = {
             constructor: Node,
@@ -320,6 +366,8 @@
                 for (var i = 0; i < elements.length; i++) {
                     var ele = elements[i];
                     SVG.get(ele.id).remove();
+                    ele.text.remove();
+
                     var instance = LineArray[ele.id];
 
                     if (instance.to == rectId) {
@@ -368,24 +416,27 @@
                 if (nx.to.length > 0) {
                     $.each(nx.to, function (i, o) {
                         var ele = SVG.get(o.id),
-                            line = LineArray[o.id];
+                            instance = LineArray[o.id];
 
-                        if (ele && line) {
-                            line.x2 = nx.x + nx.ox2;
-                            line.y2 = nx.y + nx.oy2;
-                            ele.attr({ x2: line.x2, y2: line.y2 });
+                        if (ele && instance) {
+                            instance.x2 = nx.x + nx.ox2;
+                            instance.y2 = nx.y + nx.oy2;
+
+                            ele.attr({ x2: instance.x2, y2: instance.y2 });
+                            instance.text.attr({ x: (instance.x2 - instance.x1) / 2 + instance.x1, y: (instance.y2 - instance.y1) / 2 + instance.y1 });
                         }
                     });
                 }
 
                 if (nx.from.length > 0) {
                     $.each(nx.from, function (i, o) {
-                        var ele = SVG.get(o.id);
-                        line = LineArray[o.id];
-                        if (ele && line) {
-                            line.x1 = nx.x + nx.ox1;
-                            line.y1 = nx.y + nx.oy1;
-                            ele.attr({ x1: line.x1, y1: line.y1 });
+                        var ele = SVG.get(o.id),
+                            instance = LineArray[o.id];
+                        if (ele && instance) {
+                            instance.x1 = nx.x + nx.ox1;
+                            instance.y1 = nx.y + nx.oy1;
+                            ele.attr({ x1: instance.x1, y1: instance.y1 });
+                            instance.text.attr({ x: (instance.x2 - instance.x1) / 2 + instance.x1, y: (instance.y2 - instance.y1) / 2 + instance.y1 });
                         }
                     });
                 }
@@ -400,10 +451,6 @@
             $.each(nodeArray, function () {
                 var instance = new Node();
                 $.extend(instance, this);
-
-
-
-
                 var ele = SVG.get(instance.id);
                 if (ele) {
                     ele.remove();
@@ -451,6 +498,8 @@
                 var instance = new Line();
                 $.extend(instance, this);
                 var lid = instance.draw();
+
+                LineArray[lid] = instance;
                 changeRelationShip(lid, this.id,'id');
             });
 
@@ -489,6 +538,9 @@
             </li>
             <li>
                 <a href="#" onclick="createNode()">节点</a>
+            </li>
+            <li>
+                <a href="#" onclick="createDecision()">决策</a>
             </li>
         </ul>
     </div>
