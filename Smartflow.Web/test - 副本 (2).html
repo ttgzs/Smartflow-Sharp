@@ -258,7 +258,7 @@
             this.border = 3;
             this.from = undefined;
             this.to = undefined;
-            Line.base.Constructor.call(this, "line", "line");
+            Line.base.Constructor.call(this, "Line", "Line");
         }
 
         Line.extend(Element, {
@@ -325,7 +325,7 @@
             this.oy1 = 0;
             this.ox2 = 0;
             this.oy2 = 0;
-            Node.base.Constructor.call(this, "node", "node");
+            Node.base.Constructor.call(this, "Node", "Node");
         }
 
         Node.extend(Element, {
@@ -345,8 +345,8 @@
                 return Node.base.Parent.prototype.draw.call(this);
             },
             checkRule: function (to,nf) {
-                var rule = ((nf.category === 'end' || this.category === 'start') ||
-                            (nf.category === 'start' && this.category === 'end'));
+                var rule = ((nf.type === 'end' || this.type === 'start') ||
+                            (nf.type === 'start' && this.type === 'end'));
                 return rule;
             },
             bindEvent: function (n) {
@@ -423,7 +423,7 @@
 
         function Start() {
             Start.base.Constructor.call(this);
-            this.category = "start";
+            this.type = "start";
             this.name = "开始";
         }
 
@@ -443,7 +443,7 @@
 
         function End() {
             End.base.Constructor.call(this);
-            this.category = "end";
+            this.type = "end";
             this.name = "结束";
         }
 
@@ -464,8 +464,8 @@
         //决策节点
         function Decision() {
             Decision.base.Constructor.call(this);
-            this.name = 'decision';
-            this.category = 'decision';
+            this.name = 'Decision';
+            this.category = 'Decision';
             this.circles = [];
         }
 
@@ -564,35 +564,11 @@
             });
         }
 
-
         //导出数据
         function exportJson() {
-
-            var UUID = 1;
+            //draw.clear();
 
             var nodeCollection = [], pathCollection = [];
-            var builder = new StringBuilder();
-            builder.Append("<workflow>");
-            $.each(nodeArray, function () {
-                builder
-                    .Append("<" + this.category)
-                    .Append(" name=\"" + this.name + "\"")
-                    .Append(">")
-
-
-
-                    .Append("</" + this.category + ">");
-
-            });
-
-            builder.Append("</workflow>");
-
-            alert(builder.toString());
-
-            return;
-
-
-
             $.each(nodeArray, function () {
                 var instance = new Node();
                 $.extend(instance, this);
@@ -662,28 +638,7 @@
                 });
             }
 
-
-
-
-
         }
-
-
-        function StringBuilder() {
-            this.elements = [];
-        }
-
-        StringBuilder.prototype = {
-            constructor: StringBuilder,
-            Append: function (text) {
-                this.elements.push(text);
-                return this;
-            },
-            toString:function(){
-                return this.elements.join('');
-            }
-        }
-
     </script>
 </head>
 <body>
