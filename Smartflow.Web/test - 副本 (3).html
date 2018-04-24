@@ -86,7 +86,7 @@
             }
         }
 
-        var draw, nodeArray = {}, LineArray = {}, relationShip = [],
+        var draw, nodeArray = {}, LineArray = {},relationShip= [],
         line = {
             x1: 0,
             y1: 0,
@@ -114,7 +114,7 @@
 
                 var start = new Start(),
                     end = new End();
-                end.x = start.x = 30;
+                end.x=start.x = 30;
                 end.y = start.w + 50;
                 start.draw();
                 end.draw();
@@ -159,7 +159,7 @@
                     line.x2 = rect.width() / 2 + rect.x();
                     line.y2 = rect.y();
                     line.to = rect.id();
-                    if (line.checkRule() && !nt.checkRule(line.to, nf)) {
+                    if (line.checkRule()&&!nt.checkRule(line.to,nf)) {
                         var instance = new Line();
                         $.extend(instance, line);
 
@@ -342,7 +342,7 @@
                 n.text.attr({ x: n.x + rect.width() / 2, y: n.y + rect.height() / 2 + 5 });
                 return Node.base.Parent.prototype.draw.call(this);
             },
-            checkRule: function (to, nf) {
+            checkRule: function (to,nf) {
                 var rule = ((nf.category === 'end' || this.category === 'start') ||
                             (nf.category === 'start' && this.category === 'end'));
                 return rule;
@@ -426,7 +426,7 @@
 
         Start.extend(Node, {
             constructor: Start,
-            draw: function () {
+            draw:function(){
                 Start.base.Parent.prototype.draw.call(this);
                 var nid = this.id,
                   rect = SVG.get(nid);
@@ -528,7 +528,7 @@
 
         //清空与线交接另一头的引用
         function eachElements(id) {
-            for (var i = 0, len = relationShip.length; i < len; i++) {
+           for (var i = 0, len = relationShip.length; i < len; i++) {
                 var r = relationShip[i];
                 if (r.id == id) {
                     relationShip.remove(i);
@@ -546,7 +546,7 @@
             });
         }
 
-        function findByElementId(elementId, propertyName) {
+        function findByElementId(elementId,propertyName) {
             var elements = [];
             $.each(relationShip, function () {
                 if (propertyName) {
@@ -672,7 +672,7 @@
             }
         }
 
-        function exportChildNode(sb, rectId) {
+        function exportChildNode(sb,rectId) {
 
             var elements = findByElementId(rectId, "from");
 
@@ -680,7 +680,7 @@
                 if (this.from === rectId) {
 
                     var line = LineArray[this.id],
-                        n = nodeArray[line.to];
+                        n=nodeArray[line.to];
                     sb.Append("<transition");
                     sb.Append(" name=\"" + line.name + "\"");
                     sb.Append(" to=\"" + n.uniqueId + "\"");
@@ -701,7 +701,7 @@
                 this.elements.push(text);
                 return this;
             },
-            toString: function () {
+            toString:function(){
                 return this.elements.join('');
             }
         }
