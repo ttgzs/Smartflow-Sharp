@@ -98,7 +98,7 @@ namespace Smartflow
             });
         }
 
-        internal static string CreateWorkflowInstance(long nodeID, long flowID)
+        internal static string CreateWorkflowInstance(long nodeID, string flowID)
         {
             string instanceID = Guid.NewGuid().ToString();
             string sql = "INSERT INTO T_INSTANCE(INSTANCEID,RNID,FLOWID,STATE) VALUES(@INSTANCEID,@RNID,@FLOWID,@STATE)";

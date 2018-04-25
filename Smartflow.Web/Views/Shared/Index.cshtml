@@ -1,0 +1,41 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    <link href="~/Content/smartflow.css" rel="stylesheet" />
+    <script src="~/Content/jquery-1.6.4.min.js"></script>
+    <script src="~/Content/svg.js"></script>
+    <script src="~/Content/smartflow.js"></script>
+</head>
+<body>
+ 
+    <div class="tools">
+        <ul class="tools-menu">
+            <li>
+                <a href="#" onclick="exportJson()">导出</a>
+            </li>
+            <li>
+                <a href="#" onclick="select()">选择</a>
+            </li>
+            <li>
+                <a href="#" onclick="connect()">连接</a>
+            </li>
+            <li>
+                <a href="#" onclick="createNode()">节点</a>
+            </li>
+            <li>
+                <a href="#" onclick="createDecision()">决策</a>
+            </li>
+        </ul>
+    </div>
+    <div class="container">
+        <div class="container-draw" id="drawing"></div>
+    </div>
+</body>
+</html>

@@ -40,7 +40,7 @@ namespace Smartflow
             elements.Add(workflow.EndNode);
 
             //创建关联实例
-            string instaceID = CreateWorkflowInstance(workflow.StartNode.ID, workflowXml.ID);
+            string instaceID = CreateWorkflowInstance(workflow.StartNode.ID, workflowXml.WFID);
             foreach (Element element in elements)
             {
                 element.INSTANCEID = instaceID;
@@ -80,7 +80,7 @@ namespace Smartflow
 
    
 
-        protected string CreateWorkflowInstance(long startNID, long flowID)
+        protected string CreateWorkflowInstance(long startNID, string flowID)
         {
             return WorkflowInstance.CreateWorkflowInstance(startNID, flowID);
         }

@@ -15,7 +15,7 @@ using Smartflow.Enums;
 
 namespace Smartflow
 {
-    public class DapperFactory
+    internal class DapperFactory
     {
         public static IDbConnection CreateWorkflowConnection()
         {

@@ -16,7 +16,7 @@ using System.Text;
 
 namespace Smartflow
 {
-    public  class DatabaseService
+    internal  class DatabaseService
     {
         public IDbConnection connection
         {
