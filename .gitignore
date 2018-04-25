@@ -33,3 +33,6 @@ ConsoleApplication.Test/obj/Debug/ConsoleApplication.Test.exe
 *.xdt
 *.config
 *.cache
+*._
+*.transform
+*.force
