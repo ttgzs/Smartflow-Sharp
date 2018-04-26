@@ -14,8 +14,25 @@
     <script src="~/Content/smartflow.js"></script>
 
     <script type="text/javascript">
+        /*
 
-        $(function () {
+        var origin = JSON.stringify(Wrapper),
+          xml = builder.toString();
+
+
+
+        $.ajax({
+            url: '../Default/Save',
+            data: { NAME: 'test', XML: escape(xml), ORIGIN: escape(origin) },
+            type: 'POST',
+            success: function () {
+                alert("操作成功");
+            }
+        })
+*/
+
+
+        @*$(function () {
             var wfID = '@ViewBag.WfID';
             if (wfID !== '0') {
                 $.ajax({
@@ -28,45 +45,16 @@
                     }
                 })
             }
+        });*@
+
+
+        $(function () {
+
+            $("#drawing").SmartFlow({
+
+            });
         });
 
-
-        function Revert(data) {
-
-            var origin = JSON.parse(unescape(data.ORIGIN));
-            var nodeCollection = origin.NC, pathCollection =origin.PC, relationCollection = origin.RC;
-
-            $.each(nodeCollection, function () {
-                var self = this;
-                var instance = new Node();
-                $.extend(instance, this);
-                instance.draw();
-
-                $.each(["to", "from"], function () {
-                    eachNode(instance.id, self.id, this);
-                });
-            });
-
-            $.each(pathCollection, function () {
-                var instance = new Line();
-                $.extend(instance, this);
-                instance.draw();
-                eachNode(instance.id, this.id, "id");
-            });
-
-            $.each(relationCollection, function () {
-                relationShip.push(this);
-            });
-
-            function eachNode(id, originId, nid) {
-                $.each(relationCollection, function () {
-                    var self = this;
-                    if (self[nid] === originId) {
-                        self[nid] = id;
-                    }
-                });
-            }
-        }
 
     </script>
 </head>
@@ -75,16 +63,16 @@
     <div class="tools">
         <ul class="tools-menu">
             <li>
-                <a href="#" onclick="exportJson()">保存</a>
+                <a href="#" onclick="SMF.exportToJSON()">保存</a>
             </li>
             <li>
-                <a href="#" onclick="select()">选择</a>
+                <a href="#" onclick="SMF.select()">选择</a>
             </li>
             <li>
-                <a href="#" onclick="connect()">连接</a>
+                <a href="#" onclick="SMF.connect()">连接</a>
             </li>
             <li>
-                <a href="#" onclick="createNode()">节点</a>
+                <a href="#" onclick="SMF.create('node')">节点</a>
             </li>
             <li>
                 <a href="#" onclick="createDecision()">决策</a>
