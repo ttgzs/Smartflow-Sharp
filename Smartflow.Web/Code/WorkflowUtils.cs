@@ -17,18 +17,39 @@ namespace Smartflow.Web.Code
 {
     public class WorkflowUtils
     {
+
+       
+
         public static void Persistent(WorkflowXml model)
         {
-            string sql = "INSERT INTO T_FLOWXML(WFID,NAME,XML)  VALUES(@WFID,@NAME,@XML)";
+            string sql = "INSERT INTO T_FLOWXML(WFID,NAME,XML,ORIGIN)  VALUES(@WFID,@NAME,@XML,@ORIGIN)";
             IDbConnection connection = DapperHelper.CreateWorkflowConnection();
             connection.Execute(sql, model);
         }
 
         public static void ModWorkflowXml(WorkflowXml model)
         {
-            string sql = " UPDATE T_FLOWXML SET NAME=@NAME,XML=@XML WHERE WFID=@WFID ";
+            string sql = " UPDATE T_FLOWXML SET NAME=@NAME,XML=@XML,ORIGIN=@ORIGIN WHERE WFID=@WFID ";
             IDbConnection connection = DapperHelper.CreateWorkflowConnection();
             connection.Execute(sql, model);
+        }
+
+        public static WorkflowXml GetWorkflowXml(string flowID)
+        {
+            string sql = " SELECT * FROM  T_FLOWXML WHERE WFID=@WFID ";
+            IDbConnection connection = DapperHelper.CreateWorkflowConnection();
+            return connection.Query<WorkflowXml>(sql, new { 
+                 WFID=flowID
+            }).ToList().FirstOrDefault();
+        }
+
+
+        public static List<WorkflowXml> GetWorkflowXmlList()
+        {
+            string sql = " SELECT * FROM T_FLOWXML ";
+            IDbConnection connection = DapperHelper.CreateWorkflowConnection();
+            return connection.Query<WorkflowXml>(sql)
+                   .ToList();
         }
     }
 }

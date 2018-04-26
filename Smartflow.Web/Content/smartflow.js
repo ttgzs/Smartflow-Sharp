@@ -25,10 +25,7 @@ line = {
     to: undefined
 };
 
-SVG.ready(function () {
 
-
-});
 
 line.checkRule = function () {
     var rule = (line.from !== line.to && line.from);
@@ -45,12 +42,12 @@ window.onload = function () {
             draw.off('mousemove');
         });
 
-        var start = new Start(),
-            end = new End();
-        end.x = start.x = 30;
-        end.y = start.w + 50;
-        start.draw();
-        end.draw();
+        //var start = new Start(),
+        //    end = new End();
+        //end.x = start.x = 30;
+        //end.y = start.w + 50;
+        //start.draw();
+        //end.draw();
     } else {
         alert('SVG not supported')
     }
@@ -482,24 +479,28 @@ function dragElement() {
 function findByElementId(elementId, propertyName) {
     var elements = [];
     $.each(relationShip, function () {
+        var self = this;
         if (propertyName) {
             if (this[propertyName] === elementId) {
                 elements.push(this);
             }
         } else {
-            if (this["to"] === elementId || this["from"] === elementId) {
-                elements.push(this);
-            }
+            $.each(["to", "from"], function () {
+                if (self[this] === elementId) {
+                    elements.push(self);
+                }
+            });
         }
     });
     return elements;
 }
 
-
 //导出数据
 function exportJson() {
 
-    var UUID = 0;
+    var UUID = 0,
+        nodeCollection = [],
+        pathCollection = [];
 
     function createUID() {
         UUID++;
@@ -509,12 +510,9 @@ function exportJson() {
     for (var p in nodeArray) {
         nodeArray[p].uniqueId = createUID();
     }
-
-
-    var nodeCollection = [], pathCollection = [];
     var builder = new StringBuilder();
 
-    builder.Append("<workflow>");
+    builder.append("<workflow>");
     $.each(nodeArray, function () {
         builder
             .append("<" + this.category)
@@ -529,81 +527,46 @@ function exportJson() {
 
     builder.append("</workflow>");
     alert(builder.toString());
-    return;
-
-
-
-
 
     $.each(nodeArray, function () {
         var instance = new Node();
         $.extend(instance, this);
-        var ele = SVG.get(instance.id);
-        if (ele) {
-            ele.remove();
-        }
-
-        if (instance.text) {
-            instance.text.remove();
-        }
         delete instance['text'];
         nodeCollection.push(instance);
-        delete this;
     });
+
 
     $.each(LineArray, function () {
         var instance = new Line();
         $.extend(instance, this);
+        delete instance['text'];
         pathCollection.push(instance);
-        var ele = SVG.get(instance.id);
-        if (ele) {
-            ele.remove();
-        }
-        if (instance.text) {
-            instance.text.remove();
-        }
-        delete this;
     });
 
-    $.each(nodeCollection, function () {
-        var instance = new Node();
-        $.extend(instance, this);
-        var rectId = instance.draw();
-        var from = instance.from || [],
-             to = instance.to || [];
 
-        eachNode(from, rectId, this.id, 'rectId');
-        eachNode(to, rectId, this.id, 'rectId');
-
-    });
-
-    $.each(pathCollection, function () {
-        var instance = new Line();
-        $.extend(instance, this);
-        var lid = instance.draw();
-
-        LineArray[lid] = instance;
-        changeRelationShip(lid, this.id, 'id');
-    });
-
-    function changeRelationShip(id, originId, nid) {
-        $.each(nodeArray, function () {
-            var from = this.from || [],
-                  to = this.to || [];
-
-            eachNode(from, id, originId, nid);
-            eachNode(to, id, originId, nid);
-        });
+    var Wrapper = {
+        RC: relationShip,
+        NC: nodeCollection,
+        PC: pathCollection
     }
 
-    function eachNode(elements, id, originId, nid) {
-        $.each(elements, function () {
-            if (this[nid] === originId) {
-                this[nid] = id;
-            }
-        });
-    }
+    var origin= JSON.stringify(Wrapper),
+        xml = builder.toString();
+   
+
+
+    $.ajax({
+        url: '../Default/Save',
+        data: { NAME: 'test', XML:escape( xml), ORIGIN:escape( origin) },
+        type: 'POST',
+        success: function () {
+            alert("操作成功");
+        }
+    })
+
 }
+
+
 
 function exportChildNode(sb, rectId) {
 

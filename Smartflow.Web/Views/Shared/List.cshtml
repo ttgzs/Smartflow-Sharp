@@ -1,0 +1,56 @@
+﻿@model System.Collections.Generic.IEnumerable<Smartflow.Web.Code.WorkflowXml>
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>List</title>
+    <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- jQuery (Bootstrap 的所有 JavaScript 插件都依赖 jQuery，所以必须放在前边) -->
+    <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+</head>
+<body>
+    <br />
+    <br />
+    <div class="panel panel-default" style="width:90%;margin:0 auto;">
+        <!-- Default panel contents -->
+        <div class="panel-heading">工作流程列表</div>
+
+        <a class="btn btn-default" href="@Url.Action("Index","Default")" role="button">增加</a>
+
+        <!-- Table -->
+        <table class="table  table-hover">
+            <thead>
+                <tr>
+                    <th style="width:50px;">序号</th>
+                    <th>名称</th>
+                    <th style="width:120px;">操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    int counter = 1;
+                }
+                @foreach (Smartflow.Web.Code.WorkflowXml wf in Model)
+                {
+                <tr>
+                    <td style="width:50px;text-align:center;">@(counter++)</td>
+                    <td>@wf.NAME</td>
+                    <td style="width:120px;">
+                        <a  href="@Url.Action("Index", "Default", new { id=wf.WFID })">修改</a>
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div>
+    </div>
+</body>
+</html>

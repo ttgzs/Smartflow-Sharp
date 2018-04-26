@@ -19,7 +19,7 @@ namespace Smartflow
     {
         public WorkflowXml GetWorkflowXml(string flowID)
         {
-            string sql = "SELECT * FROM T_FLOWXML WHERE ID=@ID";
+            string sql = "SELECT * FROM T_FLOWXML WHERE WFID=@ID";
 
             return conn.Query<WorkflowXml>(sql, new { ID = flowID }).FirstOrDefault<WorkflowXml>();
         }

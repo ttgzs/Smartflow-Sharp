@@ -114,6 +114,7 @@
   <ItemGroup>
     <Compile Include="Code\DapperHelper.cs" />
     <Compile Include="Code\WorkflowUtils.cs" />
+    <Compile Include="Code\WorkflowXml.cs" />
     <Compile Include="Controllers\DefaultController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -158,6 +159,12 @@
       <Project>{c77dd279-74f0-4a0a-b534-2cf858ede21d}</Project>
       <Name>Smartflow</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\List.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\View1.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

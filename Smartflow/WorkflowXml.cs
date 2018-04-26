@@ -12,7 +12,7 @@ using System.Text;
 
 namespace Smartflow
 {
-    internal class WorkflowXml
+    public class WorkflowXml
     {
         public string WFID
         {
