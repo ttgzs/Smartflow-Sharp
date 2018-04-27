@@ -1,22 +1,16 @@
 ﻿(function ($) {
 
-    var SMF = {},
+    var
         //存储所有节点的实例
         NC = {},
         //所有线的实例
         LC = {},
         //维护关系
-        RC = []
-
-    var draw,
-        line = {
-        x1: 0,
-        y1: 0,
-        x2: 0,
-        y2: 0,
-        from: undefined,
-        to: undefined
-    };
+        RC = [],
+        //全局变量
+        draw,
+        //连线ID
+        fromConnectID;
 
     //数组添加移除方法
     $.extend(Array.prototype, {
@@ -41,18 +35,13 @@
         }
     });
 
-
-    $.fn.SmartFlow = function () {
-        var self = this,
-            elementId = self.attr("id");
-
+    function bind(elementId) {
         draw = SVG(elementId);
         draw.mouseup(function (e) {
             draw.off('mousemove');
         });
-
+        return draw;
     }
-
 
     function Element(name, category) {
         //节点ID
@@ -65,28 +54,37 @@
         this.category = category;
         //唯一标识
         this.uniqueId = undefined;
+        //禁用事件
+        this.disable = false;
+
+        //背景颜色
+        this.backgroundColor = '#f06';
+        this.backgroundSelectColor = '#f8e233';
+        //当前节点颜色
+        this.currentColor = '#D6C80E';
     }
 
     Element.prototype = {
         constructor: Element,
         draw: function () {
-            this.bindEvent.apply(SVG.get(this.id), [this]);
+            if (!this.disable) {
+                this.bindEvent.apply(SVG.get(this.id), [this]);
+            }
             return this.id;
         },
-        bindEvent: function () {
+        bindEvent: function (o) {
             this.mouseout(function () {
                 if (this.type === 'rect') {
-                    this.attr({ fill: '#f06' });
+                    this.attr({ fill: o.backgroundColor });
                 } else {
-                    this.stroke({ color: '#f06' })
+                    this.stroke({ color: o.backgroundColor })
                 }
             });
-
             this.mouseover(function (e) {
                 if (this.type === 'rect') {
-                    this.attr({ fill: '#f8e233' });
+                    this.attr({ fill: o.backgroundSelectColor});
                 } else {
-                    this.stroke({ color: '#f8e233' })
+                    this.stroke({ color: o.backgroundSelectColor })
                 }
             });
         }
@@ -98,7 +96,6 @@
         this.y1 = 0;
         this.x2 = 0;
         this.y2 = 0;
-        this.color = '#f06';
         this.border = 3;
         this.from = undefined;
         this.to = undefined;
@@ -108,14 +105,13 @@
     Line.extend(Element, {
         constructor: Line,
         draw: function () {
-            var self = this;
-            var l = draw.line(self.x1, self.y1, self.x2, self.y2)
-                   .stroke({ width: self.border, color: self.color });
-
+            var self = this,
+                l = draw.line(self.x1, self.y1, self.x2, self.y2);
+            l.stroke({ width: self.border, color: self.backgroundColor });
             self.brush = draw.text(function (add) {
                 add.tspan(self.name);
             });
-
+            
             self.brush.attr({ x: (self.x2 - self.x1) / 2 + self.x1, y: (self.y2 - self.y1) / 2 + self.y1 });
             self.id = l.id();
             LC[self.id] = this;
@@ -132,11 +128,11 @@
                     instance.text.remove();
                     delete LC[instance.id];
                 } else {
-                    var nodeName = prompt("请输入节点名称", instance.name);
+                    var nodeName = prompt("请输入路线名称", instance.name);
                     if (nodeName) {
                         instance.name = nodeName;
-                        instance.text.clear();
-                        instance.text.text(function (add) {
+                        instance.brush.clear();
+                        instance.brush.text(function (add) {
                             add.tspan(lA.name);
                         });
                     }
@@ -164,25 +160,27 @@
     }
 
     Node.extend(Element, {
-        draw: function () {
-            var n = this;
-            var rect = draw.rect(n.w, n.h)
-                 .attr({ fill: '#f06', x: n.x, y: n.y });
-            n.id = rect.id();
+        draw: function (b) {
+            var n = this,
+                color = b ? n.currentColor : n.backgroundColor,
+                rect = draw.rect(n.w, n.h).attr({ fill: color, x: n.x, y: n.y });
+
             n.brush = draw.text(function (add) {
                 add.tspan(n.name);
             });
             n.brush.attr({ x: n.x + rect.width() / 2, y: n.y + rect.height() / 2 + 5 });
+
+            n.id = rect.id();
             NC[n.id] = n;
             return Node.base.Parent.prototype.draw.call(this);
         },
-        checkRule: function (to, nf) {
+        checkRule: function (nf) {
             var rule = ((nf.category === 'end' || this.category === 'start') ||
                         (nf.category === 'start' && this.category === 'end'));
             return rule;
         },
         bindEvent: function (n) {
-            this.mousedown(OnStartDrag);
+            this.mousedown(OnDrag);
             this.dblclick(function (evt) {
                 var node = NC[this.id()];
                 node.edit.call(this, evt);
@@ -237,7 +235,7 @@
                     instance.x2 = self.x + self.ox2;
                     instance.y2 = self.y + self.oy2;
                     lineElement.attr({ x2: instance.x2, y2: instance.y2 });
-                    instance.text.attr({ x: (instance.x2 - instance.x1) / 2 + instance.x1, y: (instance.y2 - instance.y1) / 2 + instance.y1 });
+                    instance.brush.attr({ x: (instance.x2 - instance.x1) / 2 + instance.x1, y: (instance.y2 - instance.y1) / 2 + instance.y1 });
                 }
             });
 
@@ -248,7 +246,7 @@
                     instance.x1 = self.x + self.ox1;
                     instance.y1 = self.y + self.oy1;
                     lineElement.attr({ x1: instance.x1, y1: instance.y1 });
-                    instance.text.attr({ x: (instance.x2 - instance.x1) / 2 + instance.x1, y: (instance.y2 - instance.y1) / 2 + instance.y1 });
+                    instance.brush.attr({ x: (instance.x2 - instance.x1) / 2 + instance.x1, y: (instance.y2 - instance.y1) / 2 + instance.y1 });
                 }
             });
         }
@@ -346,7 +344,7 @@
         initEvent();
         draw.each(function (i, child) {
             if (this.type === 'rect') {
-                this.mousedown(OnStartDrag);
+                this.mousedown(OnDrag);
             }
         });
     }
@@ -354,58 +352,57 @@
     //连接节点
     function connect() {
         initEvent();
-        $(document).bind('mousedown', OnStartLine);
-        $(document).bind('mouseup', OnEndLine);
+        $(document).bind('mousedown', OnConnect);
+        $(document).bind('mouseup', OnConnected);
     }
 
     //开始连线
-    function OnStartLine(evt) {
-        var nodeName = $(e.target).get(0).nodeName,
-            nid = $(e.target).get(0).id;
+    function OnConnect(evt) {
+        var node = $(evt.target).get(0),
+            nodeName = node.nodeName,
+            nodeId = node.id;
         if (nodeName === 'rect') {
-            var rect = SVG.get(nid);
-            line.x1 = rect.width() / 2 + rect.x();
-            line.y1 = rect.height() + rect.y();
-            line.from = rect.id();
+            fromConnectId = nodeId;
         }
-        e.preventDefault();//阻止默认事件，取消文字选中
+        evt.preventDefault();
         return false;
     }
 
     //结束连线
-    function OnEndLine(evt) {
-        var nodeName = $(e.target).get(0).nodeName,
-               nid = $(e.target).get(0).id;
+    function OnConnected(evt) {
+        var node = $(evt.target).get(0),
+            nodeName = node.nodeName,
+            nodeId = node.id;
 
-        if (nodeName === 'rect' && line.from) {
-            var rect = SVG.get(nid),
-                nt = NC[nid],
-                nf = NC[line.from];
-            line.x2 = rect.width() / 2 + rect.x();
-            line.y2 = rect.y();
-            line.to = rect.id();
-            if (line.checkRule() && !nt.checkRule(line.to, nf)) {
+        if (nodeName === 'rect' && fromConnectId) {
+            var toRect = SVG.get(nodeId),
+                fromRect = SVG.get(fromConnectId),
+                nt = NC[nodeId],
+                nf = NC[fromConnectId];
+            if (nodeId !== fromConnectId && !nt.checkRule(nf)) {
                 var instance = new Line();
-                $.extend(instance, line);
-
+                instance.x1 = fromRect.width() / 2 + fromRect.x();
+                instance.y1 = fromRect.height() + fromRect.y();
+                instance.from = fromConnectId;
+                instance.x2 = toRect.width() / 2 + toRect.x();
+                instance.y2 = toRect.y();
+                instance.to = toRect.id();
                 instance.draw();
 
                 var l = SVG.get(instance.id),
                     r = SVG.get(instance.from);
 
-                relationShip.push({ id: instance.id, from: line.from, to: nid });
-
-                nt.ox2 = l.attr("x2") - rect.x();
-                nt.oy2 = l.attr("y2") - rect.y();
+                RC.push({ id: instance.id, from: fromConnectId, to: nodeId });
+                nt.ox2 = l.attr("x2") - toRect.x();
+                nt.oy2 = l.attr("y2") - toRect.y();
                 nf.ox1 = l.attr("x1") - r.x();
                 nf.oy1 = l.attr("y1") - r.y();
-            } else {
-                reset();
             }
         }
-        return false;
+        fromConnectId = undefined;
+        evt.preventDefault();
+        return true;
     }
-
 
     //初始化事件
     function initEvent() {
@@ -418,7 +415,7 @@
         });
     }
 
-    function OnStartDrag(evt) {
+    function OnDrag(evt) {
         var self = this,
             nx = NC[self.id()];
 
@@ -455,7 +452,6 @@
         }
     }
 
-
     function findByElementId(elementId, propertyName) {
         var elements = [];
         $.each(RC, function () {
@@ -475,42 +471,22 @@
         return elements;
     }
 
-    //清空连线的值
-    function reset() {
-        $.extend(line, {
-            x1: 0,
-            y1: 0,
-            x2: 0,
-            y2: 0,
-            from: undefined,
-            to: undefined
-        });
-    }
-
-    line.checkRule = function () {
-        var rule = (line.from !== line.to && line.from);
-        if (!rule) {
-            reset();
-        }
-        return rule;
-    }
-
     //导出数据
     function exportToJSON() {
-        var UUID = 0,
+        var uniqueId = 0,
             nodeCollection = [],
             pathCollection = [];
 
-        function createUID() {
-            UUID++;
-            return UUID;
+        function generatorId() {
+            uniqueId++;
+            return uniqueId;
         }
 
-        for (var p in NC) {
-            NC[p].uniqueId = createUID();
+        for (var propertyName in NC) {
+            NC[propertyName].uniqueId = generatorId();
         }
+
         var builder = new StringBuilder();
-
         builder.append("<workflow>");
         $.each(NC, function () {
             builder
@@ -521,16 +497,14 @@
 
             builder.append(exportChildNode(builder, this.id));
             builder.append("</" + this.category + ">");
-
         });
 
         builder.append("</workflow>");
-        alert(builder.toString());
 
         $.each(NC, function () {
             var instance = new Node();
             $.extend(instance, this);
-            delete instance['text'];
+            delete instance['brush'];
             nodeCollection.push(instance);
         });
 
@@ -538,37 +512,38 @@
         $.each(LC, function () {
             var instance = new Line();
             $.extend(instance, this);
-            delete instance['text'];
+            delete instance['brush'];
             pathCollection.push(instance);
         });
 
-        
-        return {
-            RC: relationShip,
-            NC: nodeCollection,
-            PC: pathCollection
+        function exportChildNode(sb, rectId) {
+            var elements = findByElementId(rectId, "from");
+            $.each(elements, function () {
+                if (this.from === rectId) {
+                    var L = LC[this.id],
+                        N = NC[L.to];
+                    sb.append("<transition");
+                    sb.append(" name=\"" + L.name + "\"");
+                    sb.append(" to=\"" + N.uniqueId + "\"");
+                    sb.append(">")
+                    sb.append("</transition>");
+                }
+            });
         }
 
-      
-    }
-
-    function exportChildNode(sb, rectId) {
-        var elements = findByElementId(rectId, "from");
-        $.each(elements, function () {
-            if (this.from === rectId) {
-                var line = LC[this.id],
-                    n = NC[line.to];
-                sb.append("<transition");
-                sb.append(" name=\"" + line.name + "\"");
-                sb.append(" to=\"" + n.uniqueId + "\"");
-                sb.append(">")
-                sb.append("</transition>");
-            }
-        });
+  
+        return {
+            XML: escape(builder.toString()),
+            Image: escape(JSON.stringify({
+                RC: RC,
+                NC: nodeCollection,
+                PC: pathCollection
+            }))
+        };
     }
 
     //恢复流程图
-    function revertFlow(data) {
+    function revertFlow(data, disable, currentNodeId) {
 
         var origin = JSON.parse(unescape(data.ORIGIN)),
             nodeCollection = origin.NC,
@@ -577,9 +552,10 @@
 
         $.each(nodeCollection, function () {
             var self = this;
-            var instance = new Node();
-            $.extend(instance, this);
-            instance.draw();
+            var instance = convertToRealType(this);
+
+            instance.disable = (disable || false);
+            instance.draw(currentNodeId);
 
             $.each(["to", "from"], function () {
                 eachNode(instance.id, self.id, this);
@@ -589,6 +565,7 @@
         $.each(pathCollection, function () {
             var instance = new Line();
             $.extend(instance, this);
+            instance.disable = (disable || false);
             instance.draw();
             eachNode(instance.id, this.id, "id");
         });
@@ -604,6 +581,25 @@
                     self[nid] = id;
                 }
             });
+        }
+
+        function convertToRealType(n) {
+            var convertType;
+            switch (n.category) {
+                case "node":
+                    convertType = new Node();
+                    break;
+                case "start":
+                    convertType = new Start();
+                    break;
+                case "end":
+                    convertType = new End();
+                    break;
+                default:
+                    break;
+            }
+            $.extend(convertType, n);
+            return convertType;
         }
     }
 
@@ -625,6 +621,8 @@
 
     //对外提供访问接口
     window.SMF = SMF = {
+        //绑定元素，并进行初始化
+        bind: bind,
         //选择
         select: select,
         //连接
@@ -635,19 +633,29 @@
         revert: revertFlow,
 
         create: function (category) {
+            var reallType;
             switch (category) {
                 case "node":
-                    new Node().draw();
+                    reallType = new Node();
                     break;
                 case "line":
-                    new Line().draw();
+                    reallType = new Line();
+                    break;
+                case "start":
+                    reallType = new Start();
+                    break;
+                case "end":
+                    reallType = new End();
+                    break;
+                case "decision":
+                    reallType = new Decision();
                     break;
                 default:
                     break;
             }
+            reallType.draw();
         }
     };
-
 
 })(jQuery);
 

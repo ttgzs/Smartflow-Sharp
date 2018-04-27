@@ -12,58 +12,52 @@
     <script src="~/Content/jquery-1.6.4.min.js"></script>
     <script src="~/Content/svg.js"></script>
     <script src="~/Content/smartflow.js"></script>
-
     <script type="text/javascript">
-        /*
-
-        var origin = JSON.stringify(Wrapper),
-          xml = builder.toString();
-
-
-
-        $.ajax({
-            url: '../Default/Save',
-            data: { NAME: 'test', XML: escape(xml), ORIGIN: escape(origin) },
-            type: 'POST',
-            success: function () {
-                alert("操作成功");
+        function saveflow() {
+            var exportObj = SMF.exportToJSON();
+            var flowName=window.prompt("请输入流程名称");
+            if (flowName&&flowName.length>0) {
+                $.ajax({
+                    url: '@Url.Action("Save","Default")',
+                    data: { NAME: flowName, XML: exportObj.XML, ORIGIN: exportObj.Image },
+                    type: 'POST',
+                    success: function () {
+                        alert("操作成功");
+                    }
+                });
+            } else {
+                alert("请输入流程名称");
             }
-        })
-*/
+        }
 
-
-        @*$(function () {
+        $(function () {
+            var draw = window.SMF.bind('drawing');
             var wfID = '@ViewBag.WfID';
             if (wfID !== '0') {
                 $.ajax({
-                    url:'@Url.Action("GetResult", "Default")',
+                    url: '@Url.Action("GetResult", "Default")',
                     type: 'post',
                     dataType: 'json',
                     data: { wfID: wfID },
                     success: function (serverData) {
-                        Revert(serverData);
+                        //SMF.revert(serverData,false,1);
+
+                        SMF.revert(serverData);
                     }
                 })
+            } else {
+                draw.create('start');
+                draw.create('end');
             }
-        });*@
-
-
-        $(function () {
-
-            $("#drawing").SmartFlow({
-
-            });
         });
-
-
     </script>
 </head>
 <body>
- 
+
     <div class="tools">
         <ul class="tools-menu">
             <li>
-                <a href="#" onclick="SMF.exportToJSON()">保存</a>
+                <a href="#" onclick="saveflow()">保存</a>
             </li>
             <li>
                 <a href="#" onclick="SMF.select()">选择</a>
@@ -75,7 +69,7 @@
                 <a href="#" onclick="SMF.create('node')">节点</a>
             </li>
             <li>
-                <a href="#" onclick="createDecision()">决策</a>
+                <a href="#" onclick="SMF.create('decision')">决策</a>
             </li>
         </ul>
     </div>
