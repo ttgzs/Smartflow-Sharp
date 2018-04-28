@@ -18,6 +18,13 @@ namespace Smartflow.Web.Controllers
             return View();
         }
 
+
+        public ActionResult Main()
+        {
+            return View();
+        }
+
+
         public JsonResult GetResult(string wfID)
         {
             return Json(WorkflowUtils.GetWorkflowXml(wfID));

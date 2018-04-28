@@ -10,12 +10,35 @@
         //全局变量
         draw,
         //连线ID
-        fromConnectID;
+        fromConnectID,
+        //规则检查
+        rule = {
+        duplicateCheck: function (from, to) {
+            //检查是否已经存在相同路线
+            var result = false;
+            for (var i = 0, len = RC.length; i < len; i++) {
+                var r = RC[i];
+                if (r.from === from && r.to === to) {
+                    result = true;
+                    break;
+                }
+            }
+            return result;
+        }
+    }
+
 
     //数组添加移除方法
     $.extend(Array.prototype, {
         remove: function (dx, to) {
             this.splice(dx, (to || 1));
+        },
+        each: function (cb) {
+            if (typeof cb === 'function') {
+                for (var i = 0, len = this.length; i < this.length; i++) {
+                    cb.call(this[i], i, this[i]);
+                }
+            }
         }
     });
 
@@ -58,10 +81,11 @@
         this.disable = false;
 
         //背景颜色
-        this.backgroundColor = '#f06';
-        this.backgroundSelectColor = '#f8e233';
+        this.bgColor = '#f06';
+        //悬停节点背影颜色
+        this.bgOverColor = '#f8e233';
         //当前节点颜色
-        this.currentColor = '#D6C80E';
+        this.bgCurrentColor= '#D6C80E';
     }
 
     Element.prototype = {
@@ -75,16 +99,16 @@
         bindEvent: function (o) {
             this.mouseout(function () {
                 if (this.type === 'rect') {
-                    this.attr({ fill: o.backgroundColor });
+                    this.attr({ fill: o.bgColor });
                 } else {
-                    this.stroke({ color: o.backgroundColor })
+                    this.stroke({ color: o.bgColor })
                 }
             });
             this.mouseover(function (e) {
                 if (this.type === 'rect') {
-                    this.attr({ fill: o.backgroundSelectColor});
+                    this.attr({ fill: o.bgOverColor });
                 } else {
-                    this.stroke({ color: o.backgroundSelectColor })
+                    this.stroke({ color: o.bgOverColor })
                 }
             });
         }
@@ -107,7 +131,7 @@
         draw: function () {
             var self = this,
                 l = draw.line(self.x1, self.y1, self.x2, self.y2);
-            l.stroke({ width: self.border, color: self.backgroundColor });
+            l.stroke({ width: self.border, color: self.bgColor });
             self.brush = draw.text(function (add) {
                 add.tspan(self.name);
             });
@@ -117,7 +141,7 @@
             LC[self.id] = this;
             return Line.base.Parent.prototype.draw.call(self);
         },
-        bindEvent: function () {
+        bindEvent: function (l) {
             this.dblclick(function (evt) {
                 //删除
                 var instance = LC[this.id()];
@@ -125,7 +149,7 @@
                     eachElements(instance.id);
                     this.off('dblclick');
                     this.remove();
-                    instance.text.remove();
+                    instance.brush.remove();
                     delete LC[instance.id];
                 } else {
                     var nodeName = prompt("请输入路线名称", instance.name);
@@ -133,12 +157,12 @@
                         instance.name = nodeName;
                         instance.brush.clear();
                         instance.brush.text(function (add) {
-                            add.tspan(lA.name);
+                            add.tspan(instance.name);
                         });
                     }
                 }
             });
-            return Line.base.Parent.prototype.bindEvent.call(this);
+            return Line.base.Parent.prototype.bindEvent.call(this,l);
         }
     });
 
@@ -162,7 +186,7 @@
     Node.extend(Element, {
         draw: function (b) {
             var n = this,
-                color = b ? n.currentColor : n.backgroundColor,
+                color = b ? n.bgCurrentColor : n.bgColor,
                 rect = draw.rect(n.w, n.h).attr({ fill: color, x: n.x, y: n.y });
 
             n.brush = draw.text(function (add) {
@@ -185,7 +209,7 @@
                 var node = NC[this.id()];
                 node.edit.call(this, evt);
             });
-            Node.base.Parent.prototype.bindEvent.call(this);
+            Node.base.Parent.prototype.bindEvent.call(this,n);
         },
         edit: function (evt) {
 
@@ -292,7 +316,7 @@
             });
         },
         bindEvent: function (decision) {
-            Decision.base.Parent.prototype.bindEvent.call(this);
+            Decision.base.Parent.prototype.bindEvent.call(this, decision);
         }
     });
 
@@ -311,8 +335,8 @@
 
             rect.radius(10);
         },
-        bindEvent: function () {
-            Start.base.Parent.prototype.bindEvent.call(this);
+        bindEvent: function (n) {
+            Start.base.Parent.prototype.bindEvent.call(this, n);
             this.off('dblclick');
         }
     });
@@ -333,8 +357,8 @@
 
             rect.radius(10);
         },
-        bindEvent: function () {
-            End.base.Parent.prototype.bindEvent.call(this);
+        bindEvent: function (n) {
+            End.base.Parent.prototype.bindEvent.call(this,n);
             this.off('dblclick');
         }
     });
@@ -379,12 +403,22 @@
                 fromRect = SVG.get(fromConnectId),
                 nt = NC[nodeId],
                 nf = NC[fromConnectId];
-            if (nodeId !== fromConnectId && !nt.checkRule(nf)) {
+
+            if (nodeId !== fromConnectId
+                && !nt.checkRule(nf)
+                && !rule.duplicateCheck(fromConnectId, nodeId)) {
+
                 var instance = new Line();
+
                 instance.x1 = fromRect.width() / 2 + fromRect.x();
                 instance.y1 = fromRect.height() + fromRect.y();
+
+
                 instance.from = fromConnectId;
+
                 instance.x2 = toRect.width() / 2 + toRect.x();
+
+                //instance.x2 = evt.clientX-nt.cx;; //toRect.width() / 2 + toRect.x();
                 instance.y2 = toRect.y();
                 instance.to = toRect.id();
                 instance.draw();
@@ -403,6 +437,8 @@
         evt.preventDefault();
         return true;
     }
+
+   
 
     //初始化事件
     function initEvent() {
@@ -477,6 +513,11 @@
             nodeCollection = [],
             pathCollection = [];
 
+        if (RC.length === 0) {
+            alert("该流程图不符合流程定义规则");
+            return;
+        }
+
         function generatorId() {
             uniqueId++;
             return uniqueId;
@@ -505,9 +546,12 @@
             var instance = new Node();
             $.extend(instance, this);
             delete instance['brush'];
+            if (instance['circles']) {
+                delete instance['circles'];
+            }
+
             nodeCollection.push(instance);
         });
-
 
         $.each(LC, function () {
             var instance = new Line();
@@ -531,14 +575,15 @@
             });
         }
 
+        var imageData=escape(JSON.stringify({
+            RC: RC,
+            NC: nodeCollection,
+            PC: pathCollection
+        }))
   
         return {
             XML: escape(builder.toString()),
-            Image: escape(JSON.stringify({
-                RC: RC,
-                NC: nodeCollection,
-                PC: pathCollection
-            }))
+            IMAGE: imageData
         };
     }
 
@@ -552,7 +597,9 @@
 
         $.each(nodeCollection, function () {
             var self = this;
-            var instance = convertToRealType(this);
+
+            var instance = convertToRealType(this.category);
+            $.extend(instance, this);
 
             instance.disable = (disable || false);
             instance.draw(currentNodeId);
@@ -582,25 +629,28 @@
                 }
             });
         }
+    }
 
-        function convertToRealType(n) {
-            var convertType;
-            switch (n.category) {
-                case "node":
-                    convertType = new Node();
-                    break;
-                case "start":
-                    convertType = new Start();
-                    break;
-                case "end":
-                    convertType = new End();
-                    break;
-                default:
-                    break;
-            }
-            $.extend(convertType, n);
-            return convertType;
+    //转换成真实的节点类型
+    function convertToRealType(category) {
+        var convertType;
+        switch (category) {
+            case "node":
+                convertType = new Node();
+                break;
+            case "start":
+                convertType = new Start();
+                break;
+            case "end":
+                convertType = new End();
+                break;
+            case "decision":
+                convertType = new Decision();
+                break;
+            default:
+                break;
         }
+        return convertType;
     }
 
     //帮助类
@@ -619,8 +669,9 @@
         }
     }
 
+ 
     //对外提供访问接口
-    window.SMF = SMF = {
+    window.SMF = {
         //绑定元素，并进行初始化
         bind: bind,
         //选择
@@ -631,28 +682,9 @@
         exportToJSON: exportToJSON,
         //恢复图形
         revert: revertFlow,
-
+        //创建流程节点
         create: function (category) {
-            var reallType;
-            switch (category) {
-                case "node":
-                    reallType = new Node();
-                    break;
-                case "line":
-                    reallType = new Line();
-                    break;
-                case "start":
-                    reallType = new Start();
-                    break;
-                case "end":
-                    reallType = new End();
-                    break;
-                case "decision":
-                    reallType = new Decision();
-                    break;
-                default:
-                    break;
-            }
+            var reallType = convertToRealType(category);
             reallType.draw();
         }
     };

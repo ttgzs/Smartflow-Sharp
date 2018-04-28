@@ -19,7 +19,7 @@
             if (flowName&&flowName.length>0) {
                 $.ajax({
                     url: '@Url.Action("Save","Default")',
-                    data: { NAME: flowName, XML: exportObj.XML, ORIGIN: exportObj.Image },
+                    data: { NAME: flowName, XML: exportObj.XML, ORIGIN: exportObj.IMAGE },
                     type: 'POST',
                     success: function () {
                         alert("操作成功");
@@ -31,7 +31,7 @@
         }
 
         $(function () {
-            var draw = window.SMF.bind('drawing');
+            window.SMF.bind('drawing');
             var wfID = '@ViewBag.WfID';
             if (wfID !== '0') {
                 $.ajax({
@@ -46,8 +46,8 @@
                     }
                 })
             } else {
-                draw.create('start');
-                draw.create('end');
+                SMF.create('start');
+                SMF.create('end');
             }
         });
     </script>
