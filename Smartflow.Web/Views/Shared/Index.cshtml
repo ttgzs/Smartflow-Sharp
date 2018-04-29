@@ -29,7 +29,6 @@
                 alert("请输入流程名称");
             }
         }
-
         $(function () {
             window.SMF.bind('drawing');
             var wfID = '@ViewBag.WfID';
@@ -41,7 +40,6 @@
                     data: { wfID: wfID },
                     success: function (serverData) {
                         //SMF.revert(serverData,false,1);
-
                         SMF.revert(serverData);
                     }
                 })
@@ -53,7 +51,6 @@
     </script>
 </head>
 <body>
-
     <div class="tools">
         <ul class="tools-menu">
             <li>

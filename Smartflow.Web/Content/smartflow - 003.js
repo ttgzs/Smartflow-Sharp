@@ -1,6 +1,7 @@
 ﻿/*
  License: https://github.com/chengderen/Smartflow/blob/master/LICENSE 
  Home page: https://github.com/chengderen/Smartflow
+
  Author:chengderen-237552006@qq.com
  */
 (function ($) {
@@ -31,6 +32,7 @@
         }
     }
 
+
     //数组添加移除方法
     $.extend(Array.prototype, {
         remove: function (dx, to) {
@@ -44,10 +46,6 @@
             }
         }
     });
-
-    //禁用右键菜单
-    document.oncontextmenu = function () { return false;}
-
 
     //函数添加继承
     $.extend(Function.prototype, {
@@ -142,12 +140,7 @@
             self.brush = draw.text(function (add) {
                 add.tspan(self.name);
             });
-
-            //l.marker('end', 10, 10, function (add) {
-            //    add.path('M0,0 L0,6 L9,3 z').fill("#f00");
-            //    this.attr({ refX: 0, refY: 3 });
-            //});
-
+            
             self.brush.attr({ x: (self.x2 - self.x1) / 2 + self.x1, y: (self.y2 - self.y1) / 2 + self.y1 });
             self.id = l.id();
             LC[self.id] = this;
@@ -188,6 +181,10 @@
         this.cy = 0;
         this.disX = 0;
         this.disY = 0;
+        this.ox1 = 0;
+        this.oy1 = 0;
+        this.ox2 = 0;
+        this.oy2 = 0;
         Node.base.Constructor.call(this, "node", "node");
     }
 
@@ -264,8 +261,8 @@
                     instance = LC[this.id];
 
                 if (lineElement && instance) {
-                    instance.x2 = self.x + this.ox2;
-                    instance.y2 = self.y + this.oy2;
+                    instance.x2 = self.x + self.ox2;
+                    instance.y2 = self.y + self.oy2;
                     lineElement.attr({ x2: instance.x2, y2: instance.y2 });
                     instance.brush.attr({ x: (instance.x2 - instance.x1) / 2 + instance.x1, y: (instance.y2 - instance.y1) / 2 + instance.y1 });
                 }
@@ -275,8 +272,8 @@
                 var lineElement = SVG.get(this.id),
                     instance = LC[this.id];
                 if (lineElement && instance) {
-                    instance.x1 = self.x + this.ox1;
-                    instance.y1 = self.y + this.oy1;
+                    instance.x1 = self.x + self.ox1;
+                    instance.y1 = self.y + self.oy1;
                     lineElement.attr({ x1: instance.x1, y1: instance.y1 });
                     instance.brush.attr({ x: (instance.x2 - instance.x1) / 2 + instance.x1, y: (instance.y2 - instance.y1) / 2 + instance.y1 });
                 }
@@ -424,20 +421,15 @@
                     orientation = checkOrientation(fromRect, toRect);
 
                 if (orientation === 'down') {
-                    //instance.x1 = fromConnect.x - nf.cx;
-                    //instance.y1 = fromRect.height() + fromRect.y();
-                    //instance.x2 = evt.clientX - nt.cx;
-                    //instance.y2 = toRect.y();
-
-
-                    instance.x1 = fromRect.width() / 2 + fromRect.x();
+                    instance.x1 = fromConnect.x - nf.cx;//fromRect.width() / 2 + fromRect.x();
                     instance.y1 = fromRect.height() + fromRect.y();
-                    instance.x2 = toRect.width() / 2 + toRect.x();
+                    instance.x2 = evt.clientX - nt.cx;
                     instance.y2 = toRect.y();
-
                 } else {
+
                     instance.x1 = fromConnect.x - nf.cx;
                     instance.y1 = fromRect.y();
+
                     instance.x2 = evt.clientX - nt.cx;
                     instance.y2 = toRect.height() + toRect.y();
                 }
@@ -448,15 +440,11 @@
                 var l = SVG.get(instance.id),
                     r = SVG.get(instance.from);
 
-                RC.push({
-                    id: instance.id,
-                    from: fromConnect.id,
-                    to: nodeId,
-                    ox2 : l.attr("x2") - toRect.x(),
-                    oy2 : l.attr("y2") - toRect.y(),
-                    ox1 : l.attr("x1") - fromRect.x(),
-                    oy1 : l.attr("y1") - fromRect.y()
-                });
+                RC.push({ id: instance.id, from: fromConnect.id, to: nodeId });
+                nt.ox2 = l.attr("x2") - toRect.x();
+                nt.oy2 = l.attr("y2") - toRect.y();
+                nf.ox1 = l.attr("x1") - fromRect.x();
+                nf.oy1 = l.attr("y1") - fromRect.y();
             }
         }
         fromConnect = undefined;
@@ -704,6 +692,9 @@
             return this.elements.join('');
         }
     }
+
+
+
  
     //对外提供访问接口
     window.SMF = {
@@ -720,10 +711,6 @@
         //创建流程节点
         create: function (category) {
             var reallType = convertToRealType(category);
-
-            reallType.x = Math.floor(Math.random() * 200 + 1);
-            reallType.y = Math.floor(Math.random() * 200 + 1);
-
             reallType.draw();
         }
     };

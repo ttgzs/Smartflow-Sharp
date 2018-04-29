@@ -1,0 +1,56 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Smartflow 工作流程设计器</title>
+    <style type="text/css">
+        #drawing {
+            width: 600px;
+            height: 600px;
+        }
+    </style>
+    <script src="../../Content/jquery-1.6.4.min.js"></script>
+    <script src="../../Content/svg.js"></script>
+    <script type="text/javascript">
+
+        window.onload = function () {
+            var draw = SVG("drawing");
+
+            //var path = draw.path('M0,0 L0,6 L9,3 z');
+
+
+            var line = draw.line(0, 0, 100, 150)
+                      .stroke({ width: 3 });
+
+            line.marker('end', 50, 50, function (add) {
+                add.path('M0,0 L0,6 L9,3 z').fill("#f00");
+                this.attr({refX:0,refY:3});
+            });
+          
+
+
+            //path.fill('none').move(20, 20).stroke({ width: 1, color: '#ccc' })
+
+            //path.marker('start', 10, 10, function (add) {
+            //    add.circle(10).fill('#f06')
+            //})
+            //path.marker('mid', 10, 10, function (add) {
+            //    add.rect(5, 10).cx(5).fill('#ccc')
+            //})
+            //path.marker('end', 20, 20, function (add) {
+            //    add.circle(6).center(4, 5)
+            //    add.circle(6).center(4, 15)
+            //    add.circle(6).center(12, 10)
+
+            //    this.fill('#0f9')
+            //})
+
+        }
+
+    </script>
+</head>
+<body>
+    <div id="drawing"></div>
+</body>
+</html>
