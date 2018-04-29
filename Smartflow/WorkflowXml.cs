@@ -31,5 +31,11 @@ namespace Smartflow
             get;
             set;
         }
+
+        public string IMAGE
+        {
+            get;
+            set;
+        }
     }
 }

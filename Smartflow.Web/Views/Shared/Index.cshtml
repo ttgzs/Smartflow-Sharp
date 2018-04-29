@@ -19,7 +19,7 @@
             if (flowName&&flowName.length>0) {
                 $.ajax({
                     url: '@Url.Action("Save","Default")',
-                    data: { NAME: flowName, XML: exportObj.XML, ORIGIN: exportObj.IMAGE },
+                    data: { NAME: flowName, XML: exportObj.XML, IMAGE: exportObj.IMAGE, WFID: '@ViewBag.WfID' },
                     type: 'POST',
                     success: function () {
                         alert("操作成功");

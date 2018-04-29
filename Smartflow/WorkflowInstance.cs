@@ -45,6 +45,12 @@ namespace Smartflow
             set;
         }
 
+        public string Image
+        {
+            get;
+            set;
+        }
+
         /// <summary>
         /// 获取流程实例
         /// </summary>
@@ -55,7 +61,7 @@ namespace Smartflow
             WorkflowInstance workflowInstance = new WorkflowInstance();
             workflowInstance.InstanceID = instanceID;
             
-            string sql = " SELECT X.INSTANCEID,X.RNID,Y.NAME,Y.NID,Y.ID,Y.NODETYPE,Y.INSTANCEID FROM T_INSTANCE X INNER JOIN  T_NODE Y  ON (X.INSTANCEID=Y.INSTANCEID AND X.RNID=Y.ID ) WHERE X.INSTANCEID=@INSTANCEID";
+            string sql = " SELECT X.INSTANCEID,X.RNID,X.IMAGE,Y.NAME,Y.NID,Y.ID,Y.NODETYPE,Y.INSTANCEID FROM T_INSTANCE X INNER JOIN  T_NODE Y  ON (X.INSTANCEID=Y.INSTANCEID AND X.RNID=Y.ID ) WHERE X.INSTANCEID=@INSTANCEID";
 
             workflowInstance = workflowInstance.Connection.Query<WorkflowInstance, ASTNode, WorkflowInstance>(sql, (instance, node) =>
             {
@@ -98,17 +104,18 @@ namespace Smartflow
             });
         }
 
-        internal static string CreateWorkflowInstance(long nodeID, string flowID)
+        internal static string CreateWorkflowInstance(long nodeID, string flowID,string flowImage)
         {
             string instanceID = Guid.NewGuid().ToString();
-            string sql = "INSERT INTO T_INSTANCE(INSTANCEID,RNID,FLOWID,STATE) VALUES(@INSTANCEID,@RNID,@FLOWID,@STATE)";
+            string sql = "INSERT INTO T_INSTANCE(INSTANCEID,RNID,FLOWID,STATE,IMAGE) VALUES(@INSTANCEID,@RNID,@FLOWID,@STATE,@IMAGE)";
 
             DapperFactory.CreateWorkflowConnection().Execute(sql, new
             {
                 INSTANCEID = instanceID,
                 RNID = nodeID,
                 FLOWID = flowID,
-                STATE = WorkflowInstanceState.Running.ToString()
+                STATE = WorkflowInstanceState.Running.ToString(),
+                IMAGE=flowImage
             });
 
             return instanceID;

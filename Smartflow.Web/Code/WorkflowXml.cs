@@ -32,7 +32,7 @@ namespace Smartflow.Web.Code
             set;
         }
 
-        public string ORIGIN
+        public string IMAGE
         {
             get;
             set;

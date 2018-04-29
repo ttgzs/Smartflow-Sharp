@@ -17,29 +17,38 @@ namespace Smartflow.Web.Code
 {
     public class WorkflowUtils
     {
-
-       
-
         public static void Persistent(WorkflowXml model)
         {
-            string sql = "INSERT INTO T_FLOWXML(WFID,NAME,XML,ORIGIN)  VALUES(@WFID,@NAME,@XML,@ORIGIN)";
+            string sql = "INSERT INTO T_FLOWXML(WFID,NAME,XML,IMAGE)  VALUES(@WFID,@NAME,@XML,@IMAGE)";
             IDbConnection connection = DapperHelper.CreateWorkflowConnection();
             connection.Execute(sql, model);
         }
 
         public static void ModWorkflowXml(WorkflowXml model)
         {
-            string sql = " UPDATE T_FLOWXML SET NAME=@NAME,XML=@XML,ORIGIN=@ORIGIN WHERE WFID=@WFID ";
+            string sql = " UPDATE T_FLOWXML SET NAME=@NAME,XML=@XML,IMAGE=@IMAGE WHERE WFID=@WFID ";
             IDbConnection connection = DapperHelper.CreateWorkflowConnection();
             connection.Execute(sql, model);
         }
+
+        public static void DeleteWorkflowXml(string WFID)
+        {
+            string sql = " DELETE FROM T_FLOWXML WHERE WFID=@WFID ";
+            IDbConnection connection = DapperHelper.CreateWorkflowConnection();
+            connection.Execute(sql, new
+            {
+                WFID = WFID
+            });
+        }
+
 
         public static WorkflowXml GetWorkflowXml(string flowID)
         {
             string sql = " SELECT * FROM  T_FLOWXML WHERE WFID=@WFID ";
             IDbConnection connection = DapperHelper.CreateWorkflowConnection();
-            return connection.Query<WorkflowXml>(sql, new { 
-                 WFID=flowID
+            return connection.Query<WorkflowXml>(sql, new
+            {
+                WFID = flowID
             }).ToList().FirstOrDefault();
         }
 

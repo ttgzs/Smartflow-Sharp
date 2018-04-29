@@ -38,7 +38,7 @@ namespace Smartflow.Web.Controllers
 
         public JsonResult Save(Smartflow.Web.Code.WorkflowXml model)
         {
-            if (String.IsNullOrEmpty(model.WFID))
+            if (String.IsNullOrEmpty(model.WFID) || "0"==model.WFID)
             {
                 model.WFID = Guid.NewGuid().ToString();
                 WorkflowUtils.Persistent(model);
@@ -47,6 +47,12 @@ namespace Smartflow.Web.Controllers
             {
                 WorkflowUtils.ModWorkflowXml(model);
             }
+            return Json(true);
+        }
+
+        public JsonResult Delete(string WFID)
+        {
+            WorkflowUtils.DeleteWorkflowXml(WFID);
             return Json(true);
         }
     }

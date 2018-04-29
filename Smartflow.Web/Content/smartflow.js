@@ -5,6 +5,7 @@
  */
 (function ($) {
     var
+      
         //存储所有节点的实例
         NC = {},
         //所有线的实例
@@ -128,8 +129,6 @@
         this.x2 = 0;
         this.y2 = 0;
         this.border = 3;
-        this.from = undefined;
-        this.to = undefined;
         Line.base.Constructor.call(this, "line", "line");
     }
 
@@ -181,13 +180,14 @@
     //定义节点
     function Node() {
         this.w = 180;
-        this.h = 50;
+        this.h = 40;
         this.x = 10;
         this.y = 10;
         this.cx = 120;
         this.cy = 0;
         this.disX = 0;
         this.disY = 0;
+        this.vertical = 5;
         Node.base.Constructor.call(this, "node", "node");
     }
 
@@ -200,7 +200,7 @@
             n.brush = draw.text(function (add) {
                 add.tspan(n.name);
             });
-            n.brush.attr({ x: n.x + rect.width() / 2, y: n.y + rect.height() / 2 + 5 });
+            n.brush.attr({ x: n.x + rect.width() / 2, y: n.y + rect.height() / 2 + n.vertical });
 
             n.id = rect.id();
             NC[n.id] = n;
@@ -253,7 +253,7 @@
             element.attr({ x: self.x, y: self.y });
 
             if (self.brush) {
-                self.brush.attr({ x: (element.x() + (element.width() / 2)), y: element.y() + (element.height() / 2) + 5 });
+                self.brush.attr({ x: (element.x() + (element.width() / 2)), y: element.y() + (element.height() / 2) + self.vertical });
             }
 
             var toElements = findByElementId(self.id, "to"),
@@ -357,7 +357,7 @@
     }
 
     End.extend(Node, {
-        constructor: Start,
+        constructor: End,
         draw: function () {
             End.base.Parent.prototype.draw.call(this);
             var nid = this.id,
@@ -428,8 +428,6 @@
                     //instance.y1 = fromRect.height() + fromRect.y();
                     //instance.x2 = evt.clientX - nt.cx;
                     //instance.y2 = toRect.y();
-
-
                     instance.x1 = fromRect.width() / 2 + fromRect.x();
                     instance.y1 = fromRect.height() + fromRect.y();
                     instance.x2 = toRect.width() / 2 + toRect.x();
@@ -441,8 +439,6 @@
                     instance.x2 = evt.clientX - nt.cx;
                     instance.y2 = toRect.height() + toRect.y();
                 }
-                instance.from = fromConnect.id;
-                instance.to = toRect.id();
                 instance.draw();
 
                 var l = SVG.get(instance.id),
@@ -589,7 +585,7 @@
             $.each(elements, function () {
                 if (this.from === rectId) {
                     var L = LC[this.id],
-                        N = NC[L.to];
+                        N = NC[this.to];
                     sb.append("<transition");
                     sb.append(" name=\"" + L.name + "\"");
                     sb.append(" to=\"" + N.uniqueId + "\"");
@@ -604,7 +600,7 @@
             NC: nodeCollection,
             PC: pathCollection
         }))
-  
+
         return {
             XML: escape(builder.toString()),
             IMAGE: imageData
@@ -614,13 +610,14 @@
     //恢复流程图
     function revertFlow(data, disable, currentNodeId) {
 
-        var origin = JSON.parse(unescape(data.ORIGIN)),
-            nodeCollection = origin.NC,
-            pathCollection = origin.PC,
-            relationCollection = origin.RC;
+        var imageData = JSON.parse(unescape(data.IMAGE)),
+            nodeCollection = imageData.NC,
+            pathCollection = imageData.PC,
+            relationCollection = imageData.RC;
 
         $.each(nodeCollection, function () {
-            var self = this;
+            var self = this,
+                originId = self.id;
 
             var instance = convertToRealType(this.category);
             $.extend(instance, this);
@@ -628,8 +625,9 @@
             instance.disable = (disable || false);
             instance.draw(currentNodeId);
 
-            $.each(["to", "from"], function () {
-                eachNode(instance.id, self.id, this);
+            $.each(["to", "from"], function (i,propertyName) {
+                eachNode(instance.id, originId, propertyName);
+              //  eachLine(instance.id, originId, propertyName);
             });
         });
 
@@ -647,6 +645,15 @@
 
         function eachNode(id, originId, nid) {
             $.each(relationCollection, function () {
+                var self = this;
+                if (self[nid] === originId) {
+                    self[nid] = id;
+                }
+            });
+        }
+
+        function eachLine(id, originId, nid) {
+            $.each(LC, function () {
                 var self = this;
                 if (self[nid] === originId) {
                     self[nid] = id;
