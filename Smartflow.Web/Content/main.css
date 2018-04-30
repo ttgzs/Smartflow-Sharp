@@ -1,10 +1,9 @@
-﻿html,body,table,div,img{
-    margin:0;
-    padding:0;
-
+﻿html, body, table, div, img,ul {
+    margin: 0;
+    padding: 0;
 }
-img{
-    border:none;
+ul{
+    list-style:none;
 }
 
 body {
@@ -13,10 +12,35 @@ body {
     color: #000;
 }
 
-.flow-table,.form-table {
-    width: 800px;
+.panel{
+  width:98%;
+  margin:0 auto;
+}
+
+.table{
     margin: 0 auto;
-    margin-top:25px;
+    margin-top: 25px;
+    border-collapse: collapse;
+}
+
+.table-list{
+  min-width:800px;
+  width:100%;
+
+}
+
+.table-list th{
+   border-bottom:solid 1px #eee;
+   font-weight:bold;
+}
+
+.table-list td{
+  border-bottom:solid 1px #eee;
+  line-height:28px;
+}
+
+.flow-table, .form-table {
+    width: 800px;
 }
 
 .flow-table {
@@ -29,9 +53,82 @@ body {
     width: 200px;
     border-top: solid 1px #eee;
     border-right: solid 1px #eee;
+    height: 50px;
+    text-align: center;
 }
 
 .flow-message {
     border-top: solid 1px #eee;
     border-right: solid 1px #eee;
+    vertical-align: top;
+}
+
+
+.check-table {
+    margin: 0 auto;
+    padding: 0;
+    width: 98%;
+    border-collapse: collapse;
+}
+
+.check-head {
+    width: 160px;
+}
+
+.flow-content {
+}
+
+.mainFrame{
+    height:100%;
+    overflow:hidden;
+}
+
+.top {
+    height: 80px;
+    background-color: #0094ff;
+}
+
+.content {
+    position: absolute;
+    top: 80px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.left {
+    width: 200px;
+    float: left;
+    height: 100%;
+    background-color: #54B0E5;
+}
+
+.left:after {
+    content: ".";
+    display: block;
+    visibility: hidden;
+    height: 1%;
+    clear: both;
+}
+
+.right {
+    height: 100%;
+    margin-left: 200px;
+}
+
+.menu li {
+    height: 40px;
+    line-height: 40px;
+    text-align: left;
+}
+
+.menu li:hover {
+    background-color: #d4e2ed;
+}
+
+.menu li a {
+    color: #fff;
+    font-size: 16px;
+    text-decoration: none;
+    padding-left:20px;
 }

@@ -7,46 +7,35 @@ using System.Web.Mvc;
 
 namespace Smartflow.Web.Controllers
 {
-    public class UserCtlController : Controller
+    public class UserControlController : Controller
     {
-        private RecordService rservice = new RecordService();
+        private RecordService recordService = new RecordService();
 
-
-        //
-        // GET: /UserCtl/
         public PartialViewResult Record(string instanceID)
         {
-
             ViewBag.InstanceID = instanceID;
-
-            return PartialView(rservice.Query(instanceID));
+            return PartialView(recordService.Query(instanceID));
         }
 
-        public ActionResult FlowImage(string instanceID)
+        public ActionResult WorkflowImage(string instanceID)
         {
-            ViewBag.WfID = instanceID;
+            ViewBag.InstanceID = instanceID;
             return View();
         }
 
+        public ActionResult WorkflowCheck(string instanceID)
+        {
+            BaseWorkflowService bwkf = BaseWorkflowService.Instance;
+            WorkflowInstance instance = bwkf.GetInstance(instanceID);
+            ViewBag.InstanceID = instanceID;
+            return View(instance.Current.Transitions);
+        }
 
-        public JsonResult GetResult(string instanceID)
+        public JsonResult GetWorkflowImage(string instanceID)
         {
             BaseWorkflowService bwkf = BaseWorkflowService.Instance;
             return Json(bwkf.GetInstance(instanceID));
         }
-
-        //
-        // GET: /UserCtl/
-        public ActionResult FlowControl(string instanceID)
-        {
-            BaseWorkflowService bwkf = BaseWorkflowService.Instance;
-            WorkflowInstance instance = bwkf.GetInstance(instanceID);
-
-            ViewBag.InstanceID = instanceID;
-
-            return View(instance.Current.Transitions);
-        }
-
 
         public JsonResult Jump(string instanceID, string transitionID, long to, string message)
         {

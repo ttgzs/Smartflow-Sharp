@@ -10,7 +10,6 @@ namespace Smartflow.Web.Controllers
 {
     public class FormController : Controller
     {
-
         private BaseWorkflowService bwf = BaseWorkflowService.Instance;
 
         private ApplyService aservice = new ApplyService();
@@ -44,13 +43,10 @@ namespace Smartflow.Web.Controllers
             return RedirectToAction("ApplyList");
         }
 
-
-
         public ActionResult ApplyList()
         {
             return View(aservice.Query());
         }
-
 
         //
         // GET: /Form/

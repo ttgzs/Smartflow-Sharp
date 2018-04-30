@@ -93,7 +93,7 @@
         //悬停节点背影颜色
         this.bgOverColor = '#f8e233';
         //当前节点颜色
-        this.bgCurrentColor= '#D6C80E';
+        this.bgCurrentColor = '#6DEA47';
     }
 
     Element.prototype = {
@@ -529,7 +529,7 @@
 
     //导出数据
     function exportToJSON() {
-        var uniqueId = 0,
+        var uniqueId = 29,
             nodeCollection = [],
             pathCollection = [];
 

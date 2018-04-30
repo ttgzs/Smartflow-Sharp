@@ -8,39 +8,7 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>业务流程</title>
-    <style type="text/css">
-        body {
-            font-family: "Lucida Grande", Lucida Sans Unicode,Hiragino Sans GB, WenQuanYi Micro Hei, Verdana, Aril, sans-serif;
-            font-size: 14px;
-            color: #000;
-        }
-
-        .panel {
-            width: 98%;
-            margin: 0 auto;
-        }
-
-        .table {
-            width: 100%;
-            min-width: 800px;
-        }
-
-            .table td {
-                border-bottom: solid 1px #eee;
-                line-height: 28px;
-            }
-
-            .table th {
-                border-bottom: solid 1px #eee;
-                line-height: 35px;
-            }
-
-        .btn {
-            padding: 5px 10px;
-            border: solid 1px #ccc;
-            margin-bottom: 3px;
-        }
-    </style>
+    <link href="~/Content/main.css" rel="stylesheet" />
     <script src="~/Content/jquery-1.6.4.min.js"></script>
     <script type="text/javascript">
         function openWin(url) {
@@ -67,10 +35,10 @@
     <div class="panel panel-default">
         <div style="text-align:right;">
             <!-- Default panel contents -->
-            <input type="button" value="增加" class="btn" onclick="document.location.href='@Url.Action("Apply","Form")'" />
+            <input type="button" value="增加"  onclick="document.location.href='@Url.Action("Apply","Form")'" />
             <!-- Table -->
         </div>
-        <table class="table  table-hover">
+        <table class="table table-list">
             <thead>
                 <tr>
                     <th style="width:50px;">序号</th>
@@ -85,22 +53,23 @@
                     int counter = 1;
                 }
 
-                @if (Model != null) { 
-
-                foreach (Smartflow.Web.Code.Apply apply in Model)
+                @if (Model != null)
                 {
-                    <tr>
-                        <td style="width:50px;text-align:center;">@(counter++)</td>
-                        <td>@apply.NAME</td>
-                        <td>@apply.STATE</td>
-                        <td>@apply.DESCRIPTION</td>
-                        <td style="width:120px;text-align:center;">
-                            <a href="javascript:document.location.href='@Url.Action("Apply", "Form", new { id = apply.AID })'">修改</a>
-                            <a href="javascript:delApply('@apply.AID')">删除</a>
-                        </td>
-                    </tr>
-                }
-                    
+
+                    foreach (Smartflow.Web.Code.Apply apply in Model)
+                    {
+                        <tr>
+                            <td style="width:50px;text-align:center;">@(counter++)</td>
+                            <td>@apply.NAME</td>
+                            <td>@apply.STATE</td>
+                            <td>@apply.DESCRIPTION</td>
+                            <td style="width:120px;text-align:center;">
+                                <a href="javascript:document.location.href='@Url.Action("Apply", "Form", new { id = apply.AID })'">修改</a>
+                                <a href="javascript:delApply('@apply.AID')">删除</a>
+                            </td>
+                        </tr>
+                    }
+
                 }
             </tbody>
         </table>

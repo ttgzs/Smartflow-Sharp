@@ -121,7 +121,8 @@
     <Compile Include="Code\WorkflowEngineExt.cs" />
     <Compile Include="Controllers\DefaultController.cs" />
     <Compile Include="Controllers\FormController.cs" />
-    <Compile Include="Controllers\UserCtlController.cs" />
+    <Compile Include="Controllers\UserControlController.cs" />
+    <Compile Include="Controllers\WorkflowDesignController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -131,6 +132,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Content Include="Content\common.js" />
     <Content Include="Content\jquery-1.6.4.min.js" />
     <Content Include="Content\json2.js" />
     <Content Include="Content\main.css" />
@@ -155,7 +157,7 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Shared\Index.cshtml" />
+    <Content Include="Views\WorkflowDesign\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Dapper\Dapper.csproj">
@@ -168,13 +170,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Shared\List.cshtml" />
+    <Content Include="Views\WorkflowDesign\List.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\View1.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Shared\FlowImage.cshtml" />
+    <Content Include="Views\Shared\WorkflowImage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Shared\Main.cshtml" />
@@ -186,13 +185,13 @@
     <Content Include="Views\Form\Apply.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\UserCtl\Record.cshtml" />
+    <Content Include="Views\UserControl\Record.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Form\View1.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Shared\FlowControl.cshtml" />
+    <Content Include="Views\Shared\WorkflowCheck.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

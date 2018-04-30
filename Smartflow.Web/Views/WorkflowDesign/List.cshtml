@@ -6,54 +6,18 @@
 <html>
 <head>
     <title>Smartflow 工作流程列表</title>
-    <style type="text/css">
-        body{
-              font-family:"Lucida Grande", Lucida Sans Unicode,Hiragino Sans GB, WenQuanYi Micro Hei, Verdana, Aril, sans-serif;
-              font-size:14px;
-              color:#000;
-              }
-        .panel {
-            width: 98%;
-            margin: 0 auto;
-        }
-
-        .table {
-            width: 100%;
-            min-width: 800px;
-        }
-
-            .table td {
-                border-bottom: solid 1px #eee;
-                line-height: 28px;
-            }
-
-            .table th {
-                border-bottom: solid 1px #eee;
-                line-height: 35px;
-            }
-
-        .btn {
-            padding: 5px 10px;
-            border: solid 1px #ccc;
-            margin-bottom: 3px;
-        }
-    </style>
+    <link href="~/Content/main.css" rel="stylesheet" />
     <script src="~/Content/jquery-1.6.4.min.js"></script>
+    <script src="~/Content/common.js"></script>
     <script type="text/javascript">
-        function openWin(url) {
-            var iTop = (window.screen.availHeight - 30 - 560) / 2;
-            var iLeft = (window.screen.availWidth - 10 - 960) / 2;
-            window.open(url, 'newwindow', "height=560, width=960, top=" + iTop + " left=" + iLeft + ", toolbar=no, menubar=no, scrollbars=no, resizable=no,location=no, status=no");
-        }
-
         function delWf(id) {
             if (window.confirm('删除？')) {
                 $.ajax({
-                    url: '@Url.Action("Delete", "Default")',
+                    url: '@Url.Action("Delete", "WorkflowDesign")',
                     type: 'post',
                     data: { WFID: id },
                     success: function () {
-                        document.location.href = '@Url.Action("List","Default")';
+                        document.location.href = '@Url.Action("List", "WorkflowDesign")';
                     }
                 });
             }
@@ -64,10 +28,10 @@
     <div class="panel panel-default">
         <div style="text-align:right;">
             <!-- Default panel contents -->
-            <input type="button" value="增加" class="btn" onclick="openWin('@Url.Action("Index","Default")')" />
+            <input type="button" value="增加" class="btn" onclick="openWin('@Url.Action("Index", "WorkflowDesign")',960,560)" />
             <!-- Table -->
         </div>
-        <table class="table  table-hover">
+        <table class="table table-list">
             <thead>
                 <tr>
                     <th style="width:50px;">序号</th>
@@ -85,7 +49,7 @@
                         <td style="width:50px;text-align:center;">@(counter++)</td>
                         <td>@wf.NAME</td>
                         <td style="width:120px;text-align:center;">
-                            <a href="javascript:openWin('@Url.Action("Index", "Default" , new { id=wf.WFID })')">修改</a>
+                            <a href="javascript:openWin('@Url.Action("Index", "WorkflowDesign", new { id = wf.WFID })',960,560)">修改</a>
                             <a href="javascript:delWf('@wf.WFID')">删除</a>
                         </td>
                     </tr>

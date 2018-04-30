@@ -1,9 +1,7 @@
 ﻿@{
     Layout = null;
 }
-
 <!DOCTYPE html>
-
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
@@ -15,13 +13,13 @@
     <script type="text/javascript">
         $(function () {
             var draw = window.SMF.bind('drawing');
-            var WFID = '@ViewBag.WfID';
-            if (WFID !== '0') {
+            var instatnceID = '@ViewBag.InstanceID';
+            if (instatnceID !== '0') {
                 $.ajax({
-                    url: '@Url.Action("GetResult", "UserCtl")',
+                    url: '@Url.Action("GetWorkflowImage", "UserControl")',
                     type: 'post',
                     dataType: 'json',
-                    data: { instanceID: WFID },
+                    data: { instanceID: instatnceID },
                     success: function (serverData) {
                         SMF.revert(serverData.Image, true, serverData.Current.ID);
                     }

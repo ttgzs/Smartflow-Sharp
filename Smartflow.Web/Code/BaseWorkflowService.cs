@@ -10,7 +10,6 @@ namespace Smartflow.Web.Code
         private static WorkflowEngine context = WorkflowEngineExt.CreateWorkflowEngine();
         private static BaseWorkflowService singleton = new BaseWorkflowService();
 
-
         private BaseWorkflowService()
         {
             WorkflowEngine.OnProcess += new DelegatingProcessHandle(OnProcess);
@@ -25,20 +24,16 @@ namespace Smartflow.Web.Code
             }
         }
 
-        private RecordService rsservice = new RecordService();
+        private RecordService recordService = new RecordService();
      
-
-
         public void OnCompleted(ExecutingContext executeContext)
         {
-
-
 
         }
 
         public void OnProcess(ExecutingContext executeContext)
         {
-            rsservice.Persistent(new Record()
+            recordService.Persistent(new Record()
             {
                 INSTANCEID = executeContext.Instance.InstanceID,
                 NODENAME = executeContext.From.NAME,
@@ -61,7 +56,6 @@ namespace Smartflow.Web.Code
         {
             return context.GetWorkflowInstance(instanceID);
         }
-
 
         public void Jump(string instanceID, string transitionID, long transitionTo, long actorID = 0, dynamic data = null)
         {

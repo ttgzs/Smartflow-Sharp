@@ -11,6 +11,7 @@
     <title></title>
     <link href="~/Content/main.css" rel="stylesheet" />
     <script src="~/Content/jquery-1.6.4.min.js"></script>
+    <script src="~/Content/common.js"></script>
     <script type="text/javascript">
         function sumbitApply(url, state) {
             $("#STATE").val(state);
@@ -19,7 +20,7 @@
 
         $(function () {
             var v = $("#STATE").val();
-            if (v == "0") {
+            if (v == "0" || !v) {
                 $("#btnSubmit,#btnSave").show();
                 $("#btnAudit").hide();
             } else {
@@ -29,27 +30,22 @@
         });
 
         function auditApply() {
-            openWin('@Url.Action("FlowControl", "UserCtl", new { instanceID=Model.INSTANCEID })');
-        }
-
-
-        function openWin(url) {
-            var iTop = (window.screen.availHeight - 30 - 200) / 2;
-            var iLeft = (window.screen.availWidth - 10 - 400) / 2;
-            window.open(url, 'newwindow', "height=200, width=400, top=" + iTop + " left=" + iLeft + ", toolbar=no, menubar=no, scrollbars=no, resizable=no,location=no, status=no");
+            var instanceID = document.getElementById("INSTANCEID").value;
+            openWin('@Url.Action("WorkflowCheck", "UserControl")' + "?instanceID=" + instanceID,600,300);
         }
     </script>
 </head>
 <body>
     @using (Html.BeginForm("Save", "Form", FormMethod.Post, new { id = "applyForm" }))
     {
-        <table class="form-table">
+        <table class="table form-table">
             <tr>
                 <td style="width:120px;">申请人</td>
                 <td>
                     @Html.TextBoxFor(m => m.NAME, new { style = "width:98%;" })
                     @Html.HiddenFor(m => m.AID)
                     @Html.HiddenFor(m => m.STATE)
+                    @Html.HiddenFor(m => m.INSTANCEID)
                 </td>
             </tr>
             <tr>
@@ -75,7 +71,7 @@
     }
     @if (Model != null)
     {
-        Html.RenderAction("Record", "UserCtl", new { instanceID = Model.INSTANCEID });
+        Html.RenderAction("Record", "UserControl", new { instanceID = Model.INSTANCEID });
     }
 </body>
 </html>

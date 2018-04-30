@@ -11,41 +11,22 @@
     <title>FlowControl</title>
     <link href="~/Content/main.css" rel="stylesheet" />
     <script src="~/Content/jquery-1.6.4.min.js"></script>
-    <style type="text/css">
-        .flow-auditTable {
-            margin: 0 auto;
-            padding: 0;
-            width: 98%;
-        }
-
-        .flow-head {
-            width: 160px;
-        }
-
-        .flow-content {
-        }
-    </style>
-
     <script type="text/javascript">
-
         $(function () {
-
             $("#btnOk").click(function () {
-                var transitions = $(".flow-content input[name='transition']:checked");
+                var transitions = $(".check-content input[name='transition']:checked");
                 if (transitions.length == 0) {
                     alert('请选择审批操作');
                 } else {
-
-                    var t = transitions[0];
-                    var tid = $(t).attr("tid"),
-                        to = $(t).attr("to");
+                    var transition = transitions[0],
+                        transitionID = $(transition).attr("tid"),
+                        to = $(transition).attr("to");
 
                     var message = $("#txtDescription").val();
-
                     $.ajax({
-                        url: '@Url.Action("Jump","UserCtl")',
+                        url: '@Url.Action("Jump", "UserControl")',
                         type: 'post',
-                        data: { instanceID: '@ViewBag.InstanceID', transitionID: tid, to: to,message:message },
+                        data: { instanceID: '@ViewBag.InstanceID', transitionID: transitionID, to: to, message: message },
                         success: function () {
                             window.close();
                         }
@@ -54,13 +35,12 @@
             });
         });
     </script>
-
 </head>
 <body>
-    <table class="flow-auditTable">
+    <table class="check-table">
         <tr>
-            <td class="flow-head">下一步审批操作：</td>
-            <td class="flow-content">
+            <td class="check-head">下一步审批操作：</td>
+            <td class="check-content">
                 @foreach (var item in Model)
                 {
                     <input id="rad@(item.ID)" tid="@item.ID" to="@item.TO" name="transition" type="radio" />
@@ -69,8 +49,8 @@
             </td>
         </tr>
         <tr>
-            <td class="flow-head">审批意见：</td>
-            <td class="flow-content">
+            <td class="check-head">审批意见：</td>
+            <td class="check-content">
                 <textarea rows="10" cols="25" style="width:95%;height:60px;" id="txtDescription"></textarea>
             </td>
         </tr>
