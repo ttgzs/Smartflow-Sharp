@@ -7,25 +7,25 @@ namespace Smartflow.Web.Code
 {
     public class BaseWorkflowService
     {
-        private static WorkflowEngine context = WorkflowEngineExt.CreateWorkflowEngine();
+        private static WorkflowEngine context = WorkflowEngine.CreateWorkflowEngine();
         private static BaseWorkflowService singleton = new BaseWorkflowService();
 
         private BaseWorkflowService()
         {
+            //关闭授权验证（默认关闭）
+            context.EnableValidation = false;
+
             WorkflowEngine.OnProcess += new DelegatingProcessHandle(OnProcess);
             WorkflowEngine.OnCompleted += new DelegatingCompletedHandle(OnCompleted);
         }
 
         public static BaseWorkflowService Instance
         {
-            get
-            {
-                return singleton;
-            }
+            get { return singleton; }
         }
 
         private RecordService recordService = new RecordService();
-     
+
         public void OnCompleted(ExecutingContext executeContext)
         {
 
@@ -37,7 +37,8 @@ namespace Smartflow.Web.Code
             {
                 INSTANCEID = executeContext.Instance.InstanceID,
                 NODENAME = executeContext.From.NAME,
-                MESSAGE=executeContext.Data.Message
+                MESSAGE = executeContext.Data.Message
+
             });
         }
 

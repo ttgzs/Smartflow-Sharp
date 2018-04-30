@@ -25,10 +25,18 @@ namespace Smartflow
 
         private static WorkflowEngine singleton = new WorkflowEngine();
 
-
         public static event DelegatingProcessHandle OnProcess;
 
         public static event DelegatingCompletedHandle OnCompleted;
+
+
+        private bool enableValidation = true;
+
+        public bool EnableValidation
+        {
+            get { return enableValidation; }
+            set { enableValidation = value; }
+        }
 
         protected WorkflowEngine()
         {
@@ -62,7 +70,14 @@ namespace Smartflow
         /// <returns>true：授权 false：未授权</returns>
         protected virtual bool CheckAuthorization(WorkflowInstance instance, long actorID)
         {
-            return instance.Current.CheckActor(actorID);
+            if (EnableValidation)
+            {
+                return instance.Current.CheckActor(actorID);
+            }
+            else
+            {
+                return true;
+            }
         }
 
         /// <summary>
