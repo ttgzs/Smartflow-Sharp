@@ -1,9 +1,10 @@
-﻿using System;
+﻿using Smartflow.Web.Code;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace Smartflow.Web.Code
+namespace Smartflow.Web.Core
 {
     public class BaseWorkflowService
     {
@@ -28,6 +29,9 @@ namespace Smartflow.Web.Code
 
         public void OnCompleted(ExecutingContext executeContext)
         {
+            //流程结束（在完成事件中可以做业务操作）
+
+
 
         }
 

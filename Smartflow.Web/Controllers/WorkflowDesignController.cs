@@ -1,4 +1,5 @@
 ﻿using Smartflow.Design;
+using Smartflow.Web.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ namespace Smartflow.Web.Controllers
 {
     public class WorkflowDesignController : Controller
     {
-        private WorkflowDesign designService = new WorkflowDesign();
+        private WorkflowDesign designService = new WorkflowDesign(new WorkflowInfrastructure());
 
         public ActionResult Index(string id)
         {

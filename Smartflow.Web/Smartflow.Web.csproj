@@ -114,15 +114,15 @@
   <ItemGroup>
     <Compile Include="Code\Apply.cs" />
     <Compile Include="Code\ApplyService.cs" />
-    <Compile Include="Code\BaseWorkflowService.cs" />
+    <Compile Include="Core\BaseWorkflowService.cs" />
     <Compile Include="Code\DapperHelper.cs" />
     <Compile Include="Code\Record.cs" />
     <Compile Include="Code\RecordService.cs" />
-    <Compile Include="Code\WorkflowEngineExt.cs" />
     <Compile Include="Controllers\DefaultController.cs" />
     <Compile Include="Controllers\FormController.cs" />
     <Compile Include="Controllers\UserControlController.cs" />
     <Compile Include="Controllers\WorkflowDesignController.cs" />
+    <Compile Include="Core\WorkflowInfrastructure.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
