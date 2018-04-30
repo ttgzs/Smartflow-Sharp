@@ -9,6 +9,11 @@
     <title>工作流使用示例</title>
     <link href="~/Content/smartflow.css" rel="stylesheet" />
     <style type="text/css">
+            body{
+              font-family:"Lucida Grande", Lucida Sans Unicode,Hiragino Sans GB, WenQuanYi Micro Hei, Verdana, Aril, sans-serif;
+              font-size:14px;
+              color:#000;
+              }
         .top{
             height:80px;
             background-color:#0094ff;
@@ -81,6 +86,9 @@
             <ul>
                 <li>
                     <a href="#" onclick="go('@Url.Action("List","Default")')">流程设计器</a>
+                </li>
+                <li>
+                    <a href="#" onclick="go('@Url.Action("ApplyList", "Form")')">表单申请</a>
                 </li>
             </ul>
         </div>

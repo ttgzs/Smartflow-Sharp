@@ -45,6 +45,9 @@
     <Compile Include="DatabaseService.cs" />
     <Compile Include="DelegatingCompletedHandle.cs" />
     <Compile Include="DelegatingProcessHandle.cs" />
+    <Compile Include="Design\IWorkflowDesignService.cs" />
+    <Compile Include="Design\WorkflowDesign.cs" />
+    <Compile Include="Design\WorkflowDesignService.cs" />
     <Compile Include="Elements\Actor.cs" />
     <Compile Include="Elements\ASTNode.cs" />
     <Compile Include="Elements\Command.cs" />

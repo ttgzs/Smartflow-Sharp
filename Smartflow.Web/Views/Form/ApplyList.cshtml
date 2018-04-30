@@ -1,17 +1,20 @@
-﻿@model System.Collections.Generic.IEnumerable<Smartflow.WorkflowXml>
-@{
+﻿@{
     Layout = null;
 }
+
 <!DOCTYPE html>
+
 <html>
 <head>
-    <title>Smartflow 工作流程列表</title>
+    <meta name="viewport" content="width=device-width" />
+    <title>业务流程</title>
     <style type="text/css">
-        body{
-              font-family:"Lucida Grande", Lucida Sans Unicode,Hiragino Sans GB, WenQuanYi Micro Hei, Verdana, Aril, sans-serif;
-              font-size:14px;
-              color:#000;
-              }
+        body {
+            font-family: "Lucida Grande", Lucida Sans Unicode,Hiragino Sans GB, WenQuanYi Micro Hei, Verdana, Aril, sans-serif;
+            font-size: 14px;
+            color: #000;
+        }
+
         .panel {
             width: 98%;
             margin: 0 auto;
@@ -46,7 +49,7 @@
             window.open(url, 'newwindow', "height=560, width=960, top=" + iTop + " left=" + iLeft + ", toolbar=no, menubar=no, scrollbars=no, resizable=no,location=no, status=no");
         }
 
-        function delWf(id) {
+        function delApply(id) {
             if (window.confirm('删除？')) {
                 $.ajax({
                     url: '@Url.Action("Delete", "Default")',
@@ -64,7 +67,7 @@
     <div class="panel panel-default">
         <div style="text-align:right;">
             <!-- Default panel contents -->
-            <input type="button" value="增加" class="btn" onclick="openWin('@Url.Action("Index","Default")')" />
+            <input type="button" value="增加" class="btn" onclick="document.location.href='@Url.Action("Apply","Form")'" />
             <!-- Table -->
         </div>
         <table class="table  table-hover">
@@ -72,6 +75,8 @@
                 <tr>
                     <th style="width:50px;">序号</th>
                     <th>名称</th>
+                    <th>状态</th>
+                    <th>备注</th>
                     <th style="width:120px;">操作</th>
                 </tr>
             </thead>
@@ -79,16 +84,23 @@
                 @{
                     int counter = 1;
                 }
-                @foreach (Smartflow.WorkflowXml wf in Model)
+
+                @if (Model != null) { 
+
+                foreach (Smartflow.Web.Code.Apply apply in Model)
                 {
                     <tr>
                         <td style="width:50px;text-align:center;">@(counter++)</td>
-                        <td>@wf.NAME</td>
+                        <td>@apply.NAME</td>
+                        <td>@apply.STATE</td>
+                        <td>@apply.DESCRIPTION</td>
                         <td style="width:120px;text-align:center;">
-                            <a href="javascript:openWin('@Url.Action("Index", "Default" , new { id=wf.WFID })')">修改</a>
-                            <a href="javascript:delWf('@wf.WFID')">删除</a>
+                            <a href="javascript:document.location.href='@Url.Action("Apply", "Form", new { id = apply.AID })'">修改</a>
+                            <a href="javascript:delApply('@apply.AID')">删除</a>
                         </td>
                     </tr>
+                }
+                    
                 }
             </tbody>
         </table>

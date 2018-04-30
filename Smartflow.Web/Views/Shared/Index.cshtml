@@ -31,16 +31,16 @@
         }
         $(function () {
             window.SMF.bind('drawing');
-            var wfID = '@ViewBag.WfID';
-            if (wfID !== '0') {
+            var WFID = '@ViewBag.WfID';
+            if (WFID !== '0') {
                 $.ajax({
                     url: '@Url.Action("GetResult", "Default")',
                     type: 'post',
                     dataType: 'json',
-                    data: { wfID: wfID },
+                    data: { WFID: WFID },
                     success: function (serverData) {
                         //SMF.revert(serverData,false,1);
-                        SMF.revert(serverData);
+                        SMF.revert(serverData.IMAGE);
                     }
                 })
             } else {

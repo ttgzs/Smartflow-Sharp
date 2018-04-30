@@ -22,10 +22,10 @@ namespace Smartflow
     {
         protected IWorkflow workflowService = WorkflowFactoryProvider.OfType<IFactory>()
             .CreateWorkflowSerivce();
-        
-        public DelegatingProcessHandle OnProcess;
 
-        public DelegatingCompletedHandle OnCompleted;
+        public static event DelegatingProcessHandle OnProcess;
+
+        public static event DelegatingCompletedHandle OnCompleted;
 
         protected WorkflowEngine()
         {
@@ -51,13 +51,10 @@ namespace Smartflow
         protected void OnExecuteProcess(ExecutingContext executeContext)
         {
             Processing(executeContext);
+            OnProcess(executeContext);
             if (OnCompleted != null && executeContext.To.NodeType == WorkflowNodeCategeory.End)
             {
                 OnCompleted(executeContext);
-            }
-            else if (OnProcess != null)
-            {
-                OnProcess(executeContext);
             }
         }
 
@@ -133,7 +130,7 @@ namespace Smartflow
             if (instance.State == WorkflowInstanceState.Running)
             {
                 ASTNode currentNode = instance.Current;
-           
+
                 if (CheckAuthorization(instance, actorID) == false) return;
 
                 instance.Jump(transitionTo);

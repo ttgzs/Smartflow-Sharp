@@ -24,5 +24,28 @@ namespace Smartflow.Design
             string sql = " UPDATE T_FLOWXML SET NAME=@NAME,XML=@XML,IMAGE=@IMAGE WHERE WFID=@WFID ";
             Connection.Execute(sql, workflowXml);
         }
+
+        public void Delete(string WFID)
+        {
+            string sql = " DELETE FROM T_FLOWXML WHERE WFID=@WFID ";
+            Connection.Execute(sql, new
+            {
+                WFID = WFID
+            });
+        }
+
+        public List<WorkflowXml> GetWorkflowXmlList()
+        {
+            string sql = " SELECT * FROM T_FLOWXML ";
+            return Connection.Query<WorkflowXml>(sql).ToList();
+        }
+
+        public WorkflowXml GetWorkflowXml(string WFID)
+        {
+            string sql = "SELECT * FROM T_FLOWXML WHERE WFID=@WFID";
+
+            return Connection.Query<WorkflowXml>(sql, new { WFID = WFID })
+                .FirstOrDefault<WorkflowXml>();
+        }
     }
 }

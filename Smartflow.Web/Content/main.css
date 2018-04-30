@@ -1,0 +1,37 @@
+﻿html,body,table,div,img{
+    margin:0;
+    padding:0;
+
+}
+img{
+    border:none;
+}
+
+body {
+    font-family: "Lucida Grande", Lucida Sans Unicode,Hiragino Sans GB, WenQuanYi Micro Hei, Verdana, Aril, sans-serif;
+    font-size: 14px;
+    color: #000;
+}
+
+.flow-table,.form-table {
+    width: 800px;
+    margin: 0 auto;
+    margin-top:25px;
+}
+
+.flow-table {
+    border-left: solid 1px #eee;
+    border-bottom: solid 1px #eee;
+}
+
+.flow-node {
+    background-color: #e3f2f2;
+    width: 200px;
+    border-top: solid 1px #eee;
+    border-right: solid 1px #eee;
+}
+
+.flow-message {
+    border-top: solid 1px #eee;
+    border-right: solid 1px #eee;
+}

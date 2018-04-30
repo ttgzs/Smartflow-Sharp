@@ -194,7 +194,7 @@
     Node.extend(Element, {
         draw: function (b) {
             var n = this,
-                color = b ? n.bgCurrentColor : n.bgColor,
+                color = (b == n.uniqueId && b && n.uniqueId) ? n.bgCurrentColor : n.bgColor,
                 rect = draw.rect(n.w, n.h).attr({ fill: color, x: n.x, y: n.y });
 
             n.brush = draw.text(function (add) {
@@ -610,7 +610,7 @@
     //恢复流程图
     function revertFlow(data, disable, currentNodeId) {
 
-        var imageData = JSON.parse(unescape(data.IMAGE)),
+        var imageData = JSON.parse(unescape(data)),
             nodeCollection = imageData.NC,
             pathCollection = imageData.PC,
             relationCollection = imageData.RC;

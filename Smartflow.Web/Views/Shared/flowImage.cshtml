@@ -15,15 +15,15 @@
     <script type="text/javascript">
         $(function () {
             var draw = window.SMF.bind('drawing');
-            var wfID = '@ViewBag.WfID';
-            if (wfID !== '0') {
+            var WFID = '@ViewBag.WfID';
+            if (WFID !== '0') {
                 $.ajax({
-                    url: '@Url.Action("GetWfResult", "Default")',
+                    url: '@Url.Action("GetResult", "UserCtl")',
                     type: 'post',
                     dataType: 'json',
-                    data: { wfID: wfID },
+                    data: { instanceID: WFID },
                     success: function (serverData) {
-                        SMF.revert(serverData, true, 2);
+                        SMF.revert(serverData.Image, true, serverData.Current.ID);
                     }
                 })
             } else {

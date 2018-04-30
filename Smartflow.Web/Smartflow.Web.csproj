@@ -112,10 +112,16 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Code\Apply.cs" />
+    <Compile Include="Code\ApplyService.cs" />
+    <Compile Include="Code\BaseWorkflowService.cs" />
     <Compile Include="Code\DapperHelper.cs" />
-    <Compile Include="Code\WorkflowUtils.cs" />
-    <Compile Include="Code\WorkflowXml.cs" />
+    <Compile Include="Code\Record.cs" />
+    <Compile Include="Code\RecordService.cs" />
+    <Compile Include="Code\WorkflowEngineExt.cs" />
     <Compile Include="Controllers\DefaultController.cs" />
+    <Compile Include="Controllers\FormController.cs" />
+    <Compile Include="Controllers\UserCtlController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -127,6 +133,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Content Include="Content\jquery-1.6.4.min.js" />
     <Content Include="Content\json2.js" />
+    <Content Include="Content\main.css" />
     <Content Include="Content\smartflow.css" />
     <Content Include="Content\smartflow.js" />
     <Content Include="Content\svg.js" />
@@ -167,10 +174,25 @@
     <Content Include="Views\View1.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Shared\flowImage.cshtml" />
+    <Content Include="Views\Shared\FlowImage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Shared\Main.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Form\ApplyList.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Form\Apply.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\UserCtl\Record.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Form\View1.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\FlowControl.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

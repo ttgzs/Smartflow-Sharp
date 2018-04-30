@@ -1,4 +1,5 @@
-﻿using Smartflow.Web.Code;
+﻿using Smartflow.Design;
+using Smartflow.Web.Code;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,50 +10,48 @@ namespace Smartflow.Web.Controllers
 {
     public class DefaultController : Controller
     {
-        //
-        // GET: /Default/
+        private WorkflowDesign designService = new WorkflowDesign();
 
         public ActionResult Index(string id)
         {
-            ViewBag.WfID = (string.IsNullOrEmpty(id))?"0":id;
+            ViewBag.WfID = (string.IsNullOrEmpty(id)) ? "0" : id;
             return View();
         }
-
 
         public ActionResult Main()
         {
             return View();
         }
 
-
-        public JsonResult GetResult(string wfID)
+        public JsonResult GetResult(string WFID)
         {
-            return Json(WorkflowUtils.GetWorkflowXml(wfID));
-        } 
-
+            return Json(designService.GetWorkflowXml(WFID));
+        }
 
         public ActionResult List()
         {
-            return View(WorkflowUtils.GetWorkflowXmlList());
+            return View(designService.GetWorkflowXmlList());
         }
 
-        public JsonResult Save(Smartflow.Web.Code.WorkflowXml model)
+        public JsonResult Save(WorkflowXml model)
         {
-            if (String.IsNullOrEmpty(model.WFID) || "0"==model.WFID)
+            if ("0" == model.WFID)
             {
                 model.WFID = Guid.NewGuid().ToString();
-                WorkflowUtils.Persistent(model);
+                model.XML = HttpUtility.UrlDecode(model.XML);
+                designService.Persistent(model);
             }
             else
             {
-                WorkflowUtils.ModWorkflowXml(model);
+                model.XML = HttpUtility.UrlDecode(model.XML);
+                designService.Update(model);
             }
             return Json(true);
         }
 
         public JsonResult Delete(string WFID)
         {
-            WorkflowUtils.DeleteWorkflowXml(WFID);
+            designService.Delete(WFID);
             return Json(true);
         }
     }

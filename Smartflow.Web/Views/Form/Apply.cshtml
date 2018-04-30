@@ -1,0 +1,81 @@
+﻿@model Smartflow.Web.Code.Apply
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title></title>
+    <link href="~/Content/main.css" rel="stylesheet" />
+    <script src="~/Content/jquery-1.6.4.min.js"></script>
+    <script type="text/javascript">
+        function sumbitApply(url, state) {
+            $("#STATE").val(state);
+            $("#applyForm").attr("action", url);
+        }
+
+        $(function () {
+            var v = $("#STATE").val();
+            if (v == "0") {
+                $("#btnSubmit,#btnSave").show();
+                $("#btnAudit").hide();
+            } else {
+                $("#btnAudit").show();
+                $("#btnSubmit,#btnSave").hide();
+            }
+        });
+
+        function auditApply() {
+            openWin('@Url.Action("FlowControl", "UserCtl", new { instanceID=Model.INSTANCEID })');
+        }
+
+
+        function openWin(url) {
+            var iTop = (window.screen.availHeight - 30 - 200) / 2;
+            var iLeft = (window.screen.availWidth - 10 - 400) / 2;
+            window.open(url, 'newwindow', "height=200, width=400, top=" + iTop + " left=" + iLeft + ", toolbar=no, menubar=no, scrollbars=no, resizable=no,location=no, status=no");
+        }
+    </script>
+</head>
+<body>
+    @using (Html.BeginForm("Save", "Form", FormMethod.Post, new { id = "applyForm" }))
+    {
+        <table class="form-table">
+            <tr>
+                <td style="width:120px;">申请人</td>
+                <td>
+                    @Html.TextBoxFor(m => m.NAME, new { style = "width:98%;" })
+                    @Html.HiddenFor(m => m.AID)
+                    @Html.HiddenFor(m => m.STATE)
+                </td>
+            </tr>
+            <tr>
+                <td style="width:120px;">业务流程</td>
+                <td>
+                    @Html.DropDownListFor(m => m.WFID, (ViewData["Wfile"] as IEnumerable<SelectListItem>))
+                </td>
+            </tr>
+            <tr>
+                <td style="width:120px;">描述</td>
+                <td>
+                    @Html.TextAreaFor(m => m.DESCRIPTION, new { style = "width:98%;" })
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" style="text-align:center;">
+                    <input type="button" id="btnAudit" value="@ViewBag.ButtonName" onclick="auditApply()" />
+                    <input type="submit" id="btnSubmit" value="提交" onclick="return sumbitApply('/Form/SubmitApply',1)" />
+                    <input type="submit" id="btnSave" value="保存" onclick="return sumbitApply('/Form/Save',0)" />
+                </td>
+            </tr>
+        </table>
+    }
+    @if (Model != null)
+    {
+        Html.RenderAction("Record", "UserCtl", new { instanceID = Model.INSTANCEID });
+    }
+</body>
+</html>

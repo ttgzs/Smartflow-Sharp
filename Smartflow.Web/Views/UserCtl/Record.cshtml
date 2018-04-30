@@ -1,0 +1,28 @@
+﻿@model System.Collections.Generic.IEnumerable<Smartflow.Web.Code.Record>
+
+<script type="text/javascript">
+    function openWinFlowImage(url) {
+        var iTop = (window.screen.availHeight - 30 - 500) / 2;
+        var iLeft = (window.screen.availWidth - 10 - 800) / 2;
+        window.open(url, 'newwindow', "height=500, width=800, top=" + iTop + " left=" + iLeft + ", toolbar=no, menubar=no, scrollbars=no, resizable=no,location=no, status=no");
+    }
+</script>
+
+@if (Model.Count() > 0)
+{
+    <table class="flow-table">
+
+        <tr>
+            <td colspan="2" style="text-align:right;">
+                <a href="#" onclick="openWinFlowImage('@Url.Action("FlowImage", new { instanceID = ViewBag.InstanceID })')">查看流程图</a>
+            </td>
+        </tr>
+        @foreach (Smartflow.Web.Code.Record rec in Model)
+        {
+            <tr>
+                <td class="flow-node">@rec.NODENAME</td>
+                <td class="flow-message">@rec.MESSAGE</td>
+            </tr>
+        }
+    </table>
+}
