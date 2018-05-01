@@ -15,11 +15,6 @@ namespace Smartflow.Web.Core
             return null;
         }
 
-        public IList<IEntry> GetUser()
-        {
-            return null;
-        }
-
         public IList<IEntry> GetUserByOrganizationId(string organizationId)
         {
             return null;
