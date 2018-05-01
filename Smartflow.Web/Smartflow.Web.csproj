@@ -114,6 +114,7 @@
   <ItemGroup>
     <Compile Include="Code\Apply.cs" />
     <Compile Include="Code\ApplyService.cs" />
+    <Compile Include="Controllers\WorkflowDesign.Settings.cs" />
     <Compile Include="Core\BaseWorkflowService.cs" />
     <Compile Include="Code\DapperHelper.cs" />
     <Compile Include="Code\Record.cs" />
@@ -201,6 +202,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Shared\WorkflowCheck.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\WorkflowDesign\WorkflowDesignSettings.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

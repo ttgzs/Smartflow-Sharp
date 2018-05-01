@@ -16,6 +16,8 @@
         draw,
         //连线ID
         fromConnect,
+
+        drawOption,
         //规则检查
         rule = {
         duplicateCheck: function (from, to) {
@@ -66,11 +68,13 @@
         }
     });
 
-    function bind(elementId) {
+    function bind(elementId,option) {
         draw = SVG(elementId);
         draw.mouseup(function (e) {
             draw.off('mousemove');
         });
+
+        drawOption = $.extend(drawOption, option);
         return draw;
     }
 
@@ -237,8 +241,9 @@
                 delete NC[id];
 
             } else {
-
-                openLayerWin();
+                var nx = NC[this.id()];
+                drawOption['dblClick'] && drawOption['dblClick'].call(this, nx);
+          
 
                 /*var nx = NC[this.id()],
                     nodeName = prompt("请输入节点名称", nx.name);

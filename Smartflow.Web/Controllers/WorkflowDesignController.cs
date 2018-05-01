@@ -16,7 +16,7 @@ using Smartflow.Web.Core;
 
 namespace Smartflow.Web.Controllers
 {
-    public class WorkflowDesignController : Controller
+    public partial class WorkflowDesignController : Controller
     {
         private WorkflowDesign designService = new WorkflowDesign(new WorkflowInfrastructure());
 

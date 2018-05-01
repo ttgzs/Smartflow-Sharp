@@ -33,7 +33,9 @@
             }
         }
         $(function () {
-            window.SMF.bind('drawing');
+            window.SMF.bind('drawing', {
+                dblClick: openNodeWin
+            });
             var WFID = '@ViewBag.WfID';
             if (WFID) {
                 $.ajax({
@@ -53,24 +55,24 @@
     </script>
 
     <script type="text/javascript">
-        function openLayerWin() {
-
-            //tab层
-            layer.tab({
-                area: ['600px', '300px'],
-                tab: [{
-                    title: '基本信息',
-                    content: '内容1'
-                }, {
-                    title: 'TAB2',
-                    content: '内容2'
-                }, {
-                    title: 'TAB3',
-                    content: '内容3'
-                }]
+        function openNodeWin() {
+            layer.open({
+                /*area: ['800px', '400px'],*/
+                type: 2,
+                title: '流程操作节点信息设置',
+                area: ['630px', '360px'],
+                shade: 0.8,
+                closeBtn:0,
+                shadeClose: false,
+                content: ['@Url.Action("WorkflowDesignSettings", "WorkflowDesign")', 'no'],
+                btn:['确定','关闭']
             });
+        }
+
+        function closeWin() {
 
         }
+
     </script>
 
 </head>
@@ -97,6 +99,5 @@
     <div class="container">
         <div class="container-draw" id="drawing"></div>
     </div>
- 
 </body>
 </html>
