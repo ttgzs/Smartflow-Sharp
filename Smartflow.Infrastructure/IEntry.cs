@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Smartflow.Design
+namespace Smartflow.Infrastructure
 {
     /// <summary>
     /// 定义基础数据的载体接口

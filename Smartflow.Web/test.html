@@ -1,12 +1,49 @@
 ﻿<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title></title>
+    <script src="Content/jquery.min.js"></script>
+    <script src="Content/layer/layer.js"></script>
 
+    <script type="text/javascript">
 
+        function openLayerWin() {
+
+            //tab层
+            layer.tab({
+                area: ['600px', '300px'],
+                tab: [{
+                    title: 'TAB1',
+                    content: '内容1'
+                }, {
+                    title: 'TAB2',
+                    content: '内容2'
+                }, {
+                    title: 'TAB3',
+                    content: '内容3'
+                }]
+            });
+
+        }
+
+        window.onload = function () {
+
+            openLayerWin();
+        }
+
+    </script>
 </head>
 <body>
+
+    <!--<div class="dialog-container">
+        <div class="dialog-header"></div>
+        <div class="dialog-content">
+
+        </div>
+        <div class="dialog-footer">
+
+        </div>
+    </div>-->
 
 </body>
 </html>

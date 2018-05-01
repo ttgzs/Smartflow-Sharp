@@ -188,6 +188,9 @@
         this.disX = 0;
         this.disY = 0;
         this.vertical = 5;
+
+        this.group = [];//参与组
+        this.actors = [];//参与者
         Node.base.Constructor.call(this, "node", "node");
     }
 
@@ -234,7 +237,10 @@
                 delete NC[id];
 
             } else {
-                var nx = NC[this.id()],
+
+                openLayerWin();
+
+                /*var nx = NC[this.id()],
                     nodeName = prompt("请输入节点名称", nx.name);
 
                 if (nodeName) {
@@ -243,7 +249,7 @@
                     nx.brush.text(function (add) {
                         add.tspan(nx.name);
                     });
-                }
+                }*/
             }
         },
         move: function (element, d) {
@@ -291,6 +297,10 @@
         this.name = 'decision';
         this.category = 'decision';
         this.circles = [];
+        //命令
+        this.command = undefined;
+        //规则
+        this.rule = [];
     }
 
     Decision.extend(Node, {

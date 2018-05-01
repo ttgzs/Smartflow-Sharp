@@ -45,10 +45,7 @@
     <Compile Include="DatabaseService.cs" />
     <Compile Include="DelegatingCompletedHandle.cs" />
     <Compile Include="DelegatingProcessHandle.cs" />
-    <Compile Include="Design\IEntry.cs" />
-    <Compile Include="Design\IInfrastructure.cs" />
     <Compile Include="Design\IWorkflowDesignService.cs" />
-    <Compile Include="Design\TreeNode.cs" />
     <Compile Include="Design\WorkflowDesign.cs" />
     <Compile Include="Design\WorkflowDesign.Infrastructure.cs" />
     <Compile Include="Design\WorkflowDesignService.cs" />
@@ -100,6 +97,10 @@
     <ProjectReference Include="..\Dapper\Dapper.csproj">
       <Project>{97983236-a85f-4da6-8518-5e9a788e08e8}</Project>
       <Name>Dapper</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Smartflow.Infrastructure\Smartflow.Infrastructure.csproj">
+      <Project>{63bcafea-abd6-4d0f-be76-fac8ce01ce17}</Project>
+      <Name>Smartflow.Infrastructure</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

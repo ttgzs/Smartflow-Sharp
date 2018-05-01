@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Smartflow.Infrastructure;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -8,14 +9,9 @@ namespace Smartflow.Design
 {
     public partial class WorkflowDesign
     {
-        public IEntry GetOrganization()
+        public TreeNode GetOrganization()
         {
             return BaseService.GetOrganization();
-        }
-
-        public IList<IEntry> GetUser()
-        {
-            return BaseService.GetUser();
         }
 
         public IList<IEntry> GetUserByOrganizationId(string organizationId)

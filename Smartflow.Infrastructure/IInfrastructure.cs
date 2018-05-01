@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Linq;
 using System.Text;
 
-namespace Smartflow.Design
+namespace Smartflow.Infrastructure
 {
     public interface IInfrastructure
     {
@@ -13,12 +12,6 @@ namespace Smartflow.Design
         /// </summary>
         /// <returns></returns>
         TreeNode GetOrganization();
-        
-        /// <summary>
-        /// 获取有用户
-        /// </summary>
-        /// <returns></returns>
-        IList<IEntry> GetUser();
 
         /// <summary>
         /// 依据组织机构标识，获取用户信息

@@ -133,13 +133,21 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Content Include="Content\common.js" />
-    <Content Include="Content\jquery-1.6.4.min.js" />
+    <Content Include="Content\jquery.min.js" />
     <Content Include="Content\json2.js" />
+    <Content Include="Content\layer\layer.js" />
+    <Content Include="Content\layer\theme\default\icon-ext.png" />
+    <Content Include="Content\layer\theme\default\icon.png" />
+    <Content Include="Content\layer\theme\default\layer.css" />
+    <Content Include="Content\layer\theme\default\loading-0.gif" />
+    <Content Include="Content\layer\theme\default\loading-1.gif" />
+    <Content Include="Content\layer\theme\default\loading-2.gif" />
     <Content Include="Content\main.css" />
     <Content Include="Content\smartflow.css" />
     <Content Include="Content\smartflow.js" />
     <Content Include="Content\svg.js" />
     <Content Include="Global.asax" />
+    <Content Include="test.html" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -164,6 +172,10 @@
       <Project>{97983236-a85f-4da6-8518-5e9a788e08e8}</Project>
       <Name>Dapper</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Smartflow.Infrastructure\Smartflow.Infrastructure.csproj">
+      <Project>{63bcafea-abd6-4d0f-be76-fac8ce01ce17}</Project>
+      <Name>Smartflow.Infrastructure</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Smartflow\Smartflow.csproj">
       <Project>{c77dd279-74f0-4a0a-b534-2cf858ede21d}</Project>
       <Name>Smartflow</Name>
@@ -186,9 +198,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\UserControl\Record.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Form\View1.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Shared\WorkflowCheck.cshtml" />

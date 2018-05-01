@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Smartflow.Design
+namespace Smartflow.Infrastructure
 {
     public class TreeNode : IEntry
     {
