@@ -9,27 +9,27 @@ namespace Smartflow.Web.Core
 {
     public class WorkflowInfrastructure : IInfrastructure
     {
-        public DataTable GetOrganization()
+        public TreeNode GetOrganization()
         {
             return null;
         }
 
-        public DataTable GetUser()
+        public IList<IEntry> GetUser()
         {
             return null;
         }
 
-        public DataTable GetUserByOrganizationId(string organizationId)
+        public IList<IEntry> GetUserByOrganizationId(string organizationId)
         {
             return null;
         }
 
-        public DataTable GetUserByRoleId(string roleId)
+        public IList<IEntry> GetUserByRoleId(string roleId)
         {
             return null;
         }
 
-        public DataTable GetRole()
+        public IList<IEntry> GetRole()
         {
             return null;
         }

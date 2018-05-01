@@ -45,8 +45,10 @@
     <Compile Include="DatabaseService.cs" />
     <Compile Include="DelegatingCompletedHandle.cs" />
     <Compile Include="DelegatingProcessHandle.cs" />
+    <Compile Include="Design\IEntry.cs" />
     <Compile Include="Design\IInfrastructure.cs" />
     <Compile Include="Design\IWorkflowDesignService.cs" />
+    <Compile Include="Design\TreeNode.cs" />
     <Compile Include="Design\WorkflowDesign.cs" />
     <Compile Include="Design\WorkflowDesign.Infrastructure.cs" />
     <Compile Include="Design\WorkflowDesignService.cs" />

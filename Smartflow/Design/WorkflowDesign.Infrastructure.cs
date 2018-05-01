@@ -8,27 +8,27 @@ namespace Smartflow.Design
 {
     public partial class WorkflowDesign
     {
-        public DataTable GetOrganization()
+        public IEntry GetOrganization()
         {
             return BaseService.GetOrganization();
         }
 
-        public DataTable GetUser()
+        public IList<IEntry> GetUser()
         {
             return BaseService.GetUser();
         }
 
-        public DataTable GetUserByOrganizationId(string organizationId)
+        public IList<IEntry> GetUserByOrganizationId(string organizationId)
         {
             return BaseService.GetUserByOrganizationId(organizationId);
         }
 
-        public DataTable GetUserByRoleId(string roleId)
+        public IList<IEntry> GetUserByRoleId(string roleId)
         {
             return BaseService.GetUserByRoleId(roleId);
         }
 
-        public DataTable GetRole()
+        public IList<IEntry> GetRole()
         {
             return BaseService.GetRole();
         }

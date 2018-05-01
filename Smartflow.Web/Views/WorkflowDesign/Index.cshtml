@@ -15,18 +15,20 @@
     <script type="text/javascript">
         function saveflow() {
             var exportObj = SMF.exportToJSON();
-            var flowName = window.prompt("请输入流程名称");
-            if (flowName && flowName.length > 0) {
-                $.ajax({
-                    url: '@Url.Action("Save", "WorkflowDesign")',
-                    data: { NAME: flowName, XML: exportObj.XML, IMAGE: exportObj.IMAGE, WFID: '@ViewBag.WfID' },
-                    type: 'POST',
-                    success: function () {
-                        alert("操作成功");
-                    }
-                });
-            } else {
-                alert("请输入流程名称");
+            if (exportObj) {
+                var flowName = window.prompt("请输入流程名称");
+                if (flowName && flowName.length > 0) {
+                    $.ajax({
+                        url: '@Url.Action("Save", "WorkflowDesign")',
+                        data: { NAME: flowName, XML: exportObj.XML, IMAGE: exportObj.IMAGE, WFID: '@ViewBag.WfID' },
+                        type: 'POST',
+                        success: function () {
+                            alert("操作成功");
+                        }
+                    });
+                } else {
+                    alert("请输入流程名称");
+                }
             }
         }
         $(function () {

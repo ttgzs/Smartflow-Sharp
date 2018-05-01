@@ -23,7 +23,7 @@ namespace Smartflow
         protected IWorkflow workflowService = WorkflowFactoryProvider.OfType<IFactory>()
             .CreateWorkflowSerivce();
 
-        private static WorkflowEngine singleton = new WorkflowEngine();
+        private readonly static WorkflowEngine singleton = new WorkflowEngine();
 
         public static event DelegatingProcessHandle OnProcess;
 

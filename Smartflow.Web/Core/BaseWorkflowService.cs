@@ -6,10 +6,10 @@ using System.Web;
 
 namespace Smartflow.Web.Core
 {
-    public class BaseWorkflowService
+    public sealed class BaseWorkflowService
     {
         private static WorkflowEngine context = WorkflowEngine.CreateWorkflowEngine();
-        private static BaseWorkflowService singleton = new BaseWorkflowService();
+        private readonly static BaseWorkflowService singleton = new BaseWorkflowService();
 
         private BaseWorkflowService()
         {
