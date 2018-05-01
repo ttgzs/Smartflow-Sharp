@@ -1,16 +1,25 @@
-﻿using Smartflow.Web.Code;
-using Smartflow.Web.Core;
+﻿/*
+ License: https://github.com/chengderen/Smartflow/blob/master/LICENSE 
+ Home page: https://github.com/chengderen/Smartflow
+
+ Note: to build on C# 3.0 + .NET 4.0
+ Author:chengderen-237552006@qq.com
+ */
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
+using Smartflow.Web.Code;
+using Smartflow.Web.Core;
+
 namespace Smartflow.Web.Controllers
 {
     public class UserControlController : Controller
     {
         private RecordService recordService = new RecordService();
+        private BaseWorkflowService bwkf = BaseWorkflowService.Instance;
 
         public PartialViewResult Record(string instanceID)
         {
@@ -26,7 +35,6 @@ namespace Smartflow.Web.Controllers
 
         public ActionResult WorkflowCheck(string instanceID)
         {
-            BaseWorkflowService bwkf = BaseWorkflowService.Instance;
             WorkflowInstance instance = bwkf.GetInstance(instanceID);
             ViewBag.InstanceID = instanceID;
             return View(instance.Current.Transitions);
@@ -34,13 +42,11 @@ namespace Smartflow.Web.Controllers
 
         public JsonResult GetWorkflowImage(string instanceID)
         {
-            BaseWorkflowService bwkf = BaseWorkflowService.Instance;
             return Json(bwkf.GetInstance(instanceID));
         }
 
         public JsonResult Jump(string instanceID, string transitionID, long to, string message)
         {
-            BaseWorkflowService bwkf = BaseWorkflowService.Instance;
             bwkf.Jump(instanceID, transitionID, to, data: new { Message = message });
             return Json(true);
         }

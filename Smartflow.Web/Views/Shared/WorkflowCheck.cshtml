@@ -43,7 +43,7 @@
             <td class="check-content">
                 @foreach (var item in Model)
                 {
-                    <input id="rad@(item.ID)" tid="@item.ID" to="@item.TO" name="transition" type="radio" />
+                    <input id="rad@(item.ID)" tid="@item.NID" to="@item.TO" name="transition" type="radio" />
                     <label for="rad@(item.ID)">@item.NAME</label>
                 }
             </td>
