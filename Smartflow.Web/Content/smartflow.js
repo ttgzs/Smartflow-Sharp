@@ -68,7 +68,7 @@
         }
     });
 
-    function bind(elementId,option) {
+    function init(elementId,option) {
         draw = SVG(elementId);
         draw.mouseup(function (e) {
             draw.off('mousemove');
@@ -242,7 +242,9 @@
 
             } else {
                 var nx = NC[this.id()];
-                drawOption['dblClick'] && drawOption['dblClick'].call(this, nx);
+
+                drawOption['dblClick']
+                            && drawOption['dblClick'].call(this, nx);
           
 
                 /*var nx = NC[this.id()],
@@ -730,7 +732,7 @@
     //对外提供访问接口
     window.SMF = {
         //绑定元素，并进行初始化
-        bind: bind,
+        init: init,
         //选择
         select: select,
         //连接

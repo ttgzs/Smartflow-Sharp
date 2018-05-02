@@ -9,8 +9,126 @@
     <meta name="viewport" content="width=device-width" />
     <title>流程节点数据配置</title>
     <link href="~/Content/smartflow.css" rel="stylesheet" />
+    <script src="~/Content/jquery.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $(".card-tabs-bar>a").click(function () {
+                var self = $(this),
+                    text = self.text();
+                if (!self.hasClass("active")) {
+                    self.addClass("active");
+                }
+
+                $(".card-tabs-bar a.active").not(self).each(function () {
+                    $(this).removeClass("active");
+                });
+
+                $(".card-tabs-stack >div").each(function () {
+                    var tab = $(this),
+                        title = tab.attr("data-tab");
+                    if (text == title) {
+                        tab.show();
+                    } else {
+                        tab.hide();
+                    }
+                });
+            });
+        });
+
+        function getSettings() {
+            var settings = {};
+            settings.name = $("#txtName").val();
+
+            return settings;
+        }
+
+
+        function setSettings(name) {
+            $("#txtName").val(name);
+        }
+
+    </script>
 </head>
 <body>
-    <input type="text" />
+    <div class="container" style="width:100%;background:#fff;padding:5px;">
+        <div class='example'>
+            <div class="tabsholder3">
+                <div class="card-tabs-bar graygreen">
+                    <a href="javascript:;" class="active">基本信息</a>
+                    <a href="javascript:;">参与角色</a>
+                </div>
+                <div class="card-tabs-stack graygreen">
+                    <div data-tab="基本信息" style="display: block;height:240px;overflow:hidden;">
+                        <table class="smartflow-table">
+                            <tr>
+                                <td style="width:60px;">名称</td>
+                                <td>
+                                    <input type="text" style="width:100%;height:18px;" id="txtName" />
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div data-tab="参与角色" style="display: none; height: 240px;">
+                        <table class="smartflow-table">
+                            <tr>
+                                <td class="smartflow-box">
+                                    <ul class="smartflow-list">
+                                        <li>角色1</li>
+                                        <li>角色2</li>
+                                        <li>角色3</li>
+                                        <li>角色4</li>
+                                        <li>角色5</li>
+                                        <li>角色6</li>
+                                        <li>角色1</li>
+                                        <li>角色2</li>
+                                        <li>角色3</li>
+                                        <li>角色4</li>
+                                        <li>角色5</li>
+                                        <li>角色6</li>
+                                        <li>角色1</li>
+                                        <li>角色2</li>
+                                        <li>角色3</li>
+                                        <li>角色4</li>
+                                        <li>角色5</li>
+                                        <li>角色6</li>
+                                    </ul>
+                                </td>
+                                <td style="vertical-align:top;width:60px;text-align:center;">
+                                    <ul>
+                                        <li>
+                                            <input type="button" value=">>" />
+                                        </li>
+                                    </ul>
+                                </td>
+                                <td class="smartflow-box">
+                                    <ul class="smartflow-list">
+                                        <li>角色1</li>
+                                        <li>角色2</li>
+                                        <li>角色3</li>
+                                        <li>角色4</li>
+                                        <li>角色5</li>
+                                        <li>角色6</li>
+                                        <li>角色1</li>
+                                        <li>角色2</li>
+                                        <li>角色3</li>
+                                        <li>角色4</li>
+                                        <li>角色5</li>
+                                        <li>角色6</li>
+                                        <li>角色1</li>
+                                        <li>角色2</li>
+                                        <li>角色3</li>
+                                        <li>角色4</li>
+                                        <li>角色5</li>
+                                        <li>角色6</li>
+                                    </ul>
+
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

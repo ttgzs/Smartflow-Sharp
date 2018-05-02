@@ -33,7 +33,7 @@
             }
         }
         $(function () {
-            window.SMF.bind('drawing', {
+            window.SMF.init('drawing', {
                 dblClick: openNodeWin
             });
             var WFID = '@ViewBag.WfID';
@@ -55,24 +55,44 @@
     </script>
 
     <script type="text/javascript">
-        function openNodeWin() {
+        function openNodeWin(nx) {
             layer.open({
                 /*area: ['800px', '400px'],*/
                 type: 2,
-                title: '流程操作节点信息设置',
+                /*title: '流程操作节点信息设置',*/
+                title: false,
                 area: ['630px', '360px'],
                 shade: 0.8,
-                closeBtn:0,
+                closeBtn: 0,
                 shadeClose: false,
                 content: ['@Url.Action("WorkflowDesignSettings", "WorkflowDesign")', 'no'],
-                btn:['确定','关闭']
+                btn: ['确定', '关闭'],
+                success: function(dom, index){
+                    var frameContent = getFrame(dom);
+                    frameContent.setSettings(nx.name);
+                },
+                yes: function (index, dom) {
+                    var frameContent = getFrame(dom),
+                        settings = frameContent.getSettings();
+
+                    if (settings.name) {
+                        nx.name = settings.name;
+                        nx.brush.clear();
+                        nx.brush.text(function (add) {
+                            add.tspan(nx.name);
+                        });
+                    }
+                    layer.close(index);
+                },
+                btn2: function () {
+                  layer.closeAll();
+                }
             });
         }
 
-        function closeWin() {
-
+        function getFrame(dom) {
+            return dom.find("iframe").contents();
         }
-
     </script>
 
 </head>

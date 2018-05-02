@@ -12,7 +12,7 @@
     <script src="~/Content/smartflow.js"></script>
     <script type="text/javascript">
         $(function () {
-            var draw = window.SMF.bind('drawing');
+            var draw = window.SMF.init('drawing');
             var instatnceID = '@ViewBag.InstanceID';
             if (instatnceID !== '0') {
                 $.ajax({
