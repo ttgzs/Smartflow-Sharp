@@ -459,7 +459,7 @@
                 instance.draw();
 
                 var l = SVG.get(instance.id),
-                    r = SVG.get(instance.from);
+                    r = SVG.get(fromConnect.id);
 
                 RC.push({
                     id: instance.id,
@@ -572,6 +572,14 @@
                 .append(" id=\"" + this.uniqueId + "\"")
                 .append(" name=\"" + this.name + "\"")
                 .append(">");
+
+
+            $.each(this.group,function(){
+                builder.append("<group id=\"" + this.id + "\"").
+                        append(" name=\"" + this.name + "\"")
+                        .append("/>");
+            });
+           
 
             builder.append(exportChildNode(builder, this.id));
             builder.append("</" + this.category + ">");

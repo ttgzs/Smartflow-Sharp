@@ -12,11 +12,10 @@ using System.Linq;
 
 using Smartflow.Design;
 using Smartflow.Infrastructure;
-using Smartflow.Web.Code;
 using Dapper;
 using Smartflow.Web.Models;
 
-namespace Smartflow.Web.Core
+namespace Smartflow.Integration
 {
     public class WorkflowInfrastructure : IInfrastructure
     {

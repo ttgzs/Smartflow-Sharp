@@ -35,7 +35,8 @@ namespace Smartflow.Infrastructure
         /// <summary>
         /// 获取所有角色
         /// </summary>
+        /// <param name="roleIds">角色ID</param>
         /// <returns></returns>
-        IList<IEntry> GetRole();
+        IList<IEntry> GetRole(string roleIds);
     }
 }

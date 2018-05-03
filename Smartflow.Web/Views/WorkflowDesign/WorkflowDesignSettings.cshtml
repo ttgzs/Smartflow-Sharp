@@ -35,17 +35,60 @@
             });
         });
 
+        function loadRoleGrid(group) {
+            $.ajax({
+                url: '@Url.Action("GetRole", "WorkflowDesign")',
+                type: 'post',
+                dataType: 'json',
+                success: function (serverData) {
+                    var elements = [],assignElements=[];
+                    $.each(serverData, function () {
+                        elements.push("<li eid=" + this.EID + " name=" + this.Name + ">" + this.Name + "</li>");
+                    });
+
+                    $("#roleGrid").html(elements.join(""));
+
+                    $("#roleGrid").on("dblclick", "li", function () {
+                        $("#roleAssign").append(this);
+                    });
+
+                    $("#roleAssign").on("dblclick", "li", function () {
+                        $("#roleGrid").append(this);
+                    });
+
+                    $.each(group, function () {
+                        assignElements.push("<li eid=" + this.eid + " name=" + this.name + ">" + this.name + "</li>");
+                    });
+
+                    $("#roleAssign").html(assignElements.join(""));
+                }
+            });
+        }
+
         function getSettings() {
             var settings = {};
-            settings.name = $("#txtName").val();
+                settings.name = $("#txtName").val();
 
+            //settings.role=[]
+            var roleArray = [];
+
+            $("#roleAssign li").each(function () {
+                roleArray.push({
+                    eid:$(this).attr("eid"),
+                    id: $(this).attr("eid"),
+                    name:$(this).attr("name")
+                });
+            });
+
+            settings.group = roleArray;
             return settings;
         }
-
-
-        function setSettings(name) {
+        function setSettings(name,group) {
             $("#txtName").val(name);
+            loadRoleGrid(group);
         }
+
+
 
     </script>
 </head>
@@ -71,57 +114,19 @@
                     <div data-tab="参与角色" style="display: none; height: 240px;">
                         <table class="smartflow-table">
                             <tr>
-                                <td class="smartflow-box">
-                                    <ul class="smartflow-list">
-                                        <li>角色1</li>
-                                        <li>角色2</li>
-                                        <li>角色3</li>
-                                        <li>角色4</li>
-                                        <li>角色5</li>
-                                        <li>角色6</li>
-                                        <li>角色1</li>
-                                        <li>角色2</li>
-                                        <li>角色3</li>
-                                        <li>角色4</li>
-                                        <li>角色5</li>
-                                        <li>角色6</li>
-                                        <li>角色1</li>
-                                        <li>角色2</li>
-                                        <li>角色3</li>
-                                        <li>角色4</li>
-                                        <li>角色5</li>
-                                        <li>角色6</li>
-                                    </ul>
+                                <td>
+                                    <fieldset class="smartflow-box">
+                                        <legend>待选角色</legend>
+                                        <ul class="smartflow-list" id="roleGrid"></ul>
+                                    </fieldset>
                                 </td>
-                                <td style="vertical-align:top;width:60px;text-align:center;">
-                                    <ul>
-                                        <li>
-                                            <input type="button" value=">>" />
-                                        </li>
-                                    </ul>
+                                <td class="smartflow-tools">
                                 </td>
-                                <td class="smartflow-box">
-                                    <ul class="smartflow-list">
-                                        <li>角色1</li>
-                                        <li>角色2</li>
-                                        <li>角色3</li>
-                                        <li>角色4</li>
-                                        <li>角色5</li>
-                                        <li>角色6</li>
-                                        <li>角色1</li>
-                                        <li>角色2</li>
-                                        <li>角色3</li>
-                                        <li>角色4</li>
-                                        <li>角色5</li>
-                                        <li>角色6</li>
-                                        <li>角色1</li>
-                                        <li>角色2</li>
-                                        <li>角色3</li>
-                                        <li>角色4</li>
-                                        <li>角色5</li>
-                                        <li>角色6</li>
-                                    </ul>
-
+                                <td>
+                                    <fieldset class="smartflow-box">
+                                        <legend>已选角色</legend>
+                                        <ul class="smartflow-list" id="roleAssign"></ul>
+                                    </fieldset>
                                 </td>
                             </tr>
                         </table>

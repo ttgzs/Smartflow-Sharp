@@ -1,4 +1,5 @@
-﻿ html, body, div, ul {margin: 0;padding: 0;box-sizing: border-box;font-family:"Lucida Grande", Lucida Sans Unicode,Hiragino Sans GB, WenQuanYi Micro Hei, Verdana, Aril, sans-serif; }
+﻿ html, body, div, ul,fieldset {margin: 0;padding: 0;box-sizing: border-box;font-family:"Lucida Grande", Lucida Sans Unicode,Hiragino Sans GB, WenQuanYi Micro Hei, Verdana, Aril, sans-serif; }
+ fieldset legend{margin:0;padding:0;color:#2e7deb;margin-left:5px;}
  ul {list-style-type: none;}
  input,textarea{outline:none;}
  textarea {resize: none;}
@@ -41,11 +42,26 @@ text {font-size: 14px;text-anchor: middle;pointer-events: none;font-family:"Luci
     width:280px;
 }
 
+.smartflow-tools{
+    vertical-align:top;
+    width:10px;
+    text-align:center;
+  
+}
+
 .smartflow-list{
-    height:240px;
+    height:200px;
     overflow:auto;
 }
 
+.smartflow-list li{
+   padding-left:5px;
+}
+
+.smartflow-list li:hover{
+    background-color:#d0e187;
+    cursor:pointer;
+}
 
         div.card-tabs-bar {
             border-bottom: 1px solid #eaecef;

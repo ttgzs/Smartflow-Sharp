@@ -13,5 +13,9 @@ namespace Smartflow.Web.Controllers
             return View();
         }
 
+        public JsonResult GetRole(string roleIds)
+        {
+            return Json(designService.GetRole(roleIds));
+        }
     }
 }

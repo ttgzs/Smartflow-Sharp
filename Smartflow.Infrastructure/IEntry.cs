@@ -18,7 +18,7 @@ namespace Smartflow.Infrastructure
         /// <summary>
         /// 标识
         /// </summary>
-        string EID
+        long EID
         {
             get;
             set;

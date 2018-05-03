@@ -24,9 +24,9 @@ namespace Smartflow.Design
             return BaseService.GetUserByRoleId(roleId);
         }
 
-        public IList<IEntry> GetRole()
+        public IList<IEntry> GetRole(string roleIds)
         {
-            return BaseService.GetRole();
+            return BaseService.GetRole(roleIds);
         }
     }
 }
