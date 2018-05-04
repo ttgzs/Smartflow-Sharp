@@ -28,7 +28,7 @@ namespace Smartflow
             return instance;
         }
 
-        public string Start(WorkflowXml workflowXml)
+        public string Start(IWorkflowXml workflowXml)
         {
             Workflow workflow = XmlConfiguration.ParseflowXml<Workflow>(workflowXml.XML);
             List<Element> elements = new List<Element>();

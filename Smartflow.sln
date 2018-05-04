@@ -7,13 +7,17 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Smartflow", "Smartflow\Smar
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dapper", "Dapper\Dapper.csproj", "{97983236-A85F-4DA6-8518-5E9A788E08E8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApplication.Test", "ConsoleApplication.Test\ConsoleApplication.Test.csproj", "{24A9343B-8195-4C75-B4DF-C85561347E36}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Smartflow.Web", "Smartflow.Web\Smartflow.Web.csproj", "{4D2EACD3-4129-40D4-9534-8EF3505FDA97}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Smartflow.Web.Mvc", "Smartflow.Web\Smartflow.Web.Mvc.csproj", "{4D2EACD3-4129-40D4-9534-8EF3505FDA97}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Smartflow.Infrastructure", "Smartflow.Infrastructure\Smartflow.Infrastructure.csproj", "{63BCAFEA-ABD6-4D0F-BE76-FAC8CE01CE17}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Smartflow.Integration", "Smartflow.Integration\Smartflow.Integration.csproj", "{383CDF78-0DEA-40C7-BE16-AFF5D09FDBF3}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{FF382A38-0F89-443D-B5A9-18E5EE2DA278}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "example", "example", "{F9CC66D6-9A89-4F48-943F-7040203E9EB1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Smartflow.Web.Design", "Smartflow.Web.Design\Smartflow.Web.Design.csproj", "{4AEF880E-FFCF-491C-8B3A-B2347612C159}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,10 +33,6 @@ Global
 		{97983236-A85F-4DA6-8518-5E9A788E08E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{97983236-A85F-4DA6-8518-5E9A788E08E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{97983236-A85F-4DA6-8518-5E9A788E08E8}.Release|Any CPU.Build.0 = Release|Any CPU
-		{24A9343B-8195-4C75-B4DF-C85561347E36}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{24A9343B-8195-4C75-B4DF-C85561347E36}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{24A9343B-8195-4C75-B4DF-C85561347E36}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{24A9343B-8195-4C75-B4DF-C85561347E36}.Release|Any CPU.Build.0 = Release|Any CPU
 		{4D2EACD3-4129-40D4-9534-8EF3505FDA97}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{4D2EACD3-4129-40D4-9534-8EF3505FDA97}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4D2EACD3-4129-40D4-9534-8EF3505FDA97}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -45,8 +45,20 @@ Global
 		{383CDF78-0DEA-40C7-BE16-AFF5D09FDBF3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{383CDF78-0DEA-40C7-BE16-AFF5D09FDBF3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{383CDF78-0DEA-40C7-BE16-AFF5D09FDBF3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4AEF880E-FFCF-491C-8B3A-B2347612C159}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4AEF880E-FFCF-491C-8B3A-B2347612C159}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4AEF880E-FFCF-491C-8B3A-B2347612C159}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4AEF880E-FFCF-491C-8B3A-B2347612C159}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{C77DD279-74F0-4A0A-B534-2CF858EDE21D} = {FF382A38-0F89-443D-B5A9-18E5EE2DA278}
+		{97983236-A85F-4DA6-8518-5E9A788E08E8} = {FF382A38-0F89-443D-B5A9-18E5EE2DA278}
+		{4D2EACD3-4129-40D4-9534-8EF3505FDA97} = {F9CC66D6-9A89-4F48-943F-7040203E9EB1}
+		{63BCAFEA-ABD6-4D0F-BE76-FAC8CE01CE17} = {FF382A38-0F89-443D-B5A9-18E5EE2DA278}
+		{383CDF78-0DEA-40C7-BE16-AFF5D09FDBF3} = {FF382A38-0F89-443D-B5A9-18E5EE2DA278}
+		{4AEF880E-FFCF-491C-8B3A-B2347612C159} = {FF382A38-0F89-443D-B5A9-18E5EE2DA278}
 	EndGlobalSection
 EndGlobal

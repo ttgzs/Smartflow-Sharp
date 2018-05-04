@@ -11,14 +11,14 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-using Smartflow.Design;
-using Smartflow.Web.Core;
+using Smartflow.Integration.Models;
+using Smartflow.Integration;
 
 namespace Smartflow.Web.Controllers
 {
     public partial class WorkflowDesignController : Controller
     {
-        private WorkflowDesign designService = new WorkflowDesign(new WorkflowInfrastructure());
+        private WorkflowDesign designService = new WorkflowDesign();
 
         public ActionResult Index(string id)
         {

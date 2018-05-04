@@ -11,7 +11,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Text;
 
-namespace Smartflow.Web.Code
+namespace Smartflow.Web.Mvc.Code
 {
     public class DapperHelper
     {

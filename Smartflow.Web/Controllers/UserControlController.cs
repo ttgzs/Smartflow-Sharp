@@ -10,15 +10,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Smartflow.Integration;
 
-using Smartflow.Web.Code;
-using Smartflow.Web.Core;
 
 namespace Smartflow.Web.Controllers
 {
     public class UserControlController : Controller
     {
-        private RecordService recordService = new RecordService();
+        private WorkflowRecordService recordService = new WorkflowRecordService();
         private BaseWorkflowService bwkf = BaseWorkflowService.Instance;
 
         public PartialViewResult Record(string instanceID)

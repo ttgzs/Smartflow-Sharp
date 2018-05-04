@@ -29,7 +29,6 @@ namespace Smartflow
 
         public static event DelegatingCompletedHandle OnCompleted;
 
-
         private bool enableValidation = true;
 
         public bool EnableValidation
@@ -85,9 +84,8 @@ namespace Smartflow
         /// </summary>
         /// <param name="flowID">文件ID</param>
         /// <returns>返回实例ID</returns>
-        public string Start(string flowID)
+        public string Start(IWorkflowXml workflowXml)
         {
-            WorkflowXml workflowXml = workflowService.GetWorkflowXml(flowID);
             return workflowService.Start(workflowXml);
         }
 

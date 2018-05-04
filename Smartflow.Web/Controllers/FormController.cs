@@ -1,11 +1,12 @@
-﻿using Smartflow.Design;
-using Smartflow.Web.Code;
-using Smartflow.Web.Core;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+
+using Smartflow.Integration;
 using System.Web.Mvc;
+using Smartflow.Web.Mvc.Code;
+using Smartflow.Integration.Models;
 
 namespace Smartflow.Web.Controllers
 {

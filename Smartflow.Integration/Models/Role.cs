@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace Smartflow.Web.Models
+namespace Smartflow.Integration.Models
 {
     public class Role:IEntry
     {

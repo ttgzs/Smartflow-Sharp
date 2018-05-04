@@ -24,7 +24,7 @@ namespace Smartflow
         /// </summary>
         /// <param name="workflowXml"></param>
         /// <returns></returns>
-        string Start(WorkflowXml workflowXml);
+        string Start(IWorkflowXml workflowXml);
 
         /// <summary>
         /// 获取工作流实例
@@ -51,12 +51,6 @@ namespace Smartflow
         /// <param name="instance">流程实例</param>
         void Revert(WorkflowInstance instance);
 
-        /// <summary>
-        /// 获取工作流程
-        /// </summary>
-        /// <param name="flowID">流程版本ID</param>
-        /// <returns>工作流</returns>
-        WorkflowXml GetWorkflowXml(string flowID);
 
         /// <summary>
         /// 监控跳转过程

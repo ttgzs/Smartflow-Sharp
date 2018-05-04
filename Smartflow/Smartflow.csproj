@@ -45,10 +45,6 @@
     <Compile Include="DatabaseService.cs" />
     <Compile Include="DelegatingCompletedHandle.cs" />
     <Compile Include="DelegatingProcessHandle.cs" />
-    <Compile Include="Design\IWorkflowDesignService.cs" />
-    <Compile Include="Design\WorkflowDesign.cs" />
-    <Compile Include="Design\WorkflowDesign.Infrastructure.cs" />
-    <Compile Include="Design\WorkflowDesignService.cs" />
     <Compile Include="Elements\Actor.cs" />
     <Compile Include="Elements\ASTNode.cs" />
     <Compile Include="Elements\Command.cs" />
@@ -71,6 +67,7 @@
     <Compile Include="IFactory.cs" />
     <Compile Include="IPersistent.cs" />
     <Compile Include="IWorkflow.cs" />
+    <Compile Include="IWorkflowXml.cs" />
     <Compile Include="MessageResource.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -88,9 +85,7 @@
     <Compile Include="WorkflowProcess.cs" />
     <Compile Include="WorkflowService.cs" />
     <Compile Include="WorkflowService.Process.cs" />
-    <Compile Include="WorkflowService.Xml.cs" />
     <Compile Include="WorkflowServiceFactory.cs" />
-    <Compile Include="WorkflowXml.cs" />
     <Compile Include="XmlConfiguration.cs" />
   </ItemGroup>
   <ItemGroup>

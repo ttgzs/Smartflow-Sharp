@@ -5,7 +5,7 @@ using System.Linq;
 using System.Web;
 using Dapper;
 
-namespace Smartflow.Web.Code
+namespace Smartflow.Web.Mvc.Code
 {
     public class ApplyService
     {

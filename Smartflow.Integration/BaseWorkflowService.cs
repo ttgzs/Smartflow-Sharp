@@ -1,4 +1,5 @@
-﻿/*
+﻿using Smartflow.Integration.Models;
+/*
  License: https://github.com/chengderen/Smartflow/blob/master/LICENSE 
  Home page: https://github.com/chengderen/Smartflow
 
@@ -9,15 +10,15 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-using Smartflow.Web.Code;
-
 namespace Smartflow.Integration
 {
     public sealed class BaseWorkflowService
     {
         private static WorkflowEngine context = WorkflowEngine.CreateWorkflowEngine();
         private readonly static BaseWorkflowService singleton = new BaseWorkflowService();
+        private WorkflowRecordService recordService = new WorkflowRecordService();
 
+        
         private BaseWorkflowService()
         {
             //关闭授权验证（默认关闭）
@@ -31,8 +32,6 @@ namespace Smartflow.Integration
         {
             get { return singleton; }
         }
-
-        private RecordService recordService = new RecordService();
 
         public void OnCompleted(ExecutingContext executeContext)
         {
@@ -61,7 +60,7 @@ namespace Smartflow.Integration
 
         public string Start(string WFID)
         {
-            return context.Start(WFID);
+            return context.Start(null);
         }
 
         public WorkflowInstance GetInstance(string instanceID)

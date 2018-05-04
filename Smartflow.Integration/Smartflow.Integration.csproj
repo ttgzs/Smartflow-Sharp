@@ -41,13 +41,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseWorkflowService.cs" />
-    <Compile Include="Class1.cs" />
-    <Compile Include="DapperHelper.cs" />
+    <Compile Include="IWorkflowDesignService.cs" />
+    <Compile Include="Models\WorkflowXml.cs" />
+    <Compile Include="SqlHelper.cs" />
     <Compile Include="Models\Record.cs" />
     <Compile Include="Models\Role.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RecordService.cs" />
-    <Compile Include="WorkflowInfrastructure.cs" />
+    <Compile Include="WorkflowRecordService.cs" />
+    <Compile Include="WorkflowDesign.cs" />
+    <Compile Include="WorkflowDesignService.Infrastructure.cs" />
+    <Compile Include="WorkflowDesignService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Dapper\Dapper.csproj">
