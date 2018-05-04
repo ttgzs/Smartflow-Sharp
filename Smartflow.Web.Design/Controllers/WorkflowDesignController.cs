@@ -20,7 +20,7 @@ namespace Smartflow.Web.Controllers
     {
         private WorkflowDesign designService = new WorkflowDesign();
 
-        public ActionResult Index(string id)
+        public ActionResult Design(string id)
         {
             ViewBag.WFID = id;
             return View();

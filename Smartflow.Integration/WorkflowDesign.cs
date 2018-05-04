@@ -10,7 +10,7 @@ namespace Smartflow.Integration
 {
     public class WorkflowDesign
     {
-        protected IWorkflowDesignService Context = new WorkflowDesignService();
+        protected WorkflowDesignService Context = new WorkflowDesignService();
 
         public void Persistent(WorkflowXml workflowXml)
         {
@@ -54,7 +54,7 @@ namespace Smartflow.Integration
 
         public IList<IEntry> GetRole(string roleIds)
         {
-            return null;
+            return Context.GetRole(roleIds);
         }
     }
 }

@@ -41,7 +41,7 @@
                 type: 'post',
                 dataType: 'json',
                 success: function (serverData) {
-                    var elements = [],assignElements=[];
+                    var elements = [], assignElements = [];
                     $.each(serverData, function () {
                         elements.push("<li eid=" + this.EID + " name=" + this.Name + ">" + this.Name + "</li>");
                     });
@@ -67,23 +67,21 @@
 
         function getSettings() {
             var settings = {};
-                settings.name = $("#txtName").val();
-
-            //settings.role=[]
+            settings.name = $("#txtName").val();
             var roleArray = [];
 
             $("#roleAssign li").each(function () {
                 roleArray.push({
-                    eid:$(this).attr("eid"),
+                    eid: $(this).attr("eid"),
                     id: $(this).attr("eid"),
-                    name:$(this).attr("name")
+                    name: $(this).attr("name")
                 });
             });
 
             settings.group = roleArray;
             return settings;
         }
-        function setSettings(name,group) {
+        function setSettings(name, group) {
             $("#txtName").val(name);
             loadRoleGrid(group);
         }
@@ -120,8 +118,7 @@
                                         <ul class="smartflow-list" id="roleGrid"></ul>
                                     </fieldset>
                                 </td>
-                                <td class="smartflow-tools">
-                                </td>
+                                <td class="smartflow-tools"></td>
                                 <td>
                                     <fieldset class="smartflow-box">
                                         <legend>已选角色</legend>

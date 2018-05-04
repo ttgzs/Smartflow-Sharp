@@ -66,9 +66,9 @@
                 shadeClose: false,
                 content: ['@Url.Action("WorkflowDesignSettings", "WorkflowDesign")', 'no'],
                 btn: ['确定', '关闭'],
-                success: function(dom, index){
+                success: function (dom, index) {
                     var frameContent = getDOMFrame(dom);
-                    frameContent.setSettings(nx.name,nx.group);
+                    frameContent.setSettings(nx.name, nx.group);
                 },
                 yes: function (index, dom) {
                     var frameContent = getDOMFrame(dom),
@@ -79,18 +79,18 @@
                         nx.brush.text(function (add) {
                             add.tspan(nx.name);
                         });
-                        nx.group = settings.group||[];
+                        nx.group = settings.group || [];
                     }
                     layer.close(index);
                 },
                 btn2: function () {
-                  layer.closeAll();
+                    layer.closeAll();
                 }
             });
         }
 
         function getDOMFrame(dom) {
-            var frameId=dom.find("iframe").attr('id');
+            var frameId = dom.find("iframe").attr('id');
             return (document.getElementById(frameId).contentWindow);
         }
     </script>
@@ -99,19 +99,19 @@
     <div class="tools">
         <ul class="tools-menu">
             <li>
-                <a href="#" onclick="saveflow()">保存</a>
+                <a href="javascript:;" onclick="saveflow()">保存</a>
             </li>
             <li>
-                <a href="#" onclick="SMF.select()">选择</a>
+                <a href="javascript:;" onclick="SMF.select()">选择</a>
             </li>
             <li>
-                <a href="#" onclick="SMF.connect()">连接</a>
+                <a href="javascript:;" onclick="SMF.connect()">连接</a>
             </li>
             <li>
-                <a href="#" onclick="SMF.create('node')">节点</a>
+                <a href="javascript:;" onclick="SMF.create('node')">节点</a>
             </li>
             <li>
-                <a href="#" onclick="SMF.create('decision')">决策</a>
+                <a href="javascript:;" onclick="SMF.create('decision')">决策</a>
             </li>
         </ul>
     </div>

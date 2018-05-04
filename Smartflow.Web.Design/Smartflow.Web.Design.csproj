@@ -112,7 +112,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controllers\DefaultController.cs" />
     <Compile Include="Controllers\WorkflowDesign.Settings.cs" />
     <Compile Include="Controllers\WorkflowDesignController.cs" />
     <Compile Include="Global.asax.cs">
@@ -124,6 +123,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Content Include="Content\common.js" />
     <Content Include="Content\jquery.min.js" />
     <Content Include="Content\json2.js" />
     <Content Include="Content\layer\layer.js" />
@@ -133,6 +133,7 @@
     <Content Include="Content\layer\theme\default\loading-0.gif" />
     <Content Include="Content\layer\theme\default\loading-1.gif" />
     <Content Include="Content\layer\theme\default\loading-2.gif" />
+    <Content Include="Content\main.css" />
     <Content Include="Content\smartflow.css" />
     <Content Include="Content\smartflow.js" />
     <Content Include="Content\svg.js" />
@@ -154,7 +155,7 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\WorkflowDesign\Index.cshtml" />
+    <Content Include="Views\WorkflowDesign\Design.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\WorkflowDesign\List.cshtml" />
