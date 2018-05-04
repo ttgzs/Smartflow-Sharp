@@ -3,19 +3,21 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.40629.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Smartflow", "Smartflow\Smartflow.csproj", "{C77DD279-74F0-4A0A-B534-2CF858EDE21D}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dapper", "Dapper\Dapper.csproj", "{97983236-A85F-4DA6-8518-5E9A788E08E8}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Smartflow.Web.Mvc", "Smartflow.Web\Smartflow.Web.Mvc.csproj", "{4D2EACD3-4129-40D4-9534-8EF3505FDA97}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Smartflow.Integration", "Smartflow.Integration\Smartflow.Integration.csproj", "{383CDF78-0DEA-40C7-BE16-AFF5D09FDBF3}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{FF382A38-0F89-443D-B5A9-18E5EE2DA278}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "example", "example", "{F9CC66D6-9A89-4F48-943F-7040203E9EB1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Smartflow.Web.Design", "Smartflow.Web.Design\Smartflow.Web.Design.csproj", "{4AEF880E-FFCF-491C-8B3A-B2347612C159}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Smartflow.Web.Mvc", "example\Smartflow.Web.Mvc\Smartflow.Web.Mvc.csproj", "{4D2EACD3-4129-40D4-9534-8EF3505FDA97}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Smartflow", "src\Smartflow\Smartflow.csproj", "{C77DD279-74F0-4A0A-B534-2CF858EDE21D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Smartflow.Integration", "src\Smartflow.Integration\Smartflow.Integration.csproj", "{383CDF78-0DEA-40C7-BE16-AFF5D09FDBF3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Smartflow.Web.Design", "src\Smartflow.Web.Design\Smartflow.Web.Design.csproj", "{4AEF880E-FFCF-491C-8B3A-B2347612C159}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Smartflow.Web.Form", "example\Smartflow.Web.Form\Smartflow.Web.Form.csproj", "{FB32D390-E3AF-4D87-AB6C-33535CD00F66}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +25,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{C77DD279-74F0-4A0A-B534-2CF858EDE21D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C77DD279-74F0-4A0A-B534-2CF858EDE21D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C77DD279-74F0-4A0A-B534-2CF858EDE21D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C77DD279-74F0-4A0A-B534-2CF858EDE21D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{97983236-A85F-4DA6-8518-5E9A788E08E8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{97983236-A85F-4DA6-8518-5E9A788E08E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{97983236-A85F-4DA6-8518-5E9A788E08E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -35,6 +33,10 @@ Global
 		{4D2EACD3-4129-40D4-9534-8EF3505FDA97}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4D2EACD3-4129-40D4-9534-8EF3505FDA97}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4D2EACD3-4129-40D4-9534-8EF3505FDA97}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C77DD279-74F0-4A0A-B534-2CF858EDE21D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C77DD279-74F0-4A0A-B534-2CF858EDE21D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C77DD279-74F0-4A0A-B534-2CF858EDE21D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C77DD279-74F0-4A0A-B534-2CF858EDE21D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{383CDF78-0DEA-40C7-BE16-AFF5D09FDBF3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{383CDF78-0DEA-40C7-BE16-AFF5D09FDBF3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{383CDF78-0DEA-40C7-BE16-AFF5D09FDBF3}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -43,15 +45,20 @@ Global
 		{4AEF880E-FFCF-491C-8B3A-B2347612C159}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4AEF880E-FFCF-491C-8B3A-B2347612C159}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4AEF880E-FFCF-491C-8B3A-B2347612C159}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FB32D390-E3AF-4D87-AB6C-33535CD00F66}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FB32D390-E3AF-4D87-AB6C-33535CD00F66}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FB32D390-E3AF-4D87-AB6C-33535CD00F66}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FB32D390-E3AF-4D87-AB6C-33535CD00F66}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{C77DD279-74F0-4A0A-B534-2CF858EDE21D} = {FF382A38-0F89-443D-B5A9-18E5EE2DA278}
 		{97983236-A85F-4DA6-8518-5E9A788E08E8} = {FF382A38-0F89-443D-B5A9-18E5EE2DA278}
 		{4D2EACD3-4129-40D4-9534-8EF3505FDA97} = {F9CC66D6-9A89-4F48-943F-7040203E9EB1}
+		{C77DD279-74F0-4A0A-B534-2CF858EDE21D} = {FF382A38-0F89-443D-B5A9-18E5EE2DA278}
 		{383CDF78-0DEA-40C7-BE16-AFF5D09FDBF3} = {FF382A38-0F89-443D-B5A9-18E5EE2DA278}
 		{4AEF880E-FFCF-491C-8B3A-B2347612C159} = {FF382A38-0F89-443D-B5A9-18E5EE2DA278}
+		{FB32D390-E3AF-4D87-AB6C-33535CD00F66} = {F9CC66D6-9A89-4F48-943F-7040203E9EB1}
 	EndGlobalSection
 EndGlobal

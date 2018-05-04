@@ -89,7 +89,7 @@
     <Compile Include="XmlConfiguration.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Dapper\Dapper.csproj">
+    <ProjectReference Include="..\..\Dapper\Dapper.csproj">
       <Project>{97983236-a85f-4da6-8518-5e9a788e08e8}</Project>
       <Name>Dapper</Name>
     </ProjectReference>
