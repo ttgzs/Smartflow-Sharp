@@ -169,10 +169,6 @@
       <Project>{97983236-a85f-4da6-8518-5e9a788e08e8}</Project>
       <Name>Dapper</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Smartflow.Infrastructure\Smartflow.Infrastructure.csproj">
-      <Project>{63bcafea-abd6-4d0f-be76-fac8ce01ce17}</Project>
-      <Name>Smartflow.Infrastructure</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Smartflow.Integration\Smartflow.Integration.csproj">
       <Project>{383cdf78-0dea-40c7-be16-aff5d09fdbf3}</Project>
       <Name>Smartflow.Integration</Name>

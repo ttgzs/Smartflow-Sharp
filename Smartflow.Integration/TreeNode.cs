@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Smartflow.Infrastructure
+namespace Smartflow.Integration
 {
     public class TreeNode : IEntry
     {

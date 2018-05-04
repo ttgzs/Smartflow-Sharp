@@ -5,7 +5,6 @@ using System.Linq;
 using System.Text;
 
 using Dapper;
-using Smartflow.Infrastructure;
 using Smartflow.Integration.Models;
 
 namespace Smartflow.Integration

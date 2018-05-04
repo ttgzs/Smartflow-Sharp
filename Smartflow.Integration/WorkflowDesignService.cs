@@ -6,7 +6,6 @@ using System.Text;
 
 using Dapper;
 using Smartflow.Integration.Models;
-using Smartflow.Infrastructure;
 
 namespace Smartflow.Integration
 {
