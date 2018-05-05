@@ -29,11 +29,11 @@ namespace Smartflow.Integration
         public IList<IEntry> GetRole(string roleIds)
         {
             List<IEntry> entry = new List<IEntry>();
-
             string query = " SELECT * FROM T_ROLE WHERE 1=1 ";
+
             if (!String.IsNullOrEmpty(roleIds))
             {
-                query = query + " AND EID NOT IN (" + roleIds + ")";
+                query = query + " AND ID NOT IN (" + roleIds + ")";
             }
 
             entry.AddRange(Connection.Query<Role>(query).ToList());

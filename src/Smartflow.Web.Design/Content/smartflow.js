@@ -119,6 +119,7 @@
         this.x2 = 0;
         this.y2 = 0;
         this.border = 3;
+        this.orientation = 'down';
         Line.base.Constructor.call(this, "line", "line");
     }
 
@@ -130,9 +131,11 @@
             l.stroke({ width: self.border, color: self.bgColor });
             self.brush = draw.text(self.name);
 
-            //l.marker('end', 10, 10, function (add) {
-            //    add.path('M0,0 L0,6 L9,3 z').fill("#f00");
-            //    this.attr({ refX: 0, refY: 3 });
+            //var orientation = this.orientation = 'down'?'90deg':'180deg';
+
+            //l.marker('start', 10, 10, function (add) {
+            //    add.path('M0,0 L0,6 L6,3 z').fill("#f00");
+            //    this.attr({ refX: 0, refY: 3, orient: orientation });
             //});
 
             self.brush.attr({ x: (self.x2 - self.x1) / 2 + self.x1, y: (self.y2 - self.y1) / 2 + self.y1});
@@ -221,21 +224,8 @@
 
             } else {
                 var nx = NC[this.id()];
-
                 drawOption['dblClick']
                             && drawOption['dblClick'].call(this, nx);
-          
-
-                /*var nx = NC[this.id()],
-                    nodeName = prompt("请输入节点名称", nx.name);
-
-                if (nodeName) {
-                    nx.name = nodeName;
-                    nx.brush.clear();
-                    nx.brush.text(function (add) {
-                        add.tspan(nx.name);
-                    });
-                }*/
             }
         },
         move: function (element, d) {
@@ -258,7 +248,7 @@
                 if (lineElement && instance) {
                     instance.x2 = self.x + this.ox2;
                     instance.y2 = self.y + this.oy2;
-                    lineElement.attr({ x2: instance.x2, y2: instance.y2 });
+                    lineElement.attr({ x2: instance.x2, y2: instance.y2});
                     instance.brush.attr({ x: (instance.x2 - instance.x1) / 2 + instance.x1, y: (instance.y2 - instance.y1) / 2 + instance.y1 });
                 }
             });
@@ -420,10 +410,6 @@
                     orientation = checkOrientation(fromRect, toRect);
 
                 if (orientation === 'down') {
-                    //instance.x1 = fromConnect.x - nf.cx;
-                    //instance.y1 = fromRect.height() + fromRect.y();
-                    //instance.x2 = evt.clientX - nt.cx;
-                    //instance.y2 = toRect.y();
                     instance.x1 = fromRect.width() / 2 + fromRect.x();
                     instance.y1 = fromRect.height() + fromRect.y();
                     instance.x2 = toRect.width() / 2 + toRect.x();
@@ -435,6 +421,8 @@
                     instance.x2 = evt.clientX - nt.cx;
                     instance.y2 = toRect.height() + toRect.y();
                 }
+
+                instance.orientation = orientation;
                 instance.draw();
 
                 var l = SVG.get(instance.id),
@@ -631,7 +619,6 @@
 
             $.each(["to", "from"], function (i,propertyName) {
                 eachNode(instance.id, originId, propertyName);
-              //  eachLine(instance.id, originId, propertyName);
             });
         });
 
@@ -649,15 +636,6 @@
 
         function eachNode(id, originId, nid) {
             $.each(relationCollection, function () {
-                var self = this;
-                if (self[nid] === originId) {
-                    self[nid] = id;
-                }
-            });
-        }
-
-        function eachLine(id, originId, nid) {
-            $.each(LC, function () {
                 var self = this;
                 if (self[nid] === originId) {
                     self[nid] = id;
@@ -698,7 +676,6 @@
         }
         return orientation;
     }
-
 
     //帮助类
     function StringBuilder() {

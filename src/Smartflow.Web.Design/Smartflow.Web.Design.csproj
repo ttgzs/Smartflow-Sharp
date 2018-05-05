@@ -124,6 +124,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Content Include="Content\common.js" />
+    <Content Include="Content\design.js" />
     <Content Include="Content\jquery.min.js" />
     <Content Include="Content\json2.js" />
     <Content Include="Content\layer\layer.js" />

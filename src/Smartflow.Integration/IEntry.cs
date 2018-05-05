@@ -18,7 +18,7 @@ namespace Smartflow.Integration
         /// <summary>
         /// 标识
         /// </summary>
-        long EID
+        long ID
         {
             get;
             set;

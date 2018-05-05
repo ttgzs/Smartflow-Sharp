@@ -5,7 +5,7 @@ namespace Smartflow.Integration.Models
 {
     public class Role:IEntry
     {
-        public long EID
+        public long ID
         {
             get;
             set;

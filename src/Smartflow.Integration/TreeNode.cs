@@ -12,7 +12,7 @@ namespace Smartflow.Integration
 {
     public class TreeNode : IEntry
     {
-        public long EID
+        public long ID
         {
             get;
             set;

@@ -10,84 +10,12 @@
     <title>流程节点数据配置</title>
     <link href="~/Content/smartflow.css" rel="stylesheet" />
     <script src="~/Content/jquery.min.js"></script>
+    <script src="~/Content/design.js"></script>
     <script type="text/javascript">
         $(function () {
-            $(".card-tabs-bar>a").click(function () {
-                var self = $(this),
-                    text = self.text();
-                if (!self.hasClass("active")) {
-                    self.addClass("active");
-                }
-
-                $(".card-tabs-bar a.active").not(self).each(function () {
-                    $(this).removeClass("active");
-                });
-
-                $(".card-tabs-stack >div").each(function () {
-                    var tab = $(this),
-                        title = tab.attr("data-tab");
-                    if (text == title) {
-                        tab.show();
-                    } else {
-                        tab.hide();
-                    }
-                });
-            });
+            //初始化
+            SMF.init();
         });
-
-        function loadRoleGrid(group) {
-            $.ajax({
-                url: '@Url.Action("GetRole", "WorkflowDesign")',
-                type: 'post',
-                dataType: 'json',
-                success: function (serverData) {
-                    var elements = [], assignElements = [];
-                    $.each(serverData, function () {
-                        elements.push("<li eid=" + this.EID + " name=" + this.Name + ">" + this.Name + "</li>");
-                    });
-
-                    $("#roleGrid").html(elements.join(""));
-
-                    $("#roleGrid").on("dblclick", "li", function () {
-                        $("#roleAssign").append(this);
-                    });
-
-                    $("#roleAssign").on("dblclick", "li", function () {
-                        $("#roleGrid").append(this);
-                    });
-
-                    $.each(group, function () {
-                        assignElements.push("<li eid=" + this.eid + " name=" + this.name + ">" + this.name + "</li>");
-                    });
-
-                    $("#roleAssign").html(assignElements.join(""));
-                }
-            });
-        }
-
-        function getSettings() {
-            var settings = {};
-            settings.name = $("#txtName").val();
-            var roleArray = [];
-
-            $("#roleAssign li").each(function () {
-                roleArray.push({
-                    eid: $(this).attr("eid"),
-                    id: $(this).attr("eid"),
-                    name: $(this).attr("name")
-                });
-            });
-
-            settings.group = roleArray;
-            return settings;
-        }
-        function setSettings(name, group) {
-            $("#txtName").val(name);
-            loadRoleGrid(group);
-        }
-
-
-
     </script>
 </head>
 <body>
