@@ -284,10 +284,19 @@
             Decision.base.Parent.prototype.draw.call(this);
             var y = this.y + this.h,
                 w = this.w;
+
             //09dd1a
-            for (var i = 0, len = w / 10; i <= len; i++) {
-                var circle = draw.circle(10);
-                circle.attr({ fill: '#fff', cx: this.x + i * 10, cy: y });
+            for (var i = 0, len = w / 20; i <len; i++) {
+                var circle = draw.circle(20);
+                circle.attr({ fill: '#F485B2', cx: this.x + i * 20 + 10, cy: y });
+                circle.addClass('circle');
+
+                var rect = draw.rect(20, 20).attr({
+                    x: this.x + i * 20,
+                    y:y
+                });
+                var clip = draw.clip().add(rect);
+                circle.clipWith(clip);
                 this.circles.push(circle);
             }
         },
@@ -306,7 +315,13 @@
             var self = this;
             //09dd1a
             $.each(self.circles, function (i) {
-                this.attr({ fill: '#fff', cx: self.x + i * 10, cy: self.y + self.h });
+
+                var clipRect=this.reference('clip-path');
+                var rect = SVG.get(clipRect.node.firstChild.id);
+
+                rect.attr({ x: self.x + i * 20, y: self.y+self.h  });
+
+                this.attr({ fill: '#F485B2', cx: self.x + i * 20 + 10, cy: self.y + self.h });
             });
         },
         bindEvent: function (decision) {

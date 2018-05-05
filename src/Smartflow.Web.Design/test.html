@@ -1,0 +1,35 @@
+﻿<!DOCTYPE html>
+<html xmlns:svg="http://www.w3.org/2000/svg">
+<head>
+    <title></title>
+    <script src="../Content/jquery.min.js"></script>
+    <script src="../Content/svg.js"></script>
+</head>
+<body>
+
+    <svg width="100%" height="600px">
+
+        <defs>
+            <clipPath id="myClip">
+                <rect x="20" y="110" width="20" height="20" />
+                <rect x="40" y="110" width="20" height="20" />
+                <rect x="60" y="110" width="20" height="20" />
+                <rect x="80" y="110" width="20" height="20" />
+                <rect x="100" y="110" width="20" height="20" />
+            </clipPath>
+        </defs>
+
+
+        <rect x="20"  y="50" width="200" height="80" fill="#eee" stroke-width="1" stroke="rgb(0,0,0)" />
+
+        <circle cx="30" cy="130" r="10" fill="red" clip-path="url(#myClip)"></circle>
+        <circle cx="50" cy="130" r="10" fill="red" clip-path="url(#myClip)"></circle>
+        <circle cx="70" cy="130" r="10" fill="red" clip-path="url(#myClip)"></circle>
+        <circle cx="90" cy="130" r="10" fill="red" clip-path="url(#myClip)"></circle>
+        <circle cx="110" cy="130" r="10" fill="red" clip-path="url(#myClip)"></circle>
+
+    </svg>
+
+
+</body>
+</html>
