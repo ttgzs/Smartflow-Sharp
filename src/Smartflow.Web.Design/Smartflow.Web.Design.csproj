@@ -139,6 +139,7 @@
     <Content Include="Content\smartflow.js" />
     <Content Include="Content\svg.js" />
     <Content Include="Global.asax" />
+    <Content Include="test.html" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
