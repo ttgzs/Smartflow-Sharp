@@ -18,7 +18,6 @@ namespace Smartflow.Integration
         private readonly static BaseWorkflowService singleton = new BaseWorkflowService();
         private WorkflowRecordService recordService = new WorkflowRecordService();
 
-        
         private BaseWorkflowService()
         {
             //关闭授权验证（默认关闭）
@@ -36,9 +35,6 @@ namespace Smartflow.Integration
         public void OnCompleted(ExecutingContext executeContext)
         {
             //流程结束（在完成事件中可以做业务操作）
-
-
-
         }
 
         public void OnProcess(ExecutingContext executeContext)
@@ -60,7 +56,8 @@ namespace Smartflow.Integration
 
         public string Start(string WFID)
         {
-            return context.Start(null);
+            WorkflowXml wfXml = new WorkflowDesign().GetWorkflowXml(WFID);
+            return context.Start(wfXml);
         }
 
         public WorkflowInstance GetInstance(string instanceID)
