@@ -8,3 +8,8 @@ Smartflow/bin/Debug/Smartflow.dll.config
 Dapper/obj/Debug/DesignTimeResolveAssemblyReferencesInput.cache*.cache
 Smartflow/obj/Debug/Smartflow.csprojResolveAssemblyReference.cache
 *.cache
+*.nupkg
+*.xdt
+packages/Microsoft.AspNet.WebApi.Core.4.0.30506.0/content/web.config.transform
+*._
+packages/repositories.config
