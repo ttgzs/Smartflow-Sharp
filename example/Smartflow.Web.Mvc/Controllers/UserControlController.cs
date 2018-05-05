@@ -18,13 +18,13 @@ namespace Smartflow.Web.Controllers
 {
     public class UserControlController : Controller
     {
-        private WorkflowRecordService recordService = new WorkflowRecordService();
+        private WorkflowRecordService workflowRecordService = new WorkflowRecordService();
         private BaseWorkflowService bwkf = BaseWorkflowService.Instance;
 
         public PartialViewResult Record(string instanceID)
         {
             ViewBag.InstanceID = instanceID;
-            return PartialView(recordService.Query(instanceID));
+            return PartialView(workflowRecordService.Query(instanceID));
         }
 
         public ActionResult WorkflowImage(string instanceID)

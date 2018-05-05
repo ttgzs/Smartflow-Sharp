@@ -15,7 +15,7 @@
     <AssemblyName>Smartflow.Web.Mvc</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
-    <UseIISExpress>true</UseIISExpress>
+    <UseIISExpress>false</UseIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
@@ -114,16 +114,13 @@
   <ItemGroup>
     <Compile Include="Code\Apply.cs" />
     <Compile Include="Code\ApplyService.cs" />
-    <Compile Include="Controllers\WorkflowDesign.Settings.cs" />
     <Compile Include="Code\DapperHelper.cs" />
     <Compile Include="Controllers\DefaultController.cs" />
     <Compile Include="Controllers\FormController.cs" />
     <Compile Include="Controllers\UserControlController.cs" />
-    <Compile Include="Controllers\WorkflowDesignController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\Role.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -133,17 +130,7 @@
     <Content Include="Content\common.js" />
     <Content Include="Content\jquery.min.js" />
     <Content Include="Content\json2.js" />
-    <Content Include="Content\layer\layer.js" />
-    <Content Include="Content\layer\theme\default\icon-ext.png" />
-    <Content Include="Content\layer\theme\default\icon.png" />
-    <Content Include="Content\layer\theme\default\layer.css" />
-    <Content Include="Content\layer\theme\default\loading-0.gif" />
-    <Content Include="Content\layer\theme\default\loading-1.gif" />
-    <Content Include="Content\layer\theme\default\loading-2.gif" />
     <Content Include="Content\main.css" />
-    <Content Include="Content\smartflow.css" />
-    <Content Include="Content\smartflow.js" />
-    <Content Include="Content\svg.js" />
     <Content Include="Global.asax" />
     <Content Include="test.html" />
     <Content Include="Web.config" />
@@ -157,6 +144,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -220,7 +208,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>49601</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:51330/</IISUrl>
+          <IISUrl>http://localhost/Smartflow.Web.Mvc</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
