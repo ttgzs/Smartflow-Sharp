@@ -5,18 +5,27 @@
  */
 (function ($) {
     var
+        //流程定义根节点
+        rootStart = '<workflow>',
+
+        //流程定义根节点闭合
+        rootEnd = '</workflow>',
 
         //存储所有节点的实例
         NC = {},
+
         //所有线的实例
         LC = {},
+
         //维护关系
         RC = [],
+
         //全局变量
         draw,
+
         //连线ID
         fromConnect,
-
+        //参数
         drawOption,
         //规则检查
         rule = {
@@ -32,19 +41,12 @@
                 }
                 return result;
             }
-        }
+        };
 
     //数组添加移除方法
     $.extend(Array.prototype, {
         remove: function (dx, to) {
             this.splice(dx, (to || 1));
-        },
-        each: function (cb) {
-            if (typeof cb === 'function') {
-                for (var i = 0, len = this.length; i < this.length; i++) {
-                    cb.call(this[i], i, this[i]);
-                }
-            }
         }
     });
 
@@ -75,7 +77,14 @@
         });
 
         drawOption = $.extend(drawOption, option);
+        unselect();
         return draw;
+    }
+
+    //取消文字选中
+    function unselect() {
+        $(document).bind('mousedown', function () { return false; });
+        $(document).bind('mouseup', function () { return false; });
     }
 
     function Element(name, category) {
@@ -267,6 +276,94 @@
                     instance.brush.attr({ x: (instance.x2 - instance.x1) / 2 + instance.x1, y: (instance.y2 - instance.y1) / 2 + instance.y1 });
                 }
             });
+        },
+        exportElement:function(){
+            var
+                //开始
+                start = '<',
+                //结束
+                end = '>',
+                //左引号
+                lQuotation = '"',
+                //右引号
+                rQuotation ='"',
+                //闭合
+                beforeClose = '</',
+                //闭合
+                afterClose = '/>',
+                //等于
+                equal = '=',
+                //本身引用
+                self = this,
+                //空隙
+                space = ' ',
+                //参与组
+                group = 'group',
+                from = 'from',
+                //跳转线
+                transition = 'transition',
+                build = new StringBuilder();
+
+            build.append(start)
+                .append(self.category);
+
+            eachAttributs(build, self);
+            build.append(end);
+
+            //参与组
+            $.each(self.group, function () {
+
+                build.append(start)
+                     .append(group);
+                eachAttributs(build, this, 'group');
+                build.append(afterClose);
+            });
+
+            var elements = findByElementId(self.id, from);
+            $.each(elements, function () {
+                if (this.from === self.id) {
+                    var
+                        L = LC[this.id],
+                        N = NC[this.to];
+
+                    build.append(start)
+                         .append(transition)
+                         .append(space)
+                         .append('name')
+                         .append(equal)
+                         .append(lQuotation)
+                         .append(L.name)
+                         .append(rQuotation)
+                         .append(space)
+                         .append('to')
+                         .append(equal)
+                         .append(lQuotation)
+                         .append(N.uniqueId)
+                         .append(rQuotation)
+                         .append(afterClose);
+                }
+            });
+
+            //结束
+            build.append(beforeClose)
+                 .append(self.category)
+                 .append(end);
+
+            //属性
+            function eachAttributs(build, reference,attribute) {
+                var propertyName = 'uniqueId'
+                $.each(['id', 'name'], function (i,p) {
+                    build.append(space)
+                         .append(p)
+                         .append(equal)
+                         .append(lQuotation)
+                         .append(p === 'id' && attribute !== 'group' ? reference[propertyName] : reference[p])
+                         .append(rQuotation);
+                });
+            }
+
+            //导出
+            return build.toString();
         }
     });
 
@@ -556,7 +653,8 @@
     function exportToJSON() {
         var uniqueId = 29,
             nodeCollection = [],
-            pathCollection = [];
+            pathCollection = [],
+            build = new StringBuilder();
 
         if (RC.length === 0) {
             alert("该流程图不符合流程定义规则");
@@ -572,28 +670,13 @@
             NC[propertyName].uniqueId = generatorId();
         }
 
-        var builder = new StringBuilder();
-        builder.append("<workflow>");
+        build.append(rootStart);
         $.each(NC, function () {
-            builder
-                .append("<" + this.category)
-                .append(" id=\"" + this.uniqueId + "\"")
-                .append(" name=\"" + this.name + "\"")
-                .append(">");
-
-
-            $.each(this.group, function () {
-                builder.append("<group id=\"" + this.id + "\"").
-                        append(" name=\"" + this.name + "\"")
-                        .append("/>");
-            });
-
-
-            builder.append(exportChildNode(builder, this.id));
-            builder.append("</" + this.category + ">");
+            var self = this;
+            build.append(self.exportElement());
         });
 
-        builder.append("</workflow>");
+        build.append(rootEnd);
 
         $.each(NC, function () {
             var instance = new Node();
@@ -602,7 +685,6 @@
             if (instance['circles']) {
                 delete instance['circles'];
             }
-
             nodeCollection.push(instance);
         });
 
@@ -613,20 +695,6 @@
             pathCollection.push(instance);
         });
 
-        function exportChildNode(sb, rectId) {
-            var elements = findByElementId(rectId, "from");
-            $.each(elements, function () {
-                if (this.from === rectId) {
-                    var L = LC[this.id],
-                        N = NC[this.to];
-                    sb.append("<transition");
-                    sb.append(" name=\"" + L.name + "\"");
-                    sb.append(" to=\"" + N.uniqueId + "\"");
-                    sb.append(">")
-                    sb.append("</transition>");
-                }
-            });
-        }
 
         var imageData = escape(JSON.stringify({
             RC: RC,
@@ -635,7 +703,7 @@
         }))
 
         return {
-            XML: escape(builder.toString()),
+            XML: escape(build.toString()),
             IMAGE: imageData
         };
     }
