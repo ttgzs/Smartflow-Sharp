@@ -85,7 +85,8 @@ body {
 
 .top {
     height: 80px;
-    background-color: #0094ff;
+    background-color: #259FE5;
+    vertical-align:middle;
 }
 
 .content {
@@ -100,7 +101,7 @@ body {
     width: 200px;
     float: left;
     height: 100%;
-    background-color: #54B0E5;
+    background-color: #4BA7DC;
 }
 
 .left:after {
@@ -123,7 +124,7 @@ body {
 }
 
 .menu li:hover {
-    background-color: #d4e2ed;
+    background-color: #2982B5;
 }
 
 .menu li a {
