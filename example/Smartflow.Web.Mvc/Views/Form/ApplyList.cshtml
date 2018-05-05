@@ -33,9 +33,9 @@
 </head>
 <body>
     <div class="panel panel-default">
-        <div style="text-align:right;">
+        <div style="text-align:right;margin-top:20px;margin-bottom:10px;">
             <!-- Default panel contents -->
-            <input type="button" value="增加"  onclick="document.location.href='@Url.Action("Apply","Form")'" />
+            <input type="button" value="增加" onclick="document.location.href='@Url.Action("Apply","Form")'" />
             <!-- Table -->
         </div>
         <table class="table table-list">
@@ -56,7 +56,7 @@
                 @if (Model != null)
                 {
 
-                    foreach (Smartflow.Web.Code.Apply apply in Model)
+                    foreach (Smartflow.Web.Mvc.Code.Apply apply in Model)
                     {
                         <tr>
                             <td style="width:50px;text-align:center;">@(counter++)</td>

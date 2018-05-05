@@ -14,7 +14,7 @@ using System.Web.Mvc;
 using Smartflow.Integration.Models;
 using Smartflow.Integration;
 
-namespace Smartflow.Web.Controllers
+namespace Smartflow.Web.Design.Controllers
 {
     public partial class WorkflowDesignController : Controller
     {
@@ -57,6 +57,17 @@ namespace Smartflow.Web.Controllers
         {
             designService.Delete(WFID);
             return Json(true);
+        }
+
+        public ActionResult WorkflowImage(string instanceID)
+        {
+            ViewBag.InstanceID = instanceID;
+            return View();
+        }
+
+        public JsonResult GetWorkflowImage(string instanceID)
+        {
+            return Json(BaseWorkflowService.Instance.GetInstance(instanceID));
         }
     }
 }

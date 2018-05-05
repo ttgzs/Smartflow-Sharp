@@ -6,7 +6,7 @@ using System.Web.Mvc;
 
 using Smartflow.Integration;
 
-namespace Smartflow.Web.Controllers
+namespace Smartflow.Web.Design.Controllers
 {
     public partial class WorkflowDesignController
     {
