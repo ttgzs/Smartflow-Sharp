@@ -5,7 +5,7 @@
  */
 (function ($) {
     var
-      
+
         //存储所有节点的实例
         NC = {},
         //所有线的实例
@@ -20,19 +20,19 @@
         drawOption,
         //规则检查
         rule = {
-        duplicateCheck: function (from, to) {
-            //检查是否已经存在相同路线
-            var result = false;
-            for (var i = 0, len = RC.length; i < len; i++) {
-                var r = RC[i];
-                if (r.from === from && r.to === to) {
-                    result = true;
-                    break;
+            duplicateCheck: function (from, to) {
+                //检查是否已经存在相同路线
+                var result = false;
+                for (var i = 0, len = RC.length; i < len; i++) {
+                    var r = RC[i];
+                    if (r.from === from && r.to === to) {
+                        result = true;
+                        break;
+                    }
                 }
+                return result;
             }
-            return result;
         }
-    }
 
     //数组添加移除方法
     $.extend(Array.prototype, {
@@ -49,7 +49,7 @@
     });
 
     //禁用右键菜单
-    document.oncontextmenu = function () { return false;}
+    document.oncontextmenu = function () { return false; }
 
 
     //函数添加继承
@@ -68,7 +68,7 @@
         }
     });
 
-    function init(elementId,option) {
+    function init(elementId, option) {
         draw = SVG(elementId);
         draw.mouseup(function (e) {
             draw.off('mousemove');
@@ -138,13 +138,14 @@
             //    this.attr({ refX: 0, refY: 3, orient: orientation });
             //});
 
-            self.brush.attr({ x: (self.x2 - self.x1) / 2 + self.x1, y: (self.y2 - self.y1) / 2 + self.y1});
+            self.brush.attr({ x: (self.x2 - self.x1) / 2 + self.x1, y: (self.y2 - self.y1) / 2 + self.y1 });
             self.id = l.id();
             LC[self.id] = this;
             return Line.base.Parent.prototype.draw.call(self);
         },
         bindEvent: function (l) {
             this.dblclick(function (evt) {
+                evt.preventDefault();
                 //删除
                 var instance = LC[this.id()];
                 if (evt.ctrlKey && evt.altKey) {
@@ -160,8 +161,9 @@
                         instance.brush.text(instance.name);
                     }
                 }
+                return false;
             });
-            return Line.base.Parent.prototype.bindEvent.call(this,l);
+            Line.base.Parent.prototype.bindEvent.call(this, l);
         }
     });
 
@@ -189,7 +191,7 @@
                 rect = draw.rect(n.w, n.h).attr({ fill: color, x: n.x, y: n.y });
 
             n.brush = draw.text(n.name);
-            n.brush.attr({ x: n.x + rect.width() / 2, y: n.y + rect.height() / 2});
+            n.brush.attr({ x: n.x + rect.width() / 2, y: n.y + rect.height() / 2 });
 
             n.id = rect.id();
             NC[n.id] = n;
@@ -203,10 +205,12 @@
         bindEvent: function (n) {
             this.mousedown(OnDrag);
             this.dblclick(function (evt) {
+                evt.preventDefault();
                 var node = NC[this.id()];
                 node.edit.call(this, evt);
+                return false;
             });
-            Node.base.Parent.prototype.bindEvent.call(this,n);
+            Node.base.Parent.prototype.bindEvent.call(this, n);
         },
         edit: function (evt) {
 
@@ -248,7 +252,7 @@
                 if (lineElement && instance) {
                     instance.x2 = self.x + this.ox2;
                     instance.y2 = self.y + this.oy2;
-                    lineElement.attr({ x2: instance.x2, y2: instance.y2});
+                    lineElement.attr({ x2: instance.x2, y2: instance.y2 });
                     instance.brush.attr({ x: (instance.x2 - instance.x1) / 2 + instance.x1, y: (instance.y2 - instance.y1) / 2 + instance.y1 });
                 }
             });
@@ -286,17 +290,19 @@
                 w = this.w;
 
             //09dd1a
-            for (var i = 0, len = w / 20; i <len; i++) {
+            for (var i = 0, len = w / 20; i < len; i++) {
                 var circle = draw.circle(20);
                 circle.attr({ fill: '#F485B2', cx: this.x + i * 20 + 10, cy: y });
                 circle.addClass('circle');
 
                 var rect = draw.rect(20, 20).attr({
                     x: this.x + i * 20,
-                    y:y
+                    y: y - 20
                 });
                 var clip = draw.clip().add(rect);
                 circle.clipWith(clip);
+
+                circle.attr({ decisionId: this.id });
                 this.circles.push(circle);
             }
         },
@@ -312,16 +318,13 @@
         },
         move: function (element, evt) {
             Decision.base.Parent.prototype.move.call(this, element, evt);
-            var self = this;
+            var self = this, y = self.y + self.h;
             //09dd1a
             $.each(self.circles, function (i) {
-
-                var clipRect=this.reference('clip-path');
+                var clipRect = this.reference('clip-path');
                 var rect = SVG.get(clipRect.node.firstChild.id);
-
-                rect.attr({ x: self.x + i * 20, y: self.y+self.h  });
-
-                this.attr({ fill: '#F485B2', cx: self.x + i * 20 + 10, cy: self.y + self.h });
+                rect.attr({ x: self.x + i * 20, y: y - 20 });
+                this.attr({ fill: '#F485B2', cx: self.x + i * 20 + 10, cy: y });
             });
         },
         bindEvent: function (decision) {
@@ -367,7 +370,7 @@
             rect.radius(10);
         },
         bindEvent: function (n) {
-            End.base.Parent.prototype.bindEvent.call(this,n);
+            End.base.Parent.prototype.bindEvent.call(this, n);
             this.off('dblclick');
         }
     });
@@ -394,13 +397,27 @@
         var node = $(evt.target).get(0),
             nodeName = node.nodeName,
             nodeId = node.id;
-        if (nodeName === 'rect') {
+
+        if (nodeName === 'rect' || nodeName === 'circle') {
+            var instance, y, x;
+            if (!NC[nodeId]) {
+                var decisionId = node.getAttribute("decisionId");
+                instance = NC[decisionId];
+                y = node.instance.cy();
+                x = node.instance.cx();
+            } else {
+                instance = NC[nodeId];
+                y = evt.clientY - instance.cy;
+                x = evt.clientX - instance.cx;
+            }
+
             fromConnect = {
-                id: nodeId,
-                x: evt.clientX
+                id: instance.id,
+                x: x,
+                y: y
             }
         }
-        evt.preventDefault();
+
         return false;
     }
 
@@ -424,7 +441,13 @@
                 var instance = new Line(),
                     orientation = checkOrientation(fromRect, toRect);
 
-                if (orientation === 'down') {
+                if (orientation === 'down' && nf.category === 'decision') {
+                    instance.x1 = fromConnect.x;
+                    instance.y1 = fromConnect.y;
+                    instance.x2 = toRect.width() / 2 + toRect.x();
+                    instance.y2 = toRect.y();
+                }
+                else if (orientation === 'down') {
                     instance.x1 = fromRect.width() / 2 + fromRect.x();
                     instance.y1 = fromRect.height() + fromRect.y();
                     instance.x2 = toRect.width() / 2 + toRect.x();
@@ -447,16 +470,16 @@
                     id: instance.id,
                     from: fromConnect.id,
                     to: nodeId,
-                    ox2 : l.attr("x2") - toRect.x(),
-                    oy2 : l.attr("y2") - toRect.y(),
-                    ox1 : l.attr("x1") - fromRect.x(),
-                    oy1 : l.attr("y1") - fromRect.y()
+                    ox2: l.attr("x2") - toRect.x(),
+                    oy2: l.attr("y2") - toRect.y(),
+                    ox1: l.attr("x1") - fromRect.x(),
+                    oy1: l.attr("y1") - fromRect.y()
                 });
             }
         }
         fromConnect = undefined;
-        evt.preventDefault();
-        return true;
+        //evt.preventDefault();
+        return false;
     }
 
     //初始化事件
@@ -473,12 +496,15 @@
     function OnDrag(evt) {
         var self = this,
             nx = NC[self.id()];
-
+        evt.preventDefault();
         nx.disX = evt.clientX - self.x() - nx.cx;
         nx.disY = evt.clientY - self.y() - nx.cy;
         draw.on('mousemove', function (d) {
+            d.preventDefault();
             nx.move(self, d);
+            return false;
         });
+        return false;
     }
 
     //删除与当前节点的连接线
@@ -556,12 +582,12 @@
                 .append(">");
 
 
-            $.each(this.group,function(){
+            $.each(this.group, function () {
                 builder.append("<group id=\"" + this.id + "\"").
                         append(" name=\"" + this.name + "\"")
                         .append("/>");
             });
-           
+
 
             builder.append(exportChildNode(builder, this.id));
             builder.append("</" + this.category + ">");
@@ -602,7 +628,7 @@
             });
         }
 
-        var imageData=escape(JSON.stringify({
+        var imageData = escape(JSON.stringify({
             RC: RC,
             NC: nodeCollection,
             PC: pathCollection
@@ -632,7 +658,7 @@
             instance.disable = (disable || false);
             instance.draw(currentNodeId);
 
-            $.each(["to", "from"], function (i,propertyName) {
+            $.each(["to", "from"], function (i, propertyName) {
                 eachNode(instance.id, originId, propertyName);
             });
         });
@@ -682,12 +708,12 @@
     }
 
     //获取方向
-    function checkOrientation(from,to) {
+    function checkOrientation(from, to) {
         var orientation = 'down';
         if (from.y() < to.y()) {
             orientation = 'down';
         } else {
-            orientation='up'
+            orientation = 'up'
         }
         return orientation;
     }
@@ -707,7 +733,7 @@
             return this.elements.join('');
         }
     }
- 
+
     //对外提供访问接口
     window.SMF = {
         //绑定元素，并进行初始化
