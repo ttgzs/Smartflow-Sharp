@@ -5,12 +5,6 @@
  */
 (function ($) {
     var
-        //流程定义根节点
-        rootStart = '<workflow>',
-
-        //流程定义根节点闭合
-        rootEnd = '</workflow>',
-
         //存储所有节点的实例
         NC = {},
 
@@ -41,6 +35,35 @@
                 }
                 return result;
             }
+        },
+        //标签配置
+        config = {
+            //流程定义根节点
+            rootStart : '<workflow>',
+            //流程定义根节点闭合
+            rootEnd : '</workflow>',
+            //开始
+            start: '<',
+            //结束
+            end :'>',
+            //左引号
+            lQuotation: '"',
+            //右引号
+            rQuotation :'"',
+            //闭合
+            beforeClose :'</',
+            //闭合
+            afterClose : '/>',
+            //等于
+            equal:'=',
+            //本身引用
+            //空隙
+            space: ' ',
+            //参与组
+            group: 'group',
+            from :'from',
+            //跳转线
+            transition:'transition'
         };
 
     //数组添加移除方法
@@ -277,88 +300,71 @@
                 }
             });
         },
-        exportElement:function(){
+        exportElement: function () {
             var
-                //开始
-                start = '<',
-                //结束
-                end = '>',
-                //左引号
-                lQuotation = '"',
-                //右引号
-                rQuotation ='"',
-                //闭合
-                beforeClose = '</',
-                //闭合
-                afterClose = '/>',
-                //等于
-                equal = '=',
-                //本身引用
                 self = this,
-                //空隙
-                space = ' ',
-                //参与组
-                group = 'group',
-                from = 'from',
-                //跳转线
-                transition = 'transition',
                 build = new StringBuilder();
 
-            build.append(start)
+            build.append(config.start)
                 .append(self.category);
 
             eachAttributs(build, self);
-            build.append(end);
+            build.append(config.end);
 
             //参与组
             $.each(self.group, function () {
 
-                build.append(start)
-                     .append(group);
-                eachAttributs(build, this, 'group');
-                build.append(afterClose);
+                build.append(config.start)
+                     .append(config.group);
+                eachAttributs(build, this, config.group);
+                build.append(config.afterClose);
             });
 
-            var elements = findByElementId(self.id, from);
+            //导出Decision 其他元素
+            if (self.exportDecision) {
+                self.exportDecision(build);
+            }
+            
+            var elements = findByElementId(self.id, config.from);
             $.each(elements, function () {
                 if (this.from === self.id) {
                     var
                         L = LC[this.id],
                         N = NC[this.to];
 
-                    build.append(start)
-                         .append(transition)
-                         .append(space)
+                    build.append(config.start)
+                         .append(config.transition)
+                         .append(config.space)
                          .append('name')
-                         .append(equal)
-                         .append(lQuotation)
+                         .append(config.equal)
+                         .append(config.lQuotation)
                          .append(L.name)
-                         .append(rQuotation)
-                         .append(space)
+                         .append(config.rQuotation)
+                         .append(config.space)
                          .append('to')
-                         .append(equal)
-                         .append(lQuotation)
+                         .append(config.equal)
+                         .append(config.lQuotation)
                          .append(N.uniqueId)
-                         .append(rQuotation)
-                         .append(afterClose);
+                         .append(config.rQuotation)
+                         .append(config.afterClose);
                 }
             });
 
             //结束
-            build.append(beforeClose)
+            build.append(config.beforeClose)
                  .append(self.category)
-                 .append(end);
+                 .append(config.end);
 
             //属性
-            function eachAttributs(build, reference,attribute) {
+            function eachAttributs(build, reference, attribute) {
                 var propertyName = 'uniqueId'
-                $.each(['id', 'name'], function (i,p) {
-                    build.append(space)
+                $.each(['id', 'name'], function (i, p) {
+                    build.append(config.space)
                          .append(p)
-                         .append(equal)
-                         .append(lQuotation)
+                         .append(config.equal)
+                         .append(config.lQuotation)
                          .append(p === 'id' && attribute !== 'group' ? reference[propertyName] : reference[p])
-                         .append(rQuotation);
+                         .append(config.rQuotation);
                 });
             }
 
@@ -426,6 +432,55 @@
         },
         bindEvent: function (decision) {
             Decision.base.Parent.prototype.bindEvent.call(this, decision);
+        },
+        exportDecision: function (build) {
+            var self = this;
+            if (self.commad) {
+
+                build.append(config.start)
+                     .append('command')
+                     .append(config.end);
+
+                $.each(self.command, function (propertyName, value) {
+                   
+                    build.append(config.start)
+                         .append(propertyName)
+                         .append(config.end)
+                         .append(value)
+                         .append(config.beforeClose)
+                         .append(propertyName)
+                         .append(config.end);
+                });
+
+                build.append(config.beforeClose)
+                     .append('command')
+                     .append(config.end);
+            }
+
+
+            if (self.rule.length>0) {
+                var ruleName = 'rule';
+                $.each(self.rule, function () {
+                    build
+                        .append(config.start)
+                        .append(ruleName);
+                   eachAttributes(this, build);
+                   build.append(config.afterClose);
+
+                });
+            }
+            function eachAttributes(rule, build) {
+
+                $.each(['to', 'expression'], function (i,propertyName) {
+                    build.append(config.space)
+                         .append(config.propertyName)
+                         .append(config.equal)
+                         .append(config.lQuotation)
+                         .append(rule[propertyName])
+                         .append(config.rQuotation);
+
+                });
+            }
         }
     });
 
@@ -670,13 +725,13 @@
             NC[propertyName].uniqueId = generatorId();
         }
 
-        build.append(rootStart);
+        build.append(config.rootStart);
         $.each(NC, function () {
             var self = this;
             build.append(self.exportElement());
         });
 
-        build.append(rootEnd);
+        build.append(config.rootEnd);
 
         $.each(NC, function () {
             var instance = new Node();

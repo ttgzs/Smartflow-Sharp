@@ -11,14 +11,62 @@ namespace Smartflow.Integration
 {
     public partial class WorkflowDesignService
     {
-        public TreeNode GetOrganization()
+        public TreeNode GetOrganizationTree()
+        {
+            string query = "SELECT * FROM T_ORG WHERE PARENTCODE=@PARENTCODE";
+
+            TreeNode root = Connection.Query<TreeNode>(query, new
+            {
+                PARENTCODE = "0"
+
+            }).FirstOrDefault();
+
+            EachNode(root);
+
+            return root;
+        }
+
+        private void EachNode(TreeNode node)
+        {
+            string query = "SELECT * FROM T_ORG WHERE PARENTCODE=@PARENTCODE";
+
+            List<TreeNode> childNode = Connection.Query<TreeNode>(query, new
+            {
+                PARENTCODE = node.Code
+
+            }).ToList();
+
+            if (childNode.Count > 0)
+            {
+                node.Children = new List<TreeNode>();
+            }
+
+            foreach (TreeNode n in childNode)
+            {
+
+
+                EachNode(n);
+                node.Children.Add(n);
+            }
+        }
+
+
+        public IList<IEntry> GetUserByOrganizationId(string organizationCode)
         {
             return null;
         }
 
-        public IList<IEntry> GetUserByOrganizationId(string organizationId)
+
+        public IList<IEntry> GetUserList(string searchKey, string organizationCode)
         {
-            return null;
+            List<IEntry> entry = new List<IEntry>();
+            string query = " SELECT * FROM T_USER ";
+
+            List<User> userList =
+                Connection.Query<User>(query).ToList();
+
+            entry.AddRange(userList);
+            return entry;
         }
 
         public IList<IEntry> GetUserByRoleId(string roleId)

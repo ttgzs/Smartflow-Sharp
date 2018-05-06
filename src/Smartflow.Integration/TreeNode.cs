@@ -24,7 +24,7 @@ namespace Smartflow.Integration
             set;
         }
 
-        public string Value
+        public string Code
         {
             get;
             set;
@@ -35,6 +35,8 @@ namespace Smartflow.Integration
             get;
             set;
         }
+
+
 
         public List<TreeNode> Children
         {

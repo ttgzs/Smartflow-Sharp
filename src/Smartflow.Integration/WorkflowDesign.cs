@@ -38,8 +38,14 @@ namespace Smartflow.Integration
 
         public TreeNode GetOrganization()
         {
-            return null;
+            return Context.GetOrganizationTree();
         }
+
+        public IList<IEntry> GetUserList(string searchKey)
+        {
+            return Context.GetUserList(searchKey, "");
+        }
+
 
         public IList<IEntry> GetUserByOrganizationId(string organizationId)
         {

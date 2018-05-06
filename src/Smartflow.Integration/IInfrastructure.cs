@@ -16,14 +16,14 @@ namespace Smartflow.Integration
         /// 定义获取所有组织机构
         /// </summary>
         /// <returns></returns>
-        TreeNode GetOrganization();
+        TreeNode GetOrganizationTree();
 
         /// <summary>
         /// 依据组织机构标识，获取用户信息
         /// </summary>
-        /// <param name="organizationId">组织机构标识</param>
+        /// <param name="organizationCode">组织机构标识</param>
         /// <returns></returns>
-        IList<IEntry> GetUserByOrganizationId(string organizationId);
+        IList<IEntry> GetUserByOrganizationId(string organizationCode);
 
         /// <summary>
         /// 依据角色标识，获取用户信息

@@ -9,7 +9,11 @@
     <meta name="viewport" content="width=device-width" />
     <title>流程节点数据配置</title>
     <link href="~/Content/smartflow.css" rel="stylesheet" />
+    <link href="~/Content/tree/css/zTreeStyle/zTreeStyle.css" rel="stylesheet" />
+    <link href="~/Content/grid/datatables.min.css" rel="stylesheet" />
     <script src="~/Content/jquery.min.js"></script>
+    <script src="~/Content/tree/jquery.ztree.all.min.js"></script>
+    <script src="~/Content/grid/datatables.min.js"></script>
     <script src="~/Content/design.js"></script>
     <script type="text/javascript">
         $(function () {
@@ -17,45 +21,155 @@
             SMF.init();
         });
     </script>
+
+    <script type="text/javascript">
+
+
+        $(function () {
+            var treeSetting = {
+                view: {
+                    showLine: true
+                },
+                data: {
+                    simpleData: {
+                        enable: true,
+                        idKey: "Code",
+                        pIdKey: "ParentCode",
+                        rootPId: ""
+                    },
+                    key: {
+                        name: "Name",
+                        children: "Children"
+                    }
+                },
+                callback: {
+                    beforeClick: function (treeId, treeNode) {
+
+                    }
+                }
+            };
+
+            var settings = {
+                url: '@Url.Action("GetOrgTree", "WorkflowDesign")',
+                type: 'post',
+                dataType: 'json'
+            };
+
+            settings.success = function (serverData) {
+                var treeObj = $.fn.zTree.init($("#tree"), treeSetting, serverData);
+                //var treeObj = $.fn.zTree.getZTreeObj("tree");
+                var node = treeObj.getNodesByParam("Code", "000", null);
+                if (node) {
+                    treeObj.expandAll(true);
+                }
+            }
+            $.ajax(settings);
+        });
+    </script>
+
+
+    <script type="text/javascript">
+
+        $(function () {
+            var page_dt = $('#userTable').DataTable({
+                searching: true,
+                ordering: false,
+                serverSide: true,
+                lengthChange: false,
+                pagingType: "full_numbers",
+                iDisplayLength: 2, //默认显示的记录数 
+                bPaginate:true,
+                ajax: {
+                    url: '@Url.Action("GetUserList", "WorkflowDesign")',
+                    type: "POST"
+                },
+                columns: [{data:null,target:0},{ data: "Name" }]
+            });
+
+            page_dt.on('draw.dt', function () {
+                //给第一列编号
+                page_dt.column(0, { search: 'applied', order: 'applied' }).nodes().each(function (cell, i) {
+                    cell.innerHTML = i + 1;
+                });
+            });
+        });
+    </script>
+
 </head>
 <body>
     <div class="container" style="width:100%;background:#fff;padding:5px;">
-        <div class='example'>
-            <div class="tabsholder3">
-                <div class="card-tabs-bar graygreen">
-                    <a href="javascript:;" class="active">基本信息</a>
-                    <a href="javascript:;">参与角色</a>
+        <div class="tabsholder3">
+            <div class="card-tabs-bar graygreen">
+                <a href="javascript:;" class="active">基本信息</a>
+                <a href="javascript:;">参与角色</a>
+                <a href="javascript:;">参与人</a>
+                <a href="javascript:;">规则配置</a>
+            </div>
+            <div class="card-tabs-stack graygreen">
+                <div data-tab="基本信息" style="display: block;height:240px;overflow:hidden;">
+                    <table class="smartflow-table">
+                        <tr>
+                            <td style="width:60px;">名称</td>
+                            <td>
+                                <input type="text" style="width:100%;height:18px;" id="txtName" />
+                            </td>
+                        </tr>
+                    </table>
                 </div>
-                <div class="card-tabs-stack graygreen">
-                    <div data-tab="基本信息" style="display: block;height:240px;overflow:hidden;">
-                        <table class="smartflow-table">
-                            <tr>
-                                <td style="width:60px;">名称</td>
-                                <td>
-                                    <input type="text" style="width:100%;height:18px;" id="txtName" />
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                    <div data-tab="参与角色" style="display: none; height: 240px;">
-                        <table class="smartflow-table">
-                            <tr>
-                                <td>
-                                    <fieldset class="smartflow-box">
-                                        <legend>待选角色</legend>
-                                        <ul class="smartflow-list" id="roleGrid"></ul>
-                                    </fieldset>
-                                </td>
-                                <td class="smartflow-tools"></td>
-                                <td>
-                                    <fieldset class="smartflow-box">
-                                        <legend>已选角色</legend>
-                                        <ul class="smartflow-list" id="roleAssign"></ul>
-                                    </fieldset>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
+                <div data-tab="参与角色" style="display: none; height: 240px;">
+                    <table class="smartflow-table">
+                        <tr>
+                            <td>
+                                <fieldset class="smartflow-box">
+                                    <legend>待选角色</legend>
+                                    <ul class="smartflow-list" id="roleGrid"></ul>
+                                </fieldset>
+                            </td>
+                            <td class="smartflow-tools"></td>
+                            <td>
+                                <fieldset class="smartflow-box">
+                                    <legend>已选角色</legend>
+                                    <ul class="smartflow-list" id="roleAssign"></ul>
+                                </fieldset>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div data-tab="参与人" style="display: none; height: 240px;">
+                    <table class="smartflow-table">
+                        <tr>
+                            <td class="smartflow-box" style="height:240px;width:120px;">
+                                <ul id="tree" class="ztree" style="width:100%; overflow:auto;"></ul>
+                            </td>
+                            <td style="width:10px;"></td>
+                            <td class="smartflow-box" style="height:240px">
+                                <table id="userTable" class="display" style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th>序号</th>
+                                            <th>姓名</th>
+                                        </tr>
+                                    </thead>
+                                    <tfoot>
+                                    </tfoot>
+                                </table>
+                            </td>
+                            <td class="smartflow-box" style="height:240px;width:80px;"></td>
+                        </tr>
+                    </table>
+                </div>
+                <div data-tab="规则配置" style="display: none; height: 240px;">
+                    <table class="smartflow-table">
+                        <tr>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                        </tr>
+                    </table>
                 </div>
             </div>
         </div>

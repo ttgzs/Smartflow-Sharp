@@ -38,7 +38,7 @@ text {font-size: 14px;text-anchor: middle; dominant-baseline: middle;pointer-eve
 }
 
 .smartflow-box{
-    border:solid 1px #2CC185;
+    border:solid 1px #eee;
     vertical-align:top;
     width:280px;
 }
@@ -50,7 +50,7 @@ text {font-size: 14px;text-anchor: middle; dominant-baseline: middle;pointer-eve
 }
 
 .smartflow-list{
-    height:200px;
+    height:230px;
     overflow:auto;
     margin-top:-12px;
 }
@@ -65,7 +65,7 @@ text {font-size: 14px;text-anchor: middle; dominant-baseline: middle;pointer-eve
 }
 
 .smartflow-list li:first-child {
-    padding-top:5px;
+    margin-top:10px;
 }
 
 
@@ -120,10 +120,10 @@ text {font-size: 14px;text-anchor: middle; dominant-baseline: middle;pointer-eve
                     font-size: 14px;
                 }
 
-        div.card-tabs-stack div[data-tab] {
+        .card-tabs-stack div[data-tab] {
             display: none;
             border-top: none;
-            padding: 10px;
+            padding: 5px;
         }
 
             div.card-tabs-stack div[data-tab]:first-child {
@@ -153,7 +153,7 @@ text {font-size: 14px;text-anchor: middle; dominant-baseline: middle;pointer-eve
                 }
 
         div.card-tabs-stack.graygreen div[data-tab] {
-            padding: 10px;
+            /*padding: 10px;*/
            /* background-color: #fafafa;*/
             /*border: 1px solid #e5e5e5;*/
             border-top: none;
