@@ -125,8 +125,8 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Content Include="Content\common.js" />
     <Content Include="Content\design.js" />
-    <Content Include="Content\grid\datatables.min.css" />
-    <Content Include="Content\grid\datatables.min.js" />
+    <Content Include="Content\grid\grid.css" />
+    <Content Include="Content\grid\grid.js" />
     <Content Include="Content\jquery.min.js" />
     <Content Include="Content\tree\jquery.ztree.all.min.js" />
     <Content Include="Content\json2.js" />

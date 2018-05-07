@@ -25,15 +25,12 @@ namespace Smartflow.Web.Design.Controllers
             return Json(designService.GetOrganization());
         }
 
-        public JsonResult GetUserList(int draw,int length,int start,string searchKey)
+        public JsonResult GetUserList(int pageIndex,int pageSize,string searchKey)
         {
             return Json(new
             {
-                draw = 1,
-                recordsTotal = 4,
-                recordsFiltered = 4,
-                data = designService.GetUserList(searchKey)
-
+                rows= designService.GetUserList(searchKey),
+                records = 4
             });
 
         }

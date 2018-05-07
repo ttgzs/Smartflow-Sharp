@@ -10,10 +10,10 @@
     <title>流程节点数据配置</title>
     <link href="~/Content/smartflow.css" rel="stylesheet" />
     <link href="~/Content/tree/css/zTreeStyle/zTreeStyle.css" rel="stylesheet" />
-    <link href="~/Content/grid/datatables.min.css" rel="stylesheet" />
+    <link href="~/Content/grid/grid.css" rel="stylesheet" />
     <script src="~/Content/jquery.min.js"></script>
     <script src="~/Content/tree/jquery.ztree.all.min.js"></script>
-    <script src="~/Content/grid/datatables.min.js"></script>
+    <script src="~/Content/grid/grid.js"></script>
     <script src="~/Content/design.js"></script>
     <script type="text/javascript">
         $(function () {
@@ -71,27 +71,35 @@
     <script type="text/javascript">
 
         $(function () {
-            var page_dt = $('#userTable').DataTable({
-                searching: true,
-                ordering: false,
-                serverSide: true,
-                lengthChange: false,
-                pagingType: "full_numbers",
-                iDisplayLength: 2, //默认显示的记录数 
-                bPaginate:true,
-                ajax: {
-                    url: '@Url.Action("GetUserList", "WorkflowDesign")',
-                    type: "POST"
+
+            var rowIndex = 1;
+            $("#data_grid").grid({
+                //width: 600,
+                //height: 300,
+                keepHeight: true,				//保持最后一页高度
+                dataSource: '@Url.Action("GetUserList", "WorkflowDesign")',	
+                columns: [
+                    { field: 'ID', title: '主键', hidden: true,className: "ids", align: "center" },
+                    { field: 'Name', title: '姓名', Width: 150, align: 'center' },
+                    { field: 'OrgName', title: '部门', Width: 120, align: 'center' },
+
+                ],
+                // 自定义formatter
+                formatters: {
+                   
                 },
-                columns: [{data:null,target:0},{ data: "Name" }]
+                editRow: function (e, row) {
+                    alert('edit row ' + row.id);
+                },
+                selectable: 'row multiple',		//是否可以选中行
+                pageable: { pageSize: 10 },		//分页参数
+                onDblclick: function (e) {
+                    console.log(e)
+                }
             });
 
-            page_dt.on('draw.dt', function () {
-                //给第一列编号
-                page_dt.column(0, { search: 'applied', order: 'applied' }).nodes().each(function (cell, i) {
-                    cell.innerHTML = i + 1;
-                });
-            });
+
+
         });
     </script>
 
@@ -143,13 +151,25 @@
                             </td>
                             <td style="width:10px;"></td>
                             <td class="smartflow-box" style="height:240px">
-                                <table id="userTable" class="display" style="width:100%">
+                                <table id="userTable" class="display compact" style="width:100%">
                                     <thead>
-                                        <tr>
-                                            <th>序号</th>
-                                            <th>姓名</th>
-                                        </tr>
                                     </thead>
+
+                                    <tbody>
+
+                                        <tr>
+
+                                            <td>
+
+                                                <div id="data_grid"></div>
+
+                                            </td>
+
+                                            </tr>
+
+
+                                    </tbody>
+
                                     <tfoot>
                                     </tfoot>
                                 </table>

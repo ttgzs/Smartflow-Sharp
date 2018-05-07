@@ -162,13 +162,10 @@
                 l = draw.line(self.x1, self.y1, self.x2, self.y2);
             l.stroke({ width: self.border, color: self.bgColor });
             self.brush = draw.text(self.name);
-
-            //var orientation = this.orientation = 'down'?'90deg':'180deg';
-
-            //l.marker('start', 10, 10, function (add) {
-            //    add.path('M0,0 L0,6 L6,3 z').fill("#f00");
-            //    this.attr({ refX: 0, refY: 3, orient: orientation });
-            //});
+            l.marker('end', 10, 10, function (add) {
+                add.path('M0,0 L0,6 L6,3 z').fill("#f00");
+                this.attr({refX:6, refY:3, orient: 'auto'});
+            });
 
             self.brush.attr({ x: (self.x2 - self.x1) / 2 + self.x1, y: (self.y2 - self.y1) / 2 + self.y1 });
             self.id = l.id();
@@ -606,7 +603,7 @@
                     instance.y2 = toRect.y();
 
                 } else {
-                    instance.x1 = fromConnect.x - nf.cx;
+                    instance.x1 = fromConnect.x;
                     instance.y1 = fromRect.y();
                     instance.x2 = evt.clientX - nt.cx;
                     instance.y2 = toRect.height() + toRect.y();
