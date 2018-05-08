@@ -125,8 +125,27 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Content Include="Content\common.js" />
     <Content Include="Content\design.js" />
-    <Content Include="Content\grid\grid.css" />
-    <Content Include="Content\grid\grid.js" />
+    <Content Include="Content\index.js" />
+    <Content Include="Content\jqgrid\css\redmond\images\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="Content\jqgrid\css\redmond\images\ui-bg_flat_55_fbec88_40x100.png" />
+    <Content Include="Content\jqgrid\css\redmond\images\ui-bg_glass_75_d0e5f5_1x400.png" />
+    <Content Include="Content\jqgrid\css\redmond\images\ui-bg_glass_85_dfeffc_1x400.png" />
+    <Content Include="Content\jqgrid\css\redmond\images\ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="Content\jqgrid\css\redmond\images\ui-bg_gloss-wave_55_5c9ccc_500x100.png" />
+    <Content Include="Content\jqgrid\css\redmond\images\ui-bg_inset-hard_100_f5f8f9_1x100.png" />
+    <Content Include="Content\jqgrid\css\redmond\images\ui-bg_inset-hard_100_fcfdfd_1x100.png" />
+    <Content Include="Content\jqgrid\css\redmond\images\ui-icons_217bc0_256x240.png" />
+    <Content Include="Content\jqgrid\css\redmond\images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="Content\jqgrid\css\redmond\images\ui-icons_469bdd_256x240.png" />
+    <Content Include="Content\jqgrid\css\redmond\images\ui-icons_6da8d5_256x240.png" />
+    <Content Include="Content\jqgrid\css\redmond\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Content\jqgrid\css\redmond\images\ui-icons_d8e7f3_256x240.png" />
+    <Content Include="Content\jqgrid\css\redmond\images\ui-icons_f9bd01_256x240.png" />
+    <Content Include="Content\jqgrid\css\redmond\jquery-ui-1.8.16.custom.css" />
+    <Content Include="Content\jqgrid\css\ui.jqgrid.css" />
+    <Content Include="Content\jqgrid\js\grid.locale-cn.js" />
+    <Content Include="Content\jqgrid\js\jquery.jqGrid.src.js" />
+    <Content Include="Content\jquery-1.7.1.js" />
     <Content Include="Content\jquery.min.js" />
     <Content Include="Content\tree\jquery.ztree.all.min.js" />
     <Content Include="Content\json2.js" />
@@ -206,6 +225,22 @@
   <ItemGroup>
     <Content Include="Content\tree\css\awesomeStyle\awesome.less" />
     <Content Include="Content\tree\css\awesomeStyle\fa.less" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\jqgrid\css\redmond\CVS\Entries" />
+    <Content Include="Content\jqgrid\css\redmond\CVS\Entries.Extra" />
+    <Content Include="Content\jqgrid\css\redmond\CVS\Entries.Extra.Old" />
+    <Content Include="Content\jqgrid\css\redmond\CVS\Entries.Old" />
+    <Content Include="Content\jqgrid\css\redmond\CVS\Repository" />
+    <Content Include="Content\jqgrid\css\redmond\CVS\Root" />
+    <Content Include="Content\jqgrid\css\redmond\CVS\TortoiseCVS.Status" />
+    <Content Include="Content\jqgrid\css\redmond\images\CVS\Entries" />
+    <Content Include="Content\jqgrid\css\redmond\images\CVS\Entries.Extra" />
+    <Content Include="Content\jqgrid\css\redmond\images\CVS\Entries.Extra.Old" />
+    <Content Include="Content\jqgrid\css\redmond\images\CVS\Entries.Old" />
+    <Content Include="Content\jqgrid\css\redmond\images\CVS\Repository" />
+    <Content Include="Content\jqgrid\css\redmond\images\CVS\Root" />
+    <Content Include="Content\jqgrid\css\redmond\images\CVS\TortoiseCVS.Status" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

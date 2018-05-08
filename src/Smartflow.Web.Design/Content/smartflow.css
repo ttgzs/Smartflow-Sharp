@@ -1,4 +1,4 @@
-﻿ html, body, div, ul,fieldset {margin: 0;padding: 0;box-sizing: border-box; }
+﻿ html, body, div, ul,fieldset {margin: 0;padding: 0; }
  body{font-size:14px;font-family:"Lucida Grande", Lucida Sans Unicode,Hiragino Sans GB, WenQuanYi Micro Hei, Verdana, Aril, sans-serif;}
  fieldset legend{margin:0;padding:0;color:#2e7deb;margin-left:5px;}
  ul {list-style-type: none;}

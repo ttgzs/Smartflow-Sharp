@@ -25,7 +25,7 @@ namespace Smartflow.Web.Design.Controllers
             return Json(designService.GetOrganization());
         }
 
-        public JsonResult GetUserList(int pageIndex,int pageSize,string searchKey)
+        public JsonResult GetUserList(int page,int rows,string searchKey)
         {
             return Json(new
             {
