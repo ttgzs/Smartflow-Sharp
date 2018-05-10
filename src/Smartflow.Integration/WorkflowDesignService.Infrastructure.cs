@@ -43,27 +43,40 @@ namespace Smartflow.Integration
 
             foreach (TreeNode n in childNode)
             {
-
-
                 EachNode(n);
                 node.Children.Add(n);
             }
         }
-
 
         public IList<IEntry> GetUserByOrganizationId(string organizationCode)
         {
             return null;
         }
 
-
-        public IList<IEntry> GetUserList(string searchKey, string organizationCode)
+        public IList<IEntry> GetUserList(int page, int rows, out int total, Dictionary<string, object> query)
         {
             List<IEntry> entry = new List<IEntry>();
-            string query = " SELECT * FROM T_USER ";
+            string pageQuery = "SELECT Top {0} ID,UserName,OrgCode,OrgName,EmployeeName  FROM T_USER Where  ID Not in (Select Top ({0}*({1}-1)) ID  From T_USER  Where 1=1 {2} Order by ID) {2}";
+            string totalSql = " SELECT * FROM T_USER  WHERE 1=1 ";
+            StringBuilder whereStr = new StringBuilder();
+            if (query.ContainsKey("code"))
+            {
+                whereStr.AppendFormat(" AND OrgCode Like '{0}%'", query["code"]);
+            }
 
+            if (query.ContainsKey("key"))
+            {
+                whereStr.AppendFormat(" AND EmployeeName Like '{0}%'", query["key"]);
+            }
+
+            if (query.ContainsKey("userIdStr"))
+            {
+                whereStr.AppendFormat(" AND ID NOT IN ({0}) ", query["userIdStr"]);
+            }
+
+            total = Connection.ExecuteScalar<int>(string.Format(" {0}{1} ", totalSql, whereStr));
             List<User> userList =
-                Connection.Query<User>(query).ToList();
+                Connection.Query<User>(string.Format(pageQuery, rows, page, whereStr)).ToList();
 
             entry.AddRange(userList);
             return entry;
@@ -85,6 +98,15 @@ namespace Smartflow.Integration
             }
 
             entry.AddRange(Connection.Query<Role>(query).ToList());
+            return entry;
+        }
+
+        public IList<IEntry> GetConfigs()
+        {
+            List<IEntry> entry = new List<IEntry>();
+            string query = " SELECT * FROM T_CONFIG ";
+
+            entry.AddRange(Connection.Query<Config>(query).ToList());
             return entry;
         }
     }

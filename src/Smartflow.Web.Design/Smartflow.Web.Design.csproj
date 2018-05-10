@@ -125,7 +125,6 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Content Include="Content\common.js" />
     <Content Include="Content\design.js" />
-    <Content Include="Content\index.js" />
     <Content Include="Content\jqgrid\css\redmond\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\jqgrid\css\redmond\images\ui-bg_flat_55_fbec88_40x100.png" />
     <Content Include="Content\jqgrid\css\redmond\images\ui-bg_glass_75_d0e5f5_1x400.png" />
@@ -145,7 +144,6 @@
     <Content Include="Content\jqgrid\css\ui.jqgrid.css" />
     <Content Include="Content\jqgrid\js\grid.locale-cn.js" />
     <Content Include="Content\jqgrid\js\jquery.jqGrid.src.js" />
-    <Content Include="Content\jquery-1.7.1.js" />
     <Content Include="Content\jquery.min.js" />
     <Content Include="Content\tree\jquery.ztree.all.min.js" />
     <Content Include="Content\json2.js" />

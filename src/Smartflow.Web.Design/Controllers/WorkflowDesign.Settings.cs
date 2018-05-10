@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 
 using Smartflow.Integration;
+using Smartflow.Integration.Models;
 
 namespace Smartflow.Web.Design.Controllers
 {
@@ -25,14 +26,36 @@ namespace Smartflow.Web.Design.Controllers
             return Json(designService.GetOrganization());
         }
 
-        public JsonResult GetUserList(int page,int rows,string searchKey)
+        public JsonResult GetConfigs()
         {
+            return Json(designService.GetConfigs());
+        }
+
+        public JsonResult GetUserList(int page, int rows, string code, string searchKey, string userIdStr)
+        {
+            Dictionary<string, object> queryArg = new Dictionary<string, object>();
+            if (!string.IsNullOrEmpty(code) && "000" != code)
+            {
+                queryArg.Add("code", code);
+            }
+
+            if (!String.IsNullOrEmpty(searchKey))
+            {
+                queryArg.Add("key", searchKey);
+            }
+
+            if (!String.IsNullOrEmpty(userIdStr))
+            {
+                queryArg.Add("userIdStr", userIdStr);
+            }
+
+            int total;
+            IList<IEntry> userList = designService.GetUserList(page, rows, out total, queryArg);
             return Json(new
             {
-                rows= designService.GetUserList(searchKey),
-                records = 4
+                rows = userList,
+                records = total
             });
-
         }
     }
 }

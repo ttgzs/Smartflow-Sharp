@@ -44,6 +44,7 @@
     <Compile Include="IEntry.cs" />
     <Compile Include="IInfrastructure.cs" />
     <Compile Include="IWorkflowDesignService.cs" />
+    <Compile Include="Models\Config.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\WorkflowXml.cs" />
     <Compile Include="SqlHelper.cs" />

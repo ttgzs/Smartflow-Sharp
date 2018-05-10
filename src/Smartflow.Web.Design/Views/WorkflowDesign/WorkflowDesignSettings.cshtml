@@ -14,10 +14,9 @@
     <link href="~/Content/jqgrid/css/redmond/jquery-ui-1.8.16.custom.css" rel="stylesheet" />
     <script src="~/Content/jquery.min.js"></script>
     <script src="~/Content/tree/jquery.ztree.all.min.js"></script>
-    <script src="~/Content/design.js"></script>
+
     <script src="~/Content/jqgrid/js/jquery.jqGrid.src.js"></script>
     <script src="~/Content/jqgrid/js/grid.locale-cn.js"></script>
-    <script src="~/Content/index.js"></script>
     <style type="text/css">
         #t_userlist {
             border-top: none;
@@ -52,18 +51,22 @@
         .ui-jqgrid-htable {
             border-collapse: collapse;
         }
+
+        .tabsholder3 {
+            height: 100%;
+        }
     </style>
     <script type="text/javascript">
         $(function () {
             //初始化
             SMF.init();
+            loadTree();
+            loadSelect();
         });
-    </script>
-
-    <script type="text/javascript">
 
 
-        $(function () {
+        function loadTree() {
+
             var treeSetting = {
                 view: {
                     showLine: true
@@ -81,8 +84,9 @@
                     }
                 },
                 callback: {
-                    beforeClick: function (treeId, treeNode) {
-
+                    onClick: function (treeId, treeNode, data) {
+                        // alert(data.Code);
+                        doSearch(data);
                     }
                 }
             };
@@ -102,50 +106,72 @@
                 }
             }
             $.ajax(settings);
-        });
-    </script>
 
+        }
 
-    <script type="text/javascript">
+        function doSearch(data) {
+            var search = $("#txtSearchKey").val(),
+                postSettings = {},
+                o = {};
 
-        @*$(function () {
+            if (search) {
+                o.searchKey = search;
+            }
 
-            var rowIndex = 1;
-            $("#data_grid").grid({
-                //width: 600,
-                //height: 300,
-                keepHeight: true,				//保持最后一页高度
-                dataSource: '@Url.Action("GetUserList", "WorkflowDesign")',
-                columns: [
-                    { field: 'ID', title: '主键', hidden: true,className: "ids", align: "center" },
-                    { field: 'Name', title: '姓名', Width: 150, align: 'center' },
-                    { field: 'OrgName', title: '部门', Width: 120, align: 'center' },
+            var zTreeObj = $.fn.zTree.getZTreeObj("tree"),
+                selectedNodes = zTreeObj.getSelectedNodes();
 
-                ],
-                // 自定义formatter
-                formatters: {
+            if (selectedNodes.length > 0) {
+                var node = selectedNodes[0];
+                data = (data || node);
+                o.code = data.Code;
+            }
 
-                },
-                editRow: function (e, row) {
-                    alert('edit row ' + row.id);
-                },
-                selectable: 'row multiple',		//是否可以选中行
-                pageable: { pageSize: 10 },		//分页参数
-                onDblclick: function (e) {
-                    console.log(e)
-                }
+            var eleArrayId = [];
+
+            $("#userAssign li").each(function () {
+                var id = $(this).attr('id'),
+                    text = $(this).text();
+
+                eleArrayId.push(id);
             });
 
+            if (eleArrayId.length > 0) {
+                o.userIdStr = eleArrayId.join(",");
+            }
 
+            postSettings.postData = o;
+            $("#userlist").jqGrid('setGridParam', postSettings).trigger("reloadGrid");
+        }
 
-        });*@
+        function loadSelect() {
+            var settings = {
+                url: '@Url.Action("GetConfigs", "WorkflowDesign")',
+                type: 'post',
+                dataType: 'json'
+            };
+
+            settings.success = function (serverData) {
+            
+                var ele = [];
+                $.each(serverData, function () {
+
+                    ele.push("<option value='"+this.ID+"'>" + this.Name + "</option>");
+
+                });
+
+                $("#dropConfig").html(ele.join());
+                
+            }
+            $.ajax(settings);
+        }
+
     </script>
-
 </head>
 <body>
-    <div class="container" style="width:100%;background:#fff;padding:5px;">
+    <div class="container" style="width:100%;background:#fff;padding-top:5px;">
         <div class="tabsholder3">
-            <div class="card-tabs-bar graygreen">
+            <div class="card-tabs-bar graygreen" style="padding-left:5px;">
                 <a href="javascript:;" class="active">基本信息</a>
                 <a href="javascript:;">参与角色</a>
                 <a href="javascript:;">参与人</a>
@@ -165,18 +191,12 @@
                 <div data-tab="参与角色" style="display: none; height: 240px;">
                     <table class="smartflow-table">
                         <tr>
-                            <td>
-                                <fieldset class="smartflow-box">
-                                    <legend>待选角色</legend>
-                                    <ul class="smartflow-list" id="roleGrid"></ul>
-                                </fieldset>
+                            <td class="smartflow-box">
+                                <ul class="smartflow-list" id="roleGrid"></ul>
                             </td>
-                            <td class="smartflow-tools"></td>
-                            <td>
-                                <fieldset class="smartflow-box">
-                                    <legend>已选角色</legend>
-                                    <ul class="smartflow-list" id="roleAssign"></ul>
-                                </fieldset>
+                            <td class="smartflow-tools" style="width:10px;"></td>
+                            <td class="smartflow-box">
+                                <ul class="smartflow-list" id="roleAssign"></ul>
                             </td>
                         </tr>
                     </table>
@@ -184,27 +204,50 @@
                 <div data-tab="参与人" style="display: none; height: 240px;">
                     <table class="smartflow-table">
                         <tr>
-                            <td class="smartflow-box" style="height:240px;width:160px;">
+                            <td class="smartflow-box" style="width:160px;">
                                 <ul id="tree" class="ztree" style="height:100%; overflow:auto;width:160px;"></ul>
                             </td>
                             <td>
                                 <table id="userlist" class="table"></table>
                                 <div id="pager"></div>
                             </td>
-                            <td class="smartflow-box" style="height:240px;width:80px;"></td>
+                            <td class="smartflow-box">
+                                <ul class="smartflow-list" id="userAssign"></ul>
+                            </td>
                         </tr>
                     </table>
                 </div>
                 <div data-tab="规则配置" style="display: none; height: 240px;">
                     <table class="smartflow-table">
                         <tr>
-                            <td></td>
+                            <td>
+                                <label for="dropConfig">数据源</label>
+                                <select id="dropConfig"></select>
+                            </td>
                         </tr>
                         <tr>
-                            <td></td>
+                            <td>
+                                <label for="txtSql">SQL脚本</label>
+                                <input type="text" id="txtSql" />
+                            </td>
                         </tr>
                         <tr>
-                            <td></td>
+                            <td>
+                                <ul>
+                                    <li>
+                                        <label for="txtkjxxzx">科技信息中心</label>
+                                        <input type="text" id="txtkjxxzx" />
+                                    <li>
+                                    <li>
+                                        <label for="bmb">保密办</label>
+                                        <input type="text" id="txtbmb" />
+                                    <li>
+                                    <li>
+                                        <label for="txtbzb">保障部</label>
+                                        <input type="text" id="txtbzb" />
+                                    <li>
+                                </ul>
+                            </td>
                         </tr>
                     </table>
                 </div>
@@ -219,10 +262,12 @@
                     <input type="text" id="txtSearchKey" class="searchBar" placeholder="用户名称" />
                 </td>
                 <td style="vertical-align:top;">
-                    <input type="button" value="搜索" />
+                    <input type="button" value="搜索" id="btnSearch" />
                 </td>
             </tr>
         </table>
     </script>
+    <script src="~/Content/design.js"></script>
 </body>
+
 </html>

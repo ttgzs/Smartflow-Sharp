@@ -41,9 +41,9 @@ namespace Smartflow.Integration
             return Context.GetOrganizationTree();
         }
 
-        public IList<IEntry> GetUserList(string searchKey)
+        public IList<IEntry> GetUserList(int pageIndex, int pageSize, out int total, Dictionary<string, object> query)
         {
-            return Context.GetUserList(searchKey, "");
+            return Context.GetUserList(pageIndex, pageSize,out total, query);
         }
 
 
@@ -60,6 +60,11 @@ namespace Smartflow.Integration
         public IList<IEntry> GetRole(string roleIds)
         {
             return Context.GetRole(roleIds);
+        }
+
+        public IList<IEntry> GetConfigs()
+        {
+            return Context.GetConfigs();
         }
     }
 }

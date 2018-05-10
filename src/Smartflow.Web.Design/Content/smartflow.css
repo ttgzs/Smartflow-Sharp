@@ -20,10 +20,6 @@ text {font-size: 14px;text-anchor: middle; dominant-baseline: middle;pointer-eve
     width:100%;
 }
 
-.smartflow-table td{
-    line-height:28px;
-}
-
 .smartflow-table td input{
     padding-left:2px;
 }
@@ -50,23 +46,16 @@ text {font-size: 14px;text-anchor: middle; dominant-baseline: middle;pointer-eve
 }
 
 .smartflow-list{
-    height:230px;
+    height:240px;
     overflow:auto;
-    margin-top:-12px;
 }
 
-.smartflow-box legend{
-  font-weight:bold;
-}
 
 .smartflow-list li{
    padding-left:5px;
    line-height:25px;
 }
 
-.smartflow-list li:first-child {
-    margin-top:10px;
-}
 
 
 .smartflow-list li:hover{
@@ -124,6 +113,7 @@ text {font-size: 14px;text-anchor: middle; dominant-baseline: middle;pointer-eve
             display: none;
             border-top: none;
             padding: 5px;
+            padding-bottom:0;
         }
 
             div.card-tabs-stack div[data-tab]:first-child {

@@ -70,7 +70,7 @@
                     var frameContent = getDOMFrame(dom),
                         url = '@Url.Action("GetRole", "WorkflowDesign")';
 
-                    frameContent.SMF.setSettings(nx.name, nx.group, url);
+                    frameContent.SMF.setSettings(nx.name, nx.group || [], nx.actors || [], url);
                 },
                 yes: function (index, dom) {
                     var frameContent = getDOMFrame(dom),
@@ -78,8 +78,10 @@
                     if (settings.name) {
                         nx.name = settings.name;
                         nx.brush.text(nx.name);
-                        nx.group = settings.group || [];
                     }
+
+                    nx.group = settings.group || [];
+                    nx.actors = settings.actors || [];
                     layer.close(index);
                 },
                 btn2: function () {
