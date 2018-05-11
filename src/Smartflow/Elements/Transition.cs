@@ -30,7 +30,7 @@ namespace Smartflow.Elements
             get;
             set;
         }
-     
+
         [XmlAttribute("to")]
         public long TO
         {
@@ -38,18 +38,25 @@ namespace Smartflow.Elements
             set;
         }
 
+        [XmlAttribute("expression")]
+        public string EXPRESSION
+        {
+            get;
+            set;
+        }
+
         internal override void Persistent()
         {
-            string sql = "INSERT INTO T_TRANSITION(NID,ID,RNID,NAME,[TO],[FROM],INSTANCEID) VALUES(@NID,@ID,@RNID,@NAME,@TO,@FROM,@INSTANCEID)";
+            string sql = "INSERT INTO T_TRANSITION(NID,RNID,NAME,[TO],[FROM],INSTANCEID,EXPRESSION) VALUES(@NID,@RNID,@NAME,@TO,@FROM,@INSTANCEID,@EXPRESSION)";
             Connection.Execute(sql, new
             {
-                NID=Guid.NewGuid().ToString(),
-                ID = ID,
+                NID = Guid.NewGuid().ToString(),
                 RNID = RNID,
                 NAME = NAME,
                 TO = TO,
-                FROM=FROM,
-                INSTANCEID = INSTANCEID
+                FROM = FROM,
+                INSTANCEID = INSTANCEID,
+                EXPRESSION = EXPRESSION
             });
         }
     }

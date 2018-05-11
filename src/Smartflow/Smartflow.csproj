@@ -54,7 +54,6 @@
     <Compile Include="IRelationShip.cs" />
     <Compile Include="Elements\Node.cs" />
     <Compile Include="Elements\Group.cs" />
-    <Compile Include="Elements\Rule.cs" />
     <Compile Include="Elements\Start.cs" />
     <Compile Include="Elements\Transition.cs" />
     <Compile Include="Elements\Workflow.cs" />

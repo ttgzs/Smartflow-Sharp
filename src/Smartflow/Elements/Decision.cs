@@ -19,7 +19,6 @@ using Dapper;
 namespace Smartflow.Elements
 {
     [XmlInclude(typeof(Command))]
-    [XmlInclude(typeof(List<Rule>))]
     [XmlInclude(typeof(List<Transition>))]
     public class Decision : Node
     {
@@ -30,13 +29,6 @@ namespace Smartflow.Elements
 
         [XmlElement("command")]
         public Command Command
-        {
-            get;
-            set;
-        }
-
-        [XmlElement("rule")]
-        public List<Rule> Rules
         {
             get;
             set;
@@ -52,15 +44,6 @@ namespace Smartflow.Elements
                 Command.INSTANCEID = INSTANCEID;
                 Command.RNID = NID;
                 Command.Persistent();
-            }
-            if (Rules != null)
-            {
-                foreach (Rule r in Rules)
-                {
-                    r.INSTANCEID = INSTANCEID;
-                    r.RNID = NID;
-                    r.Persistent();
-                }
             }
         }
     }

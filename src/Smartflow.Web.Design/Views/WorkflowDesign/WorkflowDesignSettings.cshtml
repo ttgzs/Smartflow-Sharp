@@ -152,16 +152,12 @@
             };
 
             settings.success = function (serverData) {
-            
                 var ele = [];
                 $.each(serverData, function () {
-
-                    ele.push("<option value='"+this.ID+"'>" + this.Name + "</option>");
-
+                    var data=JSON.stringify(this);
+                    ele.push("<option data='" + escape(data) + "' value='"+this.ID+"'>" + this.Name + "</option>");
                 });
-
                 $("#dropConfig").html(ele.join());
-                
             }
             $.ajax(settings);
         }
@@ -233,20 +229,7 @@
                         </tr>
                         <tr>
                             <td>
-                                <ul>
-                                    <li>
-                                        <label for="txtkjxxzx">科技信息中心</label>
-                                        <input type="text" id="txtkjxxzx" />
-                                    <li>
-                                    <li>
-                                        <label for="bmb">保密办</label>
-                                        <input type="text" id="txtbmb" />
-                                    <li>
-                                    <li>
-                                        <label for="txtbzb">保障部</label>
-                                        <input type="text" id="txtbzb" />
-                                    <li>
-                                </ul>
+                                <ul id="ruleList"></ul>
                             </td>
                         </tr>
                     </table>

@@ -44,8 +44,6 @@ namespace Smartflow
         public Transition GetTransition()
         {
             Command cmd = GetExecuteCmd();
-            List<Smartflow.Elements.Rule> rules = GetRuleList();
-
             IDbConnection connect = DapperFactory.CreateConnection(cmd.DBCATEGORY, cmd.CONNECTION);
             DataTable resultSet = new DataTable(Guid.NewGuid().ToString());
             using (IDataReader reader = connect.ExecuteReader(cmd.Text, new { INSTANCEID = INSTANCEID }))
@@ -54,21 +52,20 @@ namespace Smartflow
                 reader.Close();
             }
 
-            long transitionID =0;
+            Transition instance = null;
+            List<Transition> transitions = QueryWorkflowNode(NID);
             if (resultSet.Rows.Count > 0)
             {
-                foreach (Smartflow.Elements.Rule rule in rules)
+                foreach (Transition transition in transitions)
                 {
-                    if (resultSet.Select(rule.Expression).Length > 0)
+                    if (resultSet.Select(transition.EXPRESSION).Length > 0)
                     {
-                        transitionID = rule.TO;
+                        instance = transition;
                         break;
                     }
                 }
             }
-
-            List<Transition> transitions =QueryWorkflowNode(NID);
-            return transitions.FirstOrDefault(t => t.ID == transitionID);
+            return instance;
         }
 
         /// <summary>
@@ -81,18 +78,6 @@ namespace Smartflow
 
             return Connection.Query<Command>(query, new { RNID = NID })
                   .FirstOrDefault();
-        }
-
-        /// <summary>
-        /// 获取规则列表，规则中定义表达式，并指定跳转跳线
-        /// </summary>
-        /// <returns>规则列表</returns>
-        protected List<Smartflow.Elements.Rule> GetRuleList()
-        {
-            string query = "SELECT * FROM T_RULE WHERE RNID=@RNID";
-
-            return Connection.Query<Smartflow.Elements.Rule>(query, new { RNID = NID })
-                  .ToList();
         }
     }
 }

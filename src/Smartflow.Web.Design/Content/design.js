@@ -145,7 +145,8 @@
     function getSettings() {
         var settings = {},
             roleArray = [],
-            actorArray = [];
+            actorArray = [],
+            expressions=[];
 
         settings.name = $("#txtName").val();
 
@@ -157,16 +158,31 @@
             actorArray.push({ id: $(this).attr("id"), name: $(this).text() });
         });
 
+        $("#ruleList li").each(function () {
+            var input = $(this).find("input");
+            expressions.push({ id: input.attr("id"), expression: input.val() });
+        });
+
+        settings.expressions = expressions;
         settings.actors = actorArray;
         settings.group = roleArray;
         return settings;
+
     }
 
-    function setSettings(name, group, actors, url) {
+    function setSettings(url, name, group, actors, lineCollection) {
         $("#txtName").val(name);
         loadRoleGrid(group, url);
-
         loadUserGrid(actors);
+
+        if (lineCollection.length > 0) {
+            var unqiueId='lineTo';
+            var ruleArray = [];
+            $.each(lineCollection, function (i) {
+                ruleArray.push("<li><label for='" +this.id+ "'>"+this.name+"</label><input type='text' value='"+this.expression+"' id='" + this.id + "' /></li>");
+            });
+            $("#ruleList").html(ruleArray.join(""));
+        }
     }
 
     window.SMF = {

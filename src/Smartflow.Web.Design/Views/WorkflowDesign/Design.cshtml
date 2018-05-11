@@ -69,8 +69,7 @@
                 success: function (dom, index) {
                     var frameContent = getDOMFrame(dom),
                         url = '@Url.Action("GetRole", "WorkflowDesign")';
-
-                    frameContent.SMF.setSettings(nx.name, nx.group || [], nx.actors || [], url);
+                    frameContent.SMF.setSettings(url, nx.name, nx.group || [], nx.actors || [], nx.getTransitions());
                 },
                 yes: function (index, dom) {
                     var frameContent = getDOMFrame(dom),
@@ -80,8 +79,9 @@
                         nx.brush.text(nx.name);
                     }
 
-                    nx.group = settings.group || [];
-                    nx.actors = settings.actors || [];
+                    nx.group = settings.group;
+                    nx.actors = settings.actors;
+                    nx.setExpression(settings.expressions);
                     layer.close(index);
                 },
                 btn2: function () {

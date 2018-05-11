@@ -152,6 +152,10 @@
         this.y2 = 0;
         this.border = 3;
         this.orientation = 'down';
+
+
+        /*表达式*/
+        this.expression='';
         Line.base.Constructor.call(this, "line", "line");
     }
 
@@ -206,14 +210,25 @@
         this.cy = 0;
         this.disX = 0;
         this.disY = 0;
-        this.vertical = 0;
-
         this.group = [];//参与组
         this.actors = [];//参与者
         Node.base.Constructor.call(this, "node", "node");
     }
 
     Node.extend(Element, {
+        getTransitions: function () {
+            var elements = findByElementId(this.id, config.from),
+                lineCollection= [];
+            $.each(elements, function () {
+                lineCollection.push(LC[this.id]);
+            });
+            return lineCollection;
+        },
+        setExpression: function (expressions) {
+            $.each(expressions, function () {
+                LC[this.id].expression = this.expression;
+            });
+        },
         draw: function (b) {
             var n = this,
                 color = (b == n.uniqueId && b && n.uniqueId) ? n.bgCurrentColor : n.bgColor,
