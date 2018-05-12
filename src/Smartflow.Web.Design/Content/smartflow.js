@@ -153,7 +153,6 @@
         this.border = 3;
         this.orientation = 'down';
 
-
         /*表达式*/
         this.expression='';
         Line.base.Constructor.call(this, "line", "line");
@@ -179,7 +178,6 @@
         bindEvent: function (l) {
             this.dblclick(function (evt) {
                 evt.preventDefault();
-                //删除
                 var instance = LC[this.id()];
                 if (evt.ctrlKey && evt.altKey) {
                     eachElements(instance.id);
@@ -358,6 +356,12 @@
                          .append(config.lQuotation)
                          .append(N.uniqueId)
                          .append(config.rQuotation)
+                         .append(config.space)
+                         .append('expression')
+                         .append(config.equal)
+                         .append(config.lQuotation)
+                         .append(L.expression)
+                         .append(config.rQuotation)
                          .append(config.afterClose);
                 }
             });
@@ -394,8 +398,6 @@
         this.circles = [];
         //命令
         this.command = undefined;
-        //规则
-        this.rule = [];
     }
 
     Decision.extend(Node, {
@@ -467,31 +469,6 @@
                 build.append(config.beforeClose)
                      .append('command')
                      .append(config.end);
-            }
-
-
-            if (self.rule.length>0) {
-                var ruleName = 'rule';
-                $.each(self.rule, function () {
-                    build
-                        .append(config.start)
-                        .append(ruleName);
-                   eachAttributes(this, build);
-                   build.append(config.afterClose);
-
-                });
-            }
-            function eachAttributes(rule, build) {
-
-                $.each(['to', 'expression'], function (i,propertyName) {
-                    build.append(config.space)
-                         .append(config.propertyName)
-                         .append(config.equal)
-                         .append(config.lQuotation)
-                         .append(rule[propertyName])
-                         .append(config.rQuotation);
-
-                });
             }
         }
     });

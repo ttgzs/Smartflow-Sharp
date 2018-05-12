@@ -11,7 +11,10 @@ namespace Smartflow.Integration
 {
     public partial class WorkflowDesignService
     {
-        public TreeNode GetOrganizationTree()
+        private  const string SQL_USER_PAGE = "SELECT TOP {0} ID,USERNAME,ORGCODE,ORGNAME,EMPLOYEENAME  FROM T_USER WHERE  ID NOT IN (SELECT TOP ({0}*({1}-1)) ID  FROM T_USER  WHERE 1=1 {2} ORDER BY ID) {2}";
+        private  const string SQL_USER_PAGE_ROWCOUNT = "SELECT * FROM T_USER  WHERE 1=1";
+
+        public TreeNode GetOrganization()
         {
             string query = "SELECT * FROM T_ORG WHERE PARENTCODE=@PARENTCODE";
 
@@ -48,43 +51,35 @@ namespace Smartflow.Integration
             }
         }
 
-        public IList<IEntry> GetUserByOrganizationId(string organizationCode)
-        {
-            return null;
-        }
-
-        public IList<IEntry> GetUserList(int page, int rows, out int total, Dictionary<string, object> query)
+        public IList<IEntry> GetUserList(int page, int rows, out int total, Dictionary<string, object> queryArg)
         {
             List<IEntry> entry = new List<IEntry>();
-            string pageQuery = "SELECT Top {0} ID,UserName,OrgCode,OrgName,EmployeeName  FROM T_USER Where  ID Not in (Select Top ({0}*({1}-1)) ID  From T_USER  Where 1=1 {2} Order by ID) {2}";
-            string totalSql = " SELECT * FROM T_USER  WHERE 1=1 ";
-            StringBuilder whereStr = new StringBuilder();
-            if (query.ContainsKey("code"))
-            {
-                whereStr.AppendFormat(" AND OrgCode Like '{0}%'", query["code"]);
-            }
-
-            if (query.ContainsKey("key"))
-            {
-                whereStr.AppendFormat(" AND EmployeeName Like '{0}%'", query["key"]);
-            }
-
-            if (query.ContainsKey("userIdStr"))
-            {
-                whereStr.AppendFormat(" AND ID NOT IN ({0}) ", query["userIdStr"]);
-            }
-
-            total = Connection.ExecuteScalar<int>(string.Format(" {0}{1} ", totalSql, whereStr));
-            List<User> userList =
-                Connection.Query<User>(string.Format(pageQuery, rows, page, whereStr)).ToList();
-
+            string whereStr = SetQueryArg(queryArg);
+            total = Connection.ExecuteScalar<int>(string.Format(" {0}{1} ", SQL_USER_PAGE_ROWCOUNT, whereStr));
+            List<User> userList = Connection.Query<User>(string.Format(SQL_USER_PAGE, rows, page, whereStr)).ToList();
             entry.AddRange(userList);
             return entry;
         }
 
-        public IList<IEntry> GetUserByRoleId(string roleId)
+        private string SetQueryArg(Dictionary<string, object> queryArg)
         {
-            return null;
+            StringBuilder whereStr = new StringBuilder();
+            if (queryArg.ContainsKey("Code"))
+            {
+                whereStr.AppendFormat(" AND ORGCODE LIKE '{0}%'", queryArg["Code"]);
+            }
+
+            if (queryArg.ContainsKey("SearchKey"))
+            {
+                whereStr.AppendFormat(" AND EMPLOYEENAME LIKE '{0}%'", queryArg["SearchKey"]);
+            }
+
+            if (queryArg.ContainsKey("UserIds"))
+            {
+                whereStr.AppendFormat(" AND ID NOT IN ({0}) ", queryArg["UserIds"]);
+            }
+
+            return whereStr.ToString();
         }
 
         public IList<IEntry> GetRole(string roleIds)

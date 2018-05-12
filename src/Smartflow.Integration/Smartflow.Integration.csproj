@@ -42,8 +42,6 @@
   <ItemGroup>
     <Compile Include="BaseWorkflowService.cs" />
     <Compile Include="IEntry.cs" />
-    <Compile Include="IInfrastructure.cs" />
-    <Compile Include="IWorkflowDesignService.cs" />
     <Compile Include="Models\Config.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\WorkflowXml.cs" />
@@ -51,9 +49,8 @@
     <Compile Include="Models\Record.cs" />
     <Compile Include="Models\Role.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TreeNode.cs" />
+    <Compile Include="Models\TreeNode.cs" />
     <Compile Include="WorkflowRecordService.cs" />
-    <Compile Include="WorkflowDesign.cs" />
     <Compile Include="WorkflowDesignService.Infrastructure.cs" />
     <Compile Include="WorkflowDesignService.cs" />
   </ItemGroup>

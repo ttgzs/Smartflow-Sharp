@@ -11,7 +11,7 @@ namespace Smartflow.Integration
 {
     public class WorkflowRecordService
     {
-        public IDbConnection Connection
+        protected IDbConnection Connection
         {
             get { return SqlHelper.CreateConnection(); }
         }
@@ -24,7 +24,7 @@ namespace Smartflow.Integration
 
         public List<Record> Query(string WFID)
         {
-            string sql = " SELECT * FROM T_RECORD WHERE INSTANCEID=@INSTANCEID ";
+            string sql = " SELECT * FROM T_RECORD WHERE INSTANCEID=@INSTANCEID ORDER BY INSERTDATE ASC ";
             return Connection.Query<Record>(sql, new
             {
                 INSTANCEID = WFID

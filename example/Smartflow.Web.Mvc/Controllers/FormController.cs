@@ -80,7 +80,7 @@ namespace Smartflow.Web.Controllers
 
         public void GenerateDropDownViewData(string WFID)
         {
-            WorkflowDesign designService = new WorkflowDesign();
+            WorkflowDesignService designService = new WorkflowDesignService();
             List<WorkflowXml> workflowXmlList = designService.GetWorkflowXmlList();
             List<SelectListItem> fileList = new List<SelectListItem>();
             foreach (WorkflowXml item in workflowXmlList)

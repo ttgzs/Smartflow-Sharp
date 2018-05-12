@@ -46,6 +46,15 @@ namespace Smartflow.Elements
             set;
         }
 
+
+        [XmlElement("COMMANDTYPE")]
+        public string COMMANDTYPE
+        {
+            get;
+            set;
+        }
+
+
         [XmlIgnore]
         public string RNID
         {
@@ -55,7 +64,7 @@ namespace Smartflow.Elements
 
         internal override void Persistent()
         {
-            string sql = "INSERT INTO T_COMMAND(NID,RNID,NAME,TEXT,CONNECTION,INSTANCEID,DBCATEGORY) VALUES(@NID,@RNID,@NAME,@TEXT,@CONNECTION,@INSTANCEID,@DBCATEGORY)";
+            string sql = "INSERT INTO T_COMMAND(NID,RNID,NAME,TEXT,CONNECTION,INSTANCEID,DBCATEGORY,COMMANDTYPE) VALUES(@NID,@RNID,@NAME,@TEXT,@CONNECTION,@INSTANCEID,@DBCATEGORY,@COMMANDTYPE)";
             Connection.Execute(sql, new
             {
                 NID=Guid.NewGuid().ToString(),
@@ -64,7 +73,8 @@ namespace Smartflow.Elements
                 TEXT = Text,
                 CONNECTION = CONNECTION,
                 INSTANCEID = INSTANCEID,
-                DBCATEGORY = DBCATEGORY.ToString()
+                DBCATEGORY = DBCATEGORY.ToString(),
+                COMANDTYPE = COMMANDTYPE
             });
         }
     }

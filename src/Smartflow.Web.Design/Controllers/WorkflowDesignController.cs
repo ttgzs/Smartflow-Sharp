@@ -18,7 +18,7 @@ namespace Smartflow.Web.Design.Controllers
 {
     public partial class WorkflowDesignController : Controller
     {
-        private WorkflowDesign designService = new WorkflowDesign();
+        private WorkflowDesignService designService = new WorkflowDesignService();
 
         public ActionResult Design(string id)
         {

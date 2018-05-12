@@ -43,10 +43,10 @@ namespace Smartflow
         /// <returns>路线</returns>
         public Transition GetTransition()
         {
-            Command cmd = GetExecuteCmd();
-            IDbConnection connect = DapperFactory.CreateConnection(cmd.DBCATEGORY, cmd.CONNECTION);
+            Command CMD = GetExecuteCmd();
+            IDbConnection connect = DapperFactory.CreateConnection(CMD.DBCATEGORY, CMD.CONNECTION);
             DataTable resultSet = new DataTable(Guid.NewGuid().ToString());
-            using (IDataReader reader = connect.ExecuteReader(cmd.Text, new { INSTANCEID = INSTANCEID }))
+            using (IDataReader reader = connect.ExecuteReader(CMD.Text, new { INSTANCEID = INSTANCEID }))
             {
                 resultSet.Load(reader);
                 reader.Close();

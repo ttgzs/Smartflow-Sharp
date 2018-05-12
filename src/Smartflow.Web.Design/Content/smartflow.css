@@ -13,13 +13,9 @@
  .container-draw {width: 100%; height: 100%;}
 text {font-size: 14px;text-anchor: middle; dominant-baseline: middle;pointer-events: none; }
 .rect:hover,.line:hover,.circle:hover{fill:#f8e233;stroke:#f8e233;}
+.tables {margin: 0; padding: 0;border-collapse: collapse;}
 
-.smartflow-table{
-    margin: 0 auto;
-    border-collapse: collapse;
-    width:100%;
-}
-
+.smartflow-table{margin: 0 auto;border-collapse: collapse;width:96%;}
 .smartflow-table td input{
     padding-left:2px;
 }
@@ -112,8 +108,8 @@ text {font-size: 14px;text-anchor: middle; dominant-baseline: middle;pointer-eve
         .card-tabs-stack div[data-tab] {
             display: none;
             border-top: none;
-            padding: 5px;
-            padding-bottom:0;
+            padding:0;
+            padding-top:5px;
         }
 
             div.card-tabs-stack div[data-tab]:first-child {

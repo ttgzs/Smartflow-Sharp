@@ -9,9 +9,9 @@ using Smartflow.Integration.Models;
 
 namespace Smartflow.Integration
 {
-    public partial class WorkflowDesignService : IWorkflowDesignService, IInfrastructure
+    public partial class WorkflowDesignService
     {
-        public IDbConnection Connection
+        protected IDbConnection Connection
         {
             get { return SqlHelper.CreateConnection(); }
         }

@@ -36,17 +36,16 @@ namespace Smartflow.Web.Design.Controllers
             Dictionary<string, object> queryArg = new Dictionary<string, object>();
             if (!string.IsNullOrEmpty(code) && "000" != code)
             {
-                queryArg.Add("code", code);
+                queryArg.Add("Code", code);
             }
-
             if (!String.IsNullOrEmpty(searchKey))
             {
-                queryArg.Add("key", searchKey);
+                queryArg.Add("SearchKey", searchKey);
             }
 
             if (!String.IsNullOrEmpty(userIdStr))
             {
-                queryArg.Add("userIdStr", userIdStr);
+                queryArg.Add("UserIds", userIdStr);
             }
 
             int total;

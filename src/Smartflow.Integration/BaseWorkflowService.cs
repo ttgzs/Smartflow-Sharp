@@ -56,7 +56,7 @@ namespace Smartflow.Integration
 
         public string Start(string WFID)
         {
-            WorkflowXml wfXml = new WorkflowDesign().GetWorkflowXml(WFID);
+            WorkflowXml wfXml = new WorkflowDesignService().GetWorkflowXml(WFID);
             return context.Start(wfXml);
         }
 
