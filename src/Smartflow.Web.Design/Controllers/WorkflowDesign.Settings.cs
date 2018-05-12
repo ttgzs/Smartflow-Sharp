@@ -31,7 +31,7 @@ namespace Smartflow.Web.Design.Controllers
             return Json(designService.GetConfigs());
         }
 
-        public JsonResult GetUserList(int page, int rows, string code, string searchKey, string userIdStr)
+        public JsonResult GetUserList(int page, int limit, string code, string searchKey, string userIdStr)
         {
             Dictionary<string, object> queryArg = new Dictionary<string, object>();
             if (!string.IsNullOrEmpty(code) && "000" != code)
@@ -49,11 +49,12 @@ namespace Smartflow.Web.Design.Controllers
             }
 
             int total;
-            IList<IEntry> userList = designService.GetUserList(page, rows, out total, queryArg);
+            IList<IEntry> userList = designService.GetUserList(page, limit, out total, queryArg);
             return Json(new
             {
-                rows = userList,
-                records = total
+                code="0",
+                data = userList,
+                count = total
             });
         }
     }

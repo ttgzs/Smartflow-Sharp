@@ -12,7 +12,7 @@ namespace Smartflow.Integration
     public partial class WorkflowDesignService
     {
         private  const string SQL_USER_PAGE = "SELECT TOP {0} ID,USERNAME,ORGCODE,ORGNAME,EMPLOYEENAME  FROM T_USER WHERE  ID NOT IN (SELECT TOP ({0}*({1}-1)) ID  FROM T_USER  WHERE 1=1 {2} ORDER BY ID) {2}";
-        private  const string SQL_USER_PAGE_ROWCOUNT = "SELECT * FROM T_USER  WHERE 1=1";
+        private  const string SQL_USER_PAGE_ROWCOUNT = "SELECT COUNT(*) FROM T_USER  WHERE 1=1";
 
         public TreeNode GetOrganization()
         {

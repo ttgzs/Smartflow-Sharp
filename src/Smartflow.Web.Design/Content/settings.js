@@ -64,13 +64,13 @@
                 roleIds.push(this.id);
             });
 
-            settings.data = {
+            ajaxSettings.data = {
                 roleIds: roleIds.join(',')
             };
         }
 
         ajaxSettings.success = function (serverData) {
-            var build = new StringBuilder(), 
+            var build = new StringBuilder(),
                 Abuild = new StringBuilder();
             $.each(serverData, function () {
                 build.append(config.start)
@@ -131,87 +131,7 @@
         ajaxService(ajaxSettings);
     }
 
-    function loadUserGrid(actors) {
-        var elementActors = [],
-            toolbar = document.getElementById("tbTemplate").innerHTML,
-            gridSettings = {
-                url: config.userUrl,
-                datatype: "json",
-                colNames: ['ID', '姓名', '部门'],
-                colModel: [
-                             { name: 'ID', index: 'ID', hidden: true },
-                             { name: 'EmployeeName', index: '姓名', align: 'center', width: 120, sortable: false },
-                             { name: 'OrgName', index: '部门', sortable: false, width: 350}
-                ],
-                rowNum: 5,
-                rowList: [5, 10, 15],
-                pager: '#pager',
-                mtype: "post",
-                viewrecords: true,
-                pagerpos: 'left',
-                recordpos: 'right',
-                shrinkToFit: false,
-                rownumbers: true,
-                autowidth: true,
-                height:165,
-                toolbar: [true, 'top'],
-                ondblClickRow: function (rowid, irow) {
-                    var row = $(this).jqGrid('getRowData', rowid),
-                        build = new StringBuilder();
-                        build.append(config.start)
-                            .append('li')
-                            .append(config.space)
-                            .append('id')
-                            .append(config.equal)
-                            .append(config.lQuotation)
-                            .append(row.ID)
-                            .append(config.rQuotation)
-                            .append(config.end)
-                            .append(row.EmployeeName)
-                            .append(config.beforeClose)
-                            .append('li')
-                            .append(config.afterClose);
-                    $(this).jqGrid('delRowData', rowid);
-                    $("#userAssign").append(build.toString());
-                }
-            };
 
-
-        if (actors.length > 0) {
-            var build = new StringBuilder();
-            $.each(actors, function () {
-                elementActors.push(this.id);
-                build.append(config.start)
-                    .append('li')
-                    .append(config.space)
-                    .append('id')
-                    .append(config.equal)
-                    .append(config.lQuotation)
-                    .append(this.id)
-                    .append(config.rQuotation)
-                    .append(config.end)
-                    .append(this.name)
-                    .append(config.beforeClose)
-                    .append('li')
-                    .append(config.afterClose);
-            });
-            gridSettings.postData = { userIdStr: elementActors.join(",") };
-            $("#userAssign").html(build.toString());
-        }
-
-        $("#userlist").jqGrid(gridSettings);
-        $("#userlist").jqGrid('navGrid', '#pager', { edit: false, search: false, refresh: false, add: false, del: false });
-        $("#t_userlist").html(toolbar);
-
-
-        $("#txtUnit").on('click', function () {
-            $("#tree").show();
-        });
-
-        $("#tree").hover(function () { }, function () {
-            $("#tree").hide();
-        });
-    }
 
     function getSettings() {
         var settings = {},
@@ -259,7 +179,7 @@
         var lineCollection = nx.getTransitions();
 
         loadRoleGrid(nx.group);
-        loadUserGrid(nx.actors);
+        //loadUserGrid(nx.actors);
 
         if (lineCollection.length > 0) {
             var unqiueId = 'lineTo';
