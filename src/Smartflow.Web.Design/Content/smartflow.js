@@ -61,7 +61,8 @@
             space: ' ',
             //参与组
             group: 'group',
-            from :'from',
+            from: 'from',
+            actor:'actor',
             //跳转线
             transition:'transition'
         };
@@ -366,6 +367,13 @@
                 }
             });
 
+            $.each(self.actors, function () {
+                build.append(config.start)
+                    .append(config.actor);
+                eachAttributs(build, this, config.actor);
+                build.append(config.afterClose);
+            });
+
             //结束
             build.append(config.beforeClose)
                  .append(self.category)
@@ -379,7 +387,7 @@
                          .append(p)
                          .append(config.equal)
                          .append(config.lQuotation)
-                         .append(p === 'id' && attribute !== 'group' ? reference[propertyName] : reference[p])
+                         .append(p === 'id' && (attribute !== 'group' && attribute !== 'actor') ? reference[propertyName] : reference[p])
                          .append(config.rQuotation);
                 });
             }

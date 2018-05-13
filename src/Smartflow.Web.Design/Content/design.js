@@ -29,7 +29,7 @@
         var settings = {
             type: 2,
             title: false,
-            area: ['630px', '360px'],
+            area: ['630px', '460px'],
             shade: 0.8,
             closeBtn: 0,
             shadeClose: false,
@@ -40,24 +40,14 @@
             }
         };
 
-        settings.yes = function (dom, index) {
-            var frameContent = getDOMFrame(dom),
-                settings = frameContent.SMF.getSettings();
-
-            if (settings.name) {
-                nx.name = settings.name;
-                nx.brush.text(nx.name);
-            }
-
-            nx.group = settings.group;
-            nx.actors = settings.actors;
-            nx.command = settings.command;
-            nx.setExpression(settings.expressions);
+        settings.yes = function (index, dom) {
+            var frameContent = getDOMFrame(dom);
+            frameContent.SMF.setSettingsToNode(nx);
             layer.close(index);
         };
         settings.success = function (dom, index) {
             var frameContent = getDOMFrame(dom);
-            frameContent.SMF.setSettings(nx);
+            frameContent.SMF.setNodeToSettings(nx);
         };
         layer.open(settings);
     }

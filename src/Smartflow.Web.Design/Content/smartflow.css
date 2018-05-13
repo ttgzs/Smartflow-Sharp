@@ -13,140 +13,87 @@
  .container-draw {width: 100%; height: 100%;}
 text {font-size: 14px;text-anchor: middle; dominant-baseline: middle;pointer-events: none; }
 .rect:hover,.line:hover,.circle:hover{fill:#f8e233;stroke:#f8e233;}
-.tables {margin: 0; padding: 0;border-collapse: collapse;}
-
-.smartflow-table{margin: 0 auto;border-collapse: collapse;width:96%;}
-.smartflow-table td input{
+.smartflow-table{margin: 0; padding: 0;border-collapse: collapse;}
+.smartflow-table td input[type='text']{
     padding-left:2px;
 }
 
-.smartflow-checkbox label{
-     display:inline;
-    vertical-align:middle;
-}
-.smartflow-checkbox input{
-      display:inline-block;
-    vertical-align:middle;
-}
-
-.smartflow-box{
-    border:solid 1px #eee;
-    vertical-align:top;
-    width:280px;
-}
-
-.smartflow-tools{
-    vertical-align:top;
-    width:28px;
-    text-align:center;
-}
-
-.smartflow-list{
-    height:240px;
-    overflow:auto;
-}
-
-
-.smartflow-list li{
-   padding-left:5px;
-   line-height:25px;
-}
-
-
-
-.smartflow-list li:hover{
-    background-color:#d0e187;
-    cursor:pointer;
-}
-
-        div.card-tabs-bar {
-            border-bottom: 1px solid #eaecef;
+    .layui-elem-field legend {
+            margin-left: 8px;
+            font-size: 16px;
         }
 
-            div.card-tabs-bar a {
-                padding: 5px;
-                padding-bottom: 1px;
-                border: 1px solid transparant;
-                color: #24292e;
-                text-decoration: none;
-                margin-left: 5px;
-                outline: none;
-            }
-
-                div.card-tabs-bar a:first-child {
-                    margin-left: 10px;
-                }
-
-                div.card-tabs-bar a:hover {
-                    text-decoration: underline;
-                }
-
-                div.card-tabs-bar a.active {
-                    border: 1px solid #eaecef;
-                    border-bottom: none;
-                    display: inline-block;
-                    color: black;
-                    font-weight: bold;
-                   /* border-radius: 4px 4px 0px 0px;*/
-                    padding-top: 6px;
-                    margin-bottom: -10px;
-                    background: #fff;
-                }
-
-                    div.card-tabs-bar a.active:hover {
-                        text-decoration: none;
-                    }
-
-            div.card-tabs-bar.titles {
-                margin-top: -10px;
-            }
-
-                div.card-tabs-bar.titles a {
-                    font-size: 14px;
-                }
-
-        .card-tabs-stack div[data-tab] {
-            display: none;
-            border-top: none;
-            padding:0;
-            padding-top:5px;
+        .layui-field-box {
+            height: 320px;
         }
 
-            div.card-tabs-stack div[data-tab]:first-child {
-                display: block;
-            }
-
-
-
-
-        /*  Green gray slate */
-        div.card-tabs-bar.graygreen {
-          /*  border-bottom: 1px solid #e5e5e5;*/
+        .smartflow-header {
+            text-align: right;
+            width: 150px;
         }
 
-            div.card-tabs-bar.graygreen a {
-                padding: 10px;
-                /*border-radius: 0px;*/
-                margin: 0;
-                padding-bottom: 10px;
-                margin-bottom: -2px;
-                font-size: 14px;
-            }
-
-                div.card-tabs-bar.graygreen a.active {
-                    /*background-color: #fafafa;*/
-                    border-top: 2px solid #2CC185;
-                }
-
-        div.card-tabs-stack.graygreen div[data-tab] {
-            /*padding: 10px;*/
-           /* background-color: #fafafa;*/
-            /*border: 1px solid #e5e5e5;*/
-            border-top: none;
+        .layui-tab-content {
+            padding: 5px;
         }
 
+        .layui-field-title-mp {
+            margin: 0;
+            padding: 0;
+        }
 
-        
+        .smartflow-input-text {
+            width: 100%;
+            border: 1px solid rgb(210,210,210);
+            padding-left: 3px;
+        }
+
+        .layui-btn {
+            border-radius: initial !important;
+            line-height: 28px !important;
+            height: 28px !important;
+        }
+
+        .smartflow-table-tb{
+            margin-top: 0px;
+            margin-bottom: 0px;
+        }
+
+        .layui-elem-field-h {
+            height: 330px;
+        }
+
+       .smartflow-input{
+            height:25px;
+            min-height:25px;
+        }
+     
+        .smartflow-tree{
+            position:absolute;
+            width:160px;
+            height:200px;
+            z-index:5;
+            background-color:#F2F2F2;
+            display:none;
+        }
+        .smartflow-table-actor{
+            margin-bottom:4px;
+            margin-top:11px
+        }
+        .layui-table-view{
+            margin-top:0 !important;
+        }
+.table-actor-cm{
+   width:60px;
+   text-align:center;
+   font-size:14px;
+   color:#666666
+ }
+ .smartflow-textarea{
+     width:100%;
+     height:40px;
+     min-height:20px;
+     resize:none
+ }
  .layui-layer,.layui-layer-btn0, .layui-layer-btn1{
      border-radius:0 !important;
  }

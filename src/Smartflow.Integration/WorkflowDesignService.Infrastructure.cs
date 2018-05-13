@@ -66,9 +66,8 @@ namespace Smartflow.Integration
             StringBuilder whereStr = new StringBuilder();
             if (queryArg.ContainsKey("Code"))
             {
-                whereStr.AppendFormat(" AND ORGCODE LIKE '{0}%'", queryArg["Code"]);
+                whereStr.AppendFormat(" AND ORGCODE IN ({0}) ",GetOrganizationCodes(queryArg["Code"].ToString()));
             }
-
             if (queryArg.ContainsKey("SearchKey"))
             {
                 whereStr.AppendFormat(" AND EMPLOYEENAME LIKE '{0}%'", queryArg["SearchKey"]);
@@ -81,6 +80,19 @@ namespace Smartflow.Integration
 
             return whereStr.ToString();
         }
+
+        private string GetOrganizationCodes(string code)
+        {
+            string[] codeArray = code.Split(',');
+            List<string> codeList = new List<string>();
+            foreach (string item in codeArray)
+            {
+                codeList.Add(string.Format("'{0}'", item));
+            }
+
+            return string.Join(",",codeList);
+        }
+
 
         public IList<IEntry> GetRole(string roleIds)
         {
