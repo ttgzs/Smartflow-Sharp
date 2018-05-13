@@ -240,13 +240,18 @@
             var lineCollection = nx.getTransitions();
             if (lineCollection.length > 0) {
                 var unqiueId = 'lineTo',
-                    ruleArray = [],
                     build = new StringBuilder();
-
                 $.each(lineCollection, function (i) {
-                    ruleArray.push("<tr><td class='smartflow-header'>" + this.name + "</td><td><input type='text' value='" + this.expression + "' id='" + this.id + "' class='smartflow-input-text' /></td></tr>");
+                    build.append("<tr><td class='smartflow-header'>")
+                         .append(this.name)
+                         .append("</td><td>")
+                         .append("<input type='text'")
+                         .append("value='" + this.expression+"'")
+                         .append("id='" + this.id+"'")
+                         .append("class='smartflow-input-text' />")
+                         .append("</td></tr>");
                 });
-                $("#transitions>tbody").html(ruleArray.join(""));
+                $("#transitions>tbody").html(build.toString());
             }
             if (nx.command) {
                 var cmd = nx.command;
