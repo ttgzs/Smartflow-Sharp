@@ -35,7 +35,7 @@
                 <tr>
                     <th style="width:50px;">序号</th>
                     <th>名称</th>
-                    <th style="width:120px;">操作</th>
+                    <th style="width:120px;text-align:center;">操作</th>
                 </tr>
             </thead>
             <tbody>
@@ -44,28 +44,18 @@
                 }
                 @foreach (Smartflow.Integration.Models.WorkflowXml wf in Model)
                 {
-                <tr>
-                    <td style="width:50px;text-align:center;">@(counter++)</td>
-                    <td>@wf.NAME</td>
-                    <td style="width:120px;text-align:center;">
-                        <a href="javascript:openWin('@Url.Action("Design", "WorkflowDesign", new { id = wf.WFID })',960,560)">修改</a>
-                        <a href="javascript:delWf('@wf.WFID')">删除</a>
-                    </td>
-                </tr>
+                    <tr>
+                        <td style="width:50px;text-align:center;">@(counter++)</td>
+                        <td>@wf.NAME</td>
+                        <td style="width:120px;text-align:center;">
+                            <a href="javascript:openWin('@Url.Action("Design", "WorkflowDesign", new { id = wf.WFID })',960,560)">修改</a>
+                            <a href="javascript:delWf('@wf.WFID')">删除</a>
+                        </td>
+                    </tr>
                 }
             </tbody>
         </table>
     </div>
-
     <script src="~/Content/layui/layui.js"></script>
-    <script type="text/javascript">
-
-        layui.use('table', function () {
-
-        });
-
-    </script>
-
-
 </body>
 </html>

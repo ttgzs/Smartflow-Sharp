@@ -8,7 +8,6 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>业务流程</title>
-
     <link href="~/Content/layui/css/layui.css" rel="stylesheet" />
     <script src="~/Content/jquery.min.js"></script>
     <script type="text/javascript">
@@ -45,7 +44,7 @@
                     <th>名称</th>
                     <th>状态</th>
                     <th>备注</th>
-                    <th style="width:120px;">操作</th>
+                    <th style="width:120px;text-align:center;">操作</th>
                 </tr>
             </thead>
             <tbody>
@@ -64,7 +63,7 @@
                             <td>@apply.STATE</td>
                             <td>@apply.DESCRIPTION</td>
                             <td style="width:120px;text-align:center;">
-                                <a href="javascript:document.location.href='@Url.Action("Apply", "Apply", new { id = apply.AID })'>修改</a>
+                                <a href="javascript:document.location.href='@Url.Action("Apply", "Apply", new { id = apply.AID })'">修改</a>
                                 <a href="javascript:delApply('@apply.AID')">删除</a>
                             </td>
                         </tr>
