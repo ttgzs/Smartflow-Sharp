@@ -230,7 +230,6 @@
     <Content Include="Content\jquery.min.js" />
     <Content Include="Content\tree\jquery.ztree.all.min.js" />
     <Content Include="Content\json2.js" />
-    <Content Include="Content\main.css" />
     <Content Include="Content\smartflow.css" />
     <Content Include="Content\smartflow.js" />
     <Content Include="Content\svg.js" />

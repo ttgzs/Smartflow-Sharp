@@ -30,7 +30,6 @@
             <ul class="layui-tab-title" id="tab">
                 <li category="info" class="layui-this">基本信息</li>
                 <li category="role">参与角色</li>
-                <li category="actor">参与人</li>
                 <li category="rule">规则配置</li>
             </ul>
             <div class="layui-tab-content">
@@ -59,34 +58,6 @@
                                 <legend>已选角色</legend>
                                 <div class="layui-field-box">
                                     <ul id="roleAssign" class="smartflow-list"></ul>
-                                </div>
-                            </fieldset>
-                        </div>
-                    </div>
-                </div>
-                <div class="layui-tab-item">
-                    <div class="layui-row">
-                        <div class="layui-col-xs9">
-                            <table class="smartflow-table smartflow-table-actor">
-                                <tr>
-                                    <td class="table-actor-cm">部门</td>
-                                    <td style="width:160px;padding-right:5px;">
-                                        <input type="hidden" id="hidOrgCode" />
-                                        <input type="text" id="txtUnit" class="layui-input smartflow-input" />
-                                        <ul id="tree" class="ztree smartflow-tree"></ul>
-                                    </td>
-                                    <td class="table-actor-cm">关键字</td>
-                                    <td style="padding-right:5px;"><input type="text" id="txtSearchKey" class="layui-input smartflow-input" /></td>
-                                    <td><input type="button" class="layui-btn layui-btn-normal" id="btnSearch" value="搜索" /></td>
-                                </tr>
-                            </table>
-                            <table class="layui-hide" id="userList"></table>
-                        </div>
-                        <div class="layui-col-xs3">
-                            <fieldset class="layui-elem-field layui-elem-field-h" style="margin-left:5px;">
-                                <legend>已选参与者</legend>
-                                <div class="layui-field-box">
-                                    <ul id="userAssign" class="smartflow-list"></ul>
                                 </div>
                             </fieldset>
                         </div>
