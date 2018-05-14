@@ -55,11 +55,11 @@ namespace Smartflow
             WorkflowProcess process = WorkflowProcess.GetWorkflowProcessInstance(INSTANCEID, NID);
             if (process != null || NodeType != WorkflowNodeCategeory.Start)
             {
-                ASTNode n = GetNode(process.FROM);
+                ASTNode n = GetNode(process.SOURCE);
                 while (n.NodeType == WorkflowNodeCategeory.Decision)
                 {
                     process = WorkflowProcess.GetWorkflowProcessInstance(INSTANCEID, n.NID);
-                    n = GetNode(process.FROM);
+                    n = GetNode(process.SOURCE);
 
                     if (n.NodeType == WorkflowNodeCategeory.Start)
                         break;

@@ -27,19 +27,6 @@ namespace Smartflow.Web.Controllers
             return PartialView(workflowRecordService.Query(instanceID));
         }
 
-        public ActionResult WorkflowImage(string instanceID)
-        {
-            ViewBag.InstanceID = instanceID;
-            return View();
-        }
-
-        public ActionResult WorkflowCheck(string instanceID)
-        {
-            WorkflowInstance instance = bwkf.GetInstance(instanceID);
-            ViewBag.InstanceID = instanceID;
-            return View(instance.Current.Transitions);
-        }
-
         public JsonResult GetWorkflowImage(string instanceID)
         {
             return Json(bwkf.GetInstance(instanceID));

@@ -1,0 +1,76 @@
+﻿@model Smartflow.BussinessService.Models.Apply
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title></title>
+    <link href="~/Content/main.css" rel="stylesheet" />
+    <script src="~/Content/jquery.min.js"></script>
+    <script src="~/Content/common.js"></script>
+    <script type="text/javascript">
+        function sumbitApply(url, state) {
+            $("#STATE").val(state);
+            $("#applyForm").attr("action", url);
+        }
+
+        $(function () {
+            var v = $("#STATE").val();
+            if (v == "0" || !v) {
+                $("#btnSubmit,#btnSave").show();
+                $("#btnAudit").hide();
+            } else {
+                $("#btnAudit").show();
+                $("#btnSubmit,#btnSave").hide();
+            }
+        });
+
+        function auditApply() {
+            var instanceID = document.getElementById("INSTANCEID").value;
+            openWin('@Url.Action("WorkflowCheck", "UserControl")' + "?instanceID=" + instanceID,600,300);
+        }
+    </script>
+</head>
+<body>
+    @using (Html.BeginForm("Save", "Apply", FormMethod.Post, new { id = "applyForm" }))
+    {
+        <table class="table form-table">
+            <tr>
+                <td style="width:120px;">申请人</td>
+                <td>
+                    @Html.TextBoxFor(m => m.NAME, new { style = "width:98%;" })
+                    @Html.HiddenFor(m => m.AID)
+                    @Html.HiddenFor(m => m.STATE)
+                    @Html.HiddenFor(m => m.INSTANCEID)
+                </td>
+            </tr>
+            <tr>
+                <td style="width:120px;">业务流程</td>
+                <td>
+                    @Html.DropDownListFor(m => m.WFID, (ViewData["Wfile"] as IEnumerable<SelectListItem>))
+                </td>
+            </tr>
+            <tr>
+                <td style="width:120px;">描述</td>
+                <td>
+                    @Html.TextAreaFor(m => m.DESCRIPTION, new { style = "width:98%;" })
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" style="text-align:center;">
+                    <input type="button" id="btnAudit" value="@ViewBag.ButtonName" onclick="auditApply()" />
+                    <input type="submit" id="btnSubmit" value="提交" onclick="return sumbitApply('/Form/SubmitApply',1)" />
+                    <input type="submit" id="btnSave" value="保存" onclick="return sumbitApply('/Form/Save',0)" />
+                </td>
+            </tr>
+        </table>
+    }
+    @if (Model != null)
+    {
+        Html.RenderAction("Record", "UserControl", new { instanceID = Model.INSTANCEID });
+    }
+</body>
+</html>

@@ -2,36 +2,56 @@
     var
         assignToUserSelector = '#userAssign',
         searchButtonSelector = '#btnSearch',
+        roleGridSelector = '#roleGrid',
+        assignToRoleSelector = '#roleAssign',
         unitSelector = '#txtUnit',
         treeSelector = '#tree',
         orgCodeSelector = '#hidOrgCode',
         cmdTextSelector = '#txtCommand',
         optionSelector = '#ddlRuleConfig option:selected',
         ruleSelector = '#ddlRuleConfig',
-        searchTextSelector = '#txtSearchKey';
-        tabConfig = {
-            node: ['#tab li[category=rule]'],
-            decision: ['#tab li[category=role]', '#tab li[category=actor]']
+        searchTextSelector = '#txtSearchKey',
+        itemTemplate = "<li id=%{0}%>%{1}%</li>",
+        lineTemplate = "<tr><td class='smartflow-header'>%{0}%</td><td><input type='text' value=%{1}% id=%{2}% class='layui-input smartflow-input' /></td></tr>";
+    tabConfig = {
+        node: ['#tab li[category=rule]'],
+        decision: ['#tab li[category=role]', '#tab li[category=actor]']
+    },
+    config = {
+        //开始
+        start: '<',
+        //结束
+        end: '>',
+        //左引号
+        lQuotation: '"',
+        //右引号
+        rQuotation: '"',
+        //闭合
+        beforeClose: '</',
+        //闭合
+        afterClose: '/>',
+        //等于
+        equal: '=',
+        //本身引用
+        //空隙
+        space: ' ',
+    };
+
+    $.extend(String.prototype, {
+        format: function () {
+            var regexp = /\{(\d+)\}/g;
+            var args = arguments,
+                escapeChar = '';
+            var result = this.replace(regexp, function (m, i, o, n) {
+                return args[i];
+            });
+            return result.replaceAll('%', escapeChar);
         },
-        config = {
-            //开始
-            start: '<',
-            //结束
-            end: '>',
-            //左引号
-            lQuotation: '"',
-            //右引号
-            rQuotation: '"',
-            //闭合
-            beforeClose: '</',
-            //闭合
-            afterClose: '/>',
-            //等于
-            equal: '=',
-            //本身引用
-            //空隙
-            space: ' ',
-        };
+        replaceAll: function (searchValue, replaceValue) {
+            var regExp = new RegExp(searchValue, "g");
+            return this.replace(regExp, replaceValue);
+        }
+    });
 
     function initOption(option) {
         config = $.extend(config, option);
@@ -47,7 +67,6 @@
         $(searchButtonSelector).click(function () {
             doSearch();
         });
-
 
         $(unitSelector).click(function () {
             $(treeSelector).show();
@@ -98,14 +117,14 @@
                     .append(config.afterClose);
             });
 
-            $("#roleGrid").html(build.toString());
+            $(roleGridSelector).html(build.toString());
 
-            $("#roleGrid").on("dblclick", "li", function () {
-                $("#roleAssign").append(this);
+            $(roleGridSelector).on("dblclick", "li", function () {
+                $(assignToRoleSelector).append(this);
             });
 
-            $("#roleAssign").on("dblclick", "li", function () {
-                $("#roleGrid").append(this);
+            $(assignToRoleSelector).on("dblclick", "li", function () {
+                $(roleGridSelector).append(this);
             });
 
             $.each(group, function () {
@@ -130,11 +149,10 @@
                     .append(config.afterClose);
             });
 
-            $("#roleAssign").html(Abuild.toString());
+            $(assignToRoleSelector).html(Abuild.toString());
         };
         ajaxService(ajaxSettings);
     }
-
     function loadUserGrid(actors) {
         layui.use('table', function () {
             var table = layui.table,
@@ -145,7 +163,6 @@
                 id: 'userGrid',
                 method: 'post',
                 size: 'sm',
-                //skin: 'line',
                 height: 'full',
                 limit: 7,
                 page: {
@@ -160,27 +177,23 @@
                    { field: 'OrgName', width: 180, title: '部门', sort: false }
                 ]],
                 done: function (res, curr, count) {
-
                     $("#userList").next().find(selector).bind('dblclick', function () {
                         var index = $(this).attr("data-index"),
                             row = res.data[index];
-
-
-                        $("#userAssign").append("<li id=" + row.ID + ">" + row.Name + "</li>");
-
+                        $(assignToUserSelector).append(itemTemplate.format(row.ID, row.Name));
                         doSearch();
                     });
-
                 }
             };
 
             if (actors.length > 0) {
-                var aes = [], elements = [];
+                var aes = [],
+                    build = new StringBuilder();
                 $.each(actors, function () {
                     aes.push(this.id);
-                    elements.push("<li id=" + this.id + ">" + this.name + "</li>");
+                    build.append(itemTemplate.format(this.id, this.name));
                 });
-                $("#userAssign").append(elements.join(""));
+                $(assignToUserSelector).append(build.toString());
                 tableSettings.where = { userIdStr: aes.join(",") };
             }
             table.render(tableSettings);
@@ -233,7 +246,6 @@
             nx.group = roles;
         }
     }
-
     function setNodeToSettings(nx) {
         $("#txtNodeName").val(nx.name);
         if (nx.category === 'decision') {
@@ -242,14 +254,7 @@
                 var unqiueId = 'lineTo',
                     build = new StringBuilder();
                 $.each(lineCollection, function (i) {
-                    build.append("<tr><td class='smartflow-header'>")
-                         .append(this.name)
-                         .append("</td><td>")
-                         .append("<input type='text'")
-                         .append("value='" + this.expression+"'")
-                         .append("id='" + this.id+"'")
-                         .append("class='smartflow-input-text' />")
-                         .append("</td></tr>");
+                    build.append(lineTemplate.format(this.name, this.expression, this.id));
                 });
                 $("#transitions>tbody").html(build.toString());
             }
@@ -321,7 +326,6 @@
         }
         ajaxService(ajaxSettings);
     }
-
     function doSearch(data) {
         layui.use('table', function () {
             var table = layui.table,
@@ -347,7 +351,6 @@
             table.reload('userGrid', { where: searchParam });
         });
     }
-
     function loadSelect() {
         var settings = {
             url: config.configUrl
@@ -382,6 +385,7 @@
         ajaxService(settings);
     }
 
+
     function ajaxService(settings) {
         var defaultSettings = $.extend({
             dataType: 'json',
@@ -394,7 +398,6 @@
     function StringBuilder() {
         this.elements = [];
     }
-
     StringBuilder.prototype = {
         constructor: StringBuilder,
         append: function (text) {

@@ -43,7 +43,7 @@ namespace Smartflow
         /// <summary>
         /// 当前节点
         /// </summary>
-        public long FROM
+        public long SOURCE
         {
             get;
             set;
@@ -52,7 +52,7 @@ namespace Smartflow
         /// <summary>
         /// 跳转到的节点
         /// </summary>
-        public long TO
+        public long DESTINATION
         {
             get;
             set;
@@ -100,12 +100,12 @@ namespace Smartflow
         /// </summary>
         public void Persistent()
         {
-            string sql = "INSERT INTO T_PROCESS(NID,[FROM],[TO],TID,INSTANCEID,NODETYPE,RNID) VALUES(@NID,@FROM,@TO,@TID,@INSTANCEID,@NODETYPE,@RNID)";
+            string sql = "INSERT INTO T_PROCESS(NID,SOURCE,DESTINATION,TID,INSTANCEID,NODETYPE,RNID) VALUES(@NID,@SOURCE,@DESTINATION,@TID,@INSTANCEID,@NODETYPE,@RNID)";
             Connection.Execute(sql, new
             {
                 NID=Guid.NewGuid().ToString(),
-                FROM = FROM,
-                TO = TO,
+                SOURCE = SOURCE,
+                DESTINATION = DESTINATION,
                 TID = TID,
                 INSTANCEID = INSTANCEID,
                 NODETYPE = NODETYPE.ToString(),

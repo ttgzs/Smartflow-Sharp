@@ -12,6 +12,7 @@ using System.Data.SqlClient;
 using System.Text;
 
 using Smartflow.Enums;
+using System.Data.OracleClient;
 
 namespace Smartflow
 {
@@ -20,13 +21,13 @@ namespace Smartflow
         public static IDbConnection CreateWorkflowConnection()
         {
             SmartflowConfigHandle config = ConfigurationManager.GetSection("smartflowConfig") as SmartflowConfigHandle;
-            
+
             Assert.CheckNull(config, "SmartflowConfigHandle");
             Assert.StringNull(config.ConnectionString, "ConnectionString");
             Assert.StringNull(config.DatabaseCategory, "DatabaseCategory");
-            
+
             DatabaseCategory dbc;
-            if (Enum.TryParse(config.DatabaseCategory,true,out dbc) || String.IsNullOrEmpty(config.ConnectionString))
+            if (Enum.TryParse(config.DatabaseCategory, true, out dbc) || String.IsNullOrEmpty(config.ConnectionString))
             {
                 return DapperFactory.CreateConnection(dbc, config.ConnectionString);
             }
@@ -45,10 +46,12 @@ namespace Smartflow
                     connection = DatabaseService.CreateInstance(new SqlConnection(connectionString));
                     break;
                 case DatabaseCategory.Oracle:
-                    connection = DatabaseService.CreateInstance(new SqlConnection(connectionString));
+                    //ms 提供
+                    connection = DatabaseService.CreateInstance(new OracleConnection(connectionString));
                     break;
                 case DatabaseCategory.MySQL:
-                    connection = DatabaseService.CreateInstance(new SqlConnection(connectionString));
+                    //需要自已提供Dll
+                    //connection = DatabaseService.CreateInstance(new SqlConnection(connectionString));
                     break;
             }
             return connection;

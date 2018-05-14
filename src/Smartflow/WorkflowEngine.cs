@@ -156,7 +156,7 @@ namespace Smartflow
                     Transition tran = wfDecision.GetTransition();
 
                     if (tran == null) return;
-                    Jump(instance, transitionID, tran.TO, actorID, data);
+                    Jump(instance, transitionID, tran.DESTINATION, actorID, data);
                 }
 
                 OnExecuteProcess(new ExecutingContext()
@@ -179,8 +179,8 @@ namespace Smartflow
             workflowService.Processing(new WorkflowProcess()
             {
                 RNID = executeContext.To.NID,
-                FROM = executeContext.From.ID,
-                TO = executeContext.To.ID,
+                SOURCE = executeContext.From.ID,
+                DESTINATION = executeContext.To.ID,
                 TID = executeContext.TID.ToString(),
                 INSTANCEID = executeContext.Instance.InstanceID,
                 NODETYPE = executeContext.From.NodeType

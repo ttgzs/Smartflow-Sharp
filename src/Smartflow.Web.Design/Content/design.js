@@ -6,13 +6,15 @@
         }
 
     function saveflow() {
-        var json = SMF.exportToJSON(),
+        var exportToObject = SMF.exportToJSON(),
             wfName = window.prompt(designConfig.message);
         if (wfName) {
-            var data = {
-                NAME: wfName, XML: json.XML, IMAGE: json.IMAGE, WFID: designConfig.id
-            },
-            settings = {
+            var data = $.extend(exportToObject, {
+                NAME: wfName,
+                WFID: designConfig.id
+            });
+
+            var settings = {
                 url: designConfig.saveUrl,
                 data: data,
                 success: function () {
@@ -76,7 +78,7 @@
         var defaultSettings = $.extend({
             dataType: 'json',
             type: 'post',
-            cache:false
+            cache: false
         }, settings);
         $.ajax(defaultSettings);
     }

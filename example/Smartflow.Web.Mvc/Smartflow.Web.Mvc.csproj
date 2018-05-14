@@ -112,11 +112,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Code\Apply.cs" />
-    <Compile Include="Code\ApplyService.cs" />
-    <Compile Include="Code\DapperHelper.cs" />
     <Compile Include="Controllers\DefaultController.cs" />
-    <Compile Include="Controllers\FormController.cs" />
+    <Compile Include="Controllers\ApplyController.cs" />
     <Compile Include="Controllers\UserControlController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -150,12 +147,9 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\WorkflowDesign\Index.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\Dapper\Dapper.csproj">
-      <Project>{97983236-a85f-4da6-8518-5e9a788e08e8}</Project>
-      <Name>Dapper</Name>
+    <ProjectReference Include="..\..\Smartflow.BussinessService\Smartflow.BussinessService.csproj">
+      <Project>{eb6e0ec6-45db-4ec2-9539-1ace0981494d}</Project>
+      <Name>Smartflow.BussinessService</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\src\Smartflow.Integration\Smartflow.Integration.csproj">
       <Project>{383cdf78-0dea-40c7-be16-aff5d09fdbf3}</Project>
@@ -167,28 +161,16 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\WorkflowDesign\List.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Shared\WorkflowImage.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Views\Shared\Main.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Form\ApplyList.cshtml" />
+    <Content Include="Views\Apply\ApplyList.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Form\Apply.cshtml" />
+    <Content Include="Views\Apply\Apply.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\UserControl\Record.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Shared\WorkflowCheck.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\WorkflowDesign\WorkflowDesignSettings.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

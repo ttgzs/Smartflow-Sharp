@@ -6,7 +6,7 @@
 <html>
 <head>
     <title>Smartflow 工作流程列表</title>
-    <link href="~/Content/main.css" rel="stylesheet" />
+    <link href="~/Content/layui/css/layui.css" rel="stylesheet" />
     <script src="~/Content/jquery.min.js"></script>
     <script src="~/Content/common.js"></script>
     <script type="text/javascript">
@@ -25,13 +25,12 @@
     </script>
 </head>
 <body>
-    <div class="panel panel-default">
-        <div style="text-align:right;margin-top:20px;margin-bottom:10px;">
-            <!-- Default panel contents -->
-            <input type="button" value="增加" class="btn" onclick="openWin('@Url.Action("Design", "WorkflowDesign")',960,560)" />
-            <!-- Table -->
+    <br />
+    <div class="layui-container">
+        <div class="layui-btn-group">
+            <input type="button" value="增加" class="layui-btn" onclick="openWin('@Url.Action("Design", "WorkflowDesign")',960,560)" />
         </div>
-        <table class="table table-list">
+        <table class="layui-table">
             <thead>
                 <tr>
                     <th style="width:50px;">序号</th>
@@ -45,17 +44,28 @@
                 }
                 @foreach (Smartflow.Integration.Models.WorkflowXml wf in Model)
                 {
-                    <tr>
-                        <td style="width:50px;text-align:center;">@(counter++)</td>
-                        <td>@wf.NAME</td>
-                        <td style="width:120px;text-align:center;">
-                            <a href="javascript:openWin('@Url.Action("Design", "WorkflowDesign", new { id = wf.WFID })',960,560)">修改</a>
-                            <a href="javascript:delWf('@wf.WFID')">删除</a>
-                        </td>
-                    </tr>
+                <tr>
+                    <td style="width:50px;text-align:center;">@(counter++)</td>
+                    <td>@wf.NAME</td>
+                    <td style="width:120px;text-align:center;">
+                        <a href="javascript:openWin('@Url.Action("Design", "WorkflowDesign", new { id = wf.WFID })',960,560)">修改</a>
+                        <a href="javascript:delWf('@wf.WFID')">删除</a>
+                    </td>
+                </tr>
                 }
             </tbody>
         </table>
     </div>
+
+    <script src="~/Content/layui/layui.js"></script>
+    <script type="text/javascript">
+
+        layui.use('table', function () {
+
+        });
+
+    </script>
+
+
 </body>
 </html>

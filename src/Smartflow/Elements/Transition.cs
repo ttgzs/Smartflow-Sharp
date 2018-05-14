@@ -25,14 +25,14 @@ namespace Smartflow.Elements
             set;
         }
 
-        public long FROM
+        public long SOURCE
         {
             get;
             set;
         }
 
         [XmlAttribute("to")]
-        public long TO
+        public long DESTINATION
         {
             get;
             set;
@@ -47,14 +47,14 @@ namespace Smartflow.Elements
 
         internal override void Persistent()
         {
-            string sql = "INSERT INTO T_TRANSITION(NID,RNID,NAME,[TO],[FROM],INSTANCEID,EXPRESSION) VALUES(@NID,@RNID,@NAME,@TO,@FROM,@INSTANCEID,@EXPRESSION)";
+            string sql = "INSERT INTO T_TRANSITION(NID,RNID,NAME,DESTINATION,SOURCE,INSTANCEID,EXPRESSION) VALUES(@NID,@RNID,@NAME,@DESTINATION,@SOURCE,@INSTANCEID,@EXPRESSION)";
             Connection.Execute(sql, new
             {
                 NID = Guid.NewGuid().ToString(),
                 RNID = RNID,
                 NAME = NAME,
-                TO = TO,
-                FROM = FROM,
+                DESTINATION = DESTINATION,
+                SOURCE = SOURCE,
                 INSTANCEID = INSTANCEID,
                 EXPRESSION = EXPRESSION
             });
