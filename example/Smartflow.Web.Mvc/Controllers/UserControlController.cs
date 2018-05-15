@@ -32,6 +32,14 @@ namespace Smartflow.Web.Controllers
             return Json(bwkf.GetInstance(instanceID));
         }
 
+        public ActionResult WorkflowCheck(string instanceID)
+        {
+            ViewBag.InstanceID = instanceID;
+            WorkflowInstance instance = bwkf.GetInstance(instanceID);
+            return View(instance.Current.Transitions);
+        }
+
+
         public JsonResult Jump(string instanceID, string transitionID, long to, string message)
         {
             bwkf.Jump(instanceID, transitionID, to, data: new { Message = message });

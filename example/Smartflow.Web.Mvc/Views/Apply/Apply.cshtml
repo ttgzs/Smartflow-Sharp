@@ -7,7 +7,7 @@
 
 <html>
 <head>
-    <title></title>
+    <title>业务流程</title>
     <link href="~/Content/main.css" rel="stylesheet" />
     <script src="~/Content/jquery.min.js"></script>
     <script src="~/Content/common.js"></script>
@@ -62,8 +62,8 @@
             <tr>
                 <td colspan="2" style="text-align:center;">
                     <input type="button" id="btnAudit" value="@ViewBag.ButtonName" onclick="auditApply()" />
-                    <input type="submit" id="btnSubmit" value="提交" onclick="return sumbitApply('/Form/SubmitApply',1)" />
-                    <input type="submit" id="btnSave" value="保存" onclick="return sumbitApply('/Form/Save',0)" />
+                    <input type="submit" id="btnSubmit" value="提交" onclick="return sumbitApply('@Url.Action("SubmitApply", "Apply")', 1)" />
+                    <input type="submit" id="btnSave" value="保存" onclick="return sumbitApply('@Url.Action("Save", "Apply")', 0)" />
                 </td>
             </tr>
         </table>

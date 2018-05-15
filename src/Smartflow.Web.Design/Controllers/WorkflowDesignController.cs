@@ -13,6 +13,7 @@ using System.Web.Mvc;
 
 using Smartflow.Integration.Models;
 using Smartflow.Integration;
+using System.Web.Script.Serialization;
 
 namespace Smartflow.Web.Design.Controllers
 {
@@ -28,8 +29,8 @@ namespace Smartflow.Web.Design.Controllers
 
         public JsonResult GetWorkflowXml(string WFID)
         {
-           WorkflowXml model= designService.GetWorkflowXml(WFID);
-           return Json(model);
+            WorkflowXml model = designService.GetWorkflowXml(WFID);
+            return Json(model);
         }
 
         public JsonResult Save(WorkflowXml model)
@@ -50,7 +51,8 @@ namespace Smartflow.Web.Design.Controllers
 
         public ActionResult WorkflowImage(string instanceID)
         {
-            ViewBag.Result =Json(BaseWorkflowService.Instance.GetInstance(instanceID));
+            JavaScriptSerializer serializer = new JavaScriptSerializer();
+            ViewBag.Result = serializer.Serialize(BaseWorkflowService.Instance.GetInstance(instanceID));
             return View();
         }
 

@@ -119,9 +119,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="App_Start\FilterConfig.cs" />
-    <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="RouteConfig.cs" />
     <Content Include="Content\layui\css\layui.css" />
     <Content Include="Content\layui\css\modules\code.css" />
     <Content Include="Content\layui\css\modules\laydate\default\laydate.css" />

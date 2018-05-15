@@ -1,0 +1,64 @@
+﻿@model System.Collections.Generic.IEnumerable<Smartflow.Elements.Transition>
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>FlowControl</title>
+    <link href="~/Content/main.css" rel="stylesheet" />
+    <script src="~/Content/jquery.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $("#btnOk").click(function () {
+                var transitions = $(".check-content input[name='transition']:checked");
+                if (transitions.length == 0) {
+                    alert('请选择审批操作');
+                } else {
+                    var transition = transitions[0],
+                        transitionID = $(transition).attr("tid"),
+                        to = $(transition).attr("to");
+
+                    var description = $("#txtDescription").val();
+                    $.ajax({
+                        url: '@Url.Action("Jump", "UserControl")',
+                        type: 'post',
+                        data: { instanceID: '@ViewBag.InstanceID', transitionID: transitionID, to: to, message: description },
+                        success: function () {
+                            window.close();
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+    <table class="check-table">
+        <tr>
+            <td class="check-head">下一步审批操作：</td>
+            <td class="check-content">
+                @foreach (var item in Model)
+                {
+                    <input id="rad@(item.ID)" tid="@item.NID" to="@item.DESTINATION" name="transition" type="radio" />
+                    <label for="rad@(item.ID)">@item.NAME</label>
+                }
+            </td>
+        </tr>
+        <tr>
+            <td class="check-head">审批意见：</td>
+            <td class="check-content">
+                <textarea rows="10" cols="25" style="width:95%;height:60px;" id="txtDescription"></textarea>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <input type="button" id="btnOk" value="确定" />
+            </td>
+        </tr>
+    </table>
+</body>
+</html>

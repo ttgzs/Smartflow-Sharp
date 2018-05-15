@@ -39,12 +39,12 @@ namespace Smartflow.Integration
 
         public void OnProcess(ExecutingContext executeContext)
         {
+            var dny =executeContext.Data;
             recordService.Persistent(new Record()
             {
                 INSTANCEID = executeContext.Instance.InstanceID,
                 NODENAME = executeContext.From.NAME,
                 MESSAGE = executeContext.Data.Message
-
             });
         }
 

@@ -14,8 +14,8 @@
     <script type="text/javascript">
         $(function () {
             var draw = window.SMF.init('drawing');
-            if ('@ViewBag.Result') {
-                var serverData = JSON.parse(@ViewBag.Result);
+            if ('@Html.Raw(ViewBag.Result)') {
+                var serverData = @Html.Raw(ViewBag.Result);
                 SMF.revert(serverData.Image, true, serverData.Current.ID);
             }
         });
