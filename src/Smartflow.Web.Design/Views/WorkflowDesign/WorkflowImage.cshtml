@@ -1,0 +1,39 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Smartflow 业务流程图</title>
+    <link href="~/Content/smartflow.css" rel="stylesheet" />
+    <script src="~/Content/jquery.min.js"></script>
+    <script src="~/Content/svg.js"></script>
+    <script src="~/Content/smartflow.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            var draw = window.SMF.init('drawing');
+            var instatnceID = '@ViewBag.InstanceID';
+            if (instatnceID !== '0') {
+                $.ajax({
+                    url: '@Url.Action("GetWorkflowImage", "WorkflowDesign")',
+                    type: 'post',
+                    dataType: 'json',
+                    data: { instanceID: instatnceID },
+                    success: function (serverData) {
+                        SMF.revert(serverData.Image, true, serverData.Current.ID);
+                    }
+                })
+            } else {
+                draw.create('start');
+                draw.create('end');
+            }
+        });
+    </script>
+</head>
+<body>
+    <div class="container">
+        <div class="container-draw" id="drawing"></div>
+    </div>
+</body>
+</html>

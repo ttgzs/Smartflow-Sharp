@@ -1,0 +1,105 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>流程节点数据配置</title>
+    <link href="~/Content/smartflow.css" rel="stylesheet" />
+    <link href="~/Content/tree/css/zTreeStyle/zTreeStyle.css" rel="stylesheet" />
+    <link href="~/Content/layui/css/layui.css" rel="stylesheet" />
+    <link href="~/Content/smartflow.css" rel="stylesheet" />
+    <script src="~/Content/jquery.min.js"></script>
+    <script src="~/Content/tree/jquery.ztree.all.min.js"></script>
+    <script src="~/Content/settings.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            SMF.init({
+                configUrl: '@Url.Action("GetConfigs", "WorkflowDesign")',
+                treeUrl: '@Url.Action("GetOrgTree", "WorkflowDesign")',
+                roleUrl: '@Url.Action("GetRole", "WorkflowDesign")',
+                userUrl: '@Url.Action("GetUserList", "WorkflowDesign")'
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="layui-container">
+        <div class="layui-tab layui-tab-brief">
+            <ul class="layui-tab-title" id="tab">
+                <li category="info" class="layui-this">基本信息</li>
+                <li category="role">参与角色</li>
+                <li category="rule">规则配置</li>
+            </ul>
+            <div class="layui-tab-content">
+                <div class="layui-tab-item layui-show">
+                    <table class="layui-table" lay-size="sm" lay-skin="nob">
+                        <tr>
+                            <td style="width:60px;">名称</td>
+                            <td>
+                                <input type="text" id="txtNodeName" class="layui-input smartflow-input" />
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="layui-tab-item">
+                    <div class="layui-row">
+                        <div class="layui-col-xs6">
+                            <fieldset class="layui-elem-field layui-elem-field-h" style="margin-right:10px;">
+                                <legend>待选角色</legend>
+                                <div class="layui-field-box">
+                                    <ul id="roleGrid" class="smartflow-list"></ul>
+                                </div>
+                            </fieldset>
+                        </div>
+                        <div class="layui-col-xs6">
+                            <fieldset class="layui-elem-field layui-elem-field-h" style="margin-left:10px;">
+                                <legend>已选角色</legend>
+                                <div class="layui-field-box">
+                                    <ul id="roleAssign" class="smartflow-list"></ul>
+                                </div>
+                            </fieldset>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-tab-item">
+                    <fieldset class="layui-elem-field layui-field-title layui-field-title-mp">
+                        <legend>SQL脚本</legend>
+                    </fieldset>
+                    <table class="layui-table smartflow-table-tb" lay-size="sm" lay-skin="nob">
+                        <tbody>
+                            <tr>
+                                <td style="width:120px;">
+                                    数据源
+                                </td>
+                                <td>
+                                    <select id="ddlRuleConfig" class="layui-select smartflow-input" style="width:100%;"></select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="width:120px;">SQL脚本</td>
+                                <td>
+                                    <textarea id="txtCommand" class="layui-textarea smartflow-textarea"></textarea>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <fieldset class="layui-elem-field  layui-field-title layui-field-title-mp">
+                        <legend>表达式配置</legend>
+                    </fieldset>
+                    <table class="layui-table smartflow-table-tb" id="transitions" lay-size="sm" lay-skin="nob">
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="~/Content/layui/layui.js"></script>
+    <script type="text/javascript">
+        //注意：选项卡 依赖 element 模块，否则无法进行功能性操作
+        layui.use(['element', 'form'], function () {
+        });
+    </script>
+</body>
+</html>
