@@ -18,7 +18,7 @@ using System.Runtime.InteropServices;
 // 对 COM 组件不可见。如果需要从 COM 访问此程序集中的某个类型，
 // 请针对该类型将 ComVisible 特性设置为 true。
 [assembly: ComVisible(false)]
-
+[assembly: InternalsVisibleTo("Smartflow.Integration")]  
 // 如果此项目向 COM 公开，则下列 GUID 用于类型库的 ID
 [assembly: Guid("ca8d03f4-ba66-463a-a930-f895a01cedca")]
 
