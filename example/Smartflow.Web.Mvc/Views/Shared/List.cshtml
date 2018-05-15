@@ -13,11 +13,11 @@
         function delWf(id) {
             if (window.confirm('删除？')) {
                 $.ajax({
-                    url: '@Url.Action("Delete", "WorkflowDesign")',
+                    url: '@Url.Action("Delete", "Default")',
                     type: 'post',
                     data: { WFID: id },
                     success: function () {
-                        document.location.href = '@Url.Action("List", "WorkflowDesign")';
+                        document.location.href = '@Url.Action("List", "Default")';
                     }
                 });
             }
@@ -28,7 +28,7 @@
     <br />
     <div class="layui-container">
         <div class="layui-btn-group">
-            <input type="button" value="增加" class="layui-btn" onclick="openWin('@Url.Action("Design", "WorkflowDesign")',960,560)" />
+            <input type="button" value="增加" class="layui-btn" onclick="openWin('../../Smartflow.Web.Design/WorkflowDesign/Design', 960, 560)" />
         </div>
         <table class="layui-table">
             <thead>
@@ -48,7 +48,7 @@
                         <td style="width:50px;text-align:center;">@(counter++)</td>
                         <td>@wf.NAME</td>
                         <td style="width:120px;text-align:center;">
-                            <a href="javascript:openWin('@Url.Action("Design", "WorkflowDesign", new { id = wf.WFID })',960,560)">修改</a>
+                            <a href="javascript:openWin('../../Smartflow.Web.Design/WorkflowDesign/Design?id=@wf.WFID',960,560)">修改</a>
                             <a href="javascript:delWf('@wf.WFID')">删除</a>
                         </td>
                     </tr>

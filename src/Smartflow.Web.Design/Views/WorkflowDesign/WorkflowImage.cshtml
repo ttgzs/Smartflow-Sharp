@@ -8,25 +8,15 @@
     <title>Smartflow 业务流程图</title>
     <link href="~/Content/smartflow.css" rel="stylesheet" />
     <script src="~/Content/jquery.min.js"></script>
+    <script src="~/Content/json2.js"></script>
     <script src="~/Content/svg.js"></script>
     <script src="~/Content/smartflow.js"></script>
     <script type="text/javascript">
         $(function () {
             var draw = window.SMF.init('drawing');
-            var instatnceID = '@ViewBag.InstanceID';
-            if (instatnceID !== '0') {
-                $.ajax({
-                    url: '@Url.Action("GetWorkflowImage", "WorkflowDesign")',
-                    type: 'post',
-                    dataType: 'json',
-                    data: { instanceID: instatnceID },
-                    success: function (serverData) {
-                        SMF.revert(serverData.Image, true, serverData.Current.ID);
-                    }
-                })
-            } else {
-                draw.create('start');
-                draw.create('end');
+            if ('@ViewBag.Result') {
+                var serverData = JSON.parse(@ViewBag.Result);
+                SMF.revert(serverData.Image, true, serverData.Current.ID);
             }
         });
     </script>

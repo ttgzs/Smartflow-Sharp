@@ -32,11 +32,6 @@ namespace Smartflow.Web.Design.Controllers
            return Json(model);
         }
 
-        public ActionResult List()
-        {
-            return View(designService.GetWorkflowXmlList());
-        }
-
         public JsonResult Save(WorkflowXml model)
         {
             if ("0" == model.WFID || String.IsNullOrEmpty(model.WFID))
@@ -53,21 +48,25 @@ namespace Smartflow.Web.Design.Controllers
             return Json(true);
         }
 
-        public JsonResult Delete(string WFID)
-        {
-            designService.Delete(WFID);
-            return Json(true);
-        }
-
         public ActionResult WorkflowImage(string instanceID)
         {
-            ViewBag.InstanceID = instanceID;
+            ViewBag.Result =Json(BaseWorkflowService.Instance.GetInstance(instanceID));
             return View();
         }
 
-        public JsonResult GetWorkflowImage(string instanceID)
+        public ActionResult WorkflowDesignSettings()
         {
-            return Json(BaseWorkflowService.Instance.GetInstance(instanceID));
+            return View();
+        }
+
+        public JsonResult GetRole(string roleIds)
+        {
+            return Json(designService.GetRole(roleIds));
+        }
+
+        public JsonResult GetConfigs()
+        {
+            return Json(designService.GetConfigs());
         }
     }
 }

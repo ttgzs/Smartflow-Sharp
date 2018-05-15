@@ -282,6 +282,9 @@
   <ItemGroup>
     <Content Include="Content\layui\font\iconfont.woff" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\List.cshtml" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
