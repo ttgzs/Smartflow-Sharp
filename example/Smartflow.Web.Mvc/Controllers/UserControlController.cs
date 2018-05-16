@@ -27,10 +27,10 @@ namespace Smartflow.Web.Controllers
             return PartialView(workflowRecordService.Query(instanceID));
         }
 
-        public JsonResult GetWorkflowImage(string instanceID)
-        {
-            return Json(bwkf.GetInstance(instanceID));
-        }
+        //public JsonResult GetWorkflowImage(string instanceID)
+        //{
+        //    return Json(bwkf.GetInstance(instanceID));
+        //}
 
         public ActionResult WorkflowCheck(string instanceID)
         {
@@ -39,9 +39,9 @@ namespace Smartflow.Web.Controllers
             return View(instance.Current.Transitions);
         }
 
-
         public JsonResult Jump(string instanceID, string transitionID, long to, string message)
         {
+            //请不要直接定义匿名类传递
             dynamic dynData= new ExpandoObject();
             dynData.Message = message;
             bwkf.Jump(instanceID, transitionID, to, data: dynData);

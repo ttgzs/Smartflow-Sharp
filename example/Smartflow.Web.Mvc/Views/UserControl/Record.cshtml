@@ -1,4 +1,4 @@
-﻿@model System.Collections.Generic.IEnumerable<Smartflow.Integration.Models.Record>
+﻿@model System.Collections.Generic.IEnumerable<Smartflow.BussinessService.Models.Record>
 @if (Model.Count() > 0)
 {
     <table class="table flow-table">
@@ -7,7 +7,7 @@
                 <a href="#" onclick="openWinWorkflowImage('../../../Smartflow.Web.Design/WorkflowDesign/WorkflowImage?instanceID=@(ViewBag.InstanceID)')">查看流程图</a>
             </td>
         </tr>
-        @foreach (Smartflow.Integration.Models.Record rec in Model)
+        @foreach (Smartflow.BussinessService.Models.Record rec in Model)
         {
             <tr>
                 <td class="flow-node">@rec.NODENAME</td>

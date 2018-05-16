@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Smartflow.BussinessService;
 
 namespace Smartflow.Web.Controllers
 {
@@ -15,12 +16,12 @@ namespace Smartflow.Web.Controllers
 
         public ActionResult List()
         {
-            return View();
+            return View(WorkflowXmlService.GetWorkflowXmlList());
         }
 
         public JsonResult Delete(string WFID)
         {
-           // designService.Delete(WFID);
+            WorkflowXmlService.Delete(WFID);
             return Json(true);
         }
     }

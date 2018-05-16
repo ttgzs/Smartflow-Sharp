@@ -16,7 +16,7 @@ namespace Smartflow.Web.Design
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "WorkflowDesign", action = "List", id = UrlParameter.Optional }
+                defaults: new { controller = "WorkflowDesign", action = "Design", id = UrlParameter.Optional }
             );
         }
     }

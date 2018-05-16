@@ -7,6 +7,7 @@ using System.Web.Mvc;
 
 using Smartflow.BussinessService.Models;
 using Smartflow.BussinessService;
+using Smartflow.Infrastructure;
 
 namespace Smartflow.Web.Controllers
 {
@@ -50,6 +51,11 @@ namespace Smartflow.Web.Controllers
             return View(aservice.Query());
         }
 
+        public void Delete(long id)
+        {
+            aservice.Delete(id);
+        }
+
         public ActionResult Apply(string id)
         {
             if (string.IsNullOrEmpty(id))
@@ -78,14 +84,13 @@ namespace Smartflow.Web.Controllers
 
         public void GenerateDropDownViewData(string WFID)
         {
-            //WorkflowDesignService designService = new WorkflowDesignService();
-            //List<WorkflowXml> workflowXmlList = designService.GetWorkflowXmlList();
-            //List<SelectListItem> fileList = new List<SelectListItem>();
-            //foreach (WorkflowXml item in workflowXmlList)
-            //{
-            //    fileList.Add(new SelectListItem { Text = item.NAME, Value = item.WFID, Selected = (item.WFID == WFID) });
-            //}
-            //ViewData["Wfile"] = fileList;
+            List<WorkflowXml> workflowXmlList = WorkflowXmlService.GetWorkflowXmlList();
+            List<SelectListItem> fileList = new List<SelectListItem>();
+            foreach (WorkflowXml item in workflowXmlList)
+            {
+                fileList.Add(new SelectListItem { Text = item.NAME, Value = item.WFID, Selected = (item.WFID == WFID) });
+            }
+            ViewData["Wfile"] = fileList;
         }
     }
 }

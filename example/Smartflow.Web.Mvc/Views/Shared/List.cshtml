@@ -1,4 +1,4 @@
-﻿@model System.Collections.Generic.IEnumerable<Smartflow.Integration.Models.WorkflowXml>
+﻿@model System.Collections.Generic.IEnumerable<Smartflow.Infrastructure.WorkflowXml>
 @{
     Layout = null;
 }
@@ -42,7 +42,7 @@
                 @{
                     int counter = 1;
                 }
-                @foreach (Smartflow.Integration.Models.WorkflowXml wf in Model)
+                @foreach (Smartflow.Infrastructure.WorkflowXml wf in Model)
                 {
                     <tr>
                         <td style="width:50px;text-align:center;">@(counter++)</td>

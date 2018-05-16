@@ -27,21 +27,6 @@ namespace Smartflow.DesignService
             Connection.Execute(sql, workflowXml);
         }
 
-        //public void Delete(string WFID)
-        //{
-        //    string sql = " DELETE FROM T_FLOWXML WHERE WFID=@WFID ";
-        //    Connection.Execute(sql, new
-        //    {
-        //        WFID = WFID
-        //    });
-        //}
-
-        //public List<WorkflowXml> GetWorkflowXmlList()
-        //{
-        //    string sql = " SELECT * FROM T_FLOWXML ";
-        //    return Connection.Query<WorkflowXml>(sql).ToList();
-        //}
-
         public WorkflowXml GetWorkflowXml(string WFID)
         {
             string sql = "SELECT * FROM T_FLOWXML WHERE WFID=@WFID";

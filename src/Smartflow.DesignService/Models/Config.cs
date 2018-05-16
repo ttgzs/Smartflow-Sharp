@@ -20,7 +20,6 @@ namespace Smartflow.DesignService.Models
             set;
         }
 
-
         public string Connection
         {
             get;

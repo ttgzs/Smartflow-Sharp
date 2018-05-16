@@ -19,11 +19,11 @@
         function delApply(id) {
             if (window.confirm('删除？')) {
                 $.ajax({
-                    url: '@Url.Action("Delete", "Default")',
+                    url: '@Url.Action("Delete", "Apply")',
                     type: 'post',
-                    data: { WFID: id },
+                    data: { id: id },
                     success: function () {
-                        document.location.href = '@Url.Action("List","Default")';
+                        document.location.href = '@Url.Action("ApplyList", "Apply")';
                     }
                 });
             }

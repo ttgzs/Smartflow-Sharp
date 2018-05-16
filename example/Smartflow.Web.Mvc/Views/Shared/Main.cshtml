@@ -15,22 +15,23 @@
 </head>
 <body class="mainFrame">
     <div class="top">
-        <span>Smartflow-Tech 工作流平台</span>
+        <span>Smartflow-Sharp 工作流平台</span>
     </div>
     <div class="content">
         <div class="left">
             <ul class="menu">
                 <li>
-                    <a href="javascript:go('@Url.Action("List", "Default")')">流程设计器</a>
+                    <a href="javascript:go('@Url.Action("ApplyList", "Apply")')">表单申请</a>
+     
                 </li>
                 <li>
-                    <a href="javascript:go('@Url.Action("ApplyList", "Apply")')">表单申请</a>
+                    <a href="javascript:go('@Url.Action("List", "Default")')">流程设计器</a>
                 </li>
             </ul>
         </div>
         <div class="right">
             <iframe id="iframeContent" style="width:100%;
-                    height:100%;" frameborder="0" src="@Url.Action("List", "Default")"></iframe>
+                    height:100%;" frameborder="0" src="@Url.Action("ApplyList", "Apply")"></iframe>
         </div>
     </div>
 </body>

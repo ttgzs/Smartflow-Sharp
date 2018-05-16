@@ -42,7 +42,6 @@
   <ItemGroup>
     <Compile Include="Models\Config.cs" />
     <Compile Include="Models\Role.cs" />
-    <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SqlHelper.cs" />
     <Compile Include="WorkflowDesignService.cs" />
