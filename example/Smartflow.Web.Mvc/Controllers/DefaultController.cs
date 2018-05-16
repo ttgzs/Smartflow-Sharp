@@ -1,5 +1,4 @@
-﻿using Smartflow.Integration;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -9,7 +8,6 @@ namespace Smartflow.Web.Controllers
 {
     public class DefaultController : Controller
     {
-        private WorkflowDesignService designService = new WorkflowDesignService();
         public ActionResult Main()
         {
             return View();
@@ -17,12 +15,12 @@ namespace Smartflow.Web.Controllers
 
         public ActionResult List()
         {
-            return View(designService.GetWorkflowXmlList());
+            return View();
         }
 
         public JsonResult Delete(string WFID)
         {
-            designService.Delete(WFID);
+           // designService.Delete(WFID);
             return Json(true);
         }
     }

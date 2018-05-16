@@ -1,5 +1,4 @@
-﻿using Smartflow.Integration.Models;
-/*
+﻿/*
  License: https://github.com/chengderen/Smartflow/blob/master/LICENSE 
  Home page: https://github.com/chengderen/Smartflow
 
@@ -9,14 +8,16 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Smartflow.BussinessService.Models;
+using Smartflow.Infrastructure;
 
-namespace Smartflow.Integration
+namespace Smartflow.BussinessService
 {
     public sealed class BaseWorkflowService
     {
         private static WorkflowEngine context = WorkflowEngine.CreateWorkflowEngine();
         private readonly static BaseWorkflowService singleton = new BaseWorkflowService();
-        private WorkflowRecordService recordService = new WorkflowRecordService();
+        private RecordService recordService = new RecordService();
 
         private BaseWorkflowService()
         {
@@ -39,7 +40,7 @@ namespace Smartflow.Integration
 
         public void OnProcess(ExecutingContext executeContext)
         {
-            var dny =executeContext.Data;
+            var dny = executeContext.Data;
             recordService.Persistent(new Record()
             {
                 INSTANCEID = executeContext.Instance.InstanceID,
@@ -56,7 +57,7 @@ namespace Smartflow.Integration
 
         public string Start(string WFID)
         {
-            WorkflowXml wfXml = new WorkflowDesignService().GetWorkflowXml(WFID);
+            WorkflowXml wfXml = null; //new WorkflowDesignService().GetWorkflowXml(WFID);
             return context.Start(wfXml);
         }
 

@@ -248,10 +248,6 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Smartflow.Integration\Smartflow.Integration.csproj">
-      <Project>{383cdf78-0dea-40c7-be16-aff5d09fdbf3}</Project>
-      <Name>Smartflow.Integration</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\src\Smartflow\Smartflow.csproj">
       <Project>{c77dd279-74f0-4a0a-b534-2cf858ede21d}</Project>
       <Name>Smartflow</Name>

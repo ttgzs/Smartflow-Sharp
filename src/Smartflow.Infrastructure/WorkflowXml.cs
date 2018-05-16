@@ -10,9 +10,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Smartflow.Integration.Models
+namespace Smartflow.Infrastructure
 {
-    public class WorkflowXml:IWorkflowXml
+    public class WorkflowXml
     {
         public string WFID
         {

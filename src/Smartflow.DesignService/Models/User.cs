@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Smartflow.Infrastructure;
 
-namespace Smartflow.Integration.Models
+namespace Smartflow.DesignService.Models
 {
     public class User : IEntry
     {

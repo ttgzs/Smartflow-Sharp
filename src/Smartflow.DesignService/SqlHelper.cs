@@ -11,13 +11,13 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Text;
 
-namespace Smartflow.Integration
+namespace Smartflow.DesignService
 {
     public class SqlHelper
     {
         public static IDbConnection CreateConnection()
         {
-            string connectionString = System.Configuration.ConfigurationManager.AppSettings["busConnection"];
+            string connectionString = ConfigurationManager.AppSettings["busConnection"];
             IDbConnection connection = new SqlConnection(connectionString);
             return connection;
         }

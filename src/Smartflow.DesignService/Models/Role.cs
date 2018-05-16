@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using Smartflow.Infrastructure;
 
-namespace Smartflow.Integration.Models
+namespace Smartflow.DesignService.Models
 {
     public class Role:IEntry
     {

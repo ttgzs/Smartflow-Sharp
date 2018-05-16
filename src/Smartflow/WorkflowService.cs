@@ -15,6 +15,7 @@ using System.Text;
 using Dapper;
 using Smartflow.Elements;
 using Smartflow.Enums;
+using Smartflow.Infrastructure;
 
 namespace Smartflow
 {
@@ -28,7 +29,7 @@ namespace Smartflow
             return instance;
         }
 
-        public string Start(IWorkflowXml workflowXml)
+        public string Start(WorkflowXml workflowXml)
         {
             Workflow workflow = XmlConfiguration.ParseflowXml<Workflow>(workflowXml.XML);
             List<Element> elements = new List<Element>();

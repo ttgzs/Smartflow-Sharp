@@ -10,15 +10,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-
-using Smartflow.Integration;
-
+using System.Dynamic;
+using Smartflow;
+using Smartflow.BussinessService;
 
 namespace Smartflow.Web.Controllers
 {
     public class UserControlController : Controller
     {
-        private WorkflowRecordService workflowRecordService = new WorkflowRecordService();
+        private RecordService workflowRecordService = new RecordService();
         private BaseWorkflowService bwkf = BaseWorkflowService.Instance;
 
         public PartialViewResult Record(string instanceID)
@@ -42,7 +42,9 @@ namespace Smartflow.Web.Controllers
 
         public JsonResult Jump(string instanceID, string transitionID, long to, string message)
         {
-            bwkf.Jump(instanceID, transitionID, to, data: new { Message = message });
+            dynamic dynData= new ExpandoObject();
+            dynData.Message = message;
+            bwkf.Jump(instanceID, transitionID, to, data: dynData);
             return Json(true);
         }
     }

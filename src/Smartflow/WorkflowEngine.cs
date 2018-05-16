@@ -12,6 +12,7 @@ using System.Text;
 
 using Smartflow.Elements;
 using Smartflow.Enums;
+using Smartflow.Infrastructure;
 
 namespace Smartflow
 {
@@ -84,7 +85,7 @@ namespace Smartflow
         /// </summary>
         /// <param name="flowID">文件ID</param>
         /// <returns>返回实例ID</returns>
-        public string Start(IWorkflowXml workflowXml)
+        public string Start(WorkflowXml workflowXml)
         {
             return workflowService.Start(workflowXml);
         }

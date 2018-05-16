@@ -11,9 +11,10 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-using Smartflow.Integration.Models;
-using Smartflow.Integration;
+using Smartflow.DesignService.Models;
+using Smartflow.DesignService;
 using System.Web.Script.Serialization;
+using Smartflow.Infrastructure;
 
 namespace Smartflow.Web.Design.Controllers
 {
@@ -52,7 +53,8 @@ namespace Smartflow.Web.Design.Controllers
         public ActionResult WorkflowImage(string instanceID)
         {
             JavaScriptSerializer serializer = new JavaScriptSerializer();
-            ViewBag.Result = serializer.Serialize(BaseWorkflowService.Instance.GetInstance(instanceID));
+            ViewBag.Result = serializer.Serialize(WorkflowEngine
+                .CreateWorkflowEngine().GetWorkflowInstance(instanceID));
             return View();
         }
 

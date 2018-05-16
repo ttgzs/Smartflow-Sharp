@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Smartflow.Integration.Models
+using Smartflow.Infrastructure;
+namespace Smartflow.DesignService.Models
 {
     public class Config : IEntry
     {

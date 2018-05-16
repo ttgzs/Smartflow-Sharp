@@ -4,12 +4,11 @@ using System.Data;
 using System.Linq;
 using System.Web;
 using Dapper;
-using Smartflow.Integration.Models;
+using Smartflow.BussinessService.Models;
 
-
-namespace Smartflow.Integration
+namespace Smartflow.BussinessService
 {
-    public class WorkflowRecordService
+    public class RecordService
     {
         protected IDbConnection Connection
         {

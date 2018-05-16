@@ -252,9 +252,13 @@
     <Content Include="Views\WorkflowDesign\WorkflowImage.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Smartflow.Integration\Smartflow.Integration.csproj">
-      <Project>{383cdf78-0dea-40c7-be16-aff5d09fdbf3}</Project>
-      <Name>Smartflow.Integration</Name>
+    <ProjectReference Include="..\Smartflow.DesignService\Smartflow.DesignService.csproj">
+      <Project>{36312179-f27b-4369-8d21-27b2d09919f2}</Project>
+      <Name>Smartflow.DesignService</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Smartflow.Infrastructure\Smartflow.Infrastructure.csproj">
+      <Project>{fbf0e9d3-1782-4ea6-80ca-aa6eb63f41d9}</Project>
+      <Name>Smartflow.Infrastructure</Name>
     </ProjectReference>
     <ProjectReference Include="..\Smartflow\Smartflow.csproj">
       <Project>{c77dd279-74f0-4a0a-b534-2cf858ede21d}</Project>

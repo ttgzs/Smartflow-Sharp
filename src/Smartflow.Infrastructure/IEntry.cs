@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Smartflow.Integration
+namespace Smartflow.Infrastructure
 {
     /// <summary>
     /// 定义基础数据的载体接口

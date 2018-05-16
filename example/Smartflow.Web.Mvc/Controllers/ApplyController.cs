@@ -4,8 +4,6 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-using Smartflow.Integration.Models;
-using Smartflow.Integration;
 
 using Smartflow.BussinessService.Models;
 using Smartflow.BussinessService;
@@ -80,14 +78,14 @@ namespace Smartflow.Web.Controllers
 
         public void GenerateDropDownViewData(string WFID)
         {
-            WorkflowDesignService designService = new WorkflowDesignService();
-            List<WorkflowXml> workflowXmlList = designService.GetWorkflowXmlList();
-            List<SelectListItem> fileList = new List<SelectListItem>();
-            foreach (WorkflowXml item in workflowXmlList)
-            {
-                fileList.Add(new SelectListItem { Text = item.NAME, Value = item.WFID, Selected = (item.WFID == WFID) });
-            }
-            ViewData["Wfile"] = fileList;
+            //WorkflowDesignService designService = new WorkflowDesignService();
+            //List<WorkflowXml> workflowXmlList = designService.GetWorkflowXmlList();
+            //List<SelectListItem> fileList = new List<SelectListItem>();
+            //foreach (WorkflowXml item in workflowXmlList)
+            //{
+            //    fileList.Add(new SelectListItem { Text = item.NAME, Value = item.WFID, Selected = (item.WFID == WFID) });
+            //}
+            //ViewData["Wfile"] = fileList;
         }
     }
 }

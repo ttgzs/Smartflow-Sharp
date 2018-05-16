@@ -3,11 +3,10 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Text;
-
 using Dapper;
-using Smartflow.Integration.Models;
+using Smartflow.Infrastructure;
 
-namespace Smartflow.Integration
+namespace Smartflow.DesignService
 {
     public partial class WorkflowDesignService
     {
@@ -28,20 +27,20 @@ namespace Smartflow.Integration
             Connection.Execute(sql, workflowXml);
         }
 
-        public void Delete(string WFID)
-        {
-            string sql = " DELETE FROM T_FLOWXML WHERE WFID=@WFID ";
-            Connection.Execute(sql, new
-            {
-                WFID = WFID
-            });
-        }
+        //public void Delete(string WFID)
+        //{
+        //    string sql = " DELETE FROM T_FLOWXML WHERE WFID=@WFID ";
+        //    Connection.Execute(sql, new
+        //    {
+        //        WFID = WFID
+        //    });
+        //}
 
-        public List<WorkflowXml> GetWorkflowXmlList()
-        {
-            string sql = " SELECT * FROM T_FLOWXML ";
-            return Connection.Query<WorkflowXml>(sql).ToList();
-        }
+        //public List<WorkflowXml> GetWorkflowXmlList()
+        //{
+        //    string sql = " SELECT * FROM T_FLOWXML ";
+        //    return Connection.Query<WorkflowXml>(sql).ToList();
+        //}
 
         public WorkflowXml GetWorkflowXml(string WFID)
         {
