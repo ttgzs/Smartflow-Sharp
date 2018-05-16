@@ -57,7 +57,7 @@ namespace Smartflow.BussinessService
 
         public string Start(string WFID)
         {
-            WorkflowXml wfXml = null; //new WorkflowDesignService().GetWorkflowXml(WFID);
+            WorkflowXml wfXml = WorkflowXmlService.GetWorkflowXml(WFID);
             return context.Start(wfXml);
         }
 

@@ -21,6 +21,14 @@ namespace Smartflow.BussinessService
             string sql = " SELECT * FROM T_FLOWXML ";
             return SqlHelper.CreateConnection().Query<WorkflowXml>(sql).ToList();
         }
-    }
 
+
+        public static WorkflowXml GetWorkflowXml(string instanceID)
+        {
+            string sql = "SELECT * FROM T_FLOWXML WHERE WFID=@WFID";
+
+            return SqlHelper.CreateConnection().Query<WorkflowXml>(sql, new { WFID = instanceID })
+                .FirstOrDefault<WorkflowXml>();
+        }
+    }
 }
