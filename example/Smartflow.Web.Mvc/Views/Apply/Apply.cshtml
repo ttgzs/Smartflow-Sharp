@@ -10,9 +10,13 @@
     <title>业务流程</title>
     <link href="~/Content/main.css" rel="stylesheet" />
     <link href="~/Content/layui/css/layui.css" rel="stylesheet" />
+    <style type="text/css">
+        .layui-btn {
+            border-radius: initial;
+        }
+    </style>
     <script src="~/Content/jquery.min.js"></script>
     <script src="~/Content/common.js"></script>
-
     <script type="text/javascript">
         function sumbitApply(url, state) {
             $("#STATE").val(state);
@@ -24,7 +28,13 @@
             if (v == "0" || !v) {
                 $("#btnSubmit,#btnSave").show();
                 $("#btnAudit").hide();
-            } else {
+            }
+            else if (v == '8') {
+                //审核流程走完
+                $("#btnAudit").hide();
+                $("#btnSubmit,#btnSave").hide();
+            }
+            else {
                 $("#btnAudit").show();
                 $("#btnSubmit,#btnSave").hide();
             }
@@ -34,24 +44,39 @@
             var instanceID = document.getElementById("INSTANCEID").value;
             openWin('@Url.Action("WorkflowCheck", "UserControl")' + "?instanceID=" + instanceID, 600, 300);
         }
+
+        function refresh() {
+            window.location.href = '@Url.Action("Apply", "Apply", new { id = (Model == null ? 0 : Model.AID) })'
+        }
     </script>
 </head>
 <body>
-    <br />
-    <div class="layui-container">
-        @using (Html.BeginForm("Save", "Apply", FormMethod.Post, new { id = "applyForm", @class = "layui-form" }))
-        {
+    <div class="layui-container" style="margin-top:10px;">
+        <form id="applyForm" action="@Url.Action("Save","Apply")" class="layui-form" lay-skin="sm">
             <div class="layui-form-item">
                 <label class="layui-form-label">申请人</label>
                 <div class="layui-input-block">
-                    @Html.TextBoxFor(m => m.NAME, new { style = "width:98%;", @class = "layui-input" })
+                    @Html.TextBoxFor(m => m.NAME, new { @class = "layui-input" })
                     @Html.HiddenFor(m => m.AID)
                     @Html.HiddenFor(m => m.STATE)
                     @Html.HiddenFor(m => m.INSTANCEID)
                 </div>
             </div>
             <div class="layui-form-item">
-                <label class="layui-form-label">工作流程</label>
+                <label class="layui-form-label">申请密级</label>
+                <div class="layui-input-block">
+
+                    <select id="ddlApplyLevel">
+                        <option value="非密">非密</option>
+                        <option value="秘密">秘密</option>
+                        <option value="机密">机密</option>
+                        <option value="绝密">绝密</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">审批流程</label>
                 <div class="layui-input-block">
                     @Html.DropDownListFor(m => m.WFID, (ViewData["Wfile"] as IEnumerable<SelectListItem>))
                 </div>
@@ -59,28 +84,28 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">描述</label>
                 <div class="layui-input-block">
-                    @Html.TextBoxFor(m => m.DESCRIPTION, new { @class = "layui-input" })
+                    @Html.TextAreaFor(m => m.DESCRIPTION, new { @class = "layui-textarea" })
                 </div>
             </div>
             <div class="layui-form-item">
                 <div class="layui-input-block">
                     <input type="button" id="btnAudit" value="@ViewBag.ButtonName" class="layui-btn" onclick="auditApply()" />
-                    <input type="submit" id="btnSubmit" value="提交" class="layui-btn" onclick="return sumbitApply('@Url.Action("SubmitApply", "Apply")', 1)" />
+                    <input type="submit" id="btnSubmit" value="提交" class="layui-btn " onclick="return sumbitApply('@Url.Action("SubmitApply", "Apply")', 1)" />
                     <input type="submit" id="btnSave" value="保存" class="layui-btn layui-btn-primary" onclick="return sumbitapply('@Url.Action("Save", "Apply" )', 0)" />
+                    <input type="button" id="btnBack" value="返回" class="layui-btn layui-btn-warm" onclick="window.location.href = '@Url.Action("ApplyList", "Apply")'" / />
                 </div>
             </div>
-        }
+        </form>
         @if (Model != null)
         {
             Html.RenderAction("Record", "UserControl", new { instanceID = Model.INSTANCEID });
         }
     </div>
     <script src="~/Content/layui/layui.js"></script>
-
     <script type="text/javascript">
 
         layui.use('form', function () {
-
+            var form = layui.form;
         });
 
 

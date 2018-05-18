@@ -12,10 +12,7 @@ body {
     color: #000;
 }
 
-.panel{
-  width:98%;
-  margin:0 auto;
-}
+
 
 .table{
     margin: 0 auto;
@@ -23,24 +20,8 @@ body {
     border-collapse: collapse;
 }
 
-.table-list{
-  min-width:800px;
-  width:100%;
-
-}
-
-.table-list th{
-   border-bottom:solid 1px #eee;
-   font-weight:bold;
-}
-
-.table-list td{
-  border-bottom:solid 1px #eee;
-  line-height:28px;
-}
-
-.flow-table, .form-table {
-    width: 800px;
+.flow-table {
+    /*width: 800px;*/
 }
 
 .flow-table {

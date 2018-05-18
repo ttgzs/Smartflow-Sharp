@@ -7,58 +7,79 @@
 
 <html>
 <head>
-    <meta name="viewport" content="width=device-width" />
-    <title>FlowControl</title>
-    <link href="~/Content/main.css" rel="stylesheet" />
+    <title>审批流程控件</title>
+    <link href="~/Content/layui/css/layui.css" rel="stylesheet" />
+    <style type="text/css">
+        .cm {
+            width: 80px;
+        }
+
+        textarea {
+            resize: none !important;
+        }
+        .layui-btn {
+            border-radius: initial;
+        }
+
+    </style>
     <script src="~/Content/jquery.min.js"></script>
     <script type="text/javascript">
         $(function () {
             $("#btnOk").click(function () {
-                var transitions = $(".check-content input[name='transition']:checked");
-                if (transitions.length == 0) {
-                    alert('请选择审批操作');
-                } else {
-                    var transition = transitions[0],
-                        transitionID = $(transition).attr("tid"),
-                        to = $(transition).attr("to");
-
-                    var description = $("#txtDescription").val();
+                var transition = $("#ddlOperate option:selected"),
+                    transitionID = $(transition).val(),
+                    to = transition.attr("to");
+                var description = $.trim($("#txtDescription").val());
+                if (description) {
                     $.ajax({
                         url: '@Url.Action("Jump", "UserControl")',
                         type: 'post',
                         data: { instanceID: '@ViewBag.InstanceID', transitionID: transitionID, to: to, message: description },
                         success: function () {
+                            window.opener.window.refresh();
                             window.close();
                         }
                     });
+                } else {
+                    alert('请填写审批意见');
                 }
             });
         });
     </script>
 </head>
 <body>
-    <table class="check-table">
-        <tr>
-            <td class="check-head">下一步审批操作：</td>
-            <td class="check-content">
-                @foreach (var item in Model)
-                {
-                    <input id="rad@(item.ID)" tid="@item.NID" to="@item.DESTINATION" name="transition" type="radio" />
-                    <label for="rad@(item.ID)">@item.NAME</label>
-                }
-            </td>
-        </tr>
-        <tr>
-            <td class="check-head">审批意见：</td>
-            <td class="check-content">
-                <textarea rows="10" cols="25" style="width:95%;height:60px;" id="txtDescription"></textarea>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <input type="button" id="btnOk" value="确定" />
-            </td>
-        </tr>
-    </table>
+    <form class="layui-container layui-form">
+        <table class="layui-table" lay-size="sm">
+            <tr>
+                <td class="layui-text cm">下一步操作</td>
+                <td>
+                    <select id="ddlOperate">
+                        @foreach (var item in Model)
+                        {
+                            <option to="@item.DESTINATION" value="@item.NID">@item.NAME</option>
+                        }
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td class="layui-text cm">审批意见</td>
+                <td>
+                    <textarea class="layui-textarea" id="txtDescription"></textarea>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" style="text-align:center;">
+                    <input type="button" id="btnOk" value="确定" class="layui-btn" />
+                    <input type="button" id="btnClose" value="关闭" onclick="window.close()" class="layui-btn layui-btn-normal" />
+                </td>
+            </tr>
+        </table>
+    </form>
+    <script src="~/Content/layui/layui.js"></script>
+    <script type="text/javascript">
+        layui.use('form', function () {
+            var form = layui.form;
+        });
+    </script>
 </body>
 </html>

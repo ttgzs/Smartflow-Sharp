@@ -36,6 +36,10 @@ namespace Smartflow.BussinessService
         public void OnCompleted(ExecutingContext executeContext)
         {
             //流程结束（在完成事件中可以做业务操作）
+            ApplyService applyService= new ApplyService();
+            Apply model = applyService.GetInstanceByInstanceID(executeContext.Instance.InstanceID);
+            model.STATE = 8;
+            applyService.Update(model);
         }
 
         public void OnProcess(ExecutingContext executeContext)
