@@ -10,12 +10,13 @@ using System.Collections.Generic;
 using System.Linq;
 using Smartflow.BussinessService.Models;
 using Smartflow.Infrastructure;
+using Smartflow.Elements;
 
 namespace Smartflow.BussinessService
 {
     public sealed class BaseWorkflowService
     {
-        private static WorkflowEngine context = WorkflowEngineExt.CreateWorkflowEngine();
+        private static WorkflowEngine context = BaseWorkflowEngine.CreateWorkflowEngine();
         private readonly static BaseWorkflowService singleton = new BaseWorkflowService();
         private RecordService recordService = new RecordService();
 
@@ -54,6 +55,11 @@ namespace Smartflow.BussinessService
         {
             return context.GetWorkflowInstance(WFID)
                 .Current.NAME;
+        }
+
+        public List<Group> GetCurrentActorGroup(string WFID)
+        {
+            return context.GetWorkflowInstance(WFID).Current.Groups;
         }
 
         public string Start(string WFID)

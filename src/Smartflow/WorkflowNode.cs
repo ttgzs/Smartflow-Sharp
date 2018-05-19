@@ -42,6 +42,7 @@ namespace Smartflow
             wfNode.INSTANCEID = node.INSTANCEID;
             wfNode.Transitions = wfNode.QueryWorkflowNode(node.NID);
             wfNode.Previous = wfNode.GetHistoryTransition();
+            wfNode.Groups = wfNode.GetGroups();
             return wfNode;
         }
 
@@ -88,11 +89,16 @@ namespace Smartflow
             return transition;
         }
 
-        public List<Group> GetGroups()
+        protected List<Group> GetGroups()
         {
-            return null;
+            string query = "SELECT * FROM T_GROUP WHERE RNID=@RNID AND INSTANCEID=@INSTANCEID";
+            return Connection.Query<Group>(query, new
+            {
+                RNID = NID,
+                INSTANCEID = INSTANCEID
+
+            }).ToList();
         }
-      
         #endregion
     }
 }

@@ -21,15 +21,11 @@ namespace Smartflow
     /// </summary>
     public abstract class WorkflowEngine
     {
-        protected IWorkflow workflowService = WorkflowFactoryProvider.OfType<IFactory>()
-            .CreateWorkflowSerivce();
-
+        private IWorkflow workflowService = WorkflowFactoryProvider.OfType<IFactory>().CreateWorkflowSerivce();
 
         public static event DelegatingProcessHandle OnProcess;
 
         public static event DelegatingCompletedHandle OnCompleted;
-
- 
 
         /// <summary>
         /// 触发流程跳转事件
@@ -115,6 +111,9 @@ namespace Smartflow
                 ASTNode currentNode = instance.Current;
 
                 if (CheckAuthorization(instance, actorID) == false) return;
+                
+                //记录已经参与审批过的人信息
+                currentNode.SetActor(actorID);
 
                 instance.Jump(transitionTo);
                 ASTNode to = instance.Current.GetNode(transitionTo);
@@ -143,6 +142,8 @@ namespace Smartflow
                 });
             }
         }
+
+
 
         /// <summary>
         /// 跳转过程处理入库

@@ -41,7 +41,7 @@ namespace Smartflow.Elements
             string sql = "INSERT INTO T_NODE(NID,ID,NAME,NODETYPE,INSTANCEID) VALUES(@NID,@ID,@NAME,@NODETYPE,@INSTANCEID)";
             Connection.ExecuteScalar<long>(sql, new
             {
-                NID=NID,
+                NID = NID,
                 ID = ID,
                 NAME = NAME,
                 NODETYPE = NodeType.ToString(),
@@ -58,14 +58,20 @@ namespace Smartflow.Elements
                   .ToList();
         }
 
-        //internal virtual void SetActor(List<Actor> actors)
-        //{
-        //    foreach (Actor actor in actors)
-        //    {
-        //        actor.RNID = NID;
-        //        actor.INSTANCEID = INSTANCEID;
-        //        actor.Persistent();
-        //    }
-        //}
+        /// <summary>
+        /// 记录已经参与过审核人员的信息
+        /// </summary>
+        /// <param name="data"></param>
+        internal virtual void SetActor(long actorID)
+        {
+            if (this.NodeType != WorkflowNodeCategeory.Decision)
+            {
+                Actor actor = new Actor();
+                actor.ID = actorID;
+                actor.RNID = NID;
+                actor.INSTANCEID = INSTANCEID;
+                actor.Persistent();
+            }
+        }
     }
 }

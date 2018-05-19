@@ -11,19 +11,12 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using Dapper;
-using Smartflow.Elements;
 
-namespace Smartflow
+namespace Smartflow.Elements
 {
-    public class WorkflowActor : Element, IRelationShip
+    public class Actor : Element, IRelationShip
     {
         public string RNID
-        {
-            get;
-            set;
-        }
-
-        public string ACTORID
         {
             get;
             set;

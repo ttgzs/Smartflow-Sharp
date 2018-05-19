@@ -29,9 +29,8 @@ namespace Smartflow.Elements
             set { _nodeType = value; }
         }
 
-
         [XmlElement(ElementName = "group")]
-        internal virtual List<Group> Groups
+        public virtual List<Group> Groups
         {
             get;
             set;
@@ -52,7 +51,7 @@ namespace Smartflow.Elements
                 }
             }
 
-            if (Groups != null)
+            if (Groups!= null)
             {
                 foreach (Group r in Groups)
                 {
