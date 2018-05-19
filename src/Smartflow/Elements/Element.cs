@@ -16,6 +16,7 @@ using System.Xml.Serialization;
 using Smartflow.Enums;
 namespace Smartflow.Elements
 {
+    [Serializable]
     public abstract class Element
     {
         [XmlAttribute("id")]

@@ -49,6 +49,7 @@
                     <th style="width:50px;">序号</th>
                     <th>名称</th>
                     <th>状态</th>
+                    <th>申请密级</th>
                     <th>备注</th>
                     <th style="width:120px;text-align:center;">操作</th>
                 </tr>
@@ -67,6 +68,7 @@
                             <td style="width:50px;text-align:center;">@(counter++)</td>
                             <td>@apply.NAME</td>
                             <td style="color:red;font-weight:bold;">@apply.STATENAME</td>
+                            <td>@apply.SECRETGRADE</td>
                             <td>@apply.DESCRIPTION</td>
                             <td style="width:120px;text-align:center;">
                                 <a href="javascript:document.location.href='@Url.Action("Apply", "Apply", new { id = apply.AID })'">修改</a>

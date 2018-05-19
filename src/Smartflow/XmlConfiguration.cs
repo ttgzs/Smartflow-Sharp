@@ -33,8 +33,15 @@ namespace Smartflow
             using (MemoryStream ms = new MemoryStream(buffer))
             {
                 XmlSerializer serializer = new XmlSerializer(typeof(T));
+
+                XmlWriterSettings settings = new XmlWriterSettings();
+                settings.Indent = true;
+                settings.OmitXmlDeclaration = true;
+
+
                 T o = (T)serializer.Deserialize(ms);
                 return o;
+
             }
         }
     }

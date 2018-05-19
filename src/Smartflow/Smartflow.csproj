@@ -46,7 +46,6 @@
     <Compile Include="DatabaseService.cs" />
     <Compile Include="DelegatingCompletedHandle.cs" />
     <Compile Include="DelegatingProcessHandle.cs" />
-    <Compile Include="Elements\Actor.cs" />
     <Compile Include="Elements\ASTNode.cs" />
     <Compile Include="Elements\Command.cs" />
     <Compile Include="Elements\Decision.cs" />
@@ -62,7 +61,6 @@
     <Compile Include="Enums\WorkflowInstanceState.cs" />
     <Compile Include="Enums\WorkflowNodeCategeory.cs" />
     <Compile Include="ExecutingContext.cs" />
-    <Compile Include="IActor.cs" />
     <Compile Include="ITransition.cs" />
     <Compile Include="IFactory.cs" />
     <Compile Include="IPersistent.cs" />

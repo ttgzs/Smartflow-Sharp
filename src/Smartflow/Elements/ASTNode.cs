@@ -35,7 +35,6 @@ namespace Smartflow.Elements
             set;
         }
 
-
         internal override void Persistent()
         {
             NID = Guid.NewGuid().ToString();
@@ -50,7 +49,6 @@ namespace Smartflow.Elements
             });
         }
 
-
         internal virtual List<Transition> QueryWorkflowNode(string NID)
         {
             IDbConnection connection = Connection;
@@ -60,14 +58,14 @@ namespace Smartflow.Elements
                   .ToList();
         }
 
-        internal virtual void SetActor(List<Actor> actors)
-        {
-            foreach (Actor actor in actors)
-            {
-                actor.RNID = NID;
-                actor.INSTANCEID = INSTANCEID;
-                actor.Persistent();
-            }
-        }
+        //internal virtual void SetActor(List<Actor> actors)
+        //{
+        //    foreach (Actor actor in actors)
+        //    {
+        //        actor.RNID = NID;
+        //        actor.INSTANCEID = INSTANCEID;
+        //        actor.Persistent();
+        //    }
+        //}
     }
 }

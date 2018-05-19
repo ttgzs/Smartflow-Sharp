@@ -19,34 +19,17 @@ namespace Smartflow
     /// <summary>
     /// 工作流引擎，由工作流引擎统一提供对外服务接口，以此来驱动流程跳转
     /// </summary>
-    public class WorkflowEngine
+    public abstract class WorkflowEngine
     {
         protected IWorkflow workflowService = WorkflowFactoryProvider.OfType<IFactory>()
             .CreateWorkflowSerivce();
 
-        private readonly static WorkflowEngine singleton = new WorkflowEngine();
 
         public static event DelegatingProcessHandle OnProcess;
 
         public static event DelegatingCompletedHandle OnCompleted;
 
-        private bool enableValidation = true;
-
-        public bool EnableValidation
-        {
-            get { return enableValidation; }
-            set { enableValidation = value; }
-        }
-
-        protected WorkflowEngine()
-        {
-
-        }
-
-        public static WorkflowEngine CreateWorkflowEngine()
-        {
-            return singleton;
-        }
+ 
 
         /// <summary>
         /// 触发流程跳转事件
@@ -68,17 +51,7 @@ namespace Smartflow
         /// <param name="instance">实例</param>
         /// <param name="actorID">审批人</param>
         /// <returns>true：授权 false：未授权</returns>
-        protected virtual bool CheckAuthorization(WorkflowInstance instance, long actorID)
-        {
-            if (EnableValidation)
-            {
-                return instance.Current.CheckActor(actorID);
-            }
-            else
-            {
-                return true;
-            }
-        }
+        protected abstract bool CheckAuthorization(WorkflowInstance instance, long actorID);
 
         /// <summary>
         /// 启动工作流

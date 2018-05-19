@@ -65,13 +65,7 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">申请密级</label>
                 <div class="layui-input-block">
-
-                    <select id="ddlApplyLevel">
-                        <option value="非密">非密</option>
-                        <option value="秘密">秘密</option>
-                        <option value="机密">机密</option>
-                        <option value="绝密">绝密</option>
-                    </select>
+                    @Html.DropDownListFor(m => m.SECRETGRADE, (ViewData["SC"] as IEnumerable<SelectListItem>))
                 </div>
             </div>
 
@@ -91,8 +85,8 @@
                 <div class="layui-input-block">
                     <input type="button" id="btnAudit" value="@ViewBag.ButtonName" class="layui-btn" onclick="auditApply()" />
                     <input type="submit" id="btnSubmit" value="提交" class="layui-btn " onclick="return sumbitApply('@Url.Action("SubmitApply", "Apply")', 1)" />
-                    <input type="submit" id="btnSave" value="保存" class="layui-btn layui-btn-primary" onclick="return sumbitapply('@Url.Action("Save", "Apply" )', 0)" />
-                    <input type="button" id="btnBack" value="返回" class="layui-btn layui-btn-warm" onclick="window.location.href = '@Url.Action("ApplyList", "Apply")'" / />
+                    <input type="submit" id="btnSave" value="保存" class="layui-btn layui-btn-normal" onclick="return sumbitapply('@Url.Action("Save", "Apply" )', 0)" />
+                    <input type="button" id="btnBack" value="返回" class="layui-btn layui-btn-warm" onclick="window.location.href = '@Url.Action("ApplyList", "Apply")'" />
                 </div>
             </div>
         </form>
@@ -107,8 +101,6 @@
         layui.use('form', function () {
             var form = layui.form;
         });
-
-
     </script>
 </body>
 </html>

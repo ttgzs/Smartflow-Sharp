@@ -17,7 +17,7 @@ using Smartflow.Enums;
 
 namespace Smartflow
 {
-    public class WorkflowNode : Node, IActor
+    public class WorkflowNode : Node
     {
         protected WorkflowNode()
         {
@@ -88,52 +88,11 @@ namespace Smartflow
             return transition;
         }
 
-        /// <summary>
-        /// 获取当前节点所有审批人
-        /// </summary>
-        /// <returns></returns>
-        public List<WorkflowActor> GetActors()
+        public List<Group> GetGroups()
         {
-            string query = " SELECT * FROM T_ACTOR WHERE RNID=@RNID AND INSTANCEID=@INSTANCEID ";
-            return Connection.Query<WorkflowActor>(query, new
-            {
-                RNID = NID,
-                INSTANCEID = INSTANCEID
-
-            }).ToList();
+            return null;
         }
-
-        /// <summary>
-        /// 检测当前节点是否有审批权限
-        /// </summary>
-        /// <param name="actorID">当前审批人ID</param>
-        /// <returns>true：有 false：没有</returns>
-        public bool CheckActor(long actorID)
-        {
-            if (NodeType == WorkflowNodeCategeory.Start || NodeType == WorkflowNodeCategeory.Decision) return true;
-            string sql = " SELECT COUNT(*) FROM T_ACTOR WHERE ID=@ID AND RNID=@RNID AND INSTANCEID=@INSTANCEID ";
-            // entrustsql = "SELECT COUNT(*) FROM T_ENTRUST WHERE TRUSTID=@ACTORID AND ACTORID IN ( SELECT ID FROM T_ACTOR WHERE RNID=@RNID AND INSTANCEID=@INSTANCEID)"
-            int selfAuthorization = Connection.ExecuteScalar<int>(sql, new { RNID = NID, ID = actorID, INSTANCEID = INSTANCEID });
-            //entrustAuthorization = Connection.ExecuteScalar<int>(entrustsql, new { RNID = NID, ACTORID = actorID, INSTANCEID = INSTANCEID });
-            return (selfAuthorization > 0);
-        }
-
-        /// <summary>
-        /// 获取下一节点审批人员列表
-        /// </summary>
-        /// <param name="ID">下一节点ID</param>
-        /// <returns>列表</returns>
-        public List<WorkflowActor> GetNextActors(long ID)
-        {
-            ASTNode node = this.GetNode(ID);
-            string query = " SELECT * FROM T_USER WHERE ID IN (SELECT UUID FROM T_UMR WHERE RID IN (SELECT ID FROM T_GROUP WHERE RNID=@RNID AND INSTANCEID=@INSTANCEID)) ";
-            return Connection.Query<WorkflowActor>(query, new
-            {
-                RNID = node.NID,
-                INSTANCEID = INSTANCEID
-
-            }).ToList();
-        }
+      
         #endregion
     }
 }

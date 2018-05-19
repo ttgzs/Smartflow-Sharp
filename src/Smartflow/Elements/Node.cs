@@ -18,6 +18,7 @@ using Smartflow.Enums;
 namespace Smartflow.Elements
 {
     [XmlInclude(typeof(List<Transition>))]
+    [XmlInclude(typeof(List<Group>))]
     public class Node : ASTNode
     {
         private WorkflowNodeCategeory _nodeType = WorkflowNodeCategeory.Normal;
@@ -28,15 +29,9 @@ namespace Smartflow.Elements
             set { _nodeType = value; }
         }
 
-        [XmlElement(ElementName = "actor")]
-        internal virtual List<Actor> Actors
-        {
-            get;
-            set;
-        }
 
         [XmlElement(ElementName = "group")]
-        internal virtual List<Group> MultiGroup
+        internal virtual List<Group> Groups
         {
             get;
             set;
@@ -57,19 +52,9 @@ namespace Smartflow.Elements
                 }
             }
 
-            if (Actors != null)
+            if (Groups != null)
             {
-                foreach (Actor actor in Actors)
-                {
-                    actor.RNID = this.NID;
-                    actor.INSTANCEID = INSTANCEID;
-                    actor.Persistent();
-                }
-            }
-
-            if (MultiGroup != null)
-            {
-                foreach (Group r in MultiGroup)
+                foreach (Group r in Groups)
                 {
                     r.RNID = this.NID;
                     r.INSTANCEID = INSTANCEID;

@@ -15,15 +15,12 @@ namespace Smartflow.BussinessService
 {
     public sealed class BaseWorkflowService
     {
-        private static WorkflowEngine context = WorkflowEngine.CreateWorkflowEngine();
+        private static WorkflowEngine context = WorkflowEngineExt.CreateWorkflowEngine();
         private readonly static BaseWorkflowService singleton = new BaseWorkflowService();
         private RecordService recordService = new RecordService();
 
         private BaseWorkflowService()
         {
-            //关闭授权验证（默认关闭）
-            context.EnableValidation = false;
-
             WorkflowEngine.OnProcess += new DelegatingProcessHandle(OnProcess);
             WorkflowEngine.OnCompleted += new DelegatingCompletedHandle(OnCompleted);
         }

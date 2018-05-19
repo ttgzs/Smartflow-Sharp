@@ -53,8 +53,7 @@ namespace Smartflow.Web.Design.Controllers
         public ActionResult WorkflowImage(string instanceID)
         {
             JavaScriptSerializer serializer = new JavaScriptSerializer();
-            ViewBag.Result = serializer.Serialize(WorkflowEngine
-                .CreateWorkflowEngine().GetWorkflowInstance(instanceID));
+            ViewBag.Result = serializer.Serialize(WorkflowInstance.GetInstance(instanceID));
             return View();
         }
 

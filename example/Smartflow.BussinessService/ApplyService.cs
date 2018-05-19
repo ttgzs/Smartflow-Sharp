@@ -17,13 +17,13 @@ namespace Smartflow.BussinessService
 
         public void Persistent(Apply model)
         {
-            string sql = "INSERT INTO T_APPLY(STATE,NAME,DESCRIPTION,WFID,INSTANCEID) VALUES (@STATE,@NAME,@DESCRIPTION,@WFID,@INSTANCEID)";
+            string sql = "INSERT INTO T_APPLY(STATE,NAME,DESCRIPTION,WFID,INSTANCEID,SECRETGRADE) VALUES (@STATE,@NAME,@DESCRIPTION,@WFID,@INSTANCEID,@SECRETGRADE)";
             Connection.Execute(sql, model);
         }
 
         public void Update(Apply model)
         {
-            string sql = " UPDATE T_APPLY SET NAME=@NAME,STATE=@STATE,DESCRIPTION=@DESCRIPTION,WFID=@WFID,INSTANCEID=@INSTANCEID WHERE AID=@AID";
+            string sql = " UPDATE T_APPLY SET NAME=@NAME,STATE=@STATE,DESCRIPTION=@DESCRIPTION,WFID=@WFID,INSTANCEID=@INSTANCEID,SECRETGRADE=@SECRETGRADE WHERE AID=@AID";
             Connection.Execute(sql, model);
         }
 

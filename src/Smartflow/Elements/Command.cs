@@ -47,7 +47,7 @@ namespace Smartflow.Elements
         }
 
 
-        [XmlElement("COMMANDTYPE")]
+        [XmlElement("commandtype")]
         public string COMMANDTYPE
         {
             get;
@@ -74,7 +74,7 @@ namespace Smartflow.Elements
                 CONNECTION = CONNECTION,
                 INSTANCEID = INSTANCEID,
                 DBCATEGORY = DBCATEGORY.ToString(),
-                COMANDTYPE = COMMANDTYPE
+                COMMANDTYPE = COMMANDTYPE
             });
         }
     }

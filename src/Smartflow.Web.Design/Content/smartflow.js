@@ -457,7 +457,7 @@
         },
         exportDecision: function (build) {
             var self = this;
-            if (self.commad) {
+            if (self.command) {
 
                 build.append(config.start)
                      .append('command')

@@ -17,16 +17,6 @@ namespace Smartflow.Elements
 {
     public class Group : Element, IRelationShip
     {
-        /// <summary>
-        /// 组织机构、角色组（org/role）
-        /// </summary>
-        [XmlAttribute("category")]
-        public string CATEGORY
-        {
-            get;
-            set;
-        }
-
         public string RNID
         {
             get;

@@ -62,6 +62,7 @@ namespace Smartflow.Web.Controllers
             {
                 ViewBag.AID = 0;
                 GenerateDropDownViewData("");
+                GenerateDropDownSecretViewData("");
                 return View();
             }
             else
@@ -77,6 +78,7 @@ namespace Smartflow.Web.Controllers
                 {
                     ViewBag.ButtonName = "审核";
                 }
+                GenerateDropDownSecretViewData(apply.SECRETGRADE);
                 GenerateDropDownViewData(apply.WFID);
                 return View(apply);
             }
@@ -91,6 +93,18 @@ namespace Smartflow.Web.Controllers
                 fileList.Add(new SelectListItem { Text = item.NAME, Value = item.WFID, Selected = (item.WFID == WFID) });
             }
             ViewData["Wfile"] = fileList;
+        }
+
+
+        public void GenerateDropDownSecretViewData(string secretGrade)
+        {
+            List<SelectListItem> list = new List<SelectListItem>();
+            list.Add(new SelectListItem { Text = "非密", Value = "非密", Selected = ("非密" == secretGrade) });
+            list.Add(new SelectListItem { Text = "秘密", Value = "秘密", Selected = ("秘密" == secretGrade) });
+            list.Add(new SelectListItem { Text = "机密", Value = "机密", Selected = ("机密" == secretGrade) });
+            list.Add(new SelectListItem { Text = "绝密", Value = "绝密", Selected = ("绝密" == secretGrade) });
+
+            ViewData["SC"] = list;
         }
     }
 }

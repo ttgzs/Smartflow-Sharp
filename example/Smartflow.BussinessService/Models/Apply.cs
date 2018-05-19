@@ -43,7 +43,7 @@ namespace Smartflow.BussinessService.Models
             set;
         }
 
-        public string APPLYLEVEL
+        public string SECRETGRADE
         {
             get;
             set;

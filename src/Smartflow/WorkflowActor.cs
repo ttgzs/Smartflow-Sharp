@@ -7,32 +7,39 @@
  */
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
+using Dapper;
+using Smartflow.Elements;
 
 namespace Smartflow
 {
-    /// <summary>
-    /// 工作审批人员
-    /// </summary>
-    public class WorkflowActor
+    public class WorkflowActor : Element, IRelationShip
     {
-        /// <summary>
-        /// 审批人员ID
-        /// </summary>
-        public long ID
+        public string RNID
         {
             get;
             set;
         }
 
-        /// <summary>
-        /// 审批人员名字
-        /// </summary>
-        public string Name
+        public string ACTORID
         {
             get;
             set;
+        }
+
+        internal override void Persistent()
+        {
+            string sql = "INSERT INTO T_ACTOR(NID,ID,RNID,NAME,INSTANCEID) VALUES(@NID,@ID,@RNID,@NAME,@INSTANCEID)";
+            DapperFactory.CreateWorkflowConnection().Execute(sql, new
+            {
+                NID = Guid.NewGuid().ToString(),
+                RNID = RNID,
+                ID = ID,
+                NAME = NAME,
+                INSTANCEID = INSTANCEID
+            });
         }
     }
 }

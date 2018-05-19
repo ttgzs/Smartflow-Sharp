@@ -6,7 +6,7 @@
         optionSelector = '#ddlRuleConfig option:selected',
         ruleSelector = '#ddlRuleConfig',
         itemTemplate = "<li id=%{0}%>%{1}%</li>",
-        lineTemplate = "<tr><td class='smartflow-header'>%{0}%</td><td><input type='text' value=%{1}% id=%{2}% class='layui-input smartflow-input' /></td></tr>";
+        lineTemplate = "<tr><td class='smartflow-header'>%{0}%</td><td><input type='text' value=\"%{1}%\" id=%{2}% class='layui-input smartflow-input' /></td></tr>";
     tabConfig = {
         node: ['#tab li[category=rule]'],
         decision: ['#tab li[category=role]']
@@ -138,8 +138,8 @@
             name = $("#txtNodeName").val();
 
         if (nx.category === 'decision') {
-            $("#transitions li").each(function () {
-                var input = $(this).find("input");
+            $("#transitions tbody input").each(function () {
+                var input = $(this);
                 expressions.push({ id: input.attr("id"), expression: input.val() });
             });
 
