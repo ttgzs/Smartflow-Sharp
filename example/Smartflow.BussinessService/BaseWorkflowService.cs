@@ -42,13 +42,16 @@ namespace Smartflow.BussinessService
 
         public void OnProcess(ExecutingContext executeContext)
         {
-            var dny = executeContext.Data;
-            recordService.Persistent(new Record()
+            if (executeContext.Instance.Current.NodeType != Enums.WorkflowNodeCategeory.Decision)
             {
-                INSTANCEID = executeContext.Instance.InstanceID,
-                NODENAME = executeContext.From.NAME,
-                MESSAGE = executeContext.Data.Message
-            });
+                var dny = executeContext.Data;
+                recordService.Persistent(new Record()
+                {
+                    INSTANCEID = executeContext.Instance.InstanceID,
+                    NODENAME = executeContext.From.NAME,
+                    MESSAGE = executeContext.Data.Message
+                });
+            }
         }
 
         public string GetCurrentNodeName(string WFID)

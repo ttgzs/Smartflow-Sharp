@@ -116,8 +116,19 @@ namespace Smartflow
                 currentNode.SetActor(actorID);
 
                 instance.Jump(transitionTo);
+
                 ASTNode to = instance.Current.GetNode(transitionTo);
 
+                OnExecuteProcess(new ExecutingContext()
+                {
+                    From = instance.Current,
+                    To = to,
+                    TID = transitionID,
+                    Instance = instance,
+                    Data = data
+             
+                });
+             
                 if (to.NodeType == WorkflowNodeCategeory.End)
                 {
                     instance.State = WorkflowInstanceState.End;
@@ -129,21 +140,10 @@ namespace Smartflow
                     Transition tran = wfDecision.GetTransition();
 
                     if (tran == null) return;
-                    Jump(instance, transitionID, tran.DESTINATION, actorID, data);
+                    Jump(GetWorkflowInstance(instance.InstanceID), transitionID, tran.DESTINATION, actorID, data);
                 }
-
-                OnExecuteProcess(new ExecutingContext()
-                {
-                    From = instance.Current,
-                    To = to,
-                    TID = transitionID,
-                    Instance = instance,
-                    Data = data
-                });
             }
         }
-
-
 
         /// <summary>
         /// 跳转过程处理入库
