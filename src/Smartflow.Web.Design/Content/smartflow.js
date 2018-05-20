@@ -174,7 +174,7 @@
             if (!util.ie || self.disable) {
                 l.marker('end', 10, 10, function (add) {
                     add.path('M0,0 L0,6 L6,3 z').fill("#f00");
-                    this.attr({ refX: 5, refY: 2.9, orient: 'auto',stroke:'none'});
+                    this.attr({ refX: 5, refY: 2.9, orient: 'auto', stroke: 'none', markerUNits: 'strokeWidth' });
                 });
             }
             self.brush.attr({ x: (self.x2 - self.x1) / 2 + self.x1, y: (self.y2 - self.y1) / 2 + self.y1 });
