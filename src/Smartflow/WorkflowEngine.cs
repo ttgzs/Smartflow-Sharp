@@ -85,48 +85,37 @@ namespace Smartflow
         {
             workflowService.Revert(instance);
         }
-
+       
         /// <summary>
-        /// 获取流程实例
-        /// </summary>
-        /// <param name="instanceID">实例ID</param>
-        /// <returns>工作流程实例</returns>
-        public WorkflowInstance GetWorkflowInstance(string instanceID)
-        {
-            return workflowService.Instance(instanceID);
-        }
-
-        /// <summary>
-        /// 进行流程跳转（流程跳转对外提供统一的接口服务，该接口服务包括跳转、回退、撤销）
+        /// 进行流程跳转
         /// </summary>
         /// <param name="instance">工作流实例</param>
         /// <param name="transitionID">路线NID</param>
         /// <param name="transitionTo">跳转节点ID</param>
         /// <param name="actorID">审批人ID</param>
         /// <param name="data">附加数据</param>
-        public void Jump(WorkflowInstance instance, string transitionID, long transitionTo, long actorID = 0, dynamic data = null)
+        public void Jump(WorkflowInstance instance, string transitionID, long transitionTo, long actorID = 0,dynamic data = null)
         {
             if (instance.State == WorkflowInstanceState.Running)
             {
-                ASTNode currentNode = instance.Current;
+                WorkflowNode current = instance.Current;
 
                 if (CheckAuthorization(instance, actorID) == false) return;
                 
                 //记录已经参与审批过的人信息
-                currentNode.SetActor(actorID);
+                current.SetActor(actorID);
 
                 instance.Jump(transitionTo);
 
-                ASTNode to = instance.Current.GetNode(transitionTo);
+                ASTNode to = current.GetNode(transitionTo);
 
                 OnExecuteProcess(new ExecutingContext()
                 {
-                    From = instance.Current,
+                    From = current,
                     To = to,
                     TID = transitionID,
                     Instance = instance,
                     Data = data
-             
                 });
              
                 if (to.NodeType == WorkflowNodeCategeory.End)
@@ -138,9 +127,48 @@ namespace Smartflow
                 {
                     WorkflowDecision wfDecision = WorkflowDecision.GetNodeInstance(to);
                     Transition tran = wfDecision.GetTransition();
-
                     if (tran == null) return;
-                    Jump(GetWorkflowInstance(instance.InstanceID), transitionID, tran.DESTINATION, actorID, data);
+                    Jump(WorkflowInstance.GetInstance(instance.InstanceID), transitionID, tran.DESTINATION, actorID, data);
+                }
+            }
+        }
+
+        /// <summary>
+        /// 流程回退、撤销
+        /// </summary>
+        /// <param name="instance"></param>
+        /// <param name="actorID"></param>
+        /// <param name="data"></param>
+        public void Return(WorkflowInstance instance,long actorID = 0, dynamic data = null)
+        {
+            if (instance.State == WorkflowInstanceState.Running)
+            {
+                WorkflowNode current = instance.Current.GetPreviousNode();
+
+                if (CheckAuthorization(instance, actorID) == false) return;
+
+                //记录已经参与审批过的人信息
+                current.SetActor(actorID);
+
+                instance.Jump(current.ID);
+
+                ASTNode to = current.GetNode(current.ID);
+
+                OnExecuteProcess(new ExecutingContext()
+                {
+                    From = current,
+                    To = to,
+                    TID = instance.Current.Previous.NID,
+                    Instance = instance,
+                    Data = data
+                });
+
+                if (to.NodeType == WorkflowNodeCategeory.Decision)
+                {
+                    WorkflowDecision wfDecision = WorkflowDecision.GetNodeInstance(to);
+                    Transition tran = wfDecision.GetTransition();
+                    if (tran == null) return;
+                    Return(WorkflowInstance.GetInstance(instance.InstanceID), actorID, data);
                 }
             }
         }

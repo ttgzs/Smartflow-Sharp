@@ -46,6 +46,12 @@ namespace Smartflow
             return wfNode;
         }
 
+        public WorkflowNode GetPreviousNode()
+        {
+            if (Previous == null) return null;
+            return GetWorkflowNodeInstance(this.GetNode(Previous.SOURCE));
+        }
+
         /// <summary>
         /// 获取回退线路
         /// </summary>

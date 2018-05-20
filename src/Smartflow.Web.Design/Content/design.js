@@ -1,5 +1,6 @@
 ﻿(function () {
     var
+        flowName,
         designConfig = {
             message: '请输入流程名称',
             success: '操作成功'
@@ -7,7 +8,15 @@
 
     function saveflow() {
         var exportToObject = SMF.exportToJSON(),
+            wfName;
+
+        if (!exportToObject) return;
+
+        if (flowName) {
+            wfName = window.prompt(designConfig.message, flowName);
+        } else {
             wfName = window.prompt(designConfig.message);
+        }
         if (wfName) {
             var data = $.extend(exportToObject, {
                 NAME: wfName,
@@ -22,9 +31,7 @@
                 }
             };
             ajaxService(settings);
-        } else {
-            alert(designConfig.message);
-        }
+        } 
     }
 
     function openConfig(nx) {
@@ -63,6 +70,7 @@
                 url: designConfig.instanceUrl,
                 data: { WFID: designConfig.id },
                 success: function (serverData) {
+                    flowName = serverData.NAME;
                     SMF.revert(serverData.IMAGE);
                 }
             };

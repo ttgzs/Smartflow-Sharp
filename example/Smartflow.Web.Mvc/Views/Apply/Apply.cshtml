@@ -27,12 +27,12 @@
             var v = $("#STATE").val();
             if (v == "0" || !v) {
                 $("#btnSubmit,#btnSave").show();
-                $("#btnAudit").hide();
+                $("#btnAudit,#btnUnAudit").hide();
             }
             else if (v == '8') {
                 //审核流程走完
                 $("#btnAudit").hide();
-                $("#btnSubmit,#btnSave").hide();
+                $("#btnSubmit,#btnSave,#btnUnAudit").hide();
             }
             else {
                 $("#btnAudit").show();
@@ -44,6 +44,19 @@
             var instanceID = document.getElementById("INSTANCEID").value;
             openWin('@Url.Action("WorkflowCheck", "UserControl")' + "?instanceID=" + instanceID, 600, 300);
         }
+
+        function undoSubmit() {
+            var instanceID = document.getElementById("INSTANCEID").value;
+            $.ajax({
+                url: '@Url.Action("UndoSubmit", "UserControl")' + "?instanceID=" + instanceID,
+                dataType: 'json',
+                type: 'get',
+                success: function (data) {
+                    window.location.href = '@Url.Action("Apply", "Apply", new { id = (Model == null ? 0 : Model.AID) })';
+                }
+            });
+        }
+
 
         function refresh() {
             window.location.href = '@Url.Action("Apply", "Apply", new { id = (Model == null ? 0 : Model.AID) })'
@@ -83,6 +96,7 @@
             </div>
             <div class="layui-form-item">
                 <div class="layui-input-block">
+                    <input type="button" id="btnUnAudit" value="@("撤销" + ViewBag.PreviousButtonName)" class="layui-btn" onclick="undoSubmit()" />
                     <input type="button" id="btnAudit" value="@ViewBag.ButtonName" class="layui-btn" onclick="auditApply()" />
                     <input type="submit" id="btnSubmit" value="提交" class="layui-btn " onclick="return sumbitApply('@Url.Action("SubmitApply", "Apply")', 1)" />
                     <input type="submit" id="btnSave" value="保存" class="layui-btn layui-btn-normal" onclick="return sumbitapply('@Url.Action("Save", "Apply" )', 0)" />

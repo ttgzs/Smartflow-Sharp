@@ -73,10 +73,12 @@ namespace Smartflow.Web.Controllers
                 if (apply.STATE == 1)
                 {
                     ViewBag.ButtonName = bwf.GetCurrentNodeName(apply.INSTANCEID);
+                    ViewBag.PreviousButtonName = bwf.GetCurrentPrevNodeName(apply.INSTANCEID);
                 }
                 else
                 {
                     ViewBag.ButtonName = "审核";
+                    ViewBag.PreviousButtonName = "撤销";
                 }
                 GenerateDropDownSecretViewData(apply.SECRETGRADE);
                 GenerateDropDownViewData(apply.WFID);

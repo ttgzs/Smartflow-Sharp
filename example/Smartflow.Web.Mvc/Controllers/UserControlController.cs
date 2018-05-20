@@ -26,19 +26,34 @@ namespace Smartflow.Web.Controllers
             ViewBag.InstanceID = instanceID;
             return PartialView(workflowRecordService.Query(instanceID));
         }
-
-        //public JsonResult GetWorkflowImage(string instanceID)
-        //{
-        //    return Json(bwkf.GetInstance(instanceID));
-        //}
-
+      
         public ActionResult WorkflowCheck(string instanceID)
         {
             ViewBag.InstanceID = instanceID;
-            WorkflowInstance instance = bwkf.GetInstance(instanceID);
+            WorkflowInstance instance = WorkflowInstance.GetInstance(instanceID);
             return View(instance.Current.Transitions);
         }
 
+        /// <summary>
+        /// 撤销操作
+        /// </summary>
+        /// <param name="instanceID"></param>
+        /// <returns></returns>
+        public JsonResult UndoSubmit(string instanceID)
+        {
+            bwkf.UndoSubmit(instanceID);
+            return Json(true,JsonRequestBehavior.AllowGet);
+        }
+
+
+        /// <summary>
+        /// 跳转
+        /// </summary>
+        /// <param name="instanceID"></param>
+        /// <param name="transitionID"></param>
+        /// <param name="to"></param>
+        /// <param name="message"></param>
+        /// <returns></returns>
         public JsonResult Jump(string instanceID, string transitionID, long to, string message)
         {
             //请不要直接定义匿名类传递
