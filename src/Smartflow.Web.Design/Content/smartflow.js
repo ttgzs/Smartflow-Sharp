@@ -394,6 +394,10 @@
 
             //导出
             return build.toString();
+        },
+        validate: function () {
+            return (findByElementId(this.id, 'to').length > 0
+                   && findByElementId(this.id, 'from').length > 0);
         }
     });
 
@@ -478,6 +482,10 @@
                      .append('command')
                      .append(config.end);
             }
+        },
+        validate: function () {
+            return (findByElementId(this.id, 'from').length > 1
+                 && findByElementId(this.id, 'to').length > 0);
         }
     });
 
@@ -499,6 +507,10 @@
         bindEvent: function (n) {
             Start.base.Parent.prototype.bindEvent.call(this, n);
             this.off('dblclick');
+        },
+        validate: function () {
+            return (findByElementId(this.id, 'from').length > 0
+                   && findByElementId(this.id, 'to').length == 0);
         }
     });
 
@@ -521,6 +533,10 @@
         bindEvent: function (n) {
             End.base.Parent.prototype.bindEvent.call(this, n);
             this.off('dblclick');
+        },
+        validate: function () {
+            return (findByElementId(this.id, 'from').length == 0
+                   && findByElementId(this.id, 'to').length > 0);
         }
     });
 
@@ -706,9 +722,17 @@
         var uniqueId = 29,
             nodeCollection = [],
             pathCollection = [],
+            validateCollection=[],
             build = new StringBuilder();
+ 
+        $.each(NC, function () {
+            var self = this;
+            if (!self.validate()) {
+                validateCollection.push(false);
+            }
+        });
 
-        if (RC.length === 0) {
+        if (validateCollection.length > 0 || (RC.length === 0)) {
             alert("该流程图不符合流程定义规则");
             return;
         }
