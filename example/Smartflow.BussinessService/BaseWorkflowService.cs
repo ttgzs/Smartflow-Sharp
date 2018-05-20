@@ -19,6 +19,8 @@ namespace Smartflow.BussinessService
     {
         private static WorkflowEngine context = BaseWorkflowEngine.CreateWorkflowEngine();
         private readonly static BaseWorkflowService singleton = new BaseWorkflowService();
+
+        //审批记录服务
         private RecordService recordService = new RecordService();
 
         private BaseWorkflowService()

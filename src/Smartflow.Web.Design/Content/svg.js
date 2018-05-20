@@ -4606,7 +4606,8 @@ SVG.Text = SVG.invent({
         for (var i = 0, il = text.length; i < il; i++) {
             this.tspan(text[i]).newLine()
         }*/
-        this.node.innerHTML = text;
+        this.node.textContent = text;
+       // this.node.innerText= text;
       }
 
       // disable build mode and rebuild lines

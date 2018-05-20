@@ -4,6 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
     <meta name="viewport" content="width=device-width" />
     <title>Smartflow 业务流程图</title>
     <link href="~/Content/smartflow.css" rel="stylesheet" />
@@ -13,13 +14,13 @@
     <script src="~/Content/smartflow.js"></script>
     <script type="text/javascript">
         $(function () {
-            var draw = window.SMF.init('drawing');
-            if ('@Html.Raw(ViewBag.Result)') {
-                var serverData = @Html.Raw(ViewBag.Result);
+            var draw = window.SMF.init('drawing'),
+                serverData=@Html.Raw(ViewBag.Result);
+            if (serverData) {
                 SMF.revert(serverData.Image, true, serverData.Current.ID);
             }
         });
-    </script>
+</script>
 </head>
 <body>
     <div class="container">

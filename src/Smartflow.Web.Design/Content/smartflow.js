@@ -5,6 +5,9 @@
  */
 (function ($) {
     var
+        util = {
+            ie: (!!window.ActiveXObject || "ActiveXObject" in window)
+        },
         //存储所有节点的实例
         NC = {},
 
@@ -39,32 +42,32 @@
         //标签配置
         config = {
             //流程定义根节点
-            rootStart : '<workflow>',
+            rootStart: '<workflow>',
             //流程定义根节点闭合
-            rootEnd : '</workflow>',
+            rootEnd: '</workflow>',
             //开始
             start: '<',
             //结束
-            end :'>',
+            end: '>',
             //左引号
             lQuotation: '"',
             //右引号
-            rQuotation :'"',
+            rQuotation: '"',
             //闭合
-            beforeClose :'</',
+            beforeClose: '</',
             //闭合
-            afterClose : '/>',
+            afterClose: '/>',
             //等于
-            equal:'=',
+            equal: '=',
             //本身引用
             //空隙
             space: ' ',
             //参与组
             group: 'group',
             from: 'from',
-            actor:'actor',
+            actor: 'actor',
             //跳转线
-            transition:'transition'
+            transition: 'transition'
         };
 
     //数组添加移除方法
@@ -155,7 +158,7 @@
         this.orientation = 'down';
 
         /*表达式*/
-        this.expression='';
+        this.expression = '';
         Line.base.Constructor.call(this, "line", "line");
     }
 
@@ -166,11 +169,14 @@
                 l = draw.line(self.x1, self.y1, self.x2, self.y2);
             l.stroke({ width: self.border, color: self.bgColor });
             self.brush = draw.text(self.name);
-            l.marker('end', 10, 10, function (add) {
-                add.path('M0,0 L0,6 L6,3 z').fill("#f00");
-                this.attr({refX:6, refY:3, orient: 'auto'});
-            });
 
+            //判断ie是否支持
+            if (!util.ie || self.disable) {
+                l.marker('end', 10, 10, function (add) {
+                    add.path('M0,0 L0,6 L6,3 z').fill("#f00");
+                    this.attr({ refX: 5, refY: 2.9, orient: 'auto',stroke:'none'});
+                });
+            }
             self.brush.attr({ x: (self.x2 - self.x1) / 2 + self.x1, y: (self.y2 - self.y1) / 2 + self.y1 });
             self.id = l.id();
             LC[self.id] = this;
@@ -209,6 +215,7 @@
         this.cy = 0;
         this.disX = 0;
         this.disY = 0;
+        this.vertical = (util.ie ? 6 : 0);
         this.group = [];//参与组
         this.actors = [];//参与者
         Node.base.Constructor.call(this, "node", "node");
@@ -217,7 +224,7 @@
     Node.extend(Element, {
         getTransitions: function () {
             var elements = findByElementId(this.id, config.from),
-                lineCollection= [];
+                lineCollection = [];
             $.each(elements, function () {
                 lineCollection.push(LC[this.id]);
             });
@@ -234,7 +241,7 @@
                 rect = draw.rect(n.w, n.h).attr({ fill: color, x: n.x, y: n.y });
 
             n.brush = draw.text(n.name);
-            n.brush.attr({ x: n.x + rect.width() / 2, y: n.y + rect.height() / 2 });
+            n.brush.attr({ x: n.x + rect.width() / 2, y: n.y + rect.height() / 2 + n.vertical });
 
             n.id = rect.id();
             NC[n.id] = n;
@@ -282,7 +289,7 @@
             element.attr({ x: self.x, y: self.y });
 
             if (self.brush) {
-                self.brush.attr({ x: (element.x() + (element.width() / 2)), y: element.y() + (element.height() / 2) });
+                self.brush.attr({ x: (element.x() + (element.width() / 2)), y: element.y() + (element.height() / 2) + self.vertical });
             }
 
             var toElements = findByElementId(self.id, "to"),
@@ -335,7 +342,7 @@
             if (self.exportDecision) {
                 self.exportDecision(build);
             }
-            
+
             var elements = findByElementId(self.id, config.from);
             $.each(elements, function () {
                 if (this.from === self.id) {
@@ -468,7 +475,7 @@
                      .append(config.end);
 
                 $.each(self.command, function (propertyName, value) {
-                   
+
                     build.append(config.start)
                          .append(propertyName)
                          .append(config.end)
@@ -722,9 +729,9 @@
         var uniqueId = 29,
             nodeCollection = [],
             pathCollection = [],
-            validateCollection=[],
+            validateCollection = [],
             build = new StringBuilder();
- 
+
         $.each(NC, function () {
             var self = this;
             if (!self.validate()) {
