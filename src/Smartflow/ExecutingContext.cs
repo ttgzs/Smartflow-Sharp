@@ -65,6 +65,16 @@ namespace Smartflow
             set;
         }
 
+
+        /// <summary>
+        /// 操作方式
+        /// </summary>
+        internal string Operate
+        {
+            get;
+            set;
+        }
+
         /// <summary>
         /// 设置下一节点审批人
         /// </summary>

@@ -94,22 +94,32 @@ namespace Smartflow
             set;
         }
 
+        /// <summary>
+        /// 退回、撤销、跳转
+        /// </summary>
+        public string OPERATE
+        {
+            get;
+            set;
+        }
+
 
         /// <summary>
         /// 将数据持久到数据库
         /// </summary>
         public void Persistent()
         {
-            string sql = "INSERT INTO T_PROCESS(NID,SOURCE,DESTINATION,TID,INSTANCEID,NODETYPE,RNID) VALUES(@NID,@SOURCE,@DESTINATION,@TID,@INSTANCEID,@NODETYPE,@RNID)";
+            string sql = "INSERT INTO T_PROCESS(NID,SOURCE,DESTINATION,TID,INSTANCEID,NODETYPE,RNID,OPERATE) VALUES(@NID,@SOURCE,@DESTINATION,@TID,@INSTANCEID,@NODETYPE,@RNID,@OPERATE)";
             Connection.Execute(sql, new
             {
-                NID=Guid.NewGuid().ToString(),
+                NID = Guid.NewGuid().ToString(),
                 SOURCE = SOURCE,
                 DESTINATION = DESTINATION,
                 TID = TID,
                 INSTANCEID = INSTANCEID,
                 NODETYPE = NODETYPE.ToString(),
-                RNID = RNID
+                RNID = RNID,
+                OPERATE = OPERATE
             });
         }
 
@@ -117,13 +127,14 @@ namespace Smartflow
         {
             WorkflowProcess instance = new WorkflowProcess();
             //兼容其它数据库
-            string query = " SELECT * FROM T_PROCESS WHERE INSTANCEID=@INSTANCEID AND RNID=@NID  ";
+            string query = " SELECT * FROM T_PROCESS WHERE INSTANCEID=@INSTANCEID AND RNID=@NID  AND OPERATE=@OPERATE ";
             instance = instance.Connection.Query<WorkflowProcess>(query, new
             {
                 INSTANCEID = instanceID,
-                NID = NID
+                NID = NID,
+                OPERATE = "normal"
 
-            }).OrderBy(order => order.CREATEDATETIME).FirstOrDefault();
+            }).OrderByDescending(order => order.CREATEDATETIME).FirstOrDefault();
 
             return instance;
         }

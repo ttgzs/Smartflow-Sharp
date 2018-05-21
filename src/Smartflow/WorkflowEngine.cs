@@ -115,7 +115,8 @@ namespace Smartflow
                     To = to,
                     TID = transitionID,
                     Instance = instance,
-                    Data = data
+                    Data = data,
+                    Operate = "normal"
                 });
              
                 if (to.NodeType == WorkflowNodeCategeory.End)
@@ -160,7 +161,8 @@ namespace Smartflow
                     To = to,
                     TID = instance.Current.Previous.NID,
                     Instance = instance,
-                    Data = data
+                    Data = data,
+                    Operate="undo"
                 });
 
                 if (to.NodeType == WorkflowNodeCategeory.Decision)
@@ -186,7 +188,8 @@ namespace Smartflow
                 DESTINATION = executeContext.To.ID,
                 TID = executeContext.TID.ToString(),
                 INSTANCEID = executeContext.Instance.InstanceID,
-                NODETYPE = executeContext.From.NodeType
+                NODETYPE = executeContext.From.NodeType,
+                OPERATE=executeContext.Operate
             });
         }
     }
