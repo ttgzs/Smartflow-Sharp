@@ -14,7 +14,7 @@
     <script src="~/Content/smartflow.js"></script>
     <script type="text/javascript">
         $(function () {
-            var draw = window.SMF.init('drawing'),
+            var draw = window.SMF.init({container:'drawing'}),
                 serverData=@Html.Raw(ViewBag.Result);
             if (serverData) {
                 SMF.revert(serverData.Image, true, serverData.Current.ID);

@@ -78,7 +78,7 @@
     });
 
     //禁用右键菜单
-    document.oncontextmenu = function () { return false; }
+    document.oncontextmenu = function () { return true; }
 
 
     //函数添加继承
@@ -97,8 +97,8 @@
         }
     });
 
-    function init(elementId, option) {
-        draw = SVG(elementId);
+    function init(option) {
+        draw = SVG(option.container);
         draw.mouseup(function (e) {
             draw.off('mousemove');
         });
@@ -170,13 +170,11 @@
             l.stroke({ width: self.border, color: self.bgColor });
             self.brush = draw.text(self.name);
 
-            //判断ie是否支持
-            if (!util.ie || self.disable) {
-                l.marker('end', 10, 10, function (add) {
-                    add.path('M0,0 L0,6 L6,3 z').fill("#f00");
-                    this.attr({ refX: 5, refY: 2.9, orient: 'auto', stroke: 'none', markerUNits: 'strokeWidth' });
-                });
-            }
+            l.marker('end', 10, 10, function (add) {
+                add.path('M0,0 L0,6 L6,3 z').fill("#f00");
+                this.attr({ refX: 5, refY: 2.9, orient: 'auto', stroke: 'none', markerUNits: 'strokeWidth' });
+            });
+
             self.brush.attr({ x: (self.x2 - self.x1) / 2 + self.x1, y: (self.y2 - self.y1) / 2 + self.y1 });
             self.id = l.id();
             LC[self.id] = this;
@@ -263,7 +261,6 @@
             Node.base.Parent.prototype.bindEvent.call(this, n);
         },
         edit: function (evt) {
-
             if (evt.ctrlKey && evt.altKey) {
                 var id = this.id(),
                     node = NC[id],
@@ -317,6 +314,14 @@
                     instance.brush.attr({ x: (instance.x2 - instance.x1) / 2 + instance.x1, y: (instance.y2 - instance.y1) / 2 + instance.y1 });
                 }
             });
+            
+            setTimeout(function () {
+                //判断ie是否支持
+                if (util.ie) {
+                    var svn = document.getElementById(drawOption.container);
+                    svn.insertAdjacentElement("beforeEnd", svn.firstElementChild);
+                }
+            }, 0);
         },
         exportElement: function () {
             var
@@ -651,6 +656,7 @@
         }
         fromConnect = undefined;
         //evt.preventDefault();
+
         return false;
     }
 

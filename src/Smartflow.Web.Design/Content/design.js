@@ -63,7 +63,7 @@
 
     function initConfig(config) {
         designConfig = $.extend(designConfig, config);
-        SMF.init(designConfig.container, { dblClick: openConfig });
+        SMF.init($.extend({ container: designConfig.container }, { dblClick: openConfig }));
 
         if (designConfig.id) {
             var settings = {
