@@ -20,8 +20,9 @@ namespace Smartflow.BussinessService
             return singleton;
         }
 
-        protected override bool CheckAuthorization(WorkflowInstance instance, long actorID)
+        protected override bool CheckAuthorization(WorkflowContext context)
         {
+            WorkflowInstance instance = context.Instance;
             //获取所有参与组织（多个角色）
             List<Group> list = instance.Current.Groups;
             //依据多个参与组织验证当前审批人是否有审批权限

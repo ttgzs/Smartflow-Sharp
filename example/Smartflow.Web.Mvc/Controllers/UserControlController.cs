@@ -54,12 +54,19 @@ namespace Smartflow.Web.Controllers
         /// <param name="to"></param>
         /// <param name="message"></param>
         /// <returns></returns>
-        public JsonResult Jump(string instanceID, string transitionID, long to, string message)
+        public JsonResult Jump(string instanceID, string transitionID, long to, string message,string action)
         {
-            //请不要直接定义匿名类传递
-            dynamic dynData= new ExpandoObject();
+            dynamic dynData = new ExpandoObject();
             dynData.Message = message;
-            bwkf.Jump(instanceID, transitionID, to, data: dynData);
+            //请不要直接定义匿名类传递
+            if (action == "exit")
+            {
+                bwkf.Back(instanceID, 0, dynData);
+            }
+            else
+            {
+                bwkf.Jump(instanceID, transitionID, to, data: dynData);
+            }
             return Json(true);
         }
     }

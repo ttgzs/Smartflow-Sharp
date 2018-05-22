@@ -28,13 +28,14 @@
             $("#btnOk").click(function () {
                 var transition = $("#ddlOperate option:selected"),
                     transitionID = $(transition).val(),
-                    to = transition.attr("to");
+                    to = transition.attr("to"),
+                    action = transition.attr("action");
                 var description = $.trim($("#txtDescription").val());
                 if (description) {
                     $.ajax({
                         url: '@Url.Action("Jump", "UserControl")',
                         type: 'post',
-                        data: { instanceID: '@ViewBag.InstanceID', transitionID: transitionID, to: to, message: description },
+                        data: { instanceID: '@ViewBag.InstanceID', transitionID: transitionID, to: to, message: description,action:action },
                         success: function () {
                             window.opener.window.refresh();
                             window.close();
@@ -56,8 +57,9 @@
                     <select id="ddlOperate">
                         @foreach (var item in Model)
                         {
-                            <option to="@item.DESTINATION" value="@item.NID">@item.NAME</option>
+                            <option to="@item.DESTINATION" value="@item.NID" action="jump">@item.NAME</option>
                         }
+                        <option to="0" value="0"  action="exit">原路退回</option>
                     </select>
                 </td>
             </tr>

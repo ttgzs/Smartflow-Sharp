@@ -213,7 +213,7 @@
         this.cy = 0;
         this.disX = 0;
         this.disY = 0;
-        this.vertical = (util.ie ? 6 : 0);
+        this.vertical = (util.ie ? 6: 0);
         this.group = [];//参与组
         this.actors = [];//参与者
         Node.base.Constructor.call(this, "node", "node");
@@ -770,10 +770,18 @@
         $.each(NC, function () {
             var instance = new Node();
             $.extend(instance, this);
-            delete instance['brush'];
-            if (instance['circles']) {
-                delete instance['circles'];
-            }
+
+            $.each(['brush', 'vertical', 'circles'], function (index, p) {
+                if (instance[p]) {
+                    delete instance[p];
+                }
+            });
+
+            //delete instance['brush'];
+            //delete instance['vertical'];
+            //if (instance['circles']) {
+            //    delete instance['circles'];
+            //}
             nodeCollection.push(instance);
         });
 

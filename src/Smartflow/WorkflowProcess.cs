@@ -97,7 +97,7 @@ namespace Smartflow
         /// <summary>
         /// 退回、撤销、跳转
         /// </summary>
-        public string OPERATE
+        public WorkflowAction ACTION
         {
             get;
             set;
@@ -109,7 +109,7 @@ namespace Smartflow
         /// </summary>
         public void Persistent()
         {
-            string sql = "INSERT INTO T_PROCESS(NID,SOURCE,DESTINATION,TID,INSTANCEID,NODETYPE,RNID,OPERATE) VALUES(@NID,@SOURCE,@DESTINATION,@TID,@INSTANCEID,@NODETYPE,@RNID,@OPERATE)";
+            string sql = "INSERT INTO T_PROCESS(NID,SOURCE,DESTINATION,TID,INSTANCEID,NODETYPE,RNID,ACTION) VALUES(@NID,@SOURCE,@DESTINATION,@TID,@INSTANCEID,@NODETYPE,@RNID,@ACTION)";
             Connection.Execute(sql, new
             {
                 NID = Guid.NewGuid().ToString(),
@@ -119,7 +119,7 @@ namespace Smartflow
                 INSTANCEID = INSTANCEID,
                 NODETYPE = NODETYPE.ToString(),
                 RNID = RNID,
-                OPERATE = OPERATE
+                ACTION = ACTION
             });
         }
 
@@ -127,12 +127,12 @@ namespace Smartflow
         {
             WorkflowProcess instance = new WorkflowProcess();
             //兼容其它数据库
-            string query = " SELECT * FROM T_PROCESS WHERE INSTANCEID=@INSTANCEID AND RNID=@NID  AND OPERATE=@OPERATE ";
+            string query = " SELECT * FROM T_PROCESS WHERE INSTANCEID=@INSTANCEID AND RNID=@NID  AND ACTION=@ACTION ";
             instance = instance.Connection.Query<WorkflowProcess>(query, new
             {
                 INSTANCEID = instanceID,
                 NID = NID,
-                OPERATE = "normal"
+                ACTION = WorkflowAction.Jump
 
             }).OrderByDescending(order => order.CREATEDATETIME).FirstOrDefault();
 

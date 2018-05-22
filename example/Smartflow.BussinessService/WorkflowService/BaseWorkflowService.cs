@@ -65,17 +65,41 @@ namespace Smartflow.BussinessService
         public string GetCurrentPrevNodeName(string WFID)
         {
             var current = WorkflowInstance.GetInstance(WFID).Current;
-            var preNode = current.GetPreviousNode();
+            var preNode = current.GetFromNode();
             return preNode == null ? "" : preNode.NAME;
         }
 
         public void UndoSubmit(string WFID)
         {
             WorkflowInstance instance = WorkflowInstance.GetInstance(WFID);
-            WorkflowNode prevNode = instance.Current.GetPreviousNode();
+            WorkflowNode prevNode = instance.Current.GetFromNode();
             dynamic dynData = new ExpandoObject();
             dynData.Message = "撤销此节点";
-            context.Return(instance, 0, dynData);
+            //context.Return(instance, 0, dynData);
+            context.Jump(new WorkflowContext()
+            {
+                Instance = instance,
+                TransitionID = transitionID,
+                Data = dynData,
+                ActorID = 0,
+                Action = Enums.WorkflowAction.Undo
+            });
+        }
+
+        public void Rollback(string WFID, long actorID = 0, dynamic dynData = null)
+        {
+            WorkflowInstance instance = WorkflowInstance.GetInstance(WFID);
+            WorkflowNode prevNode = instance.Current.GetFromNode();
+            // context.Rollback(instance, actorID, dynData);
+            context.Jump(new WorkflowContext()
+            {
+                Instance = instance,
+                TransitionID = transitionID,
+                Data = dynData,
+                ActorID = actorID,
+                Action = Enums.WorkflowAction.Rollback
+            });
+
         }
 
         public List<Group> GetCurrentActorGroup(string WFID)
@@ -89,10 +113,16 @@ namespace Smartflow.BussinessService
             return context.Start(wfXml);
         }
 
-        public void Jump(string instanceID, string transitionID, long transitionTo, long actorID = 0, dynamic data = null)
+        public void Jump(string instanceID, string transitionID, long actorID = 0, dynamic data = null)
         {
             WorkflowInstance instance = WorkflowInstance.GetInstance(instanceID);
-            context.Jump(instance, transitionID, transitionTo, actorID, data);
+            context.Jump(new WorkflowContext()
+            {
+                Instance = instance,
+                TransitionID = transitionID,
+                Data = data,
+                ActorID = actorID,
+            });
         }
     }
 }

@@ -24,7 +24,7 @@ namespace Smartflow
 
         }
 
-        public Transition Previous
+        public Transition FromTransition
         {
             get;
             set;
@@ -41,16 +41,18 @@ namespace Smartflow
             wfNode.NodeType = node.NodeType;
             wfNode.INSTANCEID = node.INSTANCEID;
             wfNode.Transitions = wfNode.QueryWorkflowNode(node.NID);
-            wfNode.Previous = wfNode.GetHistoryTransition();
+            wfNode.FromTransition = wfNode.GetHistoryTransition();
             wfNode.Groups = wfNode.GetGroups();
             return wfNode;
         }
 
-        public WorkflowNode GetPreviousNode()
+        public WorkflowNode GetFromNode()
         {
-            if (Previous == null) return null;
-            return GetWorkflowNodeInstance(this.GetNode(Previous.SOURCE));
+            if (FromTransition == null) return null;
+            ASTNode node = this.GetNode(FromTransition.SOURCE);
+            return WorkflowNode.GetWorkflowNodeInstance(node);
         }
+
 
         /// <summary>
         /// 获取回退线路

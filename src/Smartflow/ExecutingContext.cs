@@ -12,6 +12,7 @@ using System.Text;
 
 using Smartflow.Elements;
 using System.Dynamic;
+using Smartflow.Enums;
 
 namespace Smartflow
 {
@@ -69,7 +70,7 @@ namespace Smartflow
         /// <summary>
         /// 操作方式
         /// </summary>
-        internal string Operate
+        internal WorkflowAction Action
         {
             get;
             set;

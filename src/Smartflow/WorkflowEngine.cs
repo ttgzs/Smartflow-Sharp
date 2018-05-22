@@ -47,7 +47,7 @@ namespace Smartflow
         /// <param name="instance">实例</param>
         /// <param name="actorID">审批人</param>
         /// <returns>true：授权 false：未授权</returns>
-        protected abstract bool CheckAuthorization(WorkflowInstance instance, long actorID);
+        protected abstract bool CheckAuthorization(WorkflowContext context);
 
         /// <summary>
         /// 启动工作流
@@ -85,7 +85,7 @@ namespace Smartflow
         {
             workflowService.Revert(instance);
         }
-       
+
         /// <summary>
         /// 进行流程跳转
         /// </summary>
@@ -94,31 +94,32 @@ namespace Smartflow
         /// <param name="transitionTo">跳转节点ID</param>
         /// <param name="actorID">审批人ID</param>
         /// <param name="data">附加数据</param>
-        public void Jump(WorkflowInstance instance, string transitionID, long transitionTo, long actorID = 0,dynamic data = null)
+        public void Jump(WorkflowContext context)
         {
+            WorkflowInstance instance = context.Instance;
             if (instance.State == WorkflowInstanceState.Running)
             {
-                WorkflowNode current = instance.Current;
+                WorkflowNode current = (context.Action == WorkflowAction.Jump) ?
+                             instance.Current :
+                             instance.Current.GetFromNode();
 
-                if (CheckAuthorization(instance, actorID) == false) return;
-                
-                //记录已经参与审批过的人信息
-                current.SetActor(actorID);
+                if (CheckAuthorization(context) == false) return;
+                long transitionTo = context.To;
 
+                current.SetActor(context.ActorID);
                 instance.Jump(transitionTo);
 
                 ASTNode to = current.GetNode(transitionTo);
-
                 OnExecuteProcess(new ExecutingContext()
                 {
-                    From = current,
+                    From = context.Current,
                     To = to,
-                    TID = transitionID,
+                    TID = context.TransitionID,
                     Instance = instance,
-                    Data = data,
-                    Operate = "normal"
+                    Data = context.Data,
+                    Action = context.Action
                 });
-             
+
                 if (to.NodeType == WorkflowNodeCategeory.End)
                 {
                     instance.State = WorkflowInstanceState.End;
@@ -127,52 +128,100 @@ namespace Smartflow
                 else if (to.NodeType == WorkflowNodeCategeory.Decision)
                 {
                     WorkflowDecision wfDecision = WorkflowDecision.GetNodeInstance(to);
-                    Transition tran = wfDecision.GetTransition();
-                    if (tran == null) return;
-                    Jump(WorkflowInstance.GetInstance(instance.InstanceID), transitionID, tran.DESTINATION, actorID, data);
+                    Transition transition = wfDecision.GetTransition();
+                    if (transition == null) return;
+                    Jump(new WorkflowContext()
+                    {
+                        Instance = WorkflowInstance.GetInstance(instance.InstanceID),
+                        TransitionID = transition.NID,
+                        ActorID = context.ActorID,
+                        Data = context.Data,
+                        Action = context.Action
+                    });
                 }
             }
         }
 
         /// <summary>
-        /// 流程回退、撤销
+        /// 流程撤销
         /// </summary>
         /// <param name="instance"></param>
         /// <param name="actorID"></param>
         /// <param name="data"></param>
-        public void Return(WorkflowInstance instance,long actorID = 0, dynamic data = null)
+        public void Return(WorkflowInstance instance, long actorID = 0, dynamic data = null)
         {
-            if (instance.State == WorkflowInstanceState.Running)
-            {
-                WorkflowNode current = instance.Current.GetPreviousNode();
+            //if (instance.State == WorkflowInstanceState.Running)
+            //{
+            //    WorkflowNode current = instance.Current.GetFromNode();
 
-                if (CheckAuthorization(instance, actorID) == false) return;
+            //    if (CheckAuthorization(instance, actorID, data) == false) return;
 
-                //记录已经参与审批过的人信息
-                current.SetActor(actorID);
+            //    //记录已经参与审批过的人信息
+            //    current.SetActor(actorID);
 
-                instance.Jump(current.ID);
+            //    instance.Jump(current.ID);
 
-                ASTNode to = current.GetNode(current.ID);
+            //    ASTNode to = current.GetNode(current.ID);
 
-                OnExecuteProcess(new ExecutingContext()
-                {
-                    From = current,
-                    To = to,
-                    TID = instance.Current.Previous.NID,
-                    Instance = instance,
-                    Data = data,
-                    Operate="undo"
-                });
+            //    OnExecuteProcess(new ExecutingContext()
+            //    {
+            //        From = current,
+            //        To = to,
+            //        TID = instance.Current.FromTransition.NID,
+            //        Instance = instance,
+            //        Data = data,
+            //        Action = WorkflowAction.Undo
+            //    });
 
-                if (to.NodeType == WorkflowNodeCategeory.Decision)
-                {
-                    WorkflowDecision wfDecision = WorkflowDecision.GetNodeInstance(to);
-                    Transition tran = wfDecision.GetTransition();
-                    if (tran == null) return;
-                    Return(WorkflowInstance.GetInstance(instance.InstanceID), actorID, data);
-                }
-            }
+            //    if (to.NodeType == WorkflowNodeCategeory.Decision)
+            //    {
+            //        WorkflowDecision wfDecision = WorkflowDecision.GetNodeInstance(to);
+            //        Transition tran = wfDecision.GetTransition();
+            //        if (tran == null) return;
+            //        Return(WorkflowInstance.GetInstance(instance.InstanceID), actorID, data);
+            //    }
+            //}
+        }
+
+        /// <summary>
+        /// 流程回退
+        /// </summary>
+        /// <param name="instance"></param>
+        /// <param name="actorID"></param>
+        /// <param name="data"></param>
+        public void Rollback(WorkflowInstance instance, long actorID = 0, dynamic data = null)
+        {
+            //if (instance.State == WorkflowInstanceState.Running)
+            //{
+            //    WorkflowNode current = instance.Current.GetFromNode();
+
+            //    if (CheckAuthorization(instance, actorID, data) == false) return;
+
+            //    //记录已经参与审批过的人信息
+            //    current.SetActor(actorID);
+
+            //    instance.Jump(current.ID);
+
+            //    ASTNode to = current.GetNode(current.ID);
+
+            //    OnExecuteProcess(new ExecutingContext()
+            //    {
+            //        From = instance.Current,
+            //        To = to,
+            //        TID = instance.Current.FromTransition.NID,
+            //        Instance = instance,
+            //        Data = data,
+            //        Action = WorkflowAction.Rollback
+            //    });
+
+            //    if (to.NodeType == WorkflowNodeCategeory.Decision)
+            //    {
+            //        WorkflowDecision wfDecision = WorkflowDecision.GetNodeInstance(to);
+            //        Transition tran = wfDecision.GetTransition();
+            //        if (tran == null) return;
+            //        Rollback(WorkflowInstance.GetInstance(instance.InstanceID), actorID, data);
+            //    }
+            //}
         }
 
         /// <summary>
@@ -189,7 +238,7 @@ namespace Smartflow
                 TID = executeContext.TID.ToString(),
                 INSTANCEID = executeContext.Instance.InstanceID,
                 NODETYPE = executeContext.From.NodeType,
-                OPERATE=executeContext.Operate
+                ACTION = executeContext.Action
             });
         }
     }
