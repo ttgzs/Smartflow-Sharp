@@ -29,6 +29,26 @@ namespace Smartflow.Elements
             set { _nodeType = value; }
         }
 
+        /// <summary>
+        /// 是否协办
+        /// </summary>
+        [XmlAttribute("cooperate")]
+        public bool Cooperate
+        {
+            get;
+            set;
+        }
+
+        
+        /// <summary>
+        /// 限制作人数
+        /// </summary>
+        public int Limit
+        {
+            get;
+            set;
+        } 
+
         [XmlElement(ElementName = "group")]
         public virtual List<Group> Groups
         {
