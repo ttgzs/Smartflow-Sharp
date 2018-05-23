@@ -24,6 +24,9 @@ namespace Smartflow
 
         }
 
+        /// <summary>
+        /// 上一个执行跳转路线
+        /// </summary>
         public Transition FromTransition
         {
             get;
@@ -46,6 +49,10 @@ namespace Smartflow
             return wfNode;
         }
 
+        /// <summary>
+        /// 上一个执行跳转节点
+        /// </summary>
+        /// <returns></returns>
         public WorkflowNode GetFromNode()
         {
             if (FromTransition == null) return null;
@@ -53,6 +60,17 @@ namespace Smartflow
             return WorkflowNode.GetWorkflowNodeInstance(node);
         }
 
+        public List<Actor> GetActors()
+        {
+            string query = " SELECT * FROM T_ACTOR WHERE RNID=@RNID AND INSTANCEID=@INSTANCEID ";
+
+            return Connection.Query<Actor>(query, new
+            {
+                RNID = NID,
+                INSTANCEID = INSTANCEID
+
+            }).ToList();
+        }
 
         /// <summary>
         /// 获取回退线路
@@ -62,7 +80,7 @@ namespace Smartflow
         {
             Transition transition = null;
             WorkflowProcess process = WorkflowProcess.GetWorkflowProcessInstance(INSTANCEID, NID);
-            if (process != null || NodeType != WorkflowNodeCategeory.Start)
+            if (process != null && NodeType != WorkflowNodeCategeory.Start)
             {
                 ASTNode n = GetNode(process.SOURCE);
                 while (n.NodeType == WorkflowNodeCategeory.Decision)

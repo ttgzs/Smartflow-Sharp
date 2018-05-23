@@ -69,35 +69,27 @@ namespace Smartflow.BussinessService
             return preNode == null ? "" : preNode.NAME;
         }
 
-        public void UndoSubmit(string WFID)
+        public void UndoSubmit(string WFID,long actorID = 0)
         {
             WorkflowInstance instance = WorkflowInstance.GetInstance(WFID);
-            WorkflowNode prevNode = instance.Current.GetFromNode();
             dynamic dynData = new ExpandoObject();
             dynData.Message = "撤销此节点";
-            //context.Return(instance, 0, dynData);
-            context.Jump(new WorkflowContext()
+            context.Cancel(new WorkflowContext()
             {
                 Instance = instance,
-                TransitionID = transitionID,
                 Data = dynData,
-                ActorID = 0,
-                Action = Enums.WorkflowAction.Undo
+                ActorID = actorID
             });
         }
 
         public void Rollback(string WFID, long actorID = 0, dynamic dynData = null)
         {
             WorkflowInstance instance = WorkflowInstance.GetInstance(WFID);
-            WorkflowNode prevNode = instance.Current.GetFromNode();
-            // context.Rollback(instance, actorID, dynData);
-            context.Jump(new WorkflowContext()
+            context.Rollback(new WorkflowContext()
             {
                 Instance = instance,
-                TransitionID = transitionID,
                 Data = dynData,
-                ActorID = actorID,
-                Action = Enums.WorkflowAction.Rollback
+                ActorID = actorID
             });
 
         }
@@ -113,13 +105,14 @@ namespace Smartflow.BussinessService
             return context.Start(wfXml);
         }
 
-        public void Jump(string instanceID, string transitionID, long actorID = 0, dynamic data = null)
+        public void Jump(string instanceID, string transitionID,long to, long actorID = 0, dynamic data = null)
         {
             WorkflowInstance instance = WorkflowInstance.GetInstance(instanceID);
             context.Jump(new WorkflowContext()
             {
                 Instance = instance,
                 TransitionID = transitionID,
+                To=to,
                 Data = data,
                 ActorID = actorID,
             });

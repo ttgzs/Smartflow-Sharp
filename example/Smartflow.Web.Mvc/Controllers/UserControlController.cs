@@ -26,7 +26,7 @@ namespace Smartflow.Web.Controllers
             ViewBag.InstanceID = instanceID;
             return PartialView(workflowRecordService.Query(instanceID));
         }
-      
+
         public ActionResult WorkflowCheck(string instanceID)
         {
             ViewBag.InstanceID = instanceID;
@@ -42,9 +42,8 @@ namespace Smartflow.Web.Controllers
         public JsonResult UndoSubmit(string instanceID)
         {
             bwkf.UndoSubmit(instanceID);
-            return Json(true,JsonRequestBehavior.AllowGet);
+            return Json(true, JsonRequestBehavior.AllowGet);
         }
-
 
         /// <summary>
         /// 跳转
@@ -54,14 +53,14 @@ namespace Smartflow.Web.Controllers
         /// <param name="to"></param>
         /// <param name="message"></param>
         /// <returns></returns>
-        public JsonResult Jump(string instanceID, string transitionID, long to, string message,string action)
+        public JsonResult Jump(string instanceID, string transitionID, long to, string message, string action)
         {
             dynamic dynData = new ExpandoObject();
             dynData.Message = message;
             //请不要直接定义匿名类传递
-            if (action == "exit")
+            if (action == "rollback")
             {
-                bwkf.Back(instanceID, 0, dynData);
+                bwkf.Rollback(instanceID, 0, dynData);
             }
             else
             {
