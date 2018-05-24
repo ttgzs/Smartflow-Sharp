@@ -69,12 +69,12 @@ namespace Smartflow.BussinessService
             return preNode == null ? "" : preNode.NAME;
         }
 
-        public void UndoSubmit(string WFID,long actorID = 0)
+        public void UndoSubmit(string WFID, long actorID = 0)
         {
             WorkflowInstance instance = WorkflowInstance.GetInstance(WFID);
             dynamic dynData = new ExpandoObject();
             dynData.Message = "撤销此节点";
-            context.Cancel(new WorkflowContext()
+            context.Cancel(new BaseContext()
             {
                 Instance = instance,
                 Data = dynData,
@@ -85,7 +85,7 @@ namespace Smartflow.BussinessService
         public void Rollback(string WFID, long actorID = 0, dynamic dynData = null)
         {
             WorkflowInstance instance = WorkflowInstance.GetInstance(WFID);
-            context.Rollback(new WorkflowContext()
+            context.Rollback(new BaseContext()
             {
                 Instance = instance,
                 Data = dynData,
@@ -105,14 +105,14 @@ namespace Smartflow.BussinessService
             return context.Start(wfXml);
         }
 
-        public void Jump(string instanceID, string transitionID,long to, long actorID = 0, dynamic data = null)
+        public void Jump(string instanceID, string transitionID, long to, long actorID = 0, dynamic data = null)
         {
             WorkflowInstance instance = WorkflowInstance.GetInstance(instanceID);
             context.Jump(new WorkflowContext()
             {
                 Instance = instance,
                 TransitionID = transitionID,
-                To=to,
+                To = to,
                 Data = data,
                 ActorID = actorID,
             });

@@ -50,7 +50,6 @@ namespace Smartflow.BussinessService
                 .FirstOrDefault<Apply>();
         }
 
-
         public Apply GetInstanceByInstanceID(string INSTANCEID)
         {
             string sql = "SELECT * FROM T_APPLY WHERE INSTANCEID=@INSTANCEID";
@@ -58,6 +57,5 @@ namespace Smartflow.BussinessService
             return Connection.Query<Apply>(sql, new { INSTANCEID = INSTANCEID })
                 .FirstOrDefault<Apply>();
         }
-
     }
 }

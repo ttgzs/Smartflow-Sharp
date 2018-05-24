@@ -115,9 +115,10 @@ body {
     background-color: #2982B5;
 }
 
-.menu li a {
+.menu li span {
     color: #fff;
     font-size: 16px;
     text-decoration: none;
     padding-left:20px;
+    cursor:pointer;
 }

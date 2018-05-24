@@ -4,8 +4,9 @@
  ul {list-style-type: none;}
  input,textarea{outline:none;}
  textarea {resize: none;}
- html, body,.container {height: 100%;overflow: hidden;}
- .tools {width: 120px;float: left;background-color: #eee;height: 100%;}
+ html, body,.container, .container-ctr {height: 100%;overflow: hidden;}
+ .container-ctr{ margin-left:50px; }
+ .tools {width: 50px;float: left;background-color: #eee;height: 100%;}
  .tools::after {content: ".";display: block;visibility: hidden;height: 1%;clear: both;}
  .tools-menu li {line-height: 25px;text-align: center;}
  .tools-menu li a{text-decoration:none;}
