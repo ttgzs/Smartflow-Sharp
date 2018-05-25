@@ -13,6 +13,7 @@ using System.Web.Mvc;
 using System.Dynamic;
 using Smartflow;
 using Smartflow.BussinessService;
+using Smartflow.Elements;
 
 namespace Smartflow.Web.Controllers
 {
@@ -31,6 +32,21 @@ namespace Smartflow.Web.Controllers
         {
             ViewBag.InstanceID = instanceID;
             WorkflowInstance instance = WorkflowInstance.GetInstance(instanceID);
+            //List<Smartflow.Elements.Transition> ts = new List<Transition>();
+            //List<Smartflow.Elements.Transition> cts = instance.Current.Transitions;
+            //foreach (Smartflow.Elements.Transition transition in cts)
+            //{
+            //    ASTNode an=instance.Current.GetNode(transition.DESTINATION);
+            //    if (an.NodeType == Enums.WorkflowNodeCategeory.Decision)
+            //    {
+            //        WorkflowDecision decision= WorkflowDecision.GetNodeInstance(an);
+            //        ts.Add(decision.GetTransition());
+            //    }
+            //    else
+            //    {
+            //        ts.Add(transition);
+            //    }
+            //}
             return View(instance.Current.Transitions);
         }
 
@@ -53,7 +69,7 @@ namespace Smartflow.Web.Controllers
         /// <param name="to"></param>
         /// <param name="message"></param>
         /// <returns></returns>
-        public JsonResult Jump(string instanceID, string transitionID, long to, string message, string action)
+        public JsonResult Jump(string instanceID, string transitionID, string message, string action)
         {
             dynamic dynData = new ExpandoObject();
             dynData.Message = message;
@@ -64,7 +80,7 @@ namespace Smartflow.Web.Controllers
             }
             else
             {
-                bwkf.Jump(instanceID, transitionID, to, data: dynData);
+                bwkf.Jump(instanceID, transitionID, data: dynData);
             }
             return Json(true);
         }

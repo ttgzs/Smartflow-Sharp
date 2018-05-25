@@ -65,7 +65,7 @@ namespace Smartflow
 
             workflowInstance = workflowInstance.Connection.Query<WorkflowInstance, ASTNode, WorkflowInstance>(sql, (instance, node) =>
             {
-                instance.Current= WorkflowNode.GetWorkflowNodeInstance(node);
+                instance.Current= WorkflowNode.ConvertToReallyType(node);
                 return instance;
 
             }, param: new { INSTANCEID = instanceID }, splitOn: "NAME").FirstOrDefault<WorkflowInstance>();

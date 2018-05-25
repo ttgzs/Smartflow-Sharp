@@ -47,7 +47,7 @@ namespace Smartflow
         /// <param name="instance">实例</param>
         /// <param name="actorID">审批人</param>
         /// <returns>true：授权 false：未授权</returns>
-        protected abstract bool CheckAuthorization(BaseContext context);
+        protected abstract bool CheckAuthorization(WorkflowContext context);
 
         /// <summary>
         /// 启动工作流
@@ -96,9 +96,11 @@ namespace Smartflow
             if (instance.State == WorkflowInstanceState.Running)
             {
                 WorkflowNode current = instance.Current;
-
+                
                 if (CheckAuthorization(context) == false) return;
-                long transitionTo = context.To;
+
+                long transitionTo =current.Transitions
+                                  .FirstOrDefault(e => e.NID == context.TransitionID).ID;
 
                 current.SetActor(context.ActorID);
                 instance.Jump(transitionTo);
@@ -121,14 +123,13 @@ namespace Smartflow
                 }
                 else if (to.NodeType == WorkflowNodeCategeory.Decision)
                 {
-                    WorkflowDecision wfDecision = WorkflowDecision.GetNodeInstance(to);
+                    WorkflowDecision wfDecision = WorkflowDecision.ConvertToReallyType(to);
                     Transition transition = wfDecision.GetTransition();
                     if (transition == null) return;
                     Jump(new WorkflowContext()
                     {
                         Instance = WorkflowInstance.GetInstance(instance.InstanceID),
                         TransitionID = transition.NID,
-                        To=transition.DESTINATION,
                         ActorID = context.ActorID,
                         Data = context.Data
                     });
@@ -140,7 +141,7 @@ namespace Smartflow
         /// 撤销
         /// </summary>
         /// <param name="context"></param>
-        public void Cancel(BaseContext context)
+        public void Cancel(WorkflowContext context)
         {
             WorkflowInstance instance = context.Instance;
             if (instance.State == WorkflowInstanceState.Running)
@@ -168,12 +169,12 @@ namespace Smartflow
 
                 if (to.NodeType == WorkflowNodeCategeory.Decision)
                 {
-                    WorkflowNode wfDecision = WorkflowNode.GetWorkflowNodeInstance(to);
+                    WorkflowNode wfDecision = WorkflowNode.ConvertToReallyType(to);
                     Transition transition = wfDecision.FromTransition;
 
                     if (transition == null) return;
 
-                    Cancel(new BaseContext()
+                    Cancel(new WorkflowContext()
                     {
                         Instance = WorkflowInstance.GetInstance(instance.InstanceID),
                         ActorID = context.ActorID,
@@ -187,7 +188,7 @@ namespace Smartflow
         /// 流程回退、
         /// </summary>
         /// <param name="context"></param>
-        public void Rollback(BaseContext context)
+        public void Rollback(WorkflowContext context)
         {
             WorkflowInstance instance = context.Instance;
             if (instance.State == WorkflowInstanceState.Running)
@@ -215,12 +216,12 @@ namespace Smartflow
 
                 if (to.NodeType == WorkflowNodeCategeory.Decision)
                 {
-                    WorkflowNode wfDecision = WorkflowNode.GetWorkflowNodeInstance(to);
+                    WorkflowNode wfDecision = WorkflowNode.ConvertToReallyType(to);
                     Transition transition = wfDecision.FromTransition;
 
                     if (transition == null) return;
 
-                    Rollback(new BaseContext()
+                    Rollback(new WorkflowContext()
                     {
                         Instance = WorkflowInstance.GetInstance(instance.InstanceID),
                         ActorID = context.ActorID,

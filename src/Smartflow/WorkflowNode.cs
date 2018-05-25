@@ -35,7 +35,7 @@ namespace Smartflow
 
         #region 节点方法
 
-        public static WorkflowNode GetWorkflowNodeInstance(ASTNode node)
+        public static WorkflowNode ConvertToReallyType(ASTNode node)
         {
             WorkflowNode wfNode = new WorkflowNode();
             wfNode.NID = node.NID;
@@ -56,8 +56,8 @@ namespace Smartflow
         public WorkflowNode GetFromNode()
         {
             if (FromTransition == null) return null;
-            ASTNode node = this.GetNode(FromTransition.SOURCE);
-            return WorkflowNode.GetWorkflowNodeInstance(node);
+            ASTNode node =GetNode(FromTransition.SOURCE);
+            return WorkflowNode.ConvertToReallyType(node);
         }
 
         public List<Actor> GetActors()

@@ -20,7 +20,7 @@ namespace Smartflow.BussinessService
             return singleton;
         }
 
-        protected override bool CheckAuthorization(BaseContext context)
+        protected override bool CheckAuthorization(WorkflowContext context)
         {
             WorkflowInstance instance = context.Instance;
             //获取所有参与组织（多个角色）

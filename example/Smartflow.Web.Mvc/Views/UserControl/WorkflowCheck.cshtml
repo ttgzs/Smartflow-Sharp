@@ -35,7 +35,7 @@
                     $.ajax({
                         url: '@Url.Action("Jump", "UserControl")',
                         type: 'post',
-                        data: { instanceID: '@ViewBag.InstanceID', transitionID: transitionID, to: to, message: description,action:action },
+                        data: { instanceID: '@ViewBag.InstanceID', transitionID: transitionID, message: description,action:action },
                         success: function () {
                             window.opener.window.refresh();
                             window.close();

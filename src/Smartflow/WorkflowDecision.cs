@@ -26,7 +26,7 @@ namespace Smartflow
         /// </summary>
         /// <param name="node">抽象节点</param>
         /// <returns>决策节点实例</returns>
-        public static WorkflowDecision GetNodeInstance(ASTNode node)
+        public static WorkflowDecision ConvertToReallyType(ASTNode node)
         {
             WorkflowDecision wfNode = new WorkflowDecision();
             wfNode.INSTANCEID = node.INSTANCEID;

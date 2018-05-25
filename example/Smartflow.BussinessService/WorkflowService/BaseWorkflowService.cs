@@ -74,7 +74,7 @@ namespace Smartflow.BussinessService
             WorkflowInstance instance = WorkflowInstance.GetInstance(WFID);
             dynamic dynData = new ExpandoObject();
             dynData.Message = "撤销此节点";
-            context.Cancel(new BaseContext()
+            context.Cancel(new WorkflowContext()
             {
                 Instance = instance,
                 Data = dynData,
@@ -85,7 +85,7 @@ namespace Smartflow.BussinessService
         public void Rollback(string WFID, long actorID = 0, dynamic dynData = null)
         {
             WorkflowInstance instance = WorkflowInstance.GetInstance(WFID);
-            context.Rollback(new BaseContext()
+            context.Rollback(new WorkflowContext()
             {
                 Instance = instance,
                 Data = dynData,
@@ -105,14 +105,13 @@ namespace Smartflow.BussinessService
             return context.Start(wfXml);
         }
 
-        public void Jump(string instanceID, string transitionID, long to, long actorID = 0, dynamic data = null)
+        public void Jump(string instanceID, string transitionID, long actorID = 0, dynamic data = null)
         {
             WorkflowInstance instance = WorkflowInstance.GetInstance(instanceID);
             context.Jump(new WorkflowContext()
             {
                 Instance = instance,
                 TransitionID = transitionID,
-                To = to,
                 Data = data,
                 ActorID = actorID,
             });

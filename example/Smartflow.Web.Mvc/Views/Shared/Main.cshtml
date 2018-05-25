@@ -9,11 +9,6 @@
     <link href="~/Content/main.css" rel="stylesheet" />
     <link href="~/Content/layui/css/layui.css" rel="stylesheet" />
     <script src="~/Content/jquery.min.js"></script>
-    <script type="text/javascript">
-        function go(url) {
-            document.getElementById("iframeContent").src = url;
-        }
-    </script>
     <style type="text/css">
         .layui-tab-item {
             height: 100%;
@@ -31,64 +26,54 @@
                     <span class="menu-item" code="001" url="@Url.Action("ApplyList", "Apply")" data-type="tabAdd">表单申请</span>
                 </li>
                 <li>
-                    <span class="menu-item"  code="002" url="@Url.Action("List", "Default")" data-type="tabAdd">流程设计器</span>
+                    <span class="menu-item" code="002" url="@Url.Action("List", "Default")" data-type="tabAdd">流程设计器</span>
                 </li>
             </ul>
         </div>
-        <div class="right">
+        <div class="right" style="position:relative;">
             <div class="layui-tab layui-tab-card" lay-filter="main" style="margin-top:0;height:100%;">
                 <ul class="layui-tab-title">
                     <li class="layui-this">首页</li>
                 </ul>
-                <div class="layui-tab-content" style="padding:0;height:100%">
-                    <div class="layui-tab-item layui-show">内容3</div>
-                    @*<div class="layui-tab-item layui-show">
-                        <iframe style="width:100%;
-                    height:100%;" frameborder="0" src="@Url.Action("ApplyList", "Apply")"></iframe>
+                <div class="layui-tab-content" style="padding:0;left:0;right:0;bottom:0;position:absolute;top:40px;">
+                    <div class="layui-tab-item layui-show">
+
+
                     </div>
-                    <div class="layui-tab-item">
-                        <iframe style="width:100%;
-                    height:100%;" frameborder="0" src="@Url.Action("List", "Default")"></iframe>
-                    </div>*@
                 </div>
             </div>
         </div>
     </div>
-
     <script src="~/Content/layui/layui.js"></script>
-
-
-    <script>
+    <script type="text/javascript">
         //注意：选项卡 依赖 element 模块，否则无法进行功能性操作
         layui.use('element', function () {
             var element = layui.element;
 
             function addTab(o) {
-
-                var iframe = "<iframe style=\"width:100%;height:100%;\" frameborder=\"0\" src="+o.url+"></iframe>";
-
-                //新增一个Tab项
-                element.tabAdd('main', {
-                    title: o.title,
-                    content: iframe,
-                    id: o.id
-                })
+                var iframe = "<iframe style=\"width:100%;height:100%;\" frameborder=\"0\" src=" + o.url + "></iframe>";
+                var exists = $("li[lay-id=" + o.id + "]").length;
+                if (exists === 0) {
+                    //新增一个Tab项
+                    element.tabAdd('main', {
+                        title: o.title,
+                        content: iframe,
+                        id: o.id
+                    });
+                }
             }
-
 
             $('.menu-item').on('click', function () {
                 var _self = $(this);
                 var o = {
                     title: _self.text(),
                     url: _self.attr('url'),
-                    id:_self.attr('code')
+                    id: _self.attr('code')
                 }
                 addTab.call(_self, o);
-                element.tabChange('main',o.id);
+                element.tabChange('main', o.id);
             });
         });
     </script>
-
-
 </body>
 </html>
