@@ -21,32 +21,6 @@ namespace Smartflow.Elements
     [XmlInclude(typeof(List<Group>))]
     public class Node : ASTNode
     {
-        private List<Transition> transitions = new List<Transition>();
-
-        public override List<Transition> Transitions
-        {
-            get
-            {
-                foreach (Smartflow.Elements.Transition transition in transitions)
-                {
-                    ASTNode an = this.GetNode(transition.DESTINATION);
-                    Transition decisionTransition = transition;
-                    while (an.NodeType == Enums.WorkflowNodeCategeory.Decision)
-                    {
-                        WorkflowDecision decision = WorkflowDecision.ConvertToReallyType(an);
-                        decisionTransition = decision.GetTransition();
-                        an = this.GetNode(decisionTransition.DESTINATION);
-                    }
-                    transition.NAME = decisionTransition.NAME;
-                }
-                return transitions;
-            }
-            set
-            {
-                transitions = value;
-            }
-        }
-
         private WorkflowNodeCategeory _nodeType = WorkflowNodeCategeory.Normal;
 
         public override WorkflowNodeCategeory NodeType

@@ -1,9 +1,6 @@
 ﻿/*
  License: https://github.com/chengderen/Smartflow/blob/master/LICENSE 
  Home page: https://github.com/chengderen/Smartflow
-
- Note: to build on C# 3.0 + .NET 4.0
- Author:chengderen-237552006@qq.com
  */
 using System;
 using System.Collections.Generic;
@@ -14,6 +11,8 @@ using System.Dynamic;
 using Smartflow;
 using Smartflow.BussinessService;
 using Smartflow.Elements;
+using Smartflow.BussinessService.WorkflowService;
+using Smartflow.BussinessService.Models;
 
 namespace Smartflow.Web.Controllers
 {
@@ -28,11 +27,32 @@ namespace Smartflow.Web.Controllers
             return PartialView(workflowRecordService.Query(instanceID));
         }
 
+        /// <summary>
+        /// 获取用户
+        /// </summary>
+        /// <param name="instanceID"></param>
+        /// <param name="transitionID"></param>
+        /// <returns></returns>
+        public JsonResult GetUsers(string instanceID, string transitionID)
+        {
+            WorkflowInstance instance = WorkflowInstance.GetInstance(instanceID);
+            List<Group> groupList = instance.Current.GetNextGroup(transitionID);
+            List<string> gList = new List<string>();
+            foreach (Group g in groupList)
+            {
+                gList.Add(g.ID.ToString());
+            }
+
+            List<User> userList = new UserService()
+                      .GetUserList(string.Join(",", gList));
+            return Json(userList);
+        }
+
         public ActionResult WorkflowCheck(string instanceID)
         {
             ViewBag.InstanceID = instanceID;
             WorkflowInstance instance = WorkflowInstance.GetInstance(instanceID);
-            return View(instance.Current.Transitions);
+            return View(instance.Current.GetTransitions());
         }
 
         /// <summary>

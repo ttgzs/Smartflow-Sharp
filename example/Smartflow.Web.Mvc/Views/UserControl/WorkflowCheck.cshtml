@@ -17,10 +17,10 @@
         textarea {
             resize: none !important;
         }
+
         .layui-btn {
             border-radius: initial;
         }
-
     </style>
     <script src="~/Content/jquery.min.js"></script>
     <script type="text/javascript">
@@ -35,7 +35,7 @@
                     $.ajax({
                         url: '@Url.Action("Jump", "UserControl")',
                         type: 'post',
-                        data: { instanceID: '@ViewBag.InstanceID', transitionID: transitionID, message: description,action:action },
+                        data: { instanceID: '@ViewBag.InstanceID', transitionID: transitionID, message: description, action: action },
                         success: function () {
                             window.opener.window.refresh();
                             window.close();
@@ -46,6 +46,11 @@
                 }
             });
         });
+
+        function selectAction(obj) {
+
+        }
+
     </script>
 </head>
 <body>
@@ -54,13 +59,19 @@
             <tr>
                 <td class="layui-text cm">下一步操作</td>
                 <td>
-                    <select id="ddlOperate">
+                    <select id="ddlOperate" lay-filter="ddlOperate">
                         @foreach (var item in Model)
                         {
                             <option to="@item.DESTINATION" value="@item.NID" action="jump">@item.NAME</option>
                         }
                         <option to="0" value="0" action="rollback">原路退回</option>
                     </select>
+                </td>
+            </tr>
+            <tr>
+                <td class="layui-text cm">下一步审批人</td>
+                <td id="nextUsers">
+                   
                 </td>
             </tr>
             <tr>
@@ -81,6 +92,29 @@
     <script type="text/javascript">
         layui.use('form', function () {
             var form = layui.form;
+
+            form.on('select(ddlOperate)', function (data) {
+                var d = data;
+                if (d.value !== "0") {
+                    $.ajax({
+                        url: '@Url.Action("GetUsers", "UserControl")',
+                        type: 'post',
+                        data: { instanceID: '@ViewBag.InstanceID', transitionID: d.value },
+                        success: function (serverData) {
+                            var ele = [];
+                            $.each(serverData, function () {
+
+                                ele.push("<input type=\"checkbox\" style='width:40px' title=" + this.EmployeeName + ">")
+
+                            });
+                            $("#nextUsers").html(ele.join(''));
+
+                        }
+                    })
+                }
+
+            });
+
         });
     </script>
 </body>

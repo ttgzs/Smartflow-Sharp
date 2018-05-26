@@ -1,9 +1,6 @@
-﻿/*
+﻿/**
  License: https://github.com/chengderen/Smartflow/blob/master/LICENSE 
  Home page: https://github.com/chengderen/Smartflow
-
- Note: to build on C# 3.0 + .NET 4.0
- Author:chengderen-237552006@qq.com
  */
 using System;
 using System.Collections.Generic;
@@ -22,6 +19,23 @@ namespace Smartflow
         protected WorkflowNode()
         {
 
+        }
+
+        public List<Transition> GetTransitions()
+        {
+            foreach (Smartflow.Elements.Transition transition in this.Transitions)
+            {
+                ASTNode an = this.GetNode(transition.DESTINATION);
+                Transition decisionTransition = transition;
+                while (an.NodeType == Enums.WorkflowNodeCategeory.Decision)
+                {
+                    WorkflowDecision decision = WorkflowDecision.ConvertToReallyType(an);
+                    decisionTransition = decision.GetTransition();
+                    an = this.GetNode(decisionTransition.DESTINATION);
+                }
+                transition.NAME = decisionTransition.NAME;
+            }
+            return this.Transitions;
         }
 
         /// <summary>
@@ -63,7 +77,6 @@ namespace Smartflow
         public List<Actor> GetActors()
         {
             string query = " SELECT * FROM T_ACTOR WHERE RNID=@RNID AND INSTANCEID=@INSTANCEID ";
-
             return Connection.Query<Actor>(query, new
             {
                 RNID = NID,
@@ -127,16 +140,40 @@ namespace Smartflow
         }
 
         /// <summary>
+        /// 获取当前执行的跳转路线
+        /// </summary>
+        /// <param name="transitionID">跳转ID</param>
+        /// <returns>跳转对象</returns>
+        protected Transition GetExecuteTransition(string transitionID)
+        {
+            Transition executeTransition = Transitions
+                .FirstOrDefault(t => t.NID == transitionID);
+
+            ASTNode an = this.GetNode(executeTransition.DESTINATION);
+            Transition returnTransition = executeTransition;
+            while (an.NodeType == Enums.WorkflowNodeCategeory.Decision)
+            {
+                WorkflowDecision decision = WorkflowDecision.ConvertToReallyType(an);
+                returnTransition = decision.GetTransition();
+                an = this.GetNode(returnTransition.DESTINATION);
+            }
+            return returnTransition;
+        }
+
+        /// <summary>
         /// 获取下一组
         /// </summary>
-        /// <param name="nextNID">相邻的节点ID</param>
+        /// <param name="transitionID">跳转ID</param>
         /// <returns></returns>
-        public List<Group> GetNextGroup(string nextNID)
+        public List<Group> GetNextGroup(string transitionID)
         {
+            Transition executeTransition = this.GetExecuteTransition(transitionID);
+            ASTNode selectNode = this.GetNode(executeTransition.DESTINATION);
+
             string query = "SELECT * FROM T_GROUP WHERE RNID=@RNID AND INSTANCEID=@INSTANCEID";
             return Connection.Query<Group>(query, new
             {
-                RNID = nextNID,
+                RNID = selectNode.NID,
                 INSTANCEID = INSTANCEID
 
             }).ToList();
