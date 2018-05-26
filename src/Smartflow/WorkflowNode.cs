@@ -45,7 +45,7 @@ namespace Smartflow
             wfNode.INSTANCEID = node.INSTANCEID;
             wfNode.Transitions = wfNode.QueryWorkflowNode(node.NID);
             wfNode.FromTransition = wfNode.GetHistoryTransition();
-            wfNode.Groups = wfNode.GetGroups();
+            wfNode.Groups = wfNode.GetGroup();
             return wfNode;
         }
 
@@ -56,7 +56,7 @@ namespace Smartflow
         public WorkflowNode GetFromNode()
         {
             if (FromTransition == null) return null;
-            ASTNode node =GetNode(FromTransition.SOURCE);
+            ASTNode node = GetNode(FromTransition.SOURCE);
             return WorkflowNode.ConvertToReallyType(node);
         }
 
@@ -91,7 +91,7 @@ namespace Smartflow
                     if (n.NodeType == WorkflowNodeCategeory.Start)
                         break;
                 }
-                transition = GetTransition(process.TID);
+                transition = GetTransition(process.TRANSITIONID);
             }
 
             return transition;
@@ -100,14 +100,14 @@ namespace Smartflow
         /// <summary>
         /// 依据主键获取路线
         /// </summary>
-        /// <param name="TID">路线主键</param>
+        /// <param name="TRANSITIONID">路线主键</param>
         /// <returns>路线</returns>
-        protected Transition GetTransition(string TID)
+        protected Transition GetTransition(string TRANSITIONID)
         {
-            string query = "SELECT * FROM T_TRANSITION WHERE NID=@TID AND INSTANCEID=@INSTANCEID";
+            string query = "SELECT * FROM T_TRANSITION WHERE NID=@TRANSITIONID AND INSTANCEID=@INSTANCEID";
             Transition transition = Connection.Query<Transition>(query, new
             {
-                TID = TID,
+                TRANSITIONID = TRANSITIONID,
                 INSTANCEID = INSTANCEID
 
             }).FirstOrDefault();
@@ -115,12 +115,28 @@ namespace Smartflow
             return transition;
         }
 
-        protected List<Group> GetGroups()
+        protected List<Group> GetGroup()
         {
             string query = "SELECT * FROM T_GROUP WHERE RNID=@RNID AND INSTANCEID=@INSTANCEID";
             return Connection.Query<Group>(query, new
             {
                 RNID = NID,
+                INSTANCEID = INSTANCEID
+
+            }).ToList();
+        }
+
+        /// <summary>
+        /// 获取下一组
+        /// </summary>
+        /// <param name="nextNID">相邻的节点ID</param>
+        /// <returns></returns>
+        public List<Group> GetNextGroup(string nextNID)
+        {
+            string query = "SELECT * FROM T_GROUP WHERE RNID=@RNID AND INSTANCEID=@INSTANCEID";
+            return Connection.Query<Group>(query, new
+            {
+                RNID = nextNID,
                 INSTANCEID = INSTANCEID
 
             }).ToList();

@@ -42,7 +42,7 @@ namespace Smartflow
         /// <summary>
         /// 跳转路线ID
         /// </summary>
-        public string TID
+        public string TransitionID
         {
             get;
             set;

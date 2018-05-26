@@ -1,16 +1,15 @@
-﻿using Smartflow.Enums;
+﻿/**
+ License: https://github.com/chengderen/Smartflow/blob/master/LICENSE 
+ Home page: https://github.com/chengderen/Smartflow
+ */
+
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using Smartflow.Enums;
 
 namespace Smartflow
 {
-    public class WorkflowContext 
+    public class WorkflowContext
     {
-
-        private dynamic data = null;
-
         public WorkflowInstance Instance
         {
             get;
@@ -31,8 +30,8 @@ namespace Smartflow
 
         public dynamic Data
         {
-            get { return data; }
-            set { data = value; }
+            get;
+            set;
         }
 
         public string TransitionID

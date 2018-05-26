@@ -61,7 +61,7 @@ namespace Smartflow
         /// <summary>
         /// 路线ID
         /// </summary>
-        public string TID
+        public string TRANSITIONID
         {
             get;
             set;
@@ -109,13 +109,13 @@ namespace Smartflow
         /// </summary>
         public void Persistent()
         {
-            string sql = "INSERT INTO T_PROCESS(NID,SOURCE,DESTINATION,TID,INSTANCEID,NODETYPE,RNID,ACTION) VALUES(@NID,@SOURCE,@DESTINATION,@TID,@INSTANCEID,@NODETYPE,@RNID,@ACTION)";
+            string sql = "INSERT INTO T_PROCESS(NID,SOURCE,DESTINATION,TRANSITIONID,INSTANCEID,NODETYPE,RNID,ACTION) VALUES(@NID,@SOURCE,@DESTINATION,@TRANSITIONID,@INSTANCEID,@NODETYPE,@RNID,@ACTION)";
             Connection.Execute(sql, new
             {
                 NID = Guid.NewGuid().ToString(),
                 SOURCE = SOURCE,
                 DESTINATION = DESTINATION,
-                TID = TID,
+                TRANSITIONID = TRANSITIONID,
                 INSTANCEID = INSTANCEID,
                 NODETYPE = NODETYPE.ToString(),
                 RNID = RNID,
@@ -126,7 +126,6 @@ namespace Smartflow
         public static WorkflowProcess GetWorkflowProcessInstance(string instanceID, string NID)
         {
             WorkflowProcess instance = new WorkflowProcess();
-            //兼容其它数据库
             string query = " SELECT * FROM T_PROCESS WHERE INSTANCEID=@INSTANCEID AND RNID=@NID  AND ACTION=@ACTION ";
             instance = instance.Connection.Query<WorkflowProcess>(query, new
             {

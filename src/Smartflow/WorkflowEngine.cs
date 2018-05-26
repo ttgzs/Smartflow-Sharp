@@ -97,10 +97,11 @@ namespace Smartflow
             {
                 WorkflowNode current = instance.Current;
                 
+                
                 if (CheckAuthorization(context) == false) return;
 
                 long transitionTo =current.Transitions
-                                  .FirstOrDefault(e => e.NID == context.TransitionID).ID;
+                                  .FirstOrDefault(e => e.NID == context.TransitionID).DESTINATION;
 
                 current.SetActor(context.ActorID);
                 instance.Jump(transitionTo);
@@ -110,7 +111,7 @@ namespace Smartflow
                 {
                     From = current,
                     To = to,
-                    TID = context.TransitionID,
+                    TransitionID = context.TransitionID,
                     Instance = instance,
                     Data = context.Data,
                     Action = WorkflowAction.Jump
@@ -161,7 +162,7 @@ namespace Smartflow
                 {
                     From =  current,
                     To = to,
-                    TID = instance.Current.FromTransition.NID,
+                    TransitionID = instance.Current.FromTransition.NID,
                     Instance = instance,
                     Data = context.Data,
                     Action = WorkflowAction.Undo
@@ -208,7 +209,7 @@ namespace Smartflow
                 {
                     From =instance.Current,
                     To = to,
-                    TID = instance.Current.FromTransition.NID,
+                    TransitionID = instance.Current.FromTransition.NID,
                     Instance = instance,
                     Data = context.Data,
                     Action = WorkflowAction.Rollback
@@ -242,7 +243,7 @@ namespace Smartflow
                 RNID = executeContext.To.NID,
                 SOURCE = executeContext.From.ID,
                 DESTINATION = executeContext.To.ID,
-                TID = executeContext.TID.ToString(),
+                TRANSITIONID = executeContext.TransitionID,
                 INSTANCEID = executeContext.Instance.InstanceID,
                 NODETYPE = executeContext.From.NodeType,
                 ACTION = executeContext.Action

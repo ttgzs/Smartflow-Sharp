@@ -32,21 +32,6 @@ namespace Smartflow.Web.Controllers
         {
             ViewBag.InstanceID = instanceID;
             WorkflowInstance instance = WorkflowInstance.GetInstance(instanceID);
-            //List<Smartflow.Elements.Transition> ts = new List<Transition>();
-            //List<Smartflow.Elements.Transition> cts = instance.Current.Transitions;
-            //foreach (Smartflow.Elements.Transition transition in cts)
-            //{
-            //    ASTNode an=instance.Current.GetNode(transition.DESTINATION);
-            //    if (an.NodeType == Enums.WorkflowNodeCategeory.Decision)
-            //    {
-            //        WorkflowDecision decision= WorkflowDecision.GetNodeInstance(an);
-            //        ts.Add(decision.GetTransition());
-            //    }
-            //    else
-            //    {
-            //        ts.Add(transition);
-            //    }
-            //}
             return View(instance.Current.Transitions);
         }
 
@@ -66,7 +51,6 @@ namespace Smartflow.Web.Controllers
         /// </summary>
         /// <param name="instanceID"></param>
         /// <param name="transitionID"></param>
-        /// <param name="to"></param>
         /// <param name="message"></param>
         /// <returns></returns>
         public JsonResult Jump(string instanceID, string transitionID, string message, string action)
@@ -80,7 +64,7 @@ namespace Smartflow.Web.Controllers
             }
             else
             {
-                bwkf.Jump(instanceID, transitionID, data: dynData);
+                bwkf.Jump(instanceID, transitionID, actorID: 0, data: dynData);
             }
             return Json(true);
         }
