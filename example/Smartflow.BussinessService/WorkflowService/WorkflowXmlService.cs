@@ -6,7 +6,7 @@ using System.Linq;
 using Dapper;
 using Smartflow.Infrastructure;
 
-namespace Smartflow.BussinessService
+namespace Smartflow.BussinessService.WorkflowService
 {
     public class WorkflowXmlService
     {

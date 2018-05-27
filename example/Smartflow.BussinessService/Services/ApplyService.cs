@@ -6,15 +6,10 @@ using System.Web;
 using Dapper;
 using Smartflow.BussinessService.Models;
 
-namespace Smartflow.BussinessService
+namespace Smartflow.BussinessService.Services
 {
-    public class ApplyService
+    public class ApplyService : BaseService
     {
-        public IDbConnection Connection
-        {
-            get { return SqlHelper.CreateConnection(); }
-        }
-
         public void Persistent(Apply model)
         {
             string sql = "INSERT INTO T_APPLY(STATE,NAME,DESCRIPTION,WFID,INSTANCEID,SECRETGRADE) VALUES (@STATE,@NAME,@DESCRIPTION,@WFID,@INSTANCEID,@SECRETGRADE)";

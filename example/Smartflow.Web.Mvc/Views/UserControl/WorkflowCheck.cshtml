@@ -49,6 +49,23 @@
                     transitionID = $(transition).val(),
                     to = transition.attr("to"),
                     action = transition.attr("action");
+
+                var userList = [];
+
+                $("#nextUsers").find("input[type='checkbox']").each(function () {
+                        var actorId=$(this).attr('actorID');
+                        var actorName = $(this).attr('title');
+                        userList.push({
+                            ID: actorId,
+                            NAME:actorName
+                        });
+                });
+
+                if (action == 'jump' && userList.length>0) {
+                    alert('请选择人');
+                }
+
+
                 var description = $.trim($("#txtDescription").val());
                 if (description) {
                     $.ajax({
@@ -60,16 +77,16 @@
                             window.close();
                         }
                     });
+
+
+
+
+
                 } else {
                     alert('请填写审批意见');
                 }
             });
         });
-
-        function selectAction(obj) {
-
-        }
-
     </script>
 </head>
 <body>
@@ -83,7 +100,10 @@
                         {
                             <option to="@item.DESTINATION" value="@item.NID" action="jump">@item.NAME</option>
                         }
+                        @if (!ViewBag.CheckResult) { 
                         <option to="0" value="0" action="rollback">原路退回</option>
+                            
+                        }
                     </select>
                 </td>
             </tr>
@@ -119,7 +139,7 @@
                             var ele = [];
                             $.each(serverData, function (i) {
                                 inelementId = 'user' + i;
-                                ele.push("<label for='" + inelementId + "'>" + this.EmployeeName + "</label><input type=\"checkbox\" style='width:40px' id='" + inelementId + "' title=" + this.EmployeeName + " />");
+                                ele.push("<label for='" + inelementId + "'>" + this.EmployeeName + "</label><input type=\"checkbox\" style='width:40px' id='" + inelementId + "' actorID='"+this.ID+"' title=" + this.EmployeeName + " />");
                             });
                             $("#nextUsers").html(ele.join(''));
                         }

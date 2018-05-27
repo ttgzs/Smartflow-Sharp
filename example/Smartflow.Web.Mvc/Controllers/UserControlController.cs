@@ -13,6 +13,7 @@ using Smartflow.BussinessService;
 using Smartflow.Elements;
 using Smartflow.BussinessService.WorkflowService;
 using Smartflow.BussinessService.Models;
+using Smartflow.BussinessService.Services;
 
 namespace Smartflow.Web.Controllers
 {
@@ -52,6 +53,9 @@ namespace Smartflow.Web.Controllers
         {
             ViewBag.InstanceID = instanceID;
             WorkflowInstance instance = WorkflowInstance.GetInstance(instanceID);
+
+            ViewBag.CheckResult=CheckUndoButton(instanceID);
+
             return View(instance.Current.GetTransitions());
         }
 
@@ -88,6 +92,12 @@ namespace Smartflow.Web.Controllers
                 bwkf.Jump(instanceID, transitionID, actorID: 0, data: dynData);
             }
             return Json(true);
+        }
+
+        public bool CheckUndoButton(string instanceID)
+        {
+            string currentNodeName = bwkf.GetCurrentNodeName(instanceID);
+            return (currentNodeName == "开始" || currentNodeName == "结束" || bwkf.GetCurrentPrevNodeName(instanceID) == "开始");
         }
     }
 }

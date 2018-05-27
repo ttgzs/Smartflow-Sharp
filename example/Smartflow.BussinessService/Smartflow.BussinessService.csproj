@@ -40,16 +40,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ApplyService.cs" />
+    <Compile Include="Services\ApplyService.cs" />
     <Compile Include="Models\User.cs" />
+    <Compile Include="Services\BaseService.cs" />
     <Compile Include="WorkflowService\BaseWorkflowService.cs" />
     <Compile Include="Models\Apply.cs" />
     <Compile Include="Models\Record.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SqlHelper.cs" />
-    <Compile Include="RecordService.cs" />
+    <Compile Include="Services\RecordService.cs" />
     <Compile Include="WorkflowService\BaseWorkflowEngine.cs" />
-    <Compile Include="UserService.cs" />
+    <Compile Include="Services\UserService.cs" />
     <Compile Include="WorkflowService\WorkflowXmlService.cs" />
   </ItemGroup>
   <ItemGroup>

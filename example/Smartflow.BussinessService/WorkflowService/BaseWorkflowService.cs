@@ -9,8 +9,9 @@ using Smartflow.BussinessService.Models;
 using Smartflow.Infrastructure;
 using Smartflow.Elements;
 using System.Dynamic;
+using Smartflow.BussinessService.Services;
 
-namespace Smartflow.BussinessService
+namespace Smartflow.BussinessService.WorkflowService
 {
     public sealed class BaseWorkflowService
     {
@@ -51,9 +52,7 @@ namespace Smartflow.BussinessService
                     NODENAME = executeContext.From.NAME,
                     MESSAGE = executeContext.Data.Message
                 });
-
                 //写待办业务
-
             }
         }
 

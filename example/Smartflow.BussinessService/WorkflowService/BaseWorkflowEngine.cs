@@ -6,7 +6,7 @@ using System.Text;
 using Smartflow.Elements;
 using Smartflow.Enums;
 
-namespace Smartflow.BussinessService
+namespace Smartflow.BussinessService.WorkflowService
 {
     public class BaseWorkflowEngine : WorkflowEngine
     {

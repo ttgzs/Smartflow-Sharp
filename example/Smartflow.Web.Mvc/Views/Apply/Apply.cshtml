@@ -38,6 +38,14 @@
                 $("#btnAudit").show();
                 $("#btnSubmit,#btnSave").hide();
             }
+
+            if ('@ViewBag.UndoCheck' == '1') {
+                $("#btnUnAudit").show();
+            } else {
+                $("#btnUnAudit").hide();
+            }
+
+            
         });
 
         function auditApply() {

@@ -8,6 +8,8 @@ using System.Web.Mvc;
 using Smartflow.BussinessService.Models;
 using Smartflow.BussinessService;
 using Smartflow.Infrastructure;
+using Smartflow.BussinessService.WorkflowService;
+using Smartflow.BussinessService.Services;
 
 namespace Smartflow.Web.Controllers
 {
@@ -60,6 +62,7 @@ namespace Smartflow.Web.Controllers
         {
             if (string.IsNullOrEmpty(id))
             {
+                ViewBag.UndoCheck = 0;
                 ViewBag.AID = 0;
                 GenerateDropDownViewData("");
                 GenerateDropDownSecretViewData("");
@@ -74,12 +77,19 @@ namespace Smartflow.Web.Controllers
                 {
                     ViewBag.ButtonName = bwf.GetCurrentNodeName(apply.INSTANCEID);
                     ViewBag.PreviousButtonName = bwf.GetCurrentPrevNodeName(apply.INSTANCEID);
+
+                    ViewBag.UndoCheck = CheckUndoButton(apply.INSTANCEID)?0:1;
                 }
                 else
                 {
                     ViewBag.ButtonName = "审核";
                     ViewBag.PreviousButtonName = "撤销";
+                    ViewBag.UndoCheck = 0;
                 }
+
+
+                
+
                 GenerateDropDownSecretViewData(apply.SECRETGRADE);
                 GenerateDropDownViewData(apply.WFID);
                 return View(apply);
@@ -97,7 +107,6 @@ namespace Smartflow.Web.Controllers
             ViewData["Wfile"] = fileList;
         }
 
-
         public void GenerateDropDownSecretViewData(string secretGrade)
         {
             List<SelectListItem> list = new List<SelectListItem>();
@@ -107,6 +116,12 @@ namespace Smartflow.Web.Controllers
             list.Add(new SelectListItem { Text = "绝密", Value = "绝密", Selected = ("绝密" == secretGrade) });
 
             ViewData["SC"] = list;
+        }
+
+        public bool CheckUndoButton(string instanceID)
+        {
+            string currentNodeName = bwf.GetCurrentNodeName(instanceID);
+            return (currentNodeName == "开始" || currentNodeName == "结束" || bwf.GetCurrentPrevNodeName(instanceID) == "开始");
         }
     }
 }

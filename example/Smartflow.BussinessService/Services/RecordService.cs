@@ -6,15 +6,10 @@ using System.Web;
 using Dapper;
 using Smartflow.BussinessService.Models;
 
-namespace Smartflow.BussinessService
+namespace Smartflow.BussinessService.Services
 {
-    public class RecordService
+    public class RecordService:BaseService
     {
-        protected IDbConnection Connection
-        {
-            get { return SqlHelper.CreateConnection(); }
-        }
-
         public void Persistent(Record model)
         {
             string sql = "INSERT INTO T_RECORD(NODENAME,MESSAGE,INSTANCEID) VALUES (@NODENAME,@MESSAGE,@INSTANCEID)";
