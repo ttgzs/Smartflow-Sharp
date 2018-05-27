@@ -1,8 +1,10 @@
-﻿using Smartflow.Elements;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+
+using Smartflow.Elements;
+using Smartflow.Enums;
 
 namespace Smartflow.BussinessService
 {
@@ -23,11 +25,32 @@ namespace Smartflow.BussinessService
         protected override bool CheckAuthorization(WorkflowContext context)
         {
             WorkflowInstance instance = context.Instance;
-            //获取所有参与组织（多个角色）
-            List<Group> list = instance.Current.Groups;
-            //依据多个参与组织验证当前审批人是否有审批权限
-            //如是没有审批权限，返回false,否则返回true
-            return true;
+            if (instance.Current.NodeType == WorkflowNodeCategeory.Decision)
+            {
+                return true;
+            }
+            else
+            {
+                bool result = true;
+                //跳转节点
+                if (context.Action == WorkflowAction.Jump)
+                {
+                    //获取所有参与组织（多个角色）
+                    List<Group> list = instance.Current.Groups;
+                    //依据多个参与组织验证当前审批人是否有审批权限
+                    //如是没有审批权限，返回false,否则返回true
+                }
+                else if (context.Action == WorkflowAction.Rollback)
+                {
+                    //流程回退
+
+                }
+                else if (context.Action == WorkflowAction.Undo)
+                {
+                    //流程撤销
+                }
+                return result;
+            }
         }
     }
 }

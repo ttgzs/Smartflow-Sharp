@@ -125,6 +125,8 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Content Include="Content\common.js" />
+    <Content Include="Content\images\aiwrap.png" />
+    <Content Include="Content\images\web_login_bg.jpg" />
     <Content Include="Content\jquery.min.js" />
     <Content Include="Content\json2.js" />
     <Content Include="Content\layui\css\layui.css" />
@@ -228,6 +230,7 @@
     <Content Include="Content\layui\lay\modules\tree.js" />
     <Content Include="Content\layui\lay\modules\upload.js" />
     <Content Include="Content\layui\lay\modules\util.js" />
+    <Content Include="Content\login.css" />
     <Content Include="Content\main.css" />
     <Content Include="Global.asax" />
     <Content Include="test.html" />

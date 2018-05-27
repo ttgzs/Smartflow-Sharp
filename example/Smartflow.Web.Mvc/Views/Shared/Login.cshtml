@@ -1,17 +1,25 @@
 ﻿@{
     Layout = null;
 }
-
 <!DOCTYPE html>
-
 <html>
 <head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Login</title>
+    <title>Smartflow-Sharp工作流平台</title>
+    <link href="~/Content/login.css" rel="stylesheet" />
 </head>
 <body>
-    <div>
-        
+    <div class="login">
+        <div class="message">Smartflow-Sharp工作流管理平台</div>
+        <div id="darkbannerwrap"></div>
+        <form method="post">
+            <input name="action" value="login" type="hidden">
+            <input name="username" placeholder="用户名" type="text">
+            <hr class="hr15">
+            <input name="password" placeholder="密码" type="password">
+            <hr class="hr15">
+            <input value="登录" style="width:100%;" type="button">
+            <hr class="hr20">
+        </form>
     </div>
 </body>
 </html>

@@ -1,10 +1,7 @@
 ﻿/*
  License: https://github.com/chengderen/Smartflow/blob/master/LICENSE 
  Home page: https://github.com/chengderen/Smartflow
-
- Note: to build on C# 3.0 + .NET 4.0
- Author:chengderen-237552006@qq.com
- */
+*/
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -54,6 +51,9 @@ namespace Smartflow.BussinessService
                     NODENAME = executeContext.From.NAME,
                     MESSAGE = executeContext.Data.Message
                 });
+
+                //写待办业务
+
             }
         }
 
@@ -91,7 +91,6 @@ namespace Smartflow.BussinessService
                 Data = dynData,
                 ActorID = actorID
             });
-
         }
 
         public List<Group> GetCurrentActorGroup(string WFID)

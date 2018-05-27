@@ -97,6 +97,7 @@ namespace Smartflow
             {
                 WorkflowNode current = instance.Current;
                 
+                context.SetAction (WorkflowAction.Jump);
                 
                 if (CheckAuthorization(context) == false) return;
 
@@ -114,7 +115,9 @@ namespace Smartflow
                     TransitionID = context.TransitionID,
                     Instance = instance,
                     Data = context.Data,
-                    Action = WorkflowAction.Jump
+                    Action = context.Action,
+                    ActorID=context.ActorID,
+                    ActorName=context.ActorName
                 });
 
                 if (to.NodeType == WorkflowNodeCategeory.End)
@@ -149,6 +152,7 @@ namespace Smartflow
             {
                 WorkflowNode current = instance.Current.GetFromNode();
 
+                context.SetAction(WorkflowAction.Undo);
                 if (CheckAuthorization(context) == false) return;
 
                 //记录已经参与审批过的人信息
@@ -165,7 +169,9 @@ namespace Smartflow
                     TransitionID = instance.Current.FromTransition.NID,
                     Instance = instance,
                     Data = context.Data,
-                    Action = WorkflowAction.Undo
+                    Action = context.Action,
+                    ActorID = context.ActorID,
+                    ActorName = context.ActorName
                 });
 
                 if (to.NodeType == WorkflowNodeCategeory.Decision)
@@ -195,7 +201,7 @@ namespace Smartflow
             if (instance.State == WorkflowInstanceState.Running)
             {
                 WorkflowNode current = instance.Current.GetFromNode();
-
+                context.SetAction(WorkflowAction.Rollback);
                 if (CheckAuthorization(context) == false) return;
 
                 //记录已经参与审批过的人信息
@@ -212,7 +218,9 @@ namespace Smartflow
                     TransitionID = instance.Current.FromTransition.NID,
                     Instance = instance,
                     Data = context.Data,
-                    Action = WorkflowAction.Rollback
+                    Action = context.Action,
+                    ActorID = context.ActorID,
+                    ActorName = context.ActorName
                 });
 
                 if (to.NodeType == WorkflowNodeCategeory.Decision)

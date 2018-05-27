@@ -8,18 +8,37 @@
 <html>
 <head>
     <title>审批流程控件</title>
-    <link href="~/Content/layui/css/layui.css" rel="stylesheet" />
     <style type="text/css">
-        .cm {
-            width: 80px;
+        .table-cm {
+            width: 120px;
+            font-size: 14px;
+            font-family: "Lucida Grande", Lucida Sans Unicode,Hiragino Sans GB, WenQuanYi Micro Hei, Verdana, Aril, sans-serif;
+            font-size: 14px;
+            color: #301c1c;
         }
 
         textarea {
             resize: none !important;
+            width: 99%;
+            height: 40px;
+            padding: 2px;
+            outline: none;
         }
 
-        .layui-btn {
-            border-radius: initial;
+        select {
+            width: 100%;
+            height: 25px;
+            padding: 2px;
+            outline: none;
+        }
+
+        .layui-form {
+            width: 100%;
+            padding: 10px;
+        }
+
+        .form-table {
+            width: 100%;
         }
     </style>
     <script src="~/Content/jquery.min.js"></script>
@@ -54,12 +73,12 @@
     </script>
 </head>
 <body>
-    <form class="layui-container layui-form">
-        <table class="layui-table" lay-size="sm">
+    <form class="form-container">
+        <table class="form-table">
             <tr>
-                <td class="layui-text cm">下一步操作</td>
+                <td class="table-cm">下一步操作</td>
                 <td>
-                    <select id="ddlOperate" lay-filter="ddlOperate">
+                    <select id="ddlOperate">
                         @foreach (var item in Model)
                         {
                             <option to="@item.DESTINATION" value="@item.NID" action="jump">@item.NAME</option>
@@ -68,15 +87,13 @@
                     </select>
                 </td>
             </tr>
-            <tr>
-                <td class="layui-text cm">下一步审批人</td>
-                <td id="nextUsers">
-                   
-                </td>
+            <tr id="user">
+                <td class="table-cm">下一步审批人</td>
+                <td id="nextUsers"></td>
             </tr>
             <tr>
-                <td class="layui-text cm">审批意见</td>
-                <td>
+                <td class="table-cm">审批意见</td>
+                <td style="position:relative;">
                     <textarea class="layui-textarea" id="txtDescription"></textarea>
                 </td>
             </tr>
@@ -88,33 +105,31 @@
             </tr>
         </table>
     </form>
-    <script src="~/Content/layui/layui.js"></script>
     <script type="text/javascript">
-        layui.use('form', function () {
-            var form = layui.form;
-
-            form.on('select(ddlOperate)', function (data) {
-                var d = data;
-                if (d.value !== "0") {
+        $(function () {
+            $("#ddlOperate").change(function () {
+                var self = this;
+                if (self.value !== "0" && $(this).find("option:selected").text() !== '结束') {
+                    $("#user").show();
                     $.ajax({
                         url: '@Url.Action("GetUsers", "UserControl")',
                         type: 'post',
-                        data: { instanceID: '@ViewBag.InstanceID', transitionID: d.value },
+                        data: { instanceID: '@ViewBag.InstanceID', transitionID: self.value },
                         success: function (serverData) {
                             var ele = [];
-                            $.each(serverData, function () {
-
-                                ele.push("<input type=\"checkbox\" style='width:40px' title=" + this.EmployeeName + ">")
-
+                            $.each(serverData, function (i) {
+                                inelementId = 'user' + i;
+                                ele.push("<label for='" + inelementId + "'>" + this.EmployeeName + "</label><input type=\"checkbox\" style='width:40px' id='" + inelementId + "' title=" + this.EmployeeName + " />");
                             });
                             $("#nextUsers").html(ele.join(''));
-
                         }
                     })
+                } else {
+                    $("#nextUsers").html('');
+                    $("#user").hide();
                 }
-
             });
-
+            $("#ddlOperate").trigger('change');
         });
     </script>
 </body>

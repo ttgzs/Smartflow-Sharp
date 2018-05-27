@@ -39,5 +39,16 @@ namespace Smartflow
             get;
             set;
         }
+
+        public WorkflowAction Action
+        {
+            get;
+            private set;
+        }
+
+        internal void SetAction(WorkflowAction action)
+        {
+            this.Action = action;
+        }
     }
 }
