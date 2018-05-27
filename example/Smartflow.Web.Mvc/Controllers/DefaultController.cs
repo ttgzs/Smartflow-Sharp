@@ -24,5 +24,10 @@ namespace Smartflow.Web.Controllers
             WorkflowXmlService.Delete(WFID);
             return Json(true);
         }
+
+        public ActionResult Login()
+        {
+            return View();
+        }
     }
 }
