@@ -9,8 +9,9 @@ using System.Web;
 using System.Web.Mvc;
 using System.Dynamic;
 using Smartflow;
-using Smartflow.BussinessService;
 using Smartflow.Elements;
+
+
 using Smartflow.BussinessService.WorkflowService;
 using Smartflow.BussinessService.Models;
 using Smartflow.BussinessService.Services;
@@ -29,11 +30,11 @@ namespace Smartflow.Web.Controllers
         }
 
         /// <summary>
-        /// 获取用户
+        /// 依据跳转跳线获取下节点审批用户列表
         /// </summary>
-        /// <param name="instanceID"></param>
-        /// <param name="transitionID"></param>
-        /// <returns></returns>
+        /// <param name="instanceID">流程实例</param>
+        /// <param name="transitionID">跳转路线ID</param>
+        /// <returns>用户列表</returns>
         public JsonResult GetUsers(string instanceID, string transitionID)
         {
             WorkflowInstance instance = WorkflowInstance.GetInstance(instanceID);
@@ -43,26 +44,28 @@ namespace Smartflow.Web.Controllers
             {
                 gList.Add(g.ID.ToString());
             }
+            List<User> userList = new UserService().GetUserList(string.Join(",", gList));
 
-            List<User> userList = new UserService()
-                      .GetUserList(string.Join(",", gList));
             return Json(userList);
         }
 
+        /// <summary>
+        /// 工作流组件
+        /// </summary>
+        /// <param name="instanceID">流程实例ID</param>
+        /// <returns></returns>
         public ActionResult WorkflowCheck(string instanceID)
         {
             ViewBag.InstanceID = instanceID;
             WorkflowInstance instance = WorkflowInstance.GetInstance(instanceID);
-
-            ViewBag.CheckResult=CheckUndoButton(instanceID);
-
+            ViewBag.CheckResult = CheckUndoButton(instanceID);
             return View(instance.Current.GetTransitions());
         }
 
         /// <summary>
         /// 撤销操作
         /// </summary>
-        /// <param name="instanceID"></param>
+        /// <param name="instanceID">流程实例ID</param>
         /// <returns></returns>
         public JsonResult UndoSubmit(string instanceID)
         {
@@ -71,25 +74,26 @@ namespace Smartflow.Web.Controllers
         }
 
         /// <summary>
-        /// 跳转
+        /// 流程跳转处理接口
         /// </summary>
-        /// <param name="instanceID"></param>
-        /// <param name="transitionID"></param>
-        /// <param name="message"></param>
-        /// <returns></returns>
+        /// <param name="instanceID">流程实例ID</param>
+        /// <param name="transitionID">跳转路线ID</param>
+        /// <param name="message">审批消息</param>
+        /// <param name="action">审批动作（原路退回、跳转）</param>
+        /// <returns>是否成功</returns>
         public JsonResult Jump(string instanceID, string transitionID, string message, string action)
-        { 
+        {
             //请不要直接定义匿名类传递
-            dynamic dynData = new ExpandoObject();
-            dynData.Message = message;
-           
-            if (action == "rollback")
+            dynamic data = new ExpandoObject();
+            data.Message = message;
+            switch (action.ToLower())
             {
-                bwkf.Rollback(instanceID, 0, dynData);
-            }
-            else
-            {
-                bwkf.Jump(instanceID, transitionID, actorID: 0, data: dynData);
+                case "rollback":
+                    bwkf.Rollback(instanceID, 0, data);
+                    break;
+                default:
+                    bwkf.Jump(instanceID, transitionID, 0, data);
+                    break;
             }
             return Json(true);
         }

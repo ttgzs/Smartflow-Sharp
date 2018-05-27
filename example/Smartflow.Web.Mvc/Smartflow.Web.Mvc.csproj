@@ -233,7 +233,6 @@
     <Content Include="Content\login.css" />
     <Content Include="Content\main.css" />
     <Content Include="Global.asax" />
-    <Content Include="test.html" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -245,9 +244,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\Smartflow.Infrastructure\Smartflow.Infrastructure.csproj">

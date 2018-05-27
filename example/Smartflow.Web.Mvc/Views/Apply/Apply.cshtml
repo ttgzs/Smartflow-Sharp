@@ -19,17 +19,21 @@
     <script src="~/Content/common.js"></script>
     <script type="text/javascript">
         function sumbitApply(url, state) {
-            $("#STATE").val(state);
+            $("#STATUS").val(state);
             $("#applyForm").attr("action", url);
         }
 
         $(function () {
-            var v = $("#STATE").val();
-            if (v == "0" || !v) {
+            loadBtn();
+        });
+
+        function loadBtn() {
+            var status = $("#STATUS").val();
+            if (status == "0" || !status) {
                 $("#btnSubmit,#btnSave").show();
                 $("#btnAudit,#btnUnAudit").hide();
             }
-            else if (v == '8') {
+            else if (status == '8') {
                 //审核流程走完
                 $("#btnAudit").hide();
                 $("#btnSubmit,#btnSave,#btnUnAudit").hide();
@@ -38,15 +42,13 @@
                 $("#btnAudit").show();
                 $("#btnSubmit,#btnSave").hide();
             }
-
             if ('@ViewBag.UndoCheck' == '1') {
                 $("#btnUnAudit").show();
             } else {
                 $("#btnUnAudit").hide();
             }
+        }
 
-            
-        });
 
         function auditApply() {
             var instanceID = document.getElementById("INSTANCEID").value;
@@ -60,14 +62,14 @@
                 dataType: 'json',
                 type: 'get',
                 success: function (data) {
-                    window.location.href = '@Url.Action("Apply", "Apply", new { id = (Model == null ? 0 : Model.AID) })';
+                    window.location.href = '@Url.Action("Apply", "Apply", new { id = (Model == null ? 0 : Model.AUTOID) })';
                 }
             });
         }
 
 
         function refresh() {
-            window.location.href = '@Url.Action("Apply", "Apply", new { id = (Model == null ? 0 : Model.AID) })'
+            window.location.href = '@Url.Action("Apply", "Apply", new { id = (Model == null ? 0 : Model.AUTOID) })'
         }
     </script>
 </head>
@@ -78,8 +80,8 @@
                 <label class="layui-form-label">申请人</label>
                 <div class="layui-input-block">
                     @Html.TextBoxFor(m => m.NAME, new { @class = "layui-input" })
-                    @Html.HiddenFor(m => m.AID)
-                    @Html.HiddenFor(m => m.STATE)
+                    @Html.HiddenFor(m => m.AUTOID)
+                    @Html.HiddenFor(m => m.STATUS)
                     @Html.HiddenFor(m => m.INSTANCEID)
                 </div>
             </div>
@@ -89,15 +91,14 @@
                     @Html.DropDownListFor(m => m.SECRETGRADE, (ViewData["SC"] as IEnumerable<SelectListItem>))
                 </div>
             </div>
-
             <div class="layui-form-item">
                 <label class="layui-form-label">审批流程</label>
                 <div class="layui-input-block">
-                    @Html.DropDownListFor(m => m.WFID, (ViewData["Wfile"] as IEnumerable<SelectListItem>))
+                    @Html.DropDownListFor(m => m.WFID, (ViewData["WFiles"] as IEnumerable<SelectListItem>))
                 </div>
             </div>
             <div class="layui-form-item">
-                <label class="layui-form-label">描述</label>
+                <label class="layui-form-label">说明</label>
                 <div class="layui-input-block">
                     @Html.TextAreaFor(m => m.DESCRIPTION, new { @class = "layui-textarea" })
                 </div>
@@ -119,7 +120,6 @@
     </div>
     <script src="~/Content/layui/layui.js"></script>
     <script type="text/javascript">
-
         layui.use('form', function () {
             var form = layui.form;
         });

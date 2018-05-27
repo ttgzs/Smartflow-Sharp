@@ -4,10 +4,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-
-using Smartflow.BussinessService.Models;
-using Smartflow.BussinessService;
 using Smartflow.Infrastructure;
+using Smartflow.BussinessService.Models;
 using Smartflow.BussinessService.WorkflowService;
 using Smartflow.BussinessService.Services;
 
@@ -16,46 +14,29 @@ namespace Smartflow.Web.Controllers
     public class ApplyController : Controller
     {
         private BaseWorkflowService bwf = BaseWorkflowService.Instance;
-
-        private ApplyService aservice = new ApplyService();
+        private ApplyService applyService = new ApplyService();
 
         public ActionResult Save(Apply model)
         {
-            if (model.AID == 0)
-            {
-                aservice.Persistent(model);
-
-            }
-            else
-            {
-                aservice.Update(model);
-            }
-
+            applyService.Persistent(model);
             return RedirectToAction("ApplyList");
         }
 
         public ActionResult SubmitApply(Apply model)
         {
             model.INSTANCEID = bwf.Start(model.WFID);
-            if (model.AID == 0)
-            {
-                aservice.Persistent(model);
-            }
-            else
-            {
-                aservice.Update(model);
-            }
+            applyService.Persistent(model);
             return RedirectToAction("ApplyList");
         }
 
         public ActionResult ApplyList()
         {
-            return View(aservice.Query());
+            return View(applyService.Query());
         }
 
         public void Delete(long id)
         {
-            aservice.Delete(id);
+            applyService.Delete(id);
         }
 
         public ActionResult Apply(string id)
@@ -64,21 +45,20 @@ namespace Smartflow.Web.Controllers
             {
                 ViewBag.UndoCheck = 0;
                 ViewBag.AID = 0;
-                GenerateDropDownViewData("");
-                GenerateDropDownSecretViewData("");
+                GenerateWFViewData("");
+                GenerateViewData("");
                 return View();
             }
             else
             {
                 ViewBag.AID = id;
-                Apply apply = aservice.GetInstance(long.Parse(id));
+                Apply apply = applyService.GetInstance(long.Parse(id));
 
-                if (apply.STATE == 1)
+                if (apply.STATUS == 1)
                 {
                     ViewBag.ButtonName = bwf.GetCurrentNodeName(apply.INSTANCEID);
                     ViewBag.PreviousButtonName = bwf.GetCurrentPrevNodeName(apply.INSTANCEID);
-
-                    ViewBag.UndoCheck = CheckUndoButton(apply.INSTANCEID)?0:1;
+                    ViewBag.UndoCheck = CheckUndoButton(apply.INSTANCEID) ? 0 : 1;
                 }
                 else
                 {
@@ -86,17 +66,13 @@ namespace Smartflow.Web.Controllers
                     ViewBag.PreviousButtonName = "撤销";
                     ViewBag.UndoCheck = 0;
                 }
-
-
-                
-
-                GenerateDropDownSecretViewData(apply.SECRETGRADE);
-                GenerateDropDownViewData(apply.WFID);
+                GenerateViewData(apply.SECRETGRADE);
+                GenerateWFViewData(apply.WFID);
                 return View(apply);
             }
         }
 
-        public void GenerateDropDownViewData(string WFID)
+        public void GenerateWFViewData(string WFID)
         {
             List<WorkflowXml> workflowXmlList = WorkflowXmlService.GetWorkflowXmlList();
             List<SelectListItem> fileList = new List<SelectListItem>();
@@ -104,17 +80,16 @@ namespace Smartflow.Web.Controllers
             {
                 fileList.Add(new SelectListItem { Text = item.NAME, Value = item.WFID, Selected = (item.WFID == WFID) });
             }
-            ViewData["Wfile"] = fileList;
+            ViewData["WFiles"] = fileList;
         }
 
-        public void GenerateDropDownSecretViewData(string secretGrade)
+        public void GenerateViewData(string secretGrade)
         {
             List<SelectListItem> list = new List<SelectListItem>();
             list.Add(new SelectListItem { Text = "非密", Value = "非密", Selected = ("非密" == secretGrade) });
             list.Add(new SelectListItem { Text = "秘密", Value = "秘密", Selected = ("秘密" == secretGrade) });
             list.Add(new SelectListItem { Text = "机密", Value = "机密", Selected = ("机密" == secretGrade) });
             list.Add(new SelectListItem { Text = "绝密", Value = "绝密", Selected = ("绝密" == secretGrade) });
-
             ViewData["SC"] = list;
         }
 

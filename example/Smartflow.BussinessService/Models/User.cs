@@ -13,31 +13,31 @@ namespace Smartflow.BussinessService.Models
             set;
         }
 
-        public string UserName
+        public string USERNAME
         {
             get;
             set;
         }
 
-        public string UserPwd
+        public string USERPWD
         {
             get;
             set;
         }
 
-        public string EmployeeName
+        public string EMPLOYEENAME
         {
             get;
             set;
         }
 
-        public string OrgCode
+        public string ORGCODE
         {
             get;
             set;
         }
 
-        public string OrgName
+        public string ORGNAME
         {
             get;
             set;

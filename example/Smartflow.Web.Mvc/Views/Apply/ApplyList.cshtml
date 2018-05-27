@@ -67,16 +67,15 @@
                         <tr>
                             <td style="width:50px;text-align:center;">@(counter++)</td>
                             <td>@apply.NAME</td>
-                            <td style="color:red;font-weight:bold;">@apply.STATENAME</td>
+                            <td style="color:red;font-weight:bold;">@apply.STATUSNAME</td>
                             <td>@apply.SECRETGRADE</td>
                             <td>@apply.DESCRIPTION</td>
                             <td style="width:120px;text-align:center;">
-                                <a href="javascript:document.location.href='@Url.Action("Apply", "Apply", new { id = apply.AID })'">修改</a>
-                                <a href="javascript:delApply('@apply.AID')">删除</a>
+                                <a href="javascript:document.location.href='@Url.Action("Apply", "Apply", new { id = apply.AUTOID })'">修改</a>
+                                <a href="javascript:delApply('@apply.AUTOID')">删除</a>
                             </td>
                         </tr>
                     }
-
                 }
             </tbody>
         </table>

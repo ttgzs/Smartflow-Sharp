@@ -7,13 +7,13 @@ namespace Smartflow.BussinessService.Models
 {
     public class Apply
     {
-        public long AID
+        public long AUTOID
         {
             get;
             set;
         }
 
-        public int STATE
+        public int STATUS
         {
             get;
             set;
@@ -49,12 +49,12 @@ namespace Smartflow.BussinessService.Models
             set;
         }
 
-        public string STATENAME
+        public string STATUSNAME
         {
             get
             {
                 string state = "待提交";
-                switch (STATE)
+                switch (STATUS)
                 {
                     case 0:
                         break;

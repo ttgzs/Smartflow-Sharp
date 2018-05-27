@@ -37,8 +37,8 @@ namespace Smartflow.BussinessService.WorkflowService
             //流程结束（在完成事件中可以做业务操作）
             ApplyService applyService = new ApplyService();
             Apply model = applyService.GetInstanceByInstanceID(executeContext.Instance.InstanceID);
-            model.STATE = 8;
-            applyService.Update(model);
+            model.STATUS = 8;
+            applyService.Persistent(model);
         }
 
         public void OnProcess(ExecutingContext executeContext)
@@ -103,7 +103,7 @@ namespace Smartflow.BussinessService.WorkflowService
             return context.Start(wfXml);
         }
 
-        public void Jump(string instanceID, string transitionID, long actorID = 0, dynamic data = null)
+        public void Jump(string instanceID, string transitionID, long actorID, dynamic data)
         {
             WorkflowInstance instance = WorkflowInstance.GetInstance(instanceID);
             context.Jump(new WorkflowContext()

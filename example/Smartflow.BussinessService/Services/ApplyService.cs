@@ -12,22 +12,34 @@ namespace Smartflow.BussinessService.Services
     {
         public void Persistent(Apply model)
         {
-            string sql = "INSERT INTO T_APPLY(STATE,NAME,DESCRIPTION,WFID,INSTANCEID,SECRETGRADE) VALUES (@STATE,@NAME,@DESCRIPTION,@WFID,@INSTANCEID,@SECRETGRADE)";
+            if (model.AUTOID == 0)
+            {
+                Insert(model);
+            }
+            else
+            {
+                Update(model);
+            }
+        }
+
+        protected void Insert(Apply model)
+        {
+            string sql = "INSERT INTO T_APPLY(STATUS,NAME,DESCRIPTION,WFID,INSTANCEID,SECRETGRADE) VALUES (@STATUS,@NAME,@DESCRIPTION,@WFID,@INSTANCEID,@SECRETGRADE)";
             Connection.Execute(sql, model);
         }
 
-        public void Update(Apply model)
+        protected void Update(Apply model)
         {
-            string sql = " UPDATE T_APPLY SET NAME=@NAME,STATE=@STATE,DESCRIPTION=@DESCRIPTION,WFID=@WFID,INSTANCEID=@INSTANCEID,SECRETGRADE=@SECRETGRADE WHERE AID=@AID";
+            string sql = "UPDATE T_APPLY SET NAME=@NAME,STATUS=@STATUS,DESCRIPTION=@DESCRIPTION,WFID=@WFID,INSTANCEID=@INSTANCEID,SECRETGRADE=@SECRETGRADE WHERE ID=@ID";
             Connection.Execute(sql, model);
         }
 
         public void Delete(long autoID)
         {
-            string sql = " DELETE FROM T_APPLY WHERE AID=@ID ";
+            string sql = " DELETE FROM T_APPLY WHERE AUTOID=@AUTOID ";
             Connection.Execute(sql, new
             {
-                ID = autoID
+                AUTOID = autoID
             });
         }
 
@@ -39,9 +51,9 @@ namespace Smartflow.BussinessService.Services
 
         public Apply GetInstance(long autoID)
         {
-            string sql = "SELECT * FROM T_APPLY WHERE AID=@ID";
+            string sql = "SELECT * FROM T_APPLY WHERE AUTOID=@AUTOID";
 
-            return Connection.Query<Apply>(sql, new { ID = autoID })
+            return Connection.Query<Apply>(sql, new { AUTOID = autoID })
                 .FirstOrDefault<Apply>();
         }
 
