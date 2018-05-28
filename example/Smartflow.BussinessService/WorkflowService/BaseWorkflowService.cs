@@ -62,24 +62,6 @@ namespace Smartflow.BussinessService.WorkflowService
                     {
                         new PendingService().Persistent(new Pending()
                         {
-                            ACTORID=item.ID,
-                            ACTION=executeContext.Action.ToString(),
-                            INSTANCEID = executeContext.Instance.InstanceID,
-                            NODEID = GetCurrentNode(executeContext.Instance.InstanceID).NID,
-                            NAME = string.Format("<a href='../Apply/Apply/{0}'>你有待办任务。</a>", dny.bussinessID)
-                        });
-                        new PendingService()
-                            .Delete(executeContext.Instance.Current.NID, 
-                                    executeContext.Instance.InstanceID);
-                    }
-                }
-                else if (executeContext.Action == Enums.WorkflowAction.Undo || executeContext.Action == Enums.WorkflowAction.Rollback)
-                {
-                    //流程撤销
-                    foreach (var item in executeContext.Instance.Current.GetFromNode().GetActors())
-                    {
-                        new PendingService().Persistent(new Pending()
-                        {
                             ACTORID = item.ID,
                             ACTION = executeContext.Action.ToString(),
                             INSTANCEID = executeContext.Instance.InstanceID,
@@ -90,6 +72,21 @@ namespace Smartflow.BussinessService.WorkflowService
                             .Delete(executeContext.Instance.Current.NID,
                                     executeContext.Instance.InstanceID);
                     }
+                }
+                else if (executeContext.Action == Enums.WorkflowAction.Undo || executeContext.Action == Enums.WorkflowAction.Rollback)
+                {
+                    //流程撤销(谁审就退、撤给谁) 仅限演示
+                    var item = executeContext.Instance.Current.GetFromNode().GetActors().FirstOrDefault();
+                    new PendingService().Persistent(new Pending()
+                    {
+                        ACTORID = item.ID,
+                        ACTION = executeContext.Action.ToString(),
+                        INSTANCEID = executeContext.Instance.InstanceID,
+                        NODEID = GetCurrentNode(executeContext.Instance.InstanceID).NID,
+                        NAME = string.Format("<a href='../Apply/Apply/{0}'>你有待办任务。</a>", dny.bussinessID)
+                    });
+
+                    new PendingService().Delete(executeContext.Instance.Current.NID,executeContext.Instance.InstanceID);
                 }
             }
         }
