@@ -59,13 +59,14 @@ namespace Smartflow.Elements
         /// 记录已经参与过审核人员的信息
         /// </summary>
         /// <param name="data"></param>
-        internal virtual void SetActor(long actorID)
+        internal virtual void SetActor(long actorID,WorkflowAction action)
         {
             if (this.NodeType != WorkflowNodeCategeory.Decision)
             {
                 Actor actor = new Actor();
                 actor.ID = actorID;
                 actor.RNID = NID;
+                actor.ACTION = action;
                 actor.INSTANCEID = INSTANCEID;
                 actor.Persistent();
             }

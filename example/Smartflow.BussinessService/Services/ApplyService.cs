@@ -30,7 +30,7 @@ namespace Smartflow.BussinessService.Services
 
         protected void Update(Apply model)
         {
-            string sql = "UPDATE T_APPLY SET NAME=@NAME,STATUS=@STATUS,DESCRIPTION=@DESCRIPTION,WFID=@WFID,INSTANCEID=@INSTANCEID,SECRETGRADE=@SECRETGRADE WHERE ID=@ID";
+            string sql = "UPDATE T_APPLY SET NAME=@NAME,STATUS=@STATUS,DESCRIPTION=@DESCRIPTION,WFID=@WFID,INSTANCEID=@INSTANCEID,SECRETGRADE=@SECRETGRADE WHERE AUTOID=@AUTOID";
             Connection.Execute(sql, model);
         }
 

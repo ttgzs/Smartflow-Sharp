@@ -76,11 +76,12 @@ namespace Smartflow
 
         public List<Actor> GetActors()
         {
-            string query = " SELECT * FROM T_ACTOR WHERE RNID=@RNID AND INSTANCEID=@INSTANCEID ";
+            string query = " SELECT * FROM T_ACTOR WHERE RNID=@RNID AND INSTANCEID=@INSTANCEID AND @ACTION=@ACTION ";
             return Connection.Query<Actor>(query, new
             {
                 RNID = NID,
-                INSTANCEID = INSTANCEID
+                INSTANCEID = INSTANCEID,
+                ACTION=WorkflowAction.Jump
 
             }).ToList();
         }

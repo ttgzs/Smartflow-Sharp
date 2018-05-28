@@ -11,6 +11,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using Dapper;
+using Smartflow.Enums;
 
 namespace Smartflow.Elements
 {
@@ -22,16 +23,23 @@ namespace Smartflow.Elements
             set;
         }
 
+        public WorkflowAction ACTION
+        {
+            get;
+            set;
+        }
+
         internal override void Persistent()
         {
-            string sql = "INSERT INTO T_ACTOR(NID,ID,RNID,NAME,INSTANCEID) VALUES(@NID,@ID,@RNID,@NAME,@INSTANCEID)";
+            string sql = "INSERT INTO T_ACTOR(NID,ID,RNID,NAME,INSTANCEID,ACTION) VALUES(@NID,@ID,@RNID,@NAME,@INSTANCEID,@ACTION)";
             DapperFactory.CreateWorkflowConnection().Execute(sql, new
             {
                 NID = Guid.NewGuid().ToString(),
                 RNID = RNID,
                 ID = ID,
                 NAME = NAME,
-                INSTANCEID = INSTANCEID
+                INSTANCEID = INSTANCEID,
+                ACTION = ACTION
             });
         }
     }

@@ -1,17 +1,35 @@
 ﻿@{
     Layout = null;
 }
-
+@model System.Collections.Generic.IEnumerable<Smartflow.BussinessService.Models.Pending>
 <!DOCTYPE html>
 
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>待办事项</title>
+    <link href="~/Content/layui/css/layui.css" rel="stylesheet" />
+    <script src="~/Content/jquery.min.js"></script>
 </head>
 <body>
-    <div>
-        
+    <br />
+    <div class="layui-container">
+        <table class="layui-table">
+            <thead>
+                <tr>
+                    <th>待办任务列表</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (Smartflow.BussinessService.Models.Pending wf in Model)
+                {
+                    <tr>
+                        <td>@Html.Raw(wf.NAME)</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
     </div>
+    <script src="~/Content/layui/layui.js"></script>
 </body>
 </html>

@@ -6,6 +6,7 @@ using System.Web.Mvc;
 
 using Smartflow.BussinessService.WorkflowService;
 using Smartflow.BussinessService.Services;
+using Smartflow.BussinessService.Models;
 
 namespace Smartflow.Web.Controllers
 {
@@ -30,6 +31,12 @@ namespace Smartflow.Web.Controllers
         public ActionResult Login()
         {
             return View();
+        }
+
+        public ActionResult Pending()
+        {
+            User userInfo = System.Web.HttpContext.Current.Session["user"] as User;
+            return View(new PendingService().Query(userInfo.ID));
         }
 
         public JsonResult GetUser(string userName)

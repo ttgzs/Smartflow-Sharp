@@ -58,7 +58,7 @@
                         userNameList.push(actorName);
                 });
 
-                if (action == 'jump' && userList.length == 0) {
+                if (action == 'jump' && userList.length == 0 && transition.text()!=='结束') {
                     alert('请选择人');
                     return;
                 }
@@ -72,6 +72,7 @@
                         data: {
                             instanceID: '@ViewBag.InstanceID',
                             transitionID: transitionID,
+                            bussinessID: '@ViewBag.bussinessID', 
                             message: description,
                             action: action,
                             userIDs: userList,

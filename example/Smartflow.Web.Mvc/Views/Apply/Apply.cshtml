@@ -52,13 +52,15 @@
 
         function auditApply() {
             var instanceID = document.getElementById("INSTANCEID").value;
-            openWin('@Url.Action("WorkflowCheck", "UserControl")' + "?instanceID=" + instanceID, 600, 300);
+            var bussinessID = document.getElementById("AUTOID").value;
+            openWin('@Url.Action("WorkflowCheck", "UserControl")' + "?instanceID=" + instanceID + "&bussinessID=" + bussinessID, 600, 300);
         }
 
         function undoSubmit() {
             var instanceID = document.getElementById("INSTANCEID").value;
+            var bussinessID = document.getElementById("AUTOID").value;
             $.ajax({
-                url: '@Url.Action("UndoSubmit", "UserControl")' + "?instanceID=" + instanceID,
+                url: '@Url.Action("UndoSubmit", "UserControl")' + "?instanceID=" + instanceID+ "&bussinessID=" + bussinessID,
                 dataType: 'json',
                 type: 'get',
                 success: function (data) {

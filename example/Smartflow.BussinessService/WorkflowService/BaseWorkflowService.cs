@@ -33,15 +33,18 @@ namespace Smartflow.BussinessService.WorkflowService
 
         public void OnCompleted(ExecutingContext executeContext)
         {
+            //以下代码仅用于演示
             //流程结束（在完成事件中可以做业务操作）
             ApplyService applyService = new ApplyService();
             Apply model = applyService.GetInstanceByInstanceID(executeContext.Instance.InstanceID);
             model.STATUS = 8;
             applyService.Persistent(model);
+            new PendingService().Delete(executeContext.Instance.InstanceID);
         }
 
         public void OnProcess(ExecutingContext executeContext)
         {
+            //以下代码仅用于演示
             if (executeContext.Instance.Current.NodeType != Enums.WorkflowNodeCategeory.Decision)
             {
                 var dny = executeContext.Data;
@@ -63,8 +66,29 @@ namespace Smartflow.BussinessService.WorkflowService
                             ACTION=executeContext.Action.ToString(),
                             INSTANCEID = executeContext.Instance.InstanceID,
                             NODEID = GetCurrentNode(executeContext.Instance.InstanceID).NID,
-                            NAME="<a href='#'>你有待办任务。</a>"
+                            NAME = string.Format("<a href='../Apply/Apply/{0}'>你有待办任务。</a>", dny.bussinessID)
                         });
+                        new PendingService()
+                            .Delete(executeContext.Instance.Current.NID, 
+                                    executeContext.Instance.InstanceID);
+                    }
+                }
+                else if (executeContext.Action == Enums.WorkflowAction.Undo || executeContext.Action == Enums.WorkflowAction.Rollback)
+                {
+                    //流程撤销
+                    foreach (var item in executeContext.Instance.Current.GetFromNode().GetActors())
+                    {
+                        new PendingService().Persistent(new Pending()
+                        {
+                            ACTORID = item.ID,
+                            ACTION = executeContext.Action.ToString(),
+                            INSTANCEID = executeContext.Instance.InstanceID,
+                            NODEID = GetCurrentNode(executeContext.Instance.InstanceID).NID,
+                            NAME = string.Format("<a href='../Apply/Apply/{0}'>你有待办任务。</a>", dny.bussinessID)
+                        });
+                        new PendingService()
+                            .Delete(executeContext.Instance.Current.NID,
+                                    executeContext.Instance.InstanceID);
                     }
                 }
             }
@@ -87,10 +111,11 @@ namespace Smartflow.BussinessService.WorkflowService
             return WorkflowInstance.GetInstance(instanceID).Current;
         }
 
-        public void UndoSubmit(string instanceID, long actorID = 0)
+        public void UndoSubmit(string instanceID, long actorID, string bussinessID)
         {
             WorkflowInstance instance = WorkflowInstance.GetInstance(instanceID);
             dynamic dynData = new ExpandoObject();
+            dynData.bussinessID = bussinessID;
             dynData.Message = "撤销此节点";
             context.Cancel(new WorkflowContext()
             {

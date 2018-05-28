@@ -104,7 +104,7 @@ namespace Smartflow
                 long transitionTo =current.Transitions
                                   .FirstOrDefault(e => e.NID == context.TransitionID).DESTINATION;
 
-                current.SetActor(context.ActorID);
+                current.SetActor(context.ActorID, WorkflowAction.Jump);
                 instance.Jump(transitionTo);
 
                 ASTNode to = current.GetNode(transitionTo);
@@ -156,7 +156,7 @@ namespace Smartflow
                 if (CheckAuthorization(context) == false) return;
 
                 //记录已经参与审批过的人信息
-                current.SetActor(context.ActorID);
+                current.SetActor(context.ActorID, WorkflowAction.Undo);
 
                 instance.Jump(current.ID);
 
@@ -205,7 +205,7 @@ namespace Smartflow
                 if (CheckAuthorization(context) == false) return;
 
                 //记录已经参与审批过的人信息
-                current.SetActor(context.ActorID);
+                current.SetActor(context.ActorID, WorkflowAction.Rollback);
 
                 instance.Jump(current.ID);
 

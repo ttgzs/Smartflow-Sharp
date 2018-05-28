@@ -54,9 +54,10 @@ namespace Smartflow.Web.Controllers
         /// </summary>
         /// <param name="instanceID">流程实例ID</param>
         /// <returns></returns>
-        public ActionResult WorkflowCheck(string instanceID)
+        public ActionResult WorkflowCheck(string instanceID, string bussinessID)
         {
             ViewBag.InstanceID = instanceID;
+            ViewBag.bussinessID = bussinessID;
             WorkflowInstance instance = WorkflowInstance.GetInstance(instanceID);
             ViewBag.CheckResult = CheckUndoButton(instanceID);
             return View(instance.Current.GetTransitions());
@@ -67,9 +68,10 @@ namespace Smartflow.Web.Controllers
         /// </summary>
         /// <param name="instanceID">流程实例ID</param>
         /// <returns></returns>
-        public JsonResult UndoSubmit(string instanceID)
+        public JsonResult UndoSubmit(string instanceID, string bussinessID)
         {
-            bwkf.UndoSubmit(instanceID);
+            User userInfo = System.Web.HttpContext.Current.Session["user"] as User;
+            bwkf.UndoSubmit(instanceID, userInfo.ID,bussinessID);
             return Json(true, JsonRequestBehavior.AllowGet);
         }
 
@@ -81,19 +83,24 @@ namespace Smartflow.Web.Controllers
         /// <param name="message">审批消息</param>
         /// <param name="action">审批动作（原路退回、跳转）</param>
         /// <returns>是否成功</returns>
-        public JsonResult Jump(string instanceID, string transitionID, string message, string action, long[] userIDs, string[] userNames)
+        public JsonResult Jump(string instanceID, string transitionID, string bussinessID, string message, string action, long[] userIDs, string[] userNames)
         {
             User userInfo = System.Web.HttpContext.Current.Session["user"] as User;
             dynamic data = new ExpandoObject();
             data.Message = message;
+            data.bussinessID = bussinessID;
             data.UserInfo = userInfo;
             List<WorkflowActor> actorList = new List<WorkflowActor>();
-            for (int i = 0; i < userIDs.Length; i++)
+            if (userIDs != null)
             {
-                actorList.Add(new WorkflowActor(){
-                    ID = userIDs[i],
-                    NAME = userNames[i]
-               });
+                for (int i = 0; i < userIDs.Length; i++)
+                {
+                    actorList.Add(new WorkflowActor()
+                    {
+                        ID = userIDs[i],
+                        NAME = userNames[i]
+                    });
+                }
             }
             data.Actors = actorList;
             switch (action.ToLower())
