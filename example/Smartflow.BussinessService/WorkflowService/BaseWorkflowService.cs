@@ -17,9 +17,8 @@ namespace Smartflow.BussinessService.WorkflowService
     {
         private static WorkflowEngine context = BaseWorkflowEngine.CreateWorkflowEngine();
         private readonly static BaseWorkflowService singleton = new BaseWorkflowService();
-
-        //审批记录服务
         private RecordService recordService = new RecordService();
+        private PendingService pendingService = new PendingService();
 
         private BaseWorkflowService()
         {
@@ -52,25 +51,45 @@ namespace Smartflow.BussinessService.WorkflowService
                     NODENAME = executeContext.From.NAME,
                     MESSAGE = executeContext.Data.Message
                 });
-                //写待办业务
+
+                if (executeContext.Action == Enums.WorkflowAction.Jump)
+                {
+                    //写待办业务
+                    foreach (var item in dny.Actors)
+                    {
+                        new PendingService().Persistent(new Pending()
+                        {
+                            ACTORID=item.ID,
+                            ACTION=executeContext.Action.ToString(),
+                            INSTANCEID = executeContext.Instance.InstanceID,
+                            NODEID = GetCurrentNode(executeContext.Instance.InstanceID).NID,
+                            NAME="<a href='#'>你有待办任务。</a>"
+                        });
+                    }
+                }
             }
         }
 
-        public string GetCurrentNodeName(string WFID)
+        public string GetCurrentNodeName(string instanceID)
         {
-            return WorkflowInstance.GetInstance(WFID).Current.NAME;
+            return GetCurrentNode(instanceID).NAME;
         }
 
-        public string GetCurrentPrevNodeName(string WFID)
+        public string GetCurrentPrevNodeName(string instanceID)
         {
-            var current = WorkflowInstance.GetInstance(WFID).Current;
-            var preNode = current.GetFromNode();
-            return preNode == null ? "" : preNode.NAME;
+            var current = GetCurrentNode(instanceID);
+            var node = current.GetFromNode();
+            return (node == null ? string.Empty : node.NAME);
         }
 
-        public void UndoSubmit(string WFID, long actorID = 0)
+        private WorkflowNode GetCurrentNode(string instanceID)
         {
-            WorkflowInstance instance = WorkflowInstance.GetInstance(WFID);
+            return WorkflowInstance.GetInstance(instanceID).Current;
+        }
+
+        public void UndoSubmit(string instanceID, long actorID = 0)
+        {
+            WorkflowInstance instance = WorkflowInstance.GetInstance(instanceID);
             dynamic dynData = new ExpandoObject();
             dynData.Message = "撤销此节点";
             context.Cancel(new WorkflowContext()
@@ -81,20 +100,21 @@ namespace Smartflow.BussinessService.WorkflowService
             });
         }
 
-        public void Rollback(string WFID, long actorID = 0, dynamic dynData = null)
+        public void Rollback(string instanceID, long actorID, string actorName, dynamic data)
         {
-            WorkflowInstance instance = WorkflowInstance.GetInstance(WFID);
+            WorkflowInstance instance = WorkflowInstance.GetInstance(instanceID);
             context.Rollback(new WorkflowContext()
             {
                 Instance = instance,
-                Data = dynData,
-                ActorID = actorID
+                Data = data,
+                ActorID = actorID,
+                ActorName = actorName
             });
         }
 
-        public List<Group> GetCurrentActorGroup(string WFID)
+        public List<Group> GetCurrentActorGroup(string instanceID)
         {
-            return WorkflowInstance.GetInstance(WFID).Current.Groups;
+            return WorkflowInstance.GetInstance(instanceID).Current.Groups;
         }
 
         public string Start(string WFID)
@@ -103,7 +123,7 @@ namespace Smartflow.BussinessService.WorkflowService
             return context.Start(wfXml);
         }
 
-        public void Jump(string instanceID, string transitionID, long actorID, dynamic data)
+        public void Jump(string instanceID, string transitionID, long actorID, string actorName, dynamic data)
         {
             WorkflowInstance instance = WorkflowInstance.GetInstance(instanceID);
             context.Jump(new WorkflowContext()
@@ -112,6 +132,7 @@ namespace Smartflow.BussinessService.WorkflowService
                 TransitionID = transitionID,
                 Data = data,
                 ActorID = actorID,
+                ActorName = actorName
             });
         }
     }

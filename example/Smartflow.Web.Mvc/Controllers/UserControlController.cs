@@ -74,25 +74,35 @@ namespace Smartflow.Web.Controllers
         }
 
         /// <summary>
-        /// 流程跳转处理接口
+        /// 流程跳转处理接口(请不要直接定义匿名类传递)
         /// </summary>
         /// <param name="instanceID">流程实例ID</param>
         /// <param name="transitionID">跳转路线ID</param>
         /// <param name="message">审批消息</param>
         /// <param name="action">审批动作（原路退回、跳转）</param>
         /// <returns>是否成功</returns>
-        public JsonResult Jump(string instanceID, string transitionID, string message, string action)
+        public JsonResult Jump(string instanceID, string transitionID, string message, string action, long[] userIDs, string[] userNames)
         {
-            //请不要直接定义匿名类传递
+            User userInfo = System.Web.HttpContext.Current.Session["user"] as User;
             dynamic data = new ExpandoObject();
             data.Message = message;
+            data.UserInfo = userInfo;
+            List<WorkflowActor> actorList = new List<WorkflowActor>();
+            for (int i = 0; i < userIDs.Length; i++)
+            {
+                actorList.Add(new WorkflowActor(){
+                    ID = userIDs[i],
+                    NAME = userNames[i]
+               });
+            }
+            data.Actors = actorList;
             switch (action.ToLower())
             {
                 case "rollback":
-                    bwkf.Rollback(instanceID, 0, data);
+                    bwkf.Rollback(instanceID, userInfo.ID, userInfo.EMPLOYEENAME, data);
                     break;
                 default:
-                    bwkf.Jump(instanceID, transitionID, 0, data);
+                    bwkf.Jump(instanceID, transitionID, userInfo.ID, userInfo.EMPLOYEENAME, data);
                     break;
             }
             return Json(true);
@@ -102,6 +112,22 @@ namespace Smartflow.Web.Controllers
         {
             string currentNodeName = bwkf.GetCurrentNodeName(instanceID);
             return (currentNodeName == "开始" || currentNodeName == "结束" || bwkf.GetCurrentPrevNodeName(instanceID) == "开始");
+        }
+
+
+        public class WorkflowActor
+        {
+            public string NAME
+            {
+                get;
+                set;
+            }
+
+            public long ID
+            {
+                get;
+                set;
+            }
         }
     }
 }

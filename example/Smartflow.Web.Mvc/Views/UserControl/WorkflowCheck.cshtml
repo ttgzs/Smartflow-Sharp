@@ -50,37 +50,38 @@
                     to = transition.attr("to"),
                     action = transition.attr("action");
 
-                var userList = [];
-
+                var userList = [], userNameList = [];
                 $("#nextUsers").find("input[type='checkbox']").each(function () {
                         var actorId=$(this).attr('actorID');
                         var actorName = $(this).attr('title');
-                        userList.push({
-                            ID: actorId,
-                            NAME:actorName
-                        });
+                        userList.push(actorId);
+                        userNameList.push(actorName);
                 });
 
-                if (action == 'jump' && userList.length>0) {
+                if (action == 'jump' && userList.length == 0) {
                     alert('请选择人');
+                    return;
                 }
-
 
                 var description = $.trim($("#txtDescription").val());
                 if (description) {
                     $.ajax({
                         url: '@Url.Action("Jump", "UserControl")',
                         type: 'post',
-                        data: { instanceID: '@ViewBag.InstanceID', transitionID: transitionID, message: description, action: action },
+                        traditional: true,
+                        data: {
+                            instanceID: '@ViewBag.InstanceID',
+                            transitionID: transitionID,
+                            message: description,
+                            action: action,
+                            userIDs: userList,
+                            userNames:userNameList
+                        },
                         success: function () {
                             window.opener.window.refresh();
                             window.close();
                         }
                     });
-
-
-
-
 
                 } else {
                     alert('请填写审批意见');
@@ -139,7 +140,7 @@
                             var ele = [];
                             $.each(serverData, function (i) {
                                 inelementId = 'user' + i;
-                                ele.push("<label for='" + inelementId + "'>" + this.EmployeeName + "</label><input type=\"checkbox\" style='width:40px' id='" + inelementId + "' actorID='"+this.ID+"' title=" + this.EmployeeName + " />");
+                                ele.push("<label for='" + inelementId + "'>" + this.EMPLOYEENAME + "</label><input type=\"checkbox\" style='width:40px' id='" + inelementId + "' actorID='" + this.ID + "' title=" + this.EMPLOYEENAME + " />");
                             });
                             $("#nextUsers").html(ele.join(''));
                         }

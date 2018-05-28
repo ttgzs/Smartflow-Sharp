@@ -40,9 +40,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\Pending.cs" />
     <Compile Include="Services\ApplyService.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Services\BaseService.cs" />
+    <Compile Include="Services\PendingService.cs" />
     <Compile Include="WorkflowService\BaseWorkflowService.cs" />
     <Compile Include="Models\Apply.cs" />
     <Compile Include="Models\Record.cs" />
