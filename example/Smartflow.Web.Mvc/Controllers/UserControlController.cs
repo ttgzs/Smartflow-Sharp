@@ -90,19 +90,6 @@ namespace Smartflow.Web.Controllers
             data.Message = message;
             data.bussinessID = bussinessID;
             data.UserInfo = userInfo;
-            List<WorkflowActor> actorList = new List<WorkflowActor>();
-            if (userIDs != null)
-            {
-                for (int i = 0; i < userIDs.Length; i++)
-                {
-                    actorList.Add(new WorkflowActor()
-                    {
-                        ID = userIDs[i],
-                        NAME = userNames[i]
-                    });
-                }
-            }
-            data.Actors = actorList;
             switch (action.ToLower())
             {
                 case "rollback":
@@ -119,22 +106,6 @@ namespace Smartflow.Web.Controllers
         {
             string currentNodeName = bwkf.GetCurrentNodeName(instanceID);
             return (currentNodeName == "开始" || currentNodeName == "结束" || bwkf.GetCurrentPrevNodeName(instanceID) == "开始");
-        }
-
-
-        public class WorkflowActor
-        {
-            public string NAME
-            {
-                get;
-                set;
-            }
-
-            public long ID
-            {
-                get;
-                set;
-            }
         }
     }
 }

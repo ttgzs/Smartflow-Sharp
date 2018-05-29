@@ -50,19 +50,6 @@
                     to = transition.attr("to"),
                     action = transition.attr("action");
 
-                var userList = [], userNameList = [];
-                $("#nextUsers").find("input[type='checkbox']").each(function () {
-                        var actorId=$(this).attr('actorID');
-                        var actorName = $(this).attr('title');
-                        userList.push(actorId);
-                        userNameList.push(actorName);
-                });
-
-                if (action == 'jump' && userList.length == 0 && transition.text()!=='结束') {
-                    alert('请选择人');
-                    return;
-                }
-
                 var description = $.trim($("#txtDescription").val());
                 if (description) {
                     $.ajax({
@@ -74,9 +61,7 @@
                             transitionID: transitionID,
                             bussinessID: '@ViewBag.bussinessID', 
                             message: description,
-                            action: action,
-                            userIDs: userList,
-                            userNames:userNameList
+                            action: action
                         },
                         success: function () {
                             window.opener.window.refresh();
@@ -109,10 +94,6 @@
                     </select>
                 </td>
             </tr>
-            <tr id="user">
-                <td class="table-cm">下一步审批人</td>
-                <td id="nextUsers"></td>
-            </tr>
             <tr>
                 <td class="table-cm">审批意见</td>
                 <td style="position:relative;">
@@ -127,32 +108,5 @@
             </tr>
         </table>
     </form>
-    <script type="text/javascript">
-        $(function () {
-            $("#ddlOperate").change(function () {
-                var self = this;
-                if (self.value !== "0" && $(this).find("option:selected").text() !== '结束') {
-                    $("#user").show();
-                    $.ajax({
-                        url: '@Url.Action("GetUsers", "UserControl")',
-                        type: 'post',
-                        data: { instanceID: '@ViewBag.InstanceID', transitionID: self.value },
-                        success: function (serverData) {
-                            var ele = [];
-                            $.each(serverData, function (i) {
-                                inelementId = 'user' + i;
-                                ele.push("<label for='" + inelementId + "'>" + this.EMPLOYEENAME + "</label><input type=\"checkbox\" style='width:40px' id='" + inelementId + "' actorID='" + this.ID + "' title=" + this.EMPLOYEENAME + " />");
-                            });
-                            $("#nextUsers").html(ele.join(''));
-                        }
-                    })
-                } else {
-                    $("#nextUsers").html('');
-                    $("#user").hide();
-                }
-            });
-            $("#ddlOperate").trigger('change');
-        });
-    </script>
 </body>
 </html>
