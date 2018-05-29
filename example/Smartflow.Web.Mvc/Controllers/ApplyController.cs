@@ -43,25 +43,32 @@ namespace Smartflow.Web.Controllers
         {
             if (string.IsNullOrEmpty(id))
             {
+                ViewBag.UndoAuth = true;
+                ViewBag.JumpAuth = true;
                 ViewBag.UndoCheck = 0;
-                ViewBag.AID = 0;
                 GenerateWFViewData("");
                 GenerateViewData("");
                 return View();
             }
             else
             {
-                ViewBag.AID = id;
                 Apply apply = applyService.GetInstance(long.Parse(id));
-
                 if (apply.STATUS == 1)
                 {
-                    ViewBag.ButtonName = bwf.GetCurrentNodeName(apply.INSTANCEID);
-                    ViewBag.PreviousButtonName = bwf.GetCurrentPrevNodeName(apply.INSTANCEID);
+                    var prevExecuteNode = bwf.GetCurrentPrevNode(apply.INSTANCEID);
+                    var current=bwf.GetCurrent(apply.INSTANCEID);
+                    ViewBag.ButtonName = current.NAME;
+                    ViewBag.PreviousButtonName =prevExecuteNode==null?String.Empty:prevExecuteNode.NAME;
                     ViewBag.UndoCheck = CheckUndoButton(apply.INSTANCEID) ? 0 : 1;
+                    ViewBag.UndoAuth = prevExecuteNode == null ? true : 
+                                      CheckUndoAuth(WorkflowInstance.GetInstance(apply.INSTANCEID));
+
+                    ViewBag.JumpAuth =current.NAME=="开始"?true: CheckAuth(current.NID, apply.INSTANCEID);
                 }
                 else
                 {
+                    ViewBag.UndoAuth = true;
+                    ViewBag.JumpAuth = true;
                     ViewBag.ButtonName = "审核";
                     ViewBag.PreviousButtonName = "撤销";
                     ViewBag.UndoCheck = 0;
@@ -93,10 +100,24 @@ namespace Smartflow.Web.Controllers
             ViewData["SC"] = list;
         }
 
+
+        public bool CheckAuth(string nodeID, string instanceID)
+        {
+            User userInfo = System.Web.HttpContext.Current.Session["user"] as User;
+            return new PendingService().Check(userInfo.ID.ToString(), nodeID, instanceID);
+        }
+
+        public bool CheckUndoAuth(WorkflowInstance instance)
+        {
+            User userInfo = System.Web.HttpContext.Current.Session["user"] as User;
+            return instance.Current.GetFromNode().GetActors().Count(e=>e.ID==userInfo.ID)>0;
+        }
+
         public bool CheckUndoButton(string instanceID)
         {
-            string currentNodeName = bwf.GetCurrentNodeName(instanceID);
-            return (currentNodeName == "开始" || currentNodeName == "结束" || bwf.GetCurrentPrevNodeName(instanceID) == "开始");
+            string currentNodeName = bwf.GetCurrent(instanceID).NAME;
+            var prevExecuteNode = bwf.GetCurrentPrevNode(instanceID);
+            return (currentNodeName == "开始" || currentNodeName == "结束" || prevExecuteNode.NAME == "开始");
         }
     }
 }

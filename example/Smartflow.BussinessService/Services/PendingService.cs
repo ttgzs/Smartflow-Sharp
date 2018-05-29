@@ -32,5 +32,14 @@ namespace Smartflow.BussinessService.Services
             Connection.Execute(sql, new { INSTANCEID = INSTANCEID });
         }
 
+        public bool Check(string actorID, string NODEID, string INSTANCEID)
+        {
+            string sql = " SELECT * FROM T_PENDING WHERE ACTORID=@ACTORID AND NODEID=@NODEID AND INSTANCEID=@INSTANCEID ";
+
+            return (Connection.Query<Pending>(sql, 
+                new { ACTORID = actorID, 
+                      NODEID = NODEID, 
+                      INSTANCEID = INSTANCEID }).FirstOrDefault() != null);
+        }
     }
 }

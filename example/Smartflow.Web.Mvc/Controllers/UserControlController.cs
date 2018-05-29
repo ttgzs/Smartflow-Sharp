@@ -104,8 +104,9 @@ namespace Smartflow.Web.Controllers
 
         public bool CheckUndoButton(string instanceID)
         {
-            string currentNodeName = bwkf.GetCurrentNodeName(instanceID);
-            return (currentNodeName == "开始" || currentNodeName == "结束" || bwkf.GetCurrentPrevNodeName(instanceID) == "开始");
+            string currentNodeName = bwkf.GetCurrent(instanceID).NAME;
+            var prevExecuteNode = bwkf.GetCurrentPrevNode(instanceID);
+            return (currentNodeName == "开始" || currentNodeName == "结束" || prevExecuteNode.NAME == "开始");
         }
     }
 }

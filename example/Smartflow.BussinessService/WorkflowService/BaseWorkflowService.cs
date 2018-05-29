@@ -152,19 +152,18 @@ namespace Smartflow.BussinessService.WorkflowService
             return new UserService().GetUserList(string.Join(",", gList));
         }
 
-        public string GetCurrentNodeName(string instanceID)
+        public ASTNode GetCurrent(string instanceID)
         {
-            return GetCurrentNode(instanceID).NAME;
+            return GetCurrentNode(instanceID);
         }
 
-        public string GetCurrentPrevNodeName(string instanceID)
+        public ASTNode GetCurrentPrevNode(string instanceID)
         {
             var current = GetCurrentNode(instanceID);
-            var node = current.GetFromNode();
-            return (node == null ? string.Empty : node.NAME);
+            return current.GetFromNode();
         }
 
-        private WorkflowNode GetCurrentNode(string instanceID)
+        public WorkflowNode GetCurrentNode(string instanceID)
         {
             return WorkflowInstance.GetInstance(instanceID).Current;
         }

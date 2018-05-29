@@ -14,6 +14,10 @@
         .layui-btn {
             border-radius: initial;
         }
+        input[disabled]{
+            background-color:#816464;
+        }
+
     </style>
     <script src="~/Content/jquery.min.js"></script>
     <script src="~/Content/common.js"></script>
@@ -60,7 +64,7 @@
             var instanceID = document.getElementById("INSTANCEID").value;
             var bussinessID = document.getElementById("AUTOID").value;
             $.ajax({
-                url: '@Url.Action("UndoSubmit", "UserControl")' + "?instanceID=" + instanceID+ "&bussinessID=" + bussinessID,
+                url: '@Url.Action("UndoSubmit", "UserControl")' + "?instanceID=" + instanceID + "&bussinessID=" + bussinessID,
                 dataType: 'json',
                 type: 'get',
                 success: function (data) {
@@ -107,8 +111,14 @@
             </div>
             <div class="layui-form-item">
                 <div class="layui-input-block">
-                    <input type="button" id="btnUnAudit" value="@("撤销" + ViewBag.PreviousButtonName)" class="layui-btn" onclick="undoSubmit()" />
-                    <input type="button" id="btnAudit" value="@ViewBag.ButtonName" class="layui-btn" onclick="auditApply()" />
+
+                    <input type="button" id="btnUnAudit"
+                           @(ViewBag.UndoAuth == true ? "" : "disabled")
+                           value="@("撤销" + ViewBag.PreviousButtonName)" class="layui-btn" onclick="undoSubmit()" />
+
+                    <input type="button" id="btnAudit"
+                           @(ViewBag.JumpAuth == true ? "" : "disabled")
+                           value="@ViewBag.ButtonName" class="layui-btn" onclick="auditApply()" />
                     <input type="submit" id="btnSubmit" value="提交" class="layui-btn " onclick="return sumbitApply('@Url.Action("SubmitApply", "Apply")', 1)" />
                     <input type="submit" id="btnSave" value="保存" class="layui-btn layui-btn-normal" onclick="return sumbitapply('@Url.Action("Save", "Apply" )', 0)" />
                     <input type="button" id="btnBack" value="返回" class="layui-btn layui-btn-warm" onclick="window.location.href = '@Url.Action("ApplyList", "Apply")'" />
