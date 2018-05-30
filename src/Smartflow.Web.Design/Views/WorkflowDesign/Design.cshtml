@@ -27,21 +27,32 @@
 </head>
 <body>
     <div class="tools">
+
         <ul class="tools-menu">
             <li>
-                <a href="javascript:;" onclick="design.save()">保存</a>
+                <a href="javascript:;" onclick="design.save()" title="保存">
+                    <img src="~/Content/images/save.png"/>
+                </a>
             </li>
             <li>
-                <a href="javascript:;" onclick="SMF.select()">选择</a>
+                <a href="javascript:;" onclick="SMF.select()" title="选择">
+                    <img src="~/Content/images/select.png"/>
+                </a>
             </li>
             <li>
-                <a href="javascript:;" onclick="SMF.connect()">连接</a>
+                <a href="javascript:;" onclick="SMF.connect()" title="连接">
+                    <img src="~/Content/images/line.png"/>
+                </a>
             </li>
             <li>
-                <a href="javascript:;" onclick="SMF.create('node')">节点</a>
+                <a href="javascript:;" onclick="SMF.create('node')" title="节点">
+                    <img src="~/Content/images/node.png"/>
+                </a>
             </li>
             <li>
-                <a href="javascript:;" onclick="SMF.create('decision')">决策</a>
+                <a href="javascript:;" onclick="SMF.create('decision')" title="决策">
+                    <img src="~/Content/images/decision.png"/>
+                </a>
             </li>
         </ul>
     </div>

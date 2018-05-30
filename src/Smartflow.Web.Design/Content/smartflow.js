@@ -77,11 +77,8 @@
         }
     });
 
-    //禁用右键菜单
-    document.oncontextmenu = function () { return true; }
+    document.oncontextmenu = function () { return false; }
 
-
-    //函数添加继承
     $.extend(Function.prototype, {
         extend: function (Parent, Override) {
             function F() { }
@@ -209,7 +206,7 @@
         this.h = 40;
         this.x = 10;
         this.y = 10;
-        this.cx = 120;
+        this.cx = 30;
         this.cy = 0;
         this.disX = 0;
         this.disY = 0;
@@ -217,6 +214,7 @@
         this.group = [];//参与组
         this.actors = [];//参与者
         Node.base.Constructor.call(this, "node", "node");
+        this.name = "节点";
     }
 
     Node.extend(Element, {
@@ -417,7 +415,7 @@
     //决策节点
     function Decision() {
         Decision.base.Constructor.call(this);
-        this.name = 'decision';
+        this.name = '分支节点';
         this.category = 'decision';
         this.circles = [];
         //命令
@@ -620,7 +618,7 @@
 
                 if (orientation === 'down' && nf.category === 'decision') {
                     instance.x1 = fromConnect.x;
-                    instance.y1 = fromConnect.y;
+                    instance.y1 = fromRect.height()+fromRect.y();
                     instance.x2 = toRect.width() / 2 + toRect.x();
                     instance.y2 = toRect.y();
                 }

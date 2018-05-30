@@ -120,6 +120,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="RouteConfig.cs" />
+    <Content Include="Content\images\decision.png" />
+    <Content Include="Content\images\line.png" />
+    <Content Include="Content\images\node.png" />
+    <Content Include="Content\images\save.png" />
+    <Content Include="Content\images\select.png" />
     <Content Include="Content\layui\css\layui.css" />
     <Content Include="Content\layui\css\modules\code.css" />
     <Content Include="Content\layui\css\modules\laydate\default\laydate.css" />
