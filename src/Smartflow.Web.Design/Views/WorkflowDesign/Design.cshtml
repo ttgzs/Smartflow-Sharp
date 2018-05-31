@@ -22,37 +22,38 @@
                 instanceUrl: '@Url.Action("GetWorkflowXml", "WorkflowDesign")',
                 saveUrl: '@Url.Action("Save", "WorkflowDesign")'
             });
+
+            $(".tools-menu img").mousedown(function () {
+               $(this).css("border", "solid 1px #ad9d9d");
+            });
+            $(".tools-menu img").mouseup(function () {
+                $(this).css("border", "none");
+            });
         });
     </script>
 </head>
 <body>
     <div class="tools">
-
         <ul class="tools-menu">
             <li>
-                <a href="javascript:;" onclick="design.save()" title="保存">
-                    <img src="~/Content/images/save.png"/>
-                </a>
+                <img src="~/Content/images/save.png" onclick="design.save()" 
+                     title="保存" />
             </li>
             <li>
-                <a href="javascript:;" onclick="SMF.select()" title="选择">
-                    <img src="~/Content/images/select.png"/>
-                </a>
+                <img src="~/Content/images/select.png" onclick="SMF.select()" 
+                     title="选择" />
             </li>
             <li>
-                <a href="javascript:;" onclick="SMF.connect()" title="连接">
-                    <img src="~/Content/images/line.png"/>
-                </a>
+                <img src="~/Content/images/line.png" onclick="SMF.connect()" 
+                     title="连接" />
             </li>
             <li>
-                <a href="javascript:;" onclick="SMF.create('node')" title="节点">
-                    <img src="~/Content/images/node.png"/>
-                </a>
+                <img src="~/Content/images/node.png" onclick="SMF.create('node')" 
+                     title="节点" />
             </li>
             <li>
-                <a href="javascript:;" onclick="SMF.create('decision')" title="决策">
-                    <img src="~/Content/images/decision.png"/>
-                </a>
+                <img src="~/Content/images/decision.png" onclick="SMF.create('decision')" 
+                     title="决策" />
             </li>
         </ul>
     </div>
