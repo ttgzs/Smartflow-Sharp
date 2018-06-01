@@ -44,7 +44,6 @@ namespace Smartflow.BussinessService.WorkflowService
 
         public void OnProcess(ExecutingContext executeContext)
         {
-
             if (executeContext.Instance.Current.NodeType == Enums.WorkflowNodeCategeory.Decision)
             {
                 new PendingService().Delete(executeContext.Instance.Current.NID, executeContext.Instance.InstanceID);
@@ -139,7 +138,6 @@ namespace Smartflow.BussinessService.WorkflowService
                     new PendingService().Delete(executeContext.Instance.Current.NID, executeContext.Instance.InstanceID);
                 }
             }
-         
         }
 
         private List<User> GetUsersByGroup(List<Group> items)

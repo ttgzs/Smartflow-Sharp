@@ -8,11 +8,6 @@
 <head>
     <title>业务流程</title>
     <link href="~/Content/layui/css/layui.css" rel="stylesheet" />
-    <style type="text/css">
-        .layui-btn {
-            border-radius: initial;
-        }
-    </style>
     <script src="~/Content/jquery.min.js"></script>
     <script type="text/javascript">
         function openWin(url) {
@@ -40,8 +35,10 @@
 <body>
     <br />
     <div class="layui-container">
+
+
         <div class="layui-btn-group">
-            <input type="button" value="增加" class="layui-btn" onclick="document.location.href='@Url.Action("Apply")'" />
+            <input type="button" value="增加" class="layui-btn  layui-btn-sm" onclick="document.location.href='@Url.Action("Apply")'" />
         </div>
         <table class="layui-table">
             <thead>
@@ -56,29 +53,31 @@
             </thead>
             <tbody>
                 @{
-                    int counter = 1;
+                        int counter = 1;
                 }
 
                 @if (Model != null)
-                {
-
-                    foreach (Smartflow.BussinessService.Models.Apply apply in Model)
                     {
-                        <tr>
-                            <td style="width:50px;text-align:center;">@(counter++)</td>
-                            <td>@apply.NAME</td>
-                            <td style="color:red;font-weight:bold;">@apply.STATUSNAME</td>
-                            <td>@apply.SECRETGRADE</td>
-                            <td>@apply.DESCRIPTION</td>
-                            <td style="width:120px;text-align:center;">
-                                <a href="javascript:document.location.href='@Url.Action("Apply", "Apply", new { id = apply.AUTOID })'">修改</a>
-                                <a href="javascript:delApply('@apply.AUTOID')">删除</a>
-                            </td>
-                        </tr>
+
+                        foreach (Smartflow.BussinessService.Models.Apply apply in Model)
+                        {
+            <tr>
+                <td style="width:50px;text-align:center;">@(counter++)</td>
+                <td>@apply.NAME</td>
+                <td style="color:red;font-weight:bold;">@apply.STATUSNAME</td>
+                <td>@apply.SECRETGRADE</td>
+                <td>@apply.DESCRIPTION</td>
+                <td style="width:120px;text-align:center;">
+                    <a class="layui-btn layui-btn-xs"  href="javascript:document.location.href='@Url.Action("Apply", "Apply", new { id = apply.AUTOID })'">修改</a>
+                    <a class="layui-btn layui-btn-danger layui-btn-xs" href="javascript:delApply('@apply.AUTOID')">删除</a>
+                </td>
+            </tr>
+                        }
                     }
-                }
             </tbody>
         </table>
+
+
     </div>
     <script src="~/Content/layui/layui.js"></script>
 </body>

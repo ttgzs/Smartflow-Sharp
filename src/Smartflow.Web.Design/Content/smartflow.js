@@ -1,30 +1,18 @@
 ﻿/*
  License: https://github.com/chengderen/Smartflow/blob/master/LICENSE 
  Home page: https://github.com/chengderen/Smartflow
- Author:chengderen-237552006@qq.com
  */
 (function ($) {
     var
         util = {
             ie: (!!window.ActiveXObject || "ActiveXObject" in window)
         },
-        //存储所有节点的实例
         NC = {},
-
-        //所有线的实例
         LC = {},
-
-        //维护关系
         RC = [],
-
-        //全局变量
         draw,
-
-        //连线ID
         fromConnect,
-        //参数
         drawOption,
-        //规则检查
         rule = {
             duplicateCheck: function (from, to) {
                 //检查是否已经存在相同路线
@@ -39,38 +27,23 @@
                 return result;
             }
         },
-        //标签配置
         config = {
-            //流程定义根节点
             rootStart: '<workflow>',
-            //流程定义根节点闭合
             rootEnd: '</workflow>',
-            //开始
             start: '<',
-            //结束
             end: '>',
-            //左引号
             lQuotation: '"',
-            //右引号
             rQuotation: '"',
-            //闭合
             beforeClose: '</',
-            //闭合
             afterClose: '/>',
-            //等于
             equal: '=',
-            //本身引用
-            //空隙
             space: ' ',
-            //参与组
             group: 'group',
             from: 'from',
             actor: 'actor',
-            //跳转线
             transition: 'transition'
         };
 
-    //数组添加移除方法
     $.extend(Array.prototype, {
         remove: function (dx, to) {
             this.splice(dx, (to || 1));
@@ -105,7 +78,6 @@
         return draw;
     }
 
-    //取消文字选中
     function unselect() {
         $(document).bind('mousedown', function () { return false; });
         $(document).bind('mouseup', function () { return false; });
@@ -120,11 +92,9 @@
         this.name = name;
         //节点类别（LINE、NODE、START、END）
         this.category = category;
-        //唯一标识
         this.uniqueId = undefined;
         //禁用事件
         this.disable = false;
-
         //背景颜色
         this.bgColor = '#f06';
         //当前节点颜色
@@ -144,8 +114,7 @@
             this.addClass(className);
         }
     };
-
-    //定义线
+  
     function Line() {
         this.x1 = 0;
         this.y1 = 0;
@@ -153,8 +122,6 @@
         this.y2 = 0;
         this.border = 3;
         this.orientation = 'down';
-
-        /*表达式*/
         this.expression = '';
         Line.base.Constructor.call(this, "line", "line");
     }
@@ -200,7 +167,6 @@
         }
     });
 
-    //定义节点
     function Node() {
         this.w = 180;
         this.h = 40;
@@ -211,8 +177,8 @@
         this.disX = 0;
         this.disY = 0;
         this.vertical = (util.ie ? 6: 0);
-        this.group = [];//参与组
-        this.actors = [];//参与者
+        this.group = [];
+        this.actors = [];
         Node.base.Constructor.call(this, "node", "node");
         this.name = "节点";
     }
@@ -331,8 +297,7 @@
 
             eachAttributs(build, self);
             build.append(config.end);
-
-            //参与组
+           
             $.each(self.group, function () {
 
                 build.append(config.start)
@@ -412,13 +377,11 @@
     });
 
 
-    //决策节点
     function Decision() {
         Decision.base.Constructor.call(this);
         this.name = '分支节点';
         this.category = 'decision';
         this.circles = [];
-        //命令
         this.command = undefined;
     }
 
@@ -428,7 +391,6 @@
             var y = this.y + this.h,
                 w = this.w;
 
-            //09dd1a
             for (var i = 0, len = w / 20; i < len; i++) {
                 var circle = draw.circle(20);
                 circle.attr({ fill: '#F485B2', cx: this.x + i * 20 + 10, cy: y });
@@ -446,7 +408,6 @@
             }
         },
         edit: function (evt) {
-            //删除
             if (evt.ctrlKey && evt.altKey) {
                 var decision = NC[this.id()];
                 $.each(decision.circles, function () {
@@ -458,7 +419,6 @@
         move: function (element, evt) {
             Decision.base.Parent.prototype.move.call(this, element, evt);
             var self = this, y = self.y + self.h;
-            //09dd1a
             $.each(self.circles, function (i) {
                 var clipRect = this.reference('clip-path');
                 var rect = SVG.get(clipRect.node.firstChild.id);
@@ -499,7 +459,6 @@
         }
     });
 
-    //开始节点
     function Start() {
         Start.base.Constructor.call(this);
         this.category = "start";
@@ -524,7 +483,6 @@
         }
     });
 
-    //结束节点
     function End() {
         End.base.Constructor.call(this);
         this.category = "end";
@@ -550,7 +508,6 @@
         }
     });
 
-    //选择
     function select() {
         initEvent();
         draw.each(function (i, child) {
@@ -560,14 +517,12 @@
         });
     }
 
-    //连接节点
     function connect() {
         initEvent();
         $(document).bind('mousedown', OnConnect);
         $(document).bind('mouseup', OnConnected);
     }
 
-    //开始连线
     function OnConnect(evt) {
         var node = $(evt.target).get(0),
             nodeName = node.nodeName,
@@ -596,7 +551,6 @@
         return false;
     }
 
-    //结束连线
     function OnConnected(evt) {
         var node = $(evt.target).get(0),
             nodeName = node.nodeName,
@@ -653,12 +607,11 @@
             }
         }
         fromConnect = undefined;
-        //evt.preventDefault();
-
+        evt.preventDefault();
         return false;
     }
 
-    //初始化事件
+    
     function initEvent() {
         $(document).unbind('mousedown');
         $(document).unbind('mouseup');
@@ -699,7 +652,6 @@
         }
     }
 
-    //清空与线交接另一头的引用
     function eachElements(id) {
         for (var i = 0, len = RC.length; i < len; i++) {
             if (RC[i].id == id) {
@@ -728,7 +680,6 @@
         return elements;
     }
 
-    //导出数据
     function exportToJSON() {
         var uniqueId = 29,
             nodeCollection = [],
@@ -774,12 +725,6 @@
                     delete instance[p];
                 }
             });
-
-            //delete instance['brush'];
-            //delete instance['vertical'];
-            //if (instance['circles']) {
-            //    delete instance['circles'];
-            //}
             nodeCollection.push(instance);
         });
 
@@ -789,7 +734,6 @@
             delete instance['brush'];
             pathCollection.push(instance);
         });
-
 
         var imageData = escape(JSON.stringify({
             RC: RC,
@@ -803,7 +747,6 @@
         };
     }
 
-    //恢复流程图
     function revertFlow(data, disable, currentNodeId) {
 
         var imageData = JSON.parse(unescape(data)),
@@ -848,7 +791,6 @@
         }
     }
 
-    //转换成真实的节点类型
     function convertToRealType(category) {
         var convertType;
         switch (category) {
@@ -881,7 +823,6 @@
         return orientation;
     }
 
-    //帮助类
     function StringBuilder() {
         this.elements = [];
     }
@@ -899,23 +840,17 @@
 
     //对外提供访问接口
     window.SMF = {
-        //绑定元素，并进行初始化
         init: init,
-        //选择
         select: select,
-        //连接
         connect: connect,
         //导出到JSON对象，以序列化保存到数据库
         exportToJSON: exportToJSON,
-        //恢复图形
         revert: revertFlow,
-        //创建流程节点
         create: function (category) {
             var reallType = convertToRealType(category);
 
             reallType.x = Math.floor(Math.random() * 200 + 1);
             reallType.y = Math.floor(Math.random() * 200 + 1);
-
             reallType.draw();
         }
     };

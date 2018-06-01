@@ -28,7 +28,7 @@
     <br />
     <div class="layui-container">
         <div class="layui-btn-group">
-            <input type="button" value="增加" class="layui-btn" onclick="openWin('../../Smartflow.Web.Design/WorkflowDesign/Design', 960, 560)" />
+            <input type="button" value="增加" class="layui-btn  layui-btn-sm" onclick="openWin('../../Smartflow.Web.Design/WorkflowDesign/Design', 960, 560)" />
         </div>
         <table class="layui-table">
             <thead>
@@ -48,8 +48,8 @@
                         <td style="width:50px;text-align:center;">@(counter++)</td>
                         <td>@wf.NAME</td>
                         <td style="width:120px;text-align:center;">
-                            <a href="javascript:openWin('../../Smartflow.Web.Design/WorkflowDesign/Design?id=@wf.WFID',960,560)">修改</a>
-                            <a href="javascript:delWf('@wf.WFID')">删除</a>
+                            <a class="layui-btn layui-btn-xs" href="javascript:openWin('../../Smartflow.Web.Design/WorkflowDesign/Design?id=@wf.WFID',960,560)">修改</a>
+                            <a class="layui-btn layui-btn-danger layui-btn-xs" href="javascript:delWf('@wf.WFID')">删除</a>
                         </td>
                     </tr>
                 }
