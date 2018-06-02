@@ -7,72 +7,34 @@
 <head>
     <title>Smartflow-Sharp工作流平台</title>
     <link href="~/Content/main.css" rel="stylesheet" />
-    <link href="~/Content/layui/css/layui.css" rel="stylesheet" />
     <script src="~/Content/jquery.min.js"></script>
-    <style type="text/css">
-        .layui-tab-item {
-            height: 100%;
-        }
-    </style>
 </head>
 <body class="mainFrame">
     <div class="top">
         <span>Smartflow-Sharp 工作流平台</span>
     </div>
     <div class="content">
-        <div class="left">
-            <ul class="menu">
-                <li>
-                    <span class="menu-item" code="001" url="@Url.Action("ApplyList", "Apply")" data-type="tabAdd">表单申请</span>
-                </li>
-                <li>
-                    <span class="menu-item" code="002" url="@Url.Action("List", "Default")" data-type="tabAdd">流程设计器</span>
-                </li>
-            </ul>
-        </div>
-        <div class="right" style="position:relative;">
-            <div class="layui-tab layui-tab-card" lay-filter="main" style="margin-top:0;height:100%;">
-                <ul class="layui-tab-title">
-                    <li class="layui-this">首页</li>
+        <div class="left menu">
+            <div class="menu-item">
+                <ul class="menu-sub-items">
+                    <li>
+                        <a href="javascript:;">文件定密申请</a>
+                    </li>
+                    <li>
+                        <a href="javascript:;">用户信息</a>
+                    </li>
+                    <li>
+                        <a href="javascript:;">角色分配</a>
+                    </li>
+                    <li>
+                        <a href="javascript:;">流程设计器</a>
+                    </li>
                 </ul>
-                <div class="layui-tab-content" style="padding:0;left:0;right:0;bottom:0;position:absolute;top:40px;">
-                    <div class="layui-tab-item layui-show">
-                        <iframe style="width:100%;height:100%;" frameborder="0" src="@Url.Action("Pending", "Default")"></iframe>
-                    </div>
-                </div>
             </div>
         </div>
+        <div class="right">
+            <iframe style="width:100%;height:100%;" frameborder="0" src="@Url.Action("Pending", "Default")"></iframe>
+         </div>
     </div>
-    <script src="~/Content/layui/layui.js"></script>
-    <script type="text/javascript">
-        //注意：选项卡 依赖 element 模块，否则无法进行功能性操作
-        layui.use('element', function () {
-            var element = layui.element;
-
-            function addTab(o) {
-                var iframe = "<iframe style=\"width:100%;height:100%;\" frameborder=\"0\" src=" + o.url + "></iframe>";
-                var exists = $("li[lay-id=" + o.id + "]").length;
-                if (exists === 0) {
-                    //新增一个Tab项
-                    element.tabAdd('main', {
-                        title: o.title,
-                        content: iframe,
-                        id: o.id
-                    });
-                }
-            }
-
-            $('.menu-item').on('click', function () {
-                var _self = $(this);
-                var o = {
-                    title: _self.text(),
-                    url: _self.attr('url'),
-                    id: _self.attr('code')
-                }
-                addTab.call(_self, o);
-                element.tabChange('main', o.id);
-            });
-        });
-    </script>
 </body>
 </html>
