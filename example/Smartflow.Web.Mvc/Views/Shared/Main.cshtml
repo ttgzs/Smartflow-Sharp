@@ -18,23 +18,27 @@
             <div class="menu-item">
                 <ul class="menu-sub-items">
                     <li>
-                        <a href="javascript:;">文件定密申请</a>
+                        <a href="@Url.Action("FileApplyList", "FileApply")" target="frmContent">文件定密申请</a>
                     </li>
                     <li>
-                        <a href="javascript:;">用户信息</a>
+                        <a href="@Url.Action("UserList", "User")" target="frmContent">用户信息</a>
                     </li>
                     <li>
-                        <a href="javascript:;">角色分配</a>
+                        <a href="@Url.Action("RoleStatistics", "User")" target="frmContent">按角色统计</a>
                     </li>
                     <li>
-                        <a href="javascript:;">流程设计器</a>
+                        <a href="@Url.Action("List", "Default")" target="frmContent">流程设计器</a>
                     </li>
                 </ul>
             </div>
         </div>
         <div class="right">
-            <iframe style="width:100%;height:100%;" frameborder="0" src="@Url.Action("Pending", "Default")"></iframe>
-         </div>
+            <iframe style="width:100%;height:100%;"
+                    id="frmContent"
+                    name="frmContent"
+                    frameborder="0"
+                    src="about:blank;"></iframe>
+        </div>
     </div>
 </body>
 </html>

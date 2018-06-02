@@ -1,0 +1,42 @@
+﻿@model System.Data.DataTable
+@using System.Data
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Smartflow-Sharp 工作流程列表</title>
+    <link href="~/Content/layui/css/layui.css" rel="stylesheet" />
+    <style type="text/css">
+        .layui-btn {
+            border-radius: initial;
+        }
+    </style>
+    <script src="~/Content/jquery.min.js"></script>
+</head>
+<body>
+    <br />
+    <div class="layui-container">
+        <table class="layui-table">
+            <thead>
+                <tr>
+                    <th>用户名</th>
+                    <th>姓名</th>
+                    <th>角色名称</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (DataRow row in Model.Rows)
+                {
+                    <tr>
+                        <td>@row["USERNAME"]</td>
+                        <td>@row["EMPLOYEENAME"]</td>
+                        <td>@row["NAME"]</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

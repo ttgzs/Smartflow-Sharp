@@ -1,4 +1,5 @@
 ﻿@model System.Collections.Generic.IEnumerable<Smartflow.Infrastructure.WorkflowXml>
+@using Smartflow.Infrastructure
 @{
     Layout = null;
 }
@@ -7,6 +8,9 @@
 <head>
     <title>Smartflow-Sharp 工作流程列表</title>
     <link href="~/Content/layui/css/layui.css" rel="stylesheet" />
+    <style type="text/css">
+        .layui-btn {border-radius: initial;}
+    </style>
     <script src="~/Content/jquery.min.js"></script>
     <script src="~/Content/common.js"></script>
     <script type="text/javascript">
@@ -33,19 +37,14 @@
         <table class="layui-table">
             <thead>
                 <tr>
-                    <th style="width:50px;">序号</th>
                     <th>名称</th>
                     <th style="width:120px;text-align:center;">操作</th>
                 </tr>
             </thead>
             <tbody>
-                @{
-                    int counter = 1;
-                }
-                @foreach (Smartflow.Infrastructure.WorkflowXml wf in Model)
+                @foreach (WorkflowXml wf in Model)
                 {
                     <tr>
-                        <td style="width:50px;text-align:center;">@(counter++)</td>
                         <td>@wf.NAME</td>
                         <td style="width:120px;text-align:center;">
                             <a class="layui-btn layui-btn-xs" href="javascript:openWin('../../Smartflow.Web.Design/WorkflowDesign/Design?id=@wf.WFID',960,560)">修改</a>
@@ -56,6 +55,5 @@
             </tbody>
         </table>
     </div>
-    <script src="~/Content/layui/layui.js"></script>
 </body>
 </html>

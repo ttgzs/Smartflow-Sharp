@@ -1,0 +1,64 @@
+﻿@model System.Collections.Generic.IEnumerable<Smartflow.BussinessService.Models.Apply>
+@using Smartflow.BussinessService.Models
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>业务流程</title>
+    <link href="~/Content/layui/css/layui.css" rel="stylesheet" />
+    <style type="text/css">
+         .layui-btn {border-radius: initial;}
+    </style>
+    <script src="~/Content/jquery.min.js"></script>
+    <script type="text/javascript">
+        function delApply(id) {
+            if (window.confirm('删除？')) {
+                $.ajax({
+                    url: '@Url.Action("Delete", "FileApply")',
+                    type: 'post',
+                    data: { id: id },
+                    success: function () {
+                        document.location.href = '@Url.Action("FileApplyList", "FileApply")';
+                    }
+                });
+            }
+        }
+    </script>
+</head>
+<body>
+    <br />
+    <div class="layui-container">
+        <div class="layui-btn-group">
+            <input type="button" value="增加" class="layui-btn layui-btn-sm" onclick="document.location.href='@Url.Action("FileApply", "FileApply")'" />
+        </div>
+        <table class="layui-table">
+            <thead>
+                <tr>
+                    <th style="width:160px;text-align:left;">文件名称</th>
+                    <th style="width:70px;text-align:center;">表单状态</th>
+                    <th style="width:70px;text-align:center;">申请密级</th>
+                    <th>备注</th>
+                    <th style="width:120px;text-align:center;">操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (Apply mdl in Model)
+                {
+                    <tr>
+                        <td style="width:160px;text-align:left;">@mdl.NAME</td>
+                        <td style="width:70px;text-align:center;">@mdl.STATUSNAME</td>
+                        <td style="width:70px;text-align:center;">@mdl.SECRETGRADE</td>
+                        <td style="text-align:left;">@mdl.DESCRIPTION</td>
+                        <td style="width:180px;text-align:center;">
+                            <a class="layui-btn layui-btn-primary layui-btn-xs" href="@Url.Action("FileApply", "FileApply", new { id=mdl.AUTOID })" target="_self">查看</a>
+                            <a class="layui-btn layui-btn-danger layui-btn-xs" href="javascript:delApply('@mdl.AUTOID')">删除</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

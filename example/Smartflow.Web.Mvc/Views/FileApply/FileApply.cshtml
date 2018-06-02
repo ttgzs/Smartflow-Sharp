@@ -1,0 +1,145 @@
+﻿@model Smartflow.BussinessService.Models.Apply
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>业务流程</title>
+    <link href="~/Content/main.css" rel="stylesheet" />
+    <link href="~/Content/layui/css/layui.css" rel="stylesheet" />
+    <script src="~/Content/common.js"></script>
+    <script src="~/Content/jquery.min.js"></script>
+    <style type="text/css">
+        .layui-input {
+            height: 30px;
+            min-height: 30px;
+            width: 100%;
+            border: none;
+        }
+
+        .layui-select {
+            width: 100%;
+            border: none;
+        }
+
+        .layui-textarea {
+            width: 100%;
+            border: none;
+            resize: none;
+        }
+
+        .layui-btn {
+            border-radius: initial;
+        }
+
+        input[disabled] {
+            border: 1px solid #e6e6e6;
+            background-color: #FBFBFB;
+            color: #C9C9C9;
+            cursor: not-allowed;
+        }
+    </style>
+    <script type="text/javascript">
+        function save(url) {
+            $("#formFileApply").attr("action", url);
+            return true;
+        }
+        $(function () {
+            loadBtnAuth();
+        });
+
+        function loadBtnAuth() {
+            var status = $("#STATUS").val();
+            switch (status) {
+                case "0":
+                    $("#btnSubmit,#btnSave").show();
+                    $("#btnAudit,#btnUnAudit").hide();
+                    break;
+                case "1":
+                    $("#btnAudit").show();
+                    $("#btnSubmit,#btnSave").hide();
+                    $("#btnUnAudit")['@ViewBag.UndoCheck' == 'False' ? 'show' : 'hide']();
+                    break;
+                case "8":
+                    $("#btnAudit").hide();
+                    $("#btnSubmit,#btnSave,#btnUnAudit").hide();
+                    break;
+                default:
+                    $("#btnAudit,#btnUnAudit").hide();
+                    break;
+            }
+        }
+
+
+        function auditApply() {
+            var instanceID = document.getElementById("INSTANCEID").value;
+            var bussinessID = document.getElementById("AUTOID").value;
+            openWin('@Url.Action("WorkflowCheck", "UserControl")' + "?instanceID=" + instanceID + "&bussinessID=" + bussinessID, 600, 300);
+        }
+
+        function undoCheck() {
+            var instanceID = document.getElementById("INSTANCEID").value;
+            var bussinessID = document.getElementById("AUTOID").value;
+            $.ajax({
+                url: '@Url.Action("UndoCheck", "UserControl")' + "?instanceID=" + instanceID + "&bussinessID=" + bussinessID,
+                dataType: 'json',
+                type: 'get',
+                success: function () {
+                    doRefresh();
+                }
+            });
+        }
+
+        function doRefresh() {
+            window.location.href = window.location.href + '?t=' + new Date().getTime();
+        }
+    </script>
+</head>
+<body>
+    <div class="layui-container">
+        <form id="formFileApply">
+            @Html.HiddenFor(m => m.AUTOID)
+            @Html.HiddenFor(m => m.INSTANCEID)
+            @Html.HiddenFor(m => m.STATUS)
+            <table class="layui-table">
+                <tr>
+                    <td style="width:100px;text-align:right;">文件名称</td>
+                    <td>@Html.TextBoxFor(m => m.NAME, new { @class = "layui-input" })</td>
+                    <td style="width:100px;text-align:right;">申请密级</td>
+                    <td>@Html.DropDownListFor(m => m.SECRETGRADE, (ViewData["SECRET"] as IEnumerable<SelectListItem>), new { @class = "layui-select" })</td>
+                </tr>
+                <tr>
+                    <td style="width:100px;text-align:right;">审批流程</td>
+                    <td colspan="3">
+                        @Html.DropDownListFor(m => m.WFID, (ViewData["WFiles"] as IEnumerable<SelectListItem>), new { @class = "layui-select" })
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width:100px;text-align:right;">备注</td>
+                    <td colspan="3">
+                        @Html.TextAreaFor(m => m.DESCRIPTION, new { @class = "layui-textarea" })
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4" style="text-align:center;">
+                        <input type="button" id="btnUnAudit" class="layui-btn" @(ViewBag.UndoAuth == true ? "" : "disabled") value="@("撤销" + ViewBag.PreviousButtonName)" onclick="undoCheck()" />
+                        <input type="button" id="btnAudit" class="layui-btn" @(ViewBag.JumpAuth == true ? "" : "disabled") value="@ViewBag.ButtonName" onclick="auditApply()" />
+                        <input type="submit" id="btnSubmit" value="提交" class="layui-btn " onclick="return save('@Url.Action("Submit", "FileApply")')" />
+                        <input type="submit" id="btnSave" value="保存" class="layui-btn layui-btn-normal" onclick="return save('@Url.Action("Save", "FileApply")')" />
+                        <input type="button" id="btnBack" value="返回" class="layui-btn layui-btn-warm" onclick="window.location.href = '@Url.Action("FileApplyList", "FileApply")'" />
+                    </td>
+                </tr>
+            </table>
+        </form>
+        @{
+            if (Model != null)
+            {
+                Html.RenderAction("Record", "UserControl", new { instanceID = Model.INSTANCEID });
+            }
+        }
+    </div>
+</body>
+</html>

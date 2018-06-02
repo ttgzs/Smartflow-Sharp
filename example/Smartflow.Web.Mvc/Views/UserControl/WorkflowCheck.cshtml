@@ -2,9 +2,7 @@
 @{
     Layout = null;
 }
-
 <!DOCTYPE html>
-
 <html>
 <head>
     <title>审批流程控件</title>
@@ -59,12 +57,12 @@
                         data: {
                             instanceID: '@ViewBag.InstanceID',
                             transitionID: transitionID,
-                            bussinessID: '@ViewBag.bussinessID', 
+                            bussinessID: '@ViewBag.bussinessID',
                             message: description,
                             action: action
                         },
                         success: function () {
-                            window.opener.window.refresh();
+                            window.opener.window.doRefresh();
                             window.close();
                         }
                     });
@@ -87,9 +85,9 @@
                         {
                             <option to="@item.DESTINATION" value="@item.NID" action="jump">@item.NAME</option>
                         }
-                        @if (!ViewBag.CheckResult) { 
-                        <option to="0" value="0" action="rollback">原路退回</option>
-                            
+                        @if (!ViewBag.CheckResult)
+                        {
+                            <option to="0" value="0" action="rollback">原路退回</option>
                         }
                     </select>
                 </td>

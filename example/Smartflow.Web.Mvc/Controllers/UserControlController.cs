@@ -15,6 +15,7 @@ using Smartflow.Elements;
 using Smartflow.BussinessService.WorkflowService;
 using Smartflow.BussinessService.Models;
 using Smartflow.BussinessService.Services;
+using Smartflow.Web.Mvc.Code;
 
 namespace Smartflow.Web.Controllers
 {
@@ -59,7 +60,7 @@ namespace Smartflow.Web.Controllers
             ViewBag.InstanceID = instanceID;
             ViewBag.bussinessID = bussinessID;
             WorkflowInstance instance = WorkflowInstance.GetInstance(instanceID);
-            ViewBag.CheckResult = CheckUndoButton(instanceID);
+            ViewBag.CheckResult = CommonMethods.CheckUndoButton(instanceID);
             return View(instance.Current.GetTransitions());
         }
 
@@ -68,7 +69,7 @@ namespace Smartflow.Web.Controllers
         /// </summary>
         /// <param name="instanceID">流程实例ID</param>
         /// <returns></returns>
-        public JsonResult UndoSubmit(string instanceID, string bussinessID)
+        public JsonResult UndoCheck(string instanceID, string bussinessID)
         {
             User userInfo = System.Web.HttpContext.Current.Session["user"] as User;
             bwkf.UndoSubmit(instanceID, userInfo.ID,bussinessID);
@@ -83,7 +84,7 @@ namespace Smartflow.Web.Controllers
         /// <param name="message">审批消息</param>
         /// <param name="action">审批动作（原路退回、跳转）</param>
         /// <returns>是否成功</returns>
-        public JsonResult Jump(string instanceID, string transitionID, string bussinessID, string message, string action, long[] userIDs, string[] userNames)
+        public JsonResult Jump(string instanceID, string transitionID, string bussinessID, string message, string action)
         {
             User userInfo = System.Web.HttpContext.Current.Session["user"] as User;
             dynamic data = new ExpandoObject();
@@ -100,13 +101,6 @@ namespace Smartflow.Web.Controllers
                     break;
             }
             return Json(true);
-        }
-
-        public bool CheckUndoButton(string instanceID)
-        {
-            string currentNodeName = bwkf.GetCurrent(instanceID).NAME;
-            var prevExecuteNode = bwkf.GetCurrentPrevNode(instanceID);
-            return (currentNodeName == "开始" || currentNodeName == "结束" || prevExecuteNode.NAME == "开始");
         }
     }
 }

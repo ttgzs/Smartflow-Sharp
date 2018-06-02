@@ -110,7 +110,7 @@ height: 100%;
 
 
 .menu-item{
-
+    padding-right:1px;
 }
 .menu-sub-items {
 
@@ -153,4 +153,3 @@ a{
     display:block;
     
 }
-

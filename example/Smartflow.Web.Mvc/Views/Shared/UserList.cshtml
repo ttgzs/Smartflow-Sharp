@@ -1,0 +1,40 @@
+﻿@model System.Collections.Generic.IEnumerable<Smartflow.BussinessService.Models.User>
+@using Smartflow.BussinessService.Models
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Smartflow-Sharp 工作流程列表</title>
+    <link href="~/Content/layui/css/layui.css" rel="stylesheet" />
+    <style type="text/css">
+        .layui-btn {
+            border-radius: initial;
+        }
+    </style>
+    <script src="~/Content/jquery.min.js"></script>
+</head>
+<body>
+    <br />
+    <div class="layui-container">
+        <table class="layui-table">
+            <thead>
+                <tr>
+                    <th>用户名</th>
+                    <th>姓名</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (User mdl in Model)
+                {
+                    <tr>
+                        <td>@mdl.USERNAME</td>
+                        <td>@mdl.EMPLOYEENAME</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

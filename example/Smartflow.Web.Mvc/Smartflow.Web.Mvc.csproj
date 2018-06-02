@@ -112,9 +112,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Code\CommonMethods.cs" />
     <Compile Include="Controllers\DefaultController.cs" />
-    <Compile Include="Controllers\ApplyController.cs" />
+    <Compile Include="Controllers\FileApplyController.cs" />
     <Compile Include="Controllers\UserControlController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -263,10 +265,10 @@
     <Content Include="Views\Shared\Main.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Apply\ApplyList.cshtml" />
+    <Content Include="Views\FileApply\FileApplyList.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Apply\Apply.cshtml" />
+    <Content Include="Views\FileApply\FileApply.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\UserControl\Record.cshtml" />
@@ -291,6 +293,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Shared\Login.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\UserList.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\RoleStatistics.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
