@@ -158,16 +158,16 @@
             }
             nx.setExpression(expressions);
         } else {
-
             $("#roleAssign li").each(function () {
                 var self = $(this);
                 roles.push({ id: self.attr("id"), name: self.attr("name") });
             });
-            if (name) {
-                nx.name = name;
-                nx.brush.text(nx.name);
-            }
             nx.group = roles;
+        }
+
+        if (name) {
+            nx.name = name;
+            nx.brush.text(nx.name);
         }
     }
     function setNodeToSettings(nx) {

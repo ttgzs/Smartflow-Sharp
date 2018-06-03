@@ -147,6 +147,12 @@ namespace Smartflow.BussinessService.WorkflowService
             {
                 gList.Add(g.ID.ToString());
             }
+            
+            if (gList.Count==0)
+            {
+                return new List<User>();
+            }
+            
             return new UserService().GetUserList(string.Join(",", gList));
         }
 
