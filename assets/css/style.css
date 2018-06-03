@@ -2,5 +2,5 @@
 #main_content p{
   text-align:justify;
   text-justify:inter-ideograph;/*IE*/
-  text-indent:35px;
+  text-indent:32px;
 }
