@@ -94,7 +94,7 @@ namespace Smartflow
         /// <summary>
         /// 退回、撤销、跳转
         /// </summary>
-        public WorkflowAction ACTION
+        public WorkflowAction OPERATION
         {
             get;
             set;
@@ -106,7 +106,7 @@ namespace Smartflow
         /// </summary>
         public void Persistent()
         {
-            string sql = "INSERT INTO T_PROCESS(NID,SOURCE,DESTINATION,TRANSITIONID,INSTANCEID,NODETYPE,RNID,ACTION) VALUES(@NID,@SOURCE,@DESTINATION,@TRANSITIONID,@INSTANCEID,@NODETYPE,@RNID,@ACTION)";
+            string sql = "INSERT INTO T_PROCESS(NID,SOURCE,DESTINATION,TRANSITIONID,INSTANCEID,NODETYPE,RNID,OPERATION) VALUES(@NID,@SOURCE,@DESTINATION,@TRANSITIONID,@INSTANCEID,@NODETYPE,@RNID,@OPERATION)";
             Connection.Execute(sql, new
             {
                 NID = Guid.NewGuid().ToString(),
@@ -116,19 +116,19 @@ namespace Smartflow
                 INSTANCEID = INSTANCEID,
                 NODETYPE = NODETYPE.ToString(),
                 RNID = RNID,
-                ACTION = ACTION
+                OPERATION = OPERATION
             });
         }
 
         public static WorkflowProcess GetWorkflowProcessInstance(string instanceID, string NID)
         {
             WorkflowProcess instance = new WorkflowProcess();
-            string query = " SELECT * FROM T_PROCESS WHERE INSTANCEID=@INSTANCEID AND RNID=@NID  AND ACTION=@ACTION ";
+            string query = " SELECT * FROM T_PROCESS WHERE INSTANCEID=@INSTANCEID AND RNID=@NID  AND OPERATION=@OPERATION ";
             instance = instance.Connection.Query<WorkflowProcess>(query, new
             {
                 INSTANCEID = instanceID,
                 NID = NID,
-                ACTION = WorkflowAction.Jump
+                OPERATION = WorkflowAction.Jump
 
             }).OrderByDescending(order => order.CREATEDATETIME).FirstOrDefault();
 

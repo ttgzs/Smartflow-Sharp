@@ -1,4 +1,5 @@
 ﻿@model Smartflow.BussinessService.Models.Apply
+@using Smartflow.BussinessService.Models
 @{
     Layout = null;
 }
@@ -131,6 +132,25 @@
                         <input type="submit" id="btnSave" value="保存" class="layui-btn layui-btn-normal" onclick="return save('@Url.Action("Save", "FileApply")')" />
                         <input type="button" id="btnBack" value="返回" class="layui-btn layui-btn-warm" onclick="window.location.href = '@Url.Action("FileApplyList", "FileApply")'" />
                     </td>
+                </tr>
+                <tr style="display:@(ViewBag.UserList != null ? "table-row" : "none")">
+                    <td colspan="4">
+                        1、谁审谁撤销；
+                        2、原路退回，谁审退给谁；
+                        3、本节点待审批账户：
+                        @{
+                            if (ViewBag.UserList != null)
+                            {
+                                foreach (User userInfo in ViewBag.UserList)
+                                {
+                                    <span style="color:red;">
+                                        @(string.Format("{0}({1})", userInfo.USERNAME, userInfo.EMPLOYEENAME))
+                                    </span>
+                                }
+                            }
+                        }
+                    </td>
+
                 </tr>
             </table>
         </form>

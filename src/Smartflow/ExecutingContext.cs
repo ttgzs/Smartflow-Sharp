@@ -84,7 +84,7 @@ namespace Smartflow
         /// <summary>
         /// 操作方式
         /// </summary>
-        public WorkflowAction Action
+        public WorkflowAction Operation
         {
             get;
             internal set;

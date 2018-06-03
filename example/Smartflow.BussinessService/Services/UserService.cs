@@ -41,5 +41,17 @@ namespace Smartflow.BussinessService.Services
             }
             return dt;
         }
+
+
+        public List<User> GetPendingUserList(string nodeID, string instanceID)
+        {
+            string executeSql = @" SELECT * FROM T_USER WHERE ID IN (SELECT ACTORID FROM DBO.T_PENDING WHERE NODEID=@NODEID AND INSTANCEID=@INSTANCEID) ";
+            return Connection.Query<User>(executeSql, new
+            {
+                NODEID = nodeID,
+                INSTANCEID = instanceID
+
+            }).ToList();
+        }
     }
 }

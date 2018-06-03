@@ -71,17 +71,17 @@ namespace Smartflow
         {
             if (FromTransition == null) return null;
             ASTNode node = GetNode(FromTransition.SOURCE);
-            return WorkflowNode.ConvertToReallyType(node);
+            return WorkflowNode.ConvertToReallyType(node);    
         }
 
         public List<Actor> GetActors()
         {
-            string query = " SELECT * FROM T_ACTOR WHERE RNID=@RNID AND INSTANCEID=@INSTANCEID AND @ACTION=@ACTION ";
+            string query = " SELECT * FROM T_ACTOR WHERE RNID=@RNID AND INSTANCEID=@INSTANCEID AND OPERATION=@OPERATION ";
             return Connection.Query<Actor>(query, new
             {
                 RNID = NID,
                 INSTANCEID = INSTANCEID,
-                ACTION=WorkflowAction.Jump
+                OPERATION = WorkflowAction.Jump
 
             }).ToList();
         }

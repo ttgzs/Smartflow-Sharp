@@ -66,6 +66,7 @@ namespace Smartflow.Web.Controllers
                     ViewBag.UndoCheck = CommonMethods.CheckUndoButton(mdl.INSTANCEID);
                     ViewBag.UndoAuth = executeNode == null ? true : CommonMethods.CheckUndoAuth(mdl.INSTANCEID);
                     ViewBag.JumpAuth = current.NAME == "开始" ? true : CommonMethods.CheckAuth(current.NID, mdl.INSTANCEID);
+                    ViewBag.UserList= new UserService().GetPendingUserList(current.NID, mdl.INSTANCEID);
                 }
                 return View(mdl);
             }

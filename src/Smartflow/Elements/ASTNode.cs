@@ -66,7 +66,7 @@ namespace Smartflow.Elements
                 Actor actor = new Actor();
                 actor.ID = actorID;
                 actor.RNID = NID;
-                actor.ACTION = action;
+                actor.OPERATION = action;
                 actor.INSTANCEID = INSTANCEID;
                 actor.Persistent();
             }

@@ -94,7 +94,7 @@ namespace Smartflow
             {
                 WorkflowNode current = instance.Current;
                 
-                context.SetAction (WorkflowAction.Jump);
+                context.SetOperation (WorkflowAction.Jump);
                 
                 if (CheckAuthorization(context) == false) return;
 
@@ -112,7 +112,7 @@ namespace Smartflow
                     TransitionID = context.TransitionID,
                     Instance = instance,
                     Data = context.Data,
-                    Action = context.Action,
+                    Operation = context.Operation,
                     ActorID=context.ActorID,
                     ActorName=context.ActorName
                 });
@@ -149,7 +149,7 @@ namespace Smartflow
             {
                 WorkflowNode current = instance.Current.GetFromNode();
 
-                context.SetAction(WorkflowAction.Undo);
+                context.SetOperation(WorkflowAction.Undo);
                 if (CheckAuthorization(context) == false) return;
 
                 //记录已经参与审批过的人信息
@@ -166,7 +166,7 @@ namespace Smartflow
                     TransitionID = instance.Current.FromTransition.NID,
                     Instance = instance,
                     Data = context.Data,
-                    Action = context.Action,
+                    Operation = context.Operation,
                     ActorID = context.ActorID,
                     ActorName = context.ActorName
                 });
@@ -198,7 +198,7 @@ namespace Smartflow
             if (instance.State == WorkflowInstanceState.Running)
             {
                 WorkflowNode current = instance.Current.GetFromNode();
-                context.SetAction(WorkflowAction.Rollback);
+                context.SetOperation(WorkflowAction.Rollback);
                 if (CheckAuthorization(context) == false) return;
 
                 //记录已经参与审批过的人信息
@@ -215,7 +215,7 @@ namespace Smartflow
                     TransitionID = instance.Current.FromTransition.NID,
                     Instance = instance,
                     Data = context.Data,
-                    Action = context.Action,
+                    Operation = context.Operation,
                     ActorID = context.ActorID,
                     ActorName = context.ActorName
                 });
@@ -251,7 +251,7 @@ namespace Smartflow
                 TRANSITIONID = executeContext.TransitionID,
                 INSTANCEID = executeContext.Instance.InstanceID,
                 NODETYPE = executeContext.From.NodeType,
-                ACTION = executeContext.Action
+                OPERATION = executeContext.Operation
             });
         }
     }

@@ -37,19 +37,19 @@ namespace Smartflow.BussinessService.WorkflowService
             {
                 bool result = true;
                 //跳转节点
-                if (context.Action == WorkflowAction.Jump)
+                if (context.Operation == WorkflowAction.Jump)
                 {
                     //获取所有参与组织（多个角色）
                     List<Group> list = instance.Current.Groups;
                     //依据多个参与组织验证当前审批人是否有审批权限
                     //如是没有审批权限，返回false,否则返回true
                 }
-                else if (context.Action == WorkflowAction.Rollback)
+                else if (context.Operation == WorkflowAction.Rollback)
                 {
                     //流程回退
 
                 }
-                else if (context.Action == WorkflowAction.Undo)
+                else if (context.Operation == WorkflowAction.Undo)
                 {
                     //流程撤销
                 }

@@ -48,7 +48,7 @@ namespace Smartflow.BussinessService.WorkflowService
             {
                 new PendingService().Delete(executeContext.Instance.Current.NID, executeContext.Instance.InstanceID);
                 var current = GetCurrentNode(executeContext.Instance.InstanceID);
-                if (executeContext.Action == Enums.WorkflowAction.Jump&&current.NodeType!=Enums.WorkflowNodeCategeory.Decision)
+                if (executeContext.Operation == Enums.WorkflowAction.Jump&&current.NodeType!=Enums.WorkflowNodeCategeory.Decision)
                 {
                     List<User> userList = GetUsersByGroup(current.Groups);
                     //写待办业务
@@ -57,7 +57,7 @@ namespace Smartflow.BussinessService.WorkflowService
                         new PendingService().Persistent(new Pending()
                         {
                             ACTORID = item.ID,
-                            ACTION = executeContext.Action.ToString(),
+                            ACTION = executeContext.Operation.ToString(),
                             INSTANCEID = executeContext.Instance.InstanceID,
                             NODEID = GetCurrentNode(executeContext.Instance.InstanceID).NID,
                             NAME = string.Format("<a href='../Apply/Apply/{0}'>你有待办任务。</a>", executeContext.Data.bussinessID)
@@ -83,7 +83,7 @@ namespace Smartflow.BussinessService.WorkflowService
                 {
                     new PendingService().Delete(executeContext.Instance.InstanceID);
                 }
-                else if (executeContext.Action == Enums.WorkflowAction.Jump)
+                else if (executeContext.Operation == Enums.WorkflowAction.Jump)
                 {
                     List<User> userList = GetUsersByGroup(current.Groups);
                     //写待办业务
@@ -92,7 +92,7 @@ namespace Smartflow.BussinessService.WorkflowService
                         new PendingService().Persistent(new Pending()
                         {
                             ACTORID = item.ID,
-                            ACTION = executeContext.Action.ToString(),
+                            ACTION = executeContext.Operation.ToString(),
                             INSTANCEID = executeContext.Instance.InstanceID,
                             NODEID = GetCurrentNode(executeContext.Instance.InstanceID).NID,
                             NAME = string.Format("<a href='../Apply/Apply/{0}'>你有待办任务。</a>", dny.bussinessID)
@@ -101,7 +101,7 @@ namespace Smartflow.BussinessService.WorkflowService
 
                     new PendingService().Delete(executeContext.Instance.Current.NID, executeContext.Instance.InstanceID);
                 }
-                else if (executeContext.Action == Enums.WorkflowAction.Rollback)
+                else if (executeContext.Operation == Enums.WorkflowAction.Rollback)
                 {
                     //流程回退(谁审就退给谁) 仅限演示
                     var item = executeContext.Instance.Current
@@ -112,14 +112,14 @@ namespace Smartflow.BussinessService.WorkflowService
                     new PendingService().Persistent(new Pending()
                     {
                         ACTORID = item.ID,
-                        ACTION = executeContext.Action.ToString(),
+                        ACTION = executeContext.Operation.ToString(),
                         INSTANCEID = executeContext.Instance.InstanceID,
                         NODEID = GetCurrentNode(executeContext.Instance.InstanceID).NID,
                         NAME = string.Format("<a href='../Apply/Apply/{0}'>你有待办任务。</a>", dny.bussinessID)
                     });
                     new PendingService().Delete(executeContext.Instance.Current.NID, executeContext.Instance.InstanceID);
                  }
-                else if (executeContext.Action == Enums.WorkflowAction.Undo)
+                else if (executeContext.Operation == Enums.WorkflowAction.Undo)
                 {
                     //流程撤销(重新指派人审批) 仅限演示
                     List<Group> items = executeContext.Instance.Current.GetFromNode().Groups;
@@ -129,7 +129,7 @@ namespace Smartflow.BussinessService.WorkflowService
                         new PendingService().Persistent(new Pending()
                         {
                             ACTORID = item.ID,
-                            ACTION = executeContext.Action.ToString(),
+                            ACTION = executeContext.Operation.ToString(),
                             INSTANCEID = executeContext.Instance.InstanceID,
                             NODEID = GetCurrentNode(executeContext.Instance.InstanceID).NID,
                             NAME = string.Format("<a href='../Apply/Apply/{0}'>你有待办任务。</a>", dny.bussinessID)
