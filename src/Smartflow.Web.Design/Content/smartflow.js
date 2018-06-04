@@ -172,8 +172,8 @@
         this.h = 40;
         this.x = 10;
         this.y = 10;
-        this.cx = 30;
-        this.cy = 0;
+        this.cx = 40;
+        this.cy = 10;
         this.disX = 0;
         this.disY = 0;
         this.vertical = (util.ie ? 6: 0);
