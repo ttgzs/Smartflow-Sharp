@@ -5,7 +5,7 @@
  input,textarea{outline:none;}
  textarea {resize: none;}
  html, body,.container, .container-ctr {height: 100%;overflow: hidden;}
- .container-ctr{ margin-left:30px;background-color:#888; padding:10px;box-sizing:border-box;}
+ .container-ctr{ margin-left:30px; padding:10px;box-sizing:border-box;background-color:#888; }
  .tools {width: 30px;float: left;background-color: #eee;height: 100%;border-right:1px solid #D9D9D9;box-sizing:border-box;}
  .tools::after {content: ".";display: block;visibility: hidden;height: 1%;clear: both;}
  .tools-menu li {line-height: 45px;text-align: center;}
