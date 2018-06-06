@@ -9,25 +9,25 @@ Dapper+ASP.NET MVC4.0+.NETFX4.0。为了便于后续扩展，支持其他的数�
 组件， 了解该组件的，应该知道他是一款，半ORM框架，对原生SQL语句支持比较友好，且支持所有主流数据库系统访问。
 所以，你不用担心Smartflow工作流管理平台对跨库访问能力。目前，默认只支持 MSSQLSERVER数据库，若想支持其他的数
 据，请修改工作流引擎中DapperFactory 工厂类，提供数据库访问接口。
-```
+```C#
 public static IDbConnection CreateConnection(DatabaseCategory dbc, string connectionString)
 {
-            IDbConnection connection = null;
-            switch (dbc)
-            {
-                case DatabaseCategory.SQLServer:
-                    connection = DatabaseService.CreateInstance(new SqlConnection(connectionString));
-                    break;
-                case DatabaseCategory.Oracle:
-                    //ms 提供
-                    connection = DatabaseService.CreateInstance(new OracleConnection(connectionString));
-                    break;
-                case DatabaseCategory.MySQL:
-                    //需要自已提供Dll
-                    //connection = DatabaseService.CreateInstance(new SqlConnection(connectionString));
-                    break;
-            }
-            return connection;
+	IDbConnection connection = null;
+	switch (dbc)
+	{
+		case DatabaseCategory.SQLServer:
+			connection = DatabaseService.CreateInstance(new SqlConnection(connectionString));
+			break;
+		case DatabaseCategory.Oracle:
+			//ms 提供
+			connection = DatabaseService.CreateInstance(new OracleConnection(connectionString));
+			break;
+		case DatabaseCategory.MySQL:
+			//需要自已提供Dll
+			//connection = DatabaseService.CreateInstance(new SqlConnection(connectionString));
+			break;
+	}
+	return connection;
  }
 ```
 
