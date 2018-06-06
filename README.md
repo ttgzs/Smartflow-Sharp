@@ -10,29 +10,8 @@ Dapper+ASP.NET MVC4.0+.NETFX4.0。为了便于后续扩展，支持其他的数�
 所以，你不用担心Smartflow工作流管理平台对跨库访问能力。目前，默认只支持 MSSQLSERVER数据库，若想支持其他的数
 据，请修改工作流引擎中DapperFactory 工厂类，提供数据库访问接口。
 ```
-  internal class DapperFactory
-    {
-        public static IDbConnection CreateWorkflowConnection()
-        {
-            SmartflowConfigHandle config = ConfigurationManager.GetSection("smartflowConfig") as SmartflowConfigHandle;
-
-            Assert.CheckNull(config, "SmartflowConfigHandle");
-            Assert.StringNull(config.ConnectionString, "ConnectionString");
-            Assert.StringNull(config.DatabaseCategory, "DatabaseCategory");
-
-            DatabaseCategory dbc;
-            if (Enum.TryParse(config.DatabaseCategory, true, out dbc) || String.IsNullOrEmpty(config.ConnectionString))
-            {
-                return DapperFactory.CreateConnection(dbc, config.ConnectionString);
-            }
-            else
-            {
-                throw new WorkflowException(MessageResource.CONNECTION_CONFIG);
-            }
-        }
-
-        public static IDbConnection CreateConnection(DatabaseCategory dbc, string connectionString)
-        {
+public static IDbConnection CreateConnection(DatabaseCategory dbc, string connectionString)
+{
             IDbConnection connection = null;
             switch (dbc)
             {
@@ -49,8 +28,7 @@ Dapper+ASP.NET MVC4.0+.NETFX4.0。为了便于后续扩展，支持其他的数�
                     break;
             }
             return connection;
-        }
-    }
+ }
 ```
 
 
