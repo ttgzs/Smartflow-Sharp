@@ -17,7 +17,7 @@ Dapper+ASP.NET MVC4.0+.NETFX4.0。为了便于后续扩展，支持其他的数�
 6.	支持流程在线设计；<br/>
 7.	提供友好授权验证接口；<br/>
 ...
-###流程计器截图
+### 流程计器截图
 ![Image text](https://github.com/chengderen/Smartflow-Sharp/blob/master/docs/images/1.png)
 ### Smartflow 工作流管理平台未来
 笔者会对Smartflow 工作流平台，一直维护到底。未来，我会对工作流管理平台增加更多有趣的功能，以便你能将工作流平台更加快速的融入到业务系统中。期望，能打造成符合中国特色工作流管理平台，造福更多企业和开发人员。
