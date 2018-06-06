@@ -11,24 +11,24 @@ Dapper+ASP.NET MVC4.0+.NETFX4.0。为了便于后续扩展，支持其他的数�
 据，请修改工作流引擎中DapperFactory 工厂类，提供数据库访问接口,如下代码片段：
 ```C#
   public static IDbConnection CreateConnection(DatabaseCategory dbc, string connectionString)
-        {
-            IDbConnection connection = null;
-            switch (dbc)
-            {
-                case DatabaseCategory.SQLServer:
-                    connection = DatabaseService.CreateInstance(new SqlConnection(connectionString));
-                    break;
-                case DatabaseCategory.Oracle:
-                    //ms 提供
-                    connection = DatabaseService.CreateInstance(new OracleConnection(connectionString));
-                    break;
-                case DatabaseCategory.MySQL:
-                    //需要自已提供Dll
-                    //connection = DatabaseService.CreateInstance(new SqlConnection(connectionString));
-                    break;
-            }
-            return connection;
-        }
+  {
+	IDbConnection connection = null;
+	switch (dbc)
+	{
+		case DatabaseCategory.SQLServer:
+			connection = DatabaseService.CreateInstance(new SqlConnection(connectionString));
+			break;
+		case DatabaseCategory.Oracle:
+			//ms 提供
+			connection = DatabaseService.CreateInstance(new OracleConnection(connectionString));
+			break;
+		case DatabaseCategory.MySQL:
+			//需要自已提供Dll
+			//connection = DatabaseService.CreateInstance(new SqlConnection(connectionString));
+			break;
+	}
+	return connection;
+   }
 ```
 工作流平台目前实现功能点如下：
 1.	支持流程流转；<br/>
