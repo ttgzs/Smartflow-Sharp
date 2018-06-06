@@ -8,27 +8,7 @@
 Dapper+ASP.NET MVC4.0+.NETFX4.0。为了便于后续扩展，支持其他的数据库的访问，笔者经过慎重考虑采用Dapper
 组件， 了解该组件的，应该知道他是一款，半ORM框架，对原生SQL语句支持比较友好，且支持所有主流数据库系统访问。
 所以，你不用担心Smartflow工作流管理平台对跨库访问能力。目前，默认只支持 MSSQLSERVER数据库，若想支持其他的数
-据，请修改工作流引擎中DapperFactory 工厂类，提供数据库访问接口,如下代码片段：
-```C#
-  public static IDbConnection CreateConnection(DatabaseCategory dbc, string connectionString)
-  {
-		IDbConnection connection = null;
-		switch (dbc)
-		{
-			case DatabaseCategory.SQLServer:
-				connection = DatabaseService.CreateInstance(new SqlConnection(connectionString));
-				break;
-			case DatabaseCategory.Oracle:
-				connection = DatabaseService.CreateInstance(new OracleConnection(connectionString));
-				break;
-			case DatabaseCategory.MySQL:
-				//需要自已提供mysql Dll
-				break;
-		}
-		return connection;
-  }
-```
-工作流平台目前实现功能点如下：
+据，请修改工作流引擎中DapperFactory 工厂类，提供数据库访问接口。工作流平台目前实现功能点如下：
 1.	支持流程流转；<br/>
 2.	支持流程分支；<br/>
 3.	支持流程撤销；<br/>
@@ -37,7 +17,8 @@ Dapper+ASP.NET MVC4.0+.NETFX4.0。为了便于后续扩展，支持其他的数�
 6.	支持流程在线设计；<br/>
 7.	提供友好授权验证接口；<br/>
 ...
-
+###流程计器截图
+![Image text](https://github.com/chengderen/Smartflow-Sharp/blob/master/docs/images/1.png)
 ### Smartflow 工作流管理平台未来
 笔者会对Smartflow 工作流平台，一直维护到底。未来，我会对工作流管理平台增加更多有趣的功能，以便你能将工作流平台更加快速的融入到业务系统中。期望，能打造成符合中国特色工作流管理平台，造福更多企业和开发人员。
 ### 关于我
