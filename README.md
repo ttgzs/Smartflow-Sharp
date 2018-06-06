@@ -8,7 +8,7 @@
 Dapper+ASP.NET MVC4.0+.NETFX4.0。为了便于后续扩展，支持其他的数据库的访问，笔者经过慎重考虑采用Dapper
 组件， 了解该组件的，应该知道他是一款，半ORM框架，对原生SQL语句支持比较友好，且支持所有主流数据库系统访问。
 所以，你不用担心Smartflow工作流管理平台对跨库访问能力。目前，默认只支持 MSSQLSERVER数据库，若想支持其他的数
-据，请修改工作流引擎中DapperFactory 工厂类，提供数据库访问接口。
+据，请修改工作流引擎中DapperFactory 工厂类，提供数据库访问接口,如下代码片段：
 ```C#
 public static IDbConnection CreateConnection(DatabaseCategory dbc, string connectionString)
 {
