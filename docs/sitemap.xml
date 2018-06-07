@@ -6,13 +6,13 @@
        http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd"
 >
 <url>
- <loc>http://www.smartflow-sharp.com</loc>
+ <loc>https://www.smartflow-sharp.com</loc>
  <priority>0.5</priority>
  <lastmod>2018-06-06</lastmod>
  <changefreq>weekly</changefreq>
 </url>
 <url>
- <loc>http://www.smartflow-sharp.com/</loc>
+ <loc>https://www.smartflow-sharp.com/</loc>
  <priority>0.5</priority>
  <lastmod>2018-06-06</lastmod>
  <changefreq>weekly</changefreq>
