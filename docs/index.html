@@ -35,7 +35,7 @@
     <div id="main_content_wrap" class="outer">
         <section id="main_content" class="inner">
             <h2 id="smartflow" style="display:none;">Smartflow-Sharp</h2>
-            <h3 id="net平台下工作流现状">.NET平台下工作流现状</h3>
+            <h3 id="net平台下工作流现状">工作流现状分析</h3>
             <p>目前，属于.NET平台下研发的工作流管理平台真是太少，可供选择真心不多，官方我们之前也采用过，没有用好，到处是问题，而且还没有提供在线的流程设计器，使用起来极其不方便。市面上免费开源工作流管理平台又很少，基本都是属于要收取一定的费用。真正免费的又不是很好用，收费的又太高，所以笔者自已闭门造车，打造一款基于.NET平台免费开源工作流管理平台，为开源尽一点自已的绵薄之力。</p>
             <h3 id="smartflow-工作流管理平台介绍">Smartflow-Sharp 工作流管理平台介绍</h3>
             <p>
@@ -61,11 +61,11 @@
                 先睹为快，工作流设计器如下图：<br />
                 <img src="./images/min.png"   alt="工作流设计器"/><br />
             </p>
-            <h3>运行示例</h3>
+            <h3>Smartflow-Sharp 示例</h3>
             <p>
                 打开项目文件夹，在SQLSERVER2005中按顺序执行SQL文件夹下SQL的脚本，执行完成后会创建flow、bussiness两个数据库。然后，在VS中打开项目解决方案，打开example\Smartflow.Web.Mvc\Web.config，src\Smartflow.Web.Design\Web.config 配置文件，修改其访问数据库连接字符串，然后，将这两个项目发布到IIS里面。部署完成后，直接浏览项目，如果能浏览到登录界面表示部署成功。运行起来后，先画业务流程，然后再发起定密申请。
             </p>
-            <h3>业务系统集成</h3>
+            <h3>Smartflow-Sharp与业务系统集成</h3>
             <p>Smartflow-sharp工作流管理平台与业务系统集成，由于Smartflow-sharp工作流管理平台的高度可定制化特点，既是优点也是缺点，优点就是可以很方便的根据用户的需求做定制化研发，缺点是太过灵活，有些功能需要用户自已开发。集成步骤如下：</p>
             <!--<ol class="qc">
                 <li style="text-align:justify;">flow是工作流基础库，直接整体拷贝到你业务系统；<br></li>
