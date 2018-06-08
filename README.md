@@ -1,8 +1,8 @@
 ﻿## [Smartflow-Sharp](https://www.smartflow-sharp.com)
-官网中对[Smartflow-Sharp](https://www.smartflow-sharp.com)工作流管理平台，写的比较详细，分为以下几部分介绍：
+官网中对[Smartflow-Sharp](https://www.smartflow-sharp.com)工作流管理平台，从以下几部分分别做了介绍，在此不在赘述
 * 工作流现状分析
-* Smartflow-Sharp 工作流管理平台介绍
+* Smartflow-Sharp 介绍
 * Smartflow-Sharp 示例
-* Smartflow-Sharp与业务系统集成
-* Smartflow-Sharp工作流管理平台未来
+* Smartflow-Sharp 集成
+* Smartflow-Sharp 未来
 * 关于作者
