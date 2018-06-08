@@ -17,12 +17,6 @@
     <meta property="og:description" content="基于C#语言研发的Smartflow-Sharp工作流管理平台，该工作流管理平台的特点是简单易用、方便扩展、支持多种数据库访问、高度可定制化，支持用户按需求做功能的定制开发，节省用户的使用成本。" />
     <meta property="og:site_name" content="Smartflow-Sharp" />
     <script type="text/javascript" src="https://hm.baidu.com/hm.js?1d12f66f2f6f25504daa528cd96ea7e8"></script>
-
-    <style type="text/css">
-
-   
-
-    </style>
 </head>
 <body>
     <!-- HEADER -->
@@ -86,7 +80,20 @@
             2、bussiness业务库是提供的示例库，工作流中有几张表是在这个示例业务数据库里面创建的。请把bussiness数据库里面的t_flowXml、t_config拷贝到你业务系统库里面，然后在t_config表中增加业务库的连接字符串;<br/>
             3、工作流节点要与角色关联，用户必须提供角色表，工作流是依据角色筛选审批人员;<br/>
             4、调整业务系统和Smartflow.Web.Design项目中Web.config配置文件，如下图<br/>
-               <img src="./images/config.png"/><br />
+            <pre><code style="color:#454040;font-weight:bold;">&lt;configsections&gt;
+    &lt;section name="smartflowConfig" 
+             type="Smartflow.SmartflowConfigHandle,Smartflow" /&gt;
+&lt;/configsections&gt;
+                <hr />
+&lt;smartflowconfig 
+    connectionstring="server=127.0.0.1;database=flow;uid=sa;pwd=123456"
+category="SQLServer" /&gt;
+                     <hr />
+&lt;add key="busConnection" 
+     value="server=127.0.0.1;database=bussiness;uid=sa;pwd=123456" /&gt;
+</code>
+</pre>
+            </p>
             <p>
                 以上就是Smartflow-Sharp工作流管理平台完整的集成过程，工作流管理平台还有些工作需要由用户自已来完成如用户、角色等信息，都需要用户自已提供维护界面。通常在集成过程中需要提供待办、审批记录这些请参照示例，按需集成的，在此不详细介绍。
             </p>
