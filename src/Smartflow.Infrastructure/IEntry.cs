@@ -15,7 +15,7 @@ namespace Smartflow.Infrastructure
         /// <summary>
         /// 标识
         /// </summary>
-        long ID
+        long Identification
         {
             get;
             set;
@@ -24,7 +24,7 @@ namespace Smartflow.Infrastructure
         /// <summary>
         /// 名称
         /// </summary>
-        string Name
+        string Appellation
         {
             get;
             set;

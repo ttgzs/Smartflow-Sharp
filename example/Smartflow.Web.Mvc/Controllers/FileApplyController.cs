@@ -78,7 +78,7 @@ namespace Smartflow.Web.Controllers
             List<SelectListItem> fileList = new List<SelectListItem>();
             foreach (WorkflowXml item in workflowXmlList)
             {
-                fileList.Add(new SelectListItem { Text = item.NAME, Value = item.WFID, Selected = (item.WFID == WFID) });
+                fileList.Add(new SelectListItem { Text = item.APPELLATION, Value = item.IDENTIFICATION, Selected = (item.IDENTIFICATION == WFID) });
             }
             ViewData["WFiles"] = fileList;
         }

@@ -19,7 +19,7 @@ namespace Smartflow.DesignService
 
             if (!String.IsNullOrEmpty(roleIds))
             {
-                query = string.Format("{0} AND ID NOT IN ({1})", query, roleIds);
+                query = string.Format("{0} AND IDENTIFICATION NOT IN ({1})", query, roleIds);
             }
             entry.AddRange(Connection.Query<Role>(query).ToList());
             return entry;

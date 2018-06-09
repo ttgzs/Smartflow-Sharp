@@ -17,21 +17,20 @@ namespace Smartflow.DesignService
 
         public void Persistent(WorkflowXml workflowXml)
         {
-            string sql = "INSERT INTO T_FLOWXML(WFID,NAME,XML,IMAGE)  VALUES(@WFID,@NAME,@XML,@IMAGE)";
+            string sql = " INSERT INTO T_FLOWXML(IDENTIFICATION,APPELLATION,XML,IMAGE) VALUES(@IDENTIFICATION,@APPELLATION,@XML,@IMAGE) ";
             Connection.Execute(sql, workflowXml);
         }
 
         public void Update(WorkflowXml workflowXml)
         {
-            string sql = " UPDATE T_FLOWXML SET NAME=@NAME,XML=@XML,IMAGE=@IMAGE WHERE WFID=@WFID ";
+            string sql = " UPDATE T_FLOWXML SET APPELLATION=@APPELLATION,XML=@XML,IMAGE=@IMAGE WHERE IDENTIFICATION=@IDENTIFICATION ";
             Connection.Execute(sql, workflowXml);
         }
 
-        public WorkflowXml GetWorkflowXml(string WFID)
+        public WorkflowXml GetWorkflowXml(string IDENTIFICATION)
         {
-            string sql = "SELECT * FROM T_FLOWXML WHERE WFID=@WFID";
-
-            return Connection.Query<WorkflowXml>(sql, new { WFID = WFID })
+            string sql = " SELECT * FROM T_FLOWXML WHERE IDENTIFICATION=@IDENTIFICATION ";
+            return Connection.Query<WorkflowXml>(sql, new { IDENTIFICATION = IDENTIFICATION })
                 .FirstOrDefault<WorkflowXml>();
         }
     }

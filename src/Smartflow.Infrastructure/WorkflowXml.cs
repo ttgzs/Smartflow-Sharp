@@ -11,13 +11,13 @@ namespace Smartflow.Infrastructure
 {
     public class WorkflowXml
     {
-        public string WFID
+        public string IDENTIFICATION
         {
             get;
             set;
         }
-
-        public string NAME
+        
+        public string APPELLATION
         {
             get;
             set;

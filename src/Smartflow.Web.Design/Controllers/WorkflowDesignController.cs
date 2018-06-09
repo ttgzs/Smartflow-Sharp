@@ -33,9 +33,9 @@ namespace Smartflow.Web.Design.Controllers
 
         public JsonResult Save(WorkflowXml model)
         {
-            if (String.IsNullOrEmpty(model.WFID))
+            if (String.IsNullOrEmpty(model.IDENTIFICATION))
             {
-                model.WFID = Guid.NewGuid().ToString();
+                model.IDENTIFICATION = Guid.NewGuid().ToString();
                 model.XML = HttpUtility.UrlDecode(model.XML);
                 designService.Persistent(model);
             }

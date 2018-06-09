@@ -6,13 +6,13 @@ namespace Smartflow.DesignService.Models
 {
     public class Role:IEntry
     {
-        public long ID
+        public long Identification
         {
             get;
             set;
         }
 
-        public string Name
+        public string Appellation
         {
             get;
             set;

@@ -19,7 +19,6 @@ namespace Smartflow.BussinessService.Models
             set;
         }
         
-
         public string NODEID
         {
             get;
@@ -32,7 +31,7 @@ namespace Smartflow.BussinessService.Models
             set;
         }
 
-        public string NAME
+        public string APPELLATION
         {
             get;
             set;

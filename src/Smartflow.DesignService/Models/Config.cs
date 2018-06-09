@@ -8,19 +8,20 @@ namespace Smartflow.DesignService.Models
 {
     public class Config : IEntry
     {
-        public long ID
+        
+        public long Identification
+        {
+            get;
+            set;
+        }
+        
+        public string Appellation
         {
             get;
             set;
         }
 
-        public string Name
-        {
-            get;
-            set;
-        }
-
-        public string Connection
+        public string Connecte
         {
             get;
             set;
