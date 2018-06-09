@@ -24,41 +24,82 @@
             });
 
             $(".tools-menu img").mousedown(function () {
-               $(this).css("border", "solid 1px #ad9d9d");
+                $(this).css("border", "solid 1px #ad9d9d");
             });
             $(".tools-menu img").mouseup(function () {
                 $(this).css("border", "none");
             });
         });
+      
     </script>
 </head>
 <body>
     <div class="tools">
         <ul class="tools-menu">
             <li>
-                <img src="~/Content/images/save.png" onclick="design.save()" 
+                <img src="~/Content/images/save.png" onclick="design.save()"
                      title="保存" />
             </li>
             <li>
-                <img src="~/Content/images/select.png" onclick="SMF.select()" 
+                <img src="~/Content/images/select.png" onclick="SMF.select()"
                      title="选择" />
             </li>
             <li>
-                <img src="~/Content/images/line.png" onclick="SMF.connect()" 
+                <img src="~/Content/images/line.png" onclick="SMF.connect()"
                      title="连接" />
             </li>
             <li>
-                <img src="~/Content/images/node.png" onclick="SMF.create('node')" 
+                <img src="~/Content/images/node.png" onclick="SMF.create('node')"
                      title="节点" />
             </li>
             <li>
-                <img src="~/Content/images/decision.png" onclick="SMF.create('decision')" 
+                <img src="~/Content/images/decision.png" onclick="SMF.create('decision')"
                      title="决策" />
+            </li>
+            <li>
+                <img src="~/Content/images/help.png" onclick="design.openWin('note')"
+                     title="帮助" />
             </li>
         </ul>
     </div>
     <div class="container-ctr">
         <div class="container-draw" id="drawing"></div>
     </div>
+    <script type="text/html" id="note">
+        <table class="smartflow-table note-table">
+            <tr>
+                <td class="note-column">方向：</td>
+                <td class="note-content">流程设计工具仅支持从上往下</td>
+            </tr>
+            <tr>
+                <td class="note-column">规则：</td>
+                <td class="note-content">开始节点至少有一条出线，但没有进线、结束节点至少有一条进线，但没有出线，普通节点至少有一进一出的连线，决策节点至少有一条进线，两条以上出线</td>
+            </tr>
+            <tr>
+                <td class="note-column">连线：</td>
+                <td class="note-content">先点击左边线条图标，然后选中节点，按下鼠标左键拖动到另一节点，然后再松手，两节点间会出现连接线</td>
+            </tr>
+            <tr>
+                <td class="note-column">移动：</td>
+                <td class="note-content">先点击左边鼠标箭头，然后选择节点元素，按下鼠标左键进行移动</td>
+            </tr>
+            <tr>
+                <td class="note-column">编辑：</td>
+                <td class="note-content">鼠标双击元素，然后弹出编辑页面</td>
+            </tr>
+            <tr>
+                <td class="note-column">删除：</td>
+                <td class="note-content">按住键盘中Ctrl+Alt键，然后鼠标双击元素，元素就会被删除</td>
+            </tr>
+        </table>
+
+        @*<ul class="note-list">
+            <li><span>方向：</span><p>目前流程设计工具仅支持从上往下连线节点；</p></li>
+            <li><span>规则：</span><p>开始节点至少有一条出线，但没有进线、结束节点至少有一条进线，但没有出线，普通节点至少有一进一出的连线，决策节点至少有一条进线，两条以上出线</p></li>
+            <li><span>连线：</span><p>选中节点，按下鼠标左键进行拖动到另一节点，然后再松手，两节点就会出现连接的线</p></li>
+            <li><span>编辑：</span><p>鼠标双击选中的元素，然后弹出编辑页面</p></li>
+            <li><span>删除：</span><p>按住键盘中Ctrl+Alt键，然后鼠标双击选中元素，元素就会被删除</p></li>
+        </ul>*@
+    </script>
 </body>
 </html>

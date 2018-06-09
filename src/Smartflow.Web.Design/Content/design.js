@@ -96,8 +96,25 @@
         return (document.getElementById(frameId).contentWindow);
     }
 
+
+    function openWin(elementId) {
+        var ht = $("#" + elementId).html();
+        //自定页
+        layer.open({
+            title: '注意事项',
+            type: 1,
+            closeBtn: 1,
+            //skin: 'layui-layer-rim', //加上边框
+            area: ['520px', '300px'], //宽高
+            anim: 2,
+            shadeClose: true, //开启遮罩关闭
+            content: ht
+        });
+    }
+
     window.design = {
         init: initConfig,
+        openWin: openWin,
         save: saveflow
     }
 

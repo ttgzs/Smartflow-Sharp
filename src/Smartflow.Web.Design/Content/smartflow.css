@@ -34,11 +34,11 @@ text {font-size: 14px;text-anchor: middle; dominant-baseline: middle;pointer-eve
             background-color:#F2F2F2;
             display:none;
         }
-        .smartflow-table-actor{
+.smartflow-table-actor{
             margin-bottom:4px;
             margin-top:11px
         }
-        .layui-table-view{
+.layui-table-view{
             margin-top:0 !important;
         }
 .table-actor-cm{
@@ -47,12 +47,33 @@ text {font-size: 14px;text-anchor: middle; dominant-baseline: middle;pointer-eve
    font-size:14px;
    color:#666666
  }
- .smartflow-textarea{
+.smartflow-textarea{
      width:100%;
      height:40px;
      min-height:20px;
      resize:none
  }
- .layui-layer,.layui-layer-btn0, .layui-layer-btn1{
+.layui-layer,.layui-layer-btn0, .layui-layer-btn1{
      border-radius:0 !important;
  }
+.note-table{
+ margin-left:10px;
+ margin-right:10px;
+ font-size:14px;
+ letter-spacing: 0.5px;
+ color:#666666;
+}
+
+.note-table td{
+    line-height:25px;
+}
+
+.note-column{
+    width:50px;
+    vertical-align:top;
+}
+.note-content{
+    vertical-align:top;
+    text-align:justify;
+  
+}
