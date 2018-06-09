@@ -15,7 +15,7 @@
         if (flowName) {
             wfName = window.prompt(designConfig.message, flowName);
         } else {
-            wfName = window.prompt(designConfig.message);
+            wfName = window.prompt(designConfig.message,'');
         }
         if (wfName) {
             var data = $.extend(exportToObject, {
