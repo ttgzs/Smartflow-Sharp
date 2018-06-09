@@ -20,7 +20,7 @@ namespace Smartflow.Elements
         /// 执行SQL语句
         /// </summary>
         [XmlElement("text")]
-        public string Text
+        public string SCRIPT
         {
             get;
             set;
@@ -30,7 +30,7 @@ namespace Smartflow.Elements
         /// 连接字符串
         /// </summary>
         [XmlElement("connection")]
-        public string CONNECTION
+        public string CONNECTE
         {
             get;
             set;
@@ -61,14 +61,14 @@ namespace Smartflow.Elements
 
         internal override void Persistent()
         {
-            string sql = "INSERT INTO T_COMMAND(NID,RNID,NAME,TEXT,CONNECTION,INSTANCEID,DBCATEGORY,COMMANDTYPE) VALUES(@NID,@RNID,@NAME,@TEXT,@CONNECTION,@INSTANCEID,@DBCATEGORY,@COMMANDTYPE)";
+            string sql = "INSERT INTO T_COMMAND(NID,RNID,APPELLATION,SCRIPT,CONNECTE,INSTANCEID,DBCATEGORY,COMMANDTYPE) VALUES(@NID,@RNID,@APPELLATION,@SCRIPT,@CONNECTE,@INSTANCEID,@DBCATEGORY,@COMMANDTYPE)";
             Connection.Execute(sql, new
             {
                 NID=Guid.NewGuid().ToString(),
                 RNID = RNID,
-                NAME = NAME,
-                TEXT = Text,
-                CONNECTION = CONNECTION,
+                APPELLATION = APPELLATION,
+                SCRIPT = SCRIPT,
+                CONNECTE = CONNECTE,
                 INSTANCEID = INSTANCEID,
                 DBCATEGORY = DBCATEGORY.ToString(),
                 COMMANDTYPE = COMMANDTYPE

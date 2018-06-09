@@ -42,7 +42,7 @@ namespace Smartflow.Elements
                 foreach (Transition transition in Transitions)
                 {
                     transition.RNID = this.NID;
-                    transition.SOURCE = this.ID;
+                    transition.SOURCE = this.IDENTIFICATION;
                     transition.INSTANCEID = INSTANCEID;
                     transition.Persistent();
                 }
@@ -61,11 +61,11 @@ namespace Smartflow.Elements
 
         public ASTNode GetNode(long ID)
         {
-            string query = "SELECT * FROM T_NODE WHERE ID=@ID AND INSTANCEID=@INSTANCEID";
+            string query = "SELECT * FROM T_NODE WHERE IDENTIFICATION=@IDENTIFICATION AND INSTANCEID=@INSTANCEID";
 
             ASTNode node = DapperFactory.CreateWorkflowConnection().Query<ASTNode>(query, new
             {
-                ID = ID,
+                IDENTIFICATION = IDENTIFICATION,
                 INSTANCEID = INSTANCEID
 
             }).FirstOrDefault();

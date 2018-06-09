@@ -155,9 +155,9 @@ namespace Smartflow
                 //记录已经参与审批过的人信息
                 current.SetActor(context.ActorID, WorkflowAction.Undo);
 
-                instance.Jump(current.ID);
+                instance.Jump(current.IDENTIFICATION);
 
-                ASTNode to = current.GetNode(current.ID);
+                ASTNode to = current.GetNode(current.IDENTIFICATION);
 
                 OnExecuteProcess(new ExecutingContext()
                 {
@@ -204,9 +204,9 @@ namespace Smartflow
                 //记录已经参与审批过的人信息
                 current.SetActor(context.ActorID, WorkflowAction.Rollback);
 
-                instance.Jump(current.ID);
+                instance.Jump(current.IDENTIFICATION);
 
-                ASTNode to = current.GetNode(current.ID);
+                ASTNode to = current.GetNode(current.IDENTIFICATION);
 
                 OnExecuteProcess(new ExecutingContext()
                 {
@@ -246,8 +246,8 @@ namespace Smartflow
             workflowService.Processing(new WorkflowProcess()
             {
                 RNID = executeContext.To.NID,
-                SOURCE = executeContext.From.ID,
-                DESTINATION = executeContext.To.ID,
+                SOURCE = executeContext.From.IDENTIFICATION,
+                DESTINATION = executeContext.To.IDENTIFICATION,
                 TRANSITIONID = executeContext.TransitionID,
                 INSTANCEID = executeContext.Instance.InstanceID,
                 NODETYPE = executeContext.From.NodeType,

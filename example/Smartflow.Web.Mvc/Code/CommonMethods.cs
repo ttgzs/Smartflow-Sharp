@@ -21,14 +21,14 @@ namespace Smartflow.Web.Mvc.Code
         {
             WorkflowInstance instance = WorkflowInstance.GetInstance(instanceID);
             User userInfo = System.Web.HttpContext.Current.Session["user"] as User;
-            return instance.Current.GetFromNode().GetActors().Count(e => e.ID == userInfo.ID) > 0;
+            return instance.Current.GetFromNode().GetActors().Count(e => e.IDENTIFICATION == userInfo.ID) > 0;
         }
 
         public static bool CheckUndoButton(string instanceID)
         {
-            string currentNodeName = BaseWorkflowService.Instance.GetCurrent(instanceID).NAME;
+            string currentNodeName = BaseWorkflowService.Instance.GetCurrent(instanceID).APPELLATION;
             var executeNode = BaseWorkflowService.Instance.GetCurrentPrevNode(instanceID);
-            return (currentNodeName == "开始" || currentNodeName == "结束" || executeNode.NAME == "开始");
+            return (currentNodeName == "开始" || currentNodeName == "结束" || executeNode.APPELLATION == "开始");
         }
     }
 }

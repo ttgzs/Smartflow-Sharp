@@ -15,13 +15,11 @@ namespace Smartflow.Elements
     public class End :Node
     {
         [XmlIgnore]
-        public override string NAME
+        public override string APPELLATION
         {
             get{ return "结束";}
         }
 
-
-   
         [XmlIgnore]
         public override List<Transition> Transitions
         {

@@ -38,7 +38,7 @@ namespace Smartflow
             elements.Add(workflow.EndNode);
 
             //创建关联实例
-            string instaceID = CreateWorkflowInstance(workflow.StartNode.ID, workflowXml.WFID, workflowXml.IMAGE);
+            string instaceID = CreateWorkflowInstance(workflow.StartNode.IDENTIFICATION, workflowXml.WFID, workflowXml.IMAGE);
             foreach (Element element in elements)
             {
                 element.INSTANCEID = instaceID;

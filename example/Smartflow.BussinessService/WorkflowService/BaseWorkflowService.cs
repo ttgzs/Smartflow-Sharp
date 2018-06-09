@@ -73,13 +73,13 @@ namespace Smartflow.BussinessService.WorkflowService
                 recordService.Persistent(new Record()
                 {
                     INSTANCEID = executeContext.Instance.InstanceID,
-                    NODENAME = executeContext.From.NAME,
+                    NODENAME = executeContext.From.APPELLATION,
                     MESSAGE = executeContext.Data.Message
                 });
 
                 var current = GetCurrentNode(executeContext.Instance.InstanceID);
 
-                if (current.NAME == "结束")
+                if (current.APPELLATION == "结束")
                 {
                     new PendingService().Delete(executeContext.Instance.InstanceID);
                 }
@@ -111,7 +111,7 @@ namespace Smartflow.BussinessService.WorkflowService
 
                     new PendingService().Persistent(new Pending()
                     {
-                        ACTORID = item.ID,
+                        ACTORID = item.IDENTIFICATION,
                         ACTION = executeContext.Operation.ToString(),
                         INSTANCEID = executeContext.Instance.InstanceID,
                         NODEID = GetCurrentNode(executeContext.Instance.InstanceID).NID,
@@ -145,7 +145,7 @@ namespace Smartflow.BussinessService.WorkflowService
             List<string> gList = new List<string>();
             foreach (Group g in items)
             {
-                gList.Add(g.ID.ToString());
+                gList.Add(g.IDENTIFICATION.ToString());
             }
             
             if (gList.Count==0)

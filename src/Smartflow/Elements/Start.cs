@@ -17,7 +17,7 @@ namespace Smartflow.Elements
     public class Start : Node
     {
         [XmlIgnore]
-        public override string NAME
+        public override string APPELLATION
         {
             get { return "开始"; }
         }

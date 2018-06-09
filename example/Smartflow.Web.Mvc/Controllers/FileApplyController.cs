@@ -61,11 +61,11 @@ namespace Smartflow.Web.Controllers
                     var executeNode = bwfs.GetCurrentPrevNode(mdl.INSTANCEID);
                     var current = bwfs.GetCurrent(mdl.INSTANCEID);
 
-                    ViewBag.ButtonName = current.NAME;
-                    ViewBag.PreviousButtonName = executeNode == null ? String.Empty : executeNode.NAME;
+                    ViewBag.ButtonName = current.APPELLATION;
+                    ViewBag.PreviousButtonName = executeNode == null ? String.Empty : executeNode.APPELLATION;
                     ViewBag.UndoCheck = CommonMethods.CheckUndoButton(mdl.INSTANCEID);
                     ViewBag.UndoAuth = executeNode == null ? true : CommonMethods.CheckUndoAuth(mdl.INSTANCEID);
-                    ViewBag.JumpAuth = current.NAME == "开始" ? true : CommonMethods.CheckAuth(current.NID, mdl.INSTANCEID);
+                    ViewBag.JumpAuth = current.APPELLATION == "开始" ? true : CommonMethods.CheckAuth(current.NID, mdl.INSTANCEID);
                     ViewBag.UserList= new UserService().GetPendingUserList(current.NID, mdl.INSTANCEID);
                 }
                 return View(mdl);

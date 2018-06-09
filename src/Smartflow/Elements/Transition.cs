@@ -44,12 +44,12 @@ namespace Smartflow.Elements
 
         internal override void Persistent()
         {
-            string sql = "INSERT INTO T_TRANSITION(NID,RNID,NAME,DESTINATION,SOURCE,INSTANCEID,EXPRESSION) VALUES(@NID,@RNID,@NAME,@DESTINATION,@SOURCE,@INSTANCEID,@EXPRESSION)";
+            string sql = "INSERT INTO T_TRANSITION(NID,RNID,APPELLATION,DESTINATION,SOURCE,INSTANCEID,EXPRESSION) VALUES(@NID,@RNID,@APPELLATION,@DESTINATION,@SOURCE,@INSTANCEID,@EXPRESSION)";
             Connection.Execute(sql, new
             {
                 NID = Guid.NewGuid().ToString(),
                 RNID = RNID,
-                NAME = NAME,
+                APPELLATION = APPELLATION,
                 DESTINATION = DESTINATION,
                 SOURCE = SOURCE,
                 INSTANCEID = INSTANCEID,

@@ -35,12 +35,12 @@ namespace Smartflow.Elements
         internal override void Persistent()
         {
             NID = Guid.NewGuid().ToString();
-            string sql = "INSERT INTO T_NODE(NID,ID,NAME,NODETYPE,INSTANCEID) VALUES(@NID,@ID,@NAME,@NODETYPE,@INSTANCEID)";
+            string sql = "INSERT INTO T_NODE(NID,IDENTIFICATION,APPELLATION,NODETYPE,INSTANCEID) VALUES(@NID,@IDENTIFICATION,@APPELLATION,@NODETYPE,@INSTANCEID)";
             Connection.ExecuteScalar<long>(sql, new
             {
                 NID = NID,
-                ID = ID,
-                NAME = NAME,
+                IDENTIFICATION = IDENTIFICATION,
+                APPELLATION = APPELLATION,
                 NODETYPE = NodeType.ToString(),
                 INSTANCEID = INSTANCEID
             });
@@ -64,7 +64,7 @@ namespace Smartflow.Elements
             if (this.NodeType != WorkflowNodeCategeory.Decision)
             {
                 Actor actor = new Actor();
-                actor.ID = actorID;
+                actor.IDENTIFICATION = actorID;
                 actor.RNID = NID;
                 actor.OPERATION = action;
                 actor.INSTANCEID = INSTANCEID;

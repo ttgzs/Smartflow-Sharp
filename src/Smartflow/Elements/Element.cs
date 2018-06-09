@@ -13,11 +13,15 @@ using System.Xml.Serialization;
 using Smartflow.Enums;
 namespace Smartflow.Elements
 {
+
+    /// <summary>
+    /// 为兼容其他数据库，对ID、NAME 名称进行调整，与数据库保留关键字进行区分
+    /// </summary>
     [Serializable]
     public abstract class Element
     {
         [XmlAttribute("id")]
-        public virtual long ID
+        public virtual long IDENTIFICATION
         {
             get;
             set;
@@ -34,7 +38,7 @@ namespace Smartflow.Elements
         }
 
         [XmlAttribute("name")]
-        public virtual string NAME
+        public virtual string APPELLATION
         {
             get;
             set;

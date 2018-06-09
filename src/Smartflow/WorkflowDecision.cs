@@ -28,8 +28,8 @@ namespace Smartflow
             WorkflowDecision wfNode = new WorkflowDecision();
             wfNode.INSTANCEID = node.INSTANCEID;
             wfNode.NID = node.NID;
-            wfNode.ID = node.ID;
-            wfNode.NAME = node.NAME;
+            wfNode.IDENTIFICATION = node.IDENTIFICATION;
+            wfNode.APPELLATION = node.APPELLATION;
             wfNode.NodeType = node.NodeType;
             return wfNode;
         }
@@ -41,9 +41,9 @@ namespace Smartflow
         public Transition GetTransition()
         {
             Command CMD = GetExecuteCmd();
-            IDbConnection connect = DapperFactory.CreateConnection(CMD.DBCATEGORY, CMD.CONNECTION);
+            IDbConnection connect = DapperFactory.CreateConnection(CMD.DBCATEGORY, CMD.CONNECTE);
             DataTable resultSet = new DataTable(Guid.NewGuid().ToString());
-            using (IDataReader reader = connect.ExecuteReader(CMD.Text, new { INSTANCEID = INSTANCEID }))
+            using (IDataReader reader = connect.ExecuteReader(CMD.SCRIPT, new { INSTANCEID = INSTANCEID }))
             {
                 resultSet.Load(reader);
                 reader.Close();

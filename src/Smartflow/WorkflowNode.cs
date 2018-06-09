@@ -33,7 +33,7 @@ namespace Smartflow
                     decisionTransition = decision.GetTransition();
                     an = this.GetNode(decisionTransition.DESTINATION);
                 }
-                transition.NAME = decisionTransition.NAME;
+                transition.APPELLATION = decisionTransition.APPELLATION;
             }
             return this.Transitions;
         }
@@ -53,8 +53,8 @@ namespace Smartflow
         {
             WorkflowNode wfNode = new WorkflowNode();
             wfNode.NID = node.NID;
-            wfNode.ID = node.ID;
-            wfNode.NAME = node.NAME;
+            wfNode.IDENTIFICATION = node.IDENTIFICATION;
+            wfNode.APPELLATION = node.APPELLATION;
             wfNode.NodeType = node.NodeType;
             wfNode.INSTANCEID = node.INSTANCEID;
             wfNode.Transitions = wfNode.QueryWorkflowNode(node.NID);
