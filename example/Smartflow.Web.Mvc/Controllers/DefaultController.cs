@@ -21,12 +21,12 @@ namespace Smartflow.Web.Controllers
 
         public ActionResult List()
         {
-            return View(WorkflowXmlService.GetWorkflowXmlList());
+            return View(WorkflowStructureService.GetWorkflowStructureList());
         }
 
         public JsonResult Delete(string WFID)
         {
-            WorkflowXmlService.Delete(WFID);
+            WorkflowStructureService.Delete(WFID);
             return Json(true);
         }
 

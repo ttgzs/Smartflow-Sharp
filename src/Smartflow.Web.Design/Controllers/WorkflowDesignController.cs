@@ -25,23 +25,23 @@ namespace Smartflow.Web.Design.Controllers
             return View();
         }
 
-        public JsonResult GetWorkflowXml(string WFID)
+        public JsonResult GetWorkflowStructure(string WFID)
         {
-            WorkflowXml model = designService.GetWorkflowXml(WFID);
+            WorkflowStructure model = designService.GetWorkflowStructure(WFID);
             return Json(model);
         }
 
-        public JsonResult Save(WorkflowXml model)
+        public JsonResult Save(WorkflowStructure model)
         {
             if (String.IsNullOrEmpty(model.IDENTIFICATION))
             {
                 model.IDENTIFICATION = Guid.NewGuid().ToString();
-                model.XML = HttpUtility.UrlDecode(model.XML);
+                model.FILESTRUCTURE = HttpUtility.UrlDecode(model.FILESTRUCTURE);
                 designService.Persistent(model);
             }
             else
             {
-                model.XML = HttpUtility.UrlDecode(model.XML);
+                model.FILESTRUCTURE = HttpUtility.UrlDecode(model.FILESTRUCTURE);
                 designService.Update(model);
             }
             return Json(true);

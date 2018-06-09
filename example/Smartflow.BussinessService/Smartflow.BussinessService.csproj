@@ -53,7 +53,7 @@
     <Compile Include="Services\RecordService.cs" />
     <Compile Include="WorkflowService\BaseWorkflowEngine.cs" />
     <Compile Include="Services\UserService.cs" />
-    <Compile Include="WorkflowService\WorkflowXmlService.cs" />
+    <Compile Include="WorkflowService\WorkflowStructureService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Dapper\Dapper.csproj">

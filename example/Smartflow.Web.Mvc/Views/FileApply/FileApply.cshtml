@@ -108,7 +108,7 @@
             <table class="layui-table">
                 <tr>
                     <td style="width:100px;text-align:right;">文件名称</td>
-                    <td>@Html.TextBoxFor(m => m.NAME, new { @class = "layui-input" })</td>
+                    <td>@Html.TextBoxFor(m => m.FNAME, new { @class = "layui-input" })</td>
                     <td style="width:100px;text-align:right;">申请密级</td>
                     <td>@Html.DropDownListFor(m => m.SECRETGRADE, (ViewData["SECRET"] as IEnumerable<SelectListItem>), new { @class = "layui-select" })</td>
                 </tr>

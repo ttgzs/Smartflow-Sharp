@@ -19,7 +19,7 @@ namespace Smartflow.BussinessService.Models
             set;
         }
 
-        public string NAME
+        public string FNAME
         {
             get;
             set;

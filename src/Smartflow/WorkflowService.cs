@@ -26,9 +26,9 @@ namespace Smartflow
             return instance;
         }
 
-        public string Start(WorkflowXml workflowXml)
+        public string Start(WorkflowStructure workflowStructure)
         {
-            Workflow workflow = XmlConfiguration.ParseflowXml<Workflow>(workflowXml.XML);
+            Workflow workflow = XmlConfiguration.ParseflowXml<Workflow>(workflowStructure.FILESTRUCTURE);
             List<Element> elements = new List<Element>();
             elements.Add(workflow.StartNode);
             elements.AddRange(workflow.ChildNode);
@@ -37,8 +37,7 @@ namespace Smartflow
 
             elements.Add(workflow.EndNode);
 
-            //创建关联实例
-            string instaceID = CreateWorkflowInstance(workflow.StartNode.IDENTIFICATION, workflowXml.IDENTIFICATION, workflowXml.IMAGE);
+            string instaceID = CreateWorkflowInstance(workflow.StartNode.IDENTIFICATION, workflowStructure.IDENTIFICATION, workflowStructure.JSSTRUCTURE);
             foreach (Element element in elements)
             {
                 element.INSTANCEID = instaceID;
@@ -46,8 +45,6 @@ namespace Smartflow
             }
             return instaceID;
         }
-
-  
 
         public void Kill(WorkflowInstance instance)
         {
@@ -75,8 +72,6 @@ namespace Smartflow
                 instance.Transfer();
             }
         }
-
-   
 
         protected string CreateWorkflowInstance(long startNID, string flowID,string flowImage)
         {

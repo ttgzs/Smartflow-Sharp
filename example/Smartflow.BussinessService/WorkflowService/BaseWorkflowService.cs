@@ -203,10 +203,10 @@ namespace Smartflow.BussinessService.WorkflowService
             return WorkflowInstance.GetInstance(instanceID).Current.Groups;
         }
 
-        public string Start(string WFID)
+        public string Start(string identification)
         {
-            WorkflowXml wfXml = WorkflowXmlService.GetWorkflowXml(WFID);
-            return context.Start(wfXml);
+            WorkflowStructure workflowStructure = WorkflowStructureService.GetWorkflowStructure(identification);
+            return context.Start(workflowStructure);
         }
 
         public void Jump(string instanceID, string transitionID, long actorID, string actorName, dynamic data)

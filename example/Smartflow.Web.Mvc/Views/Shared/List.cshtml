@@ -1,4 +1,4 @@
-﻿@model System.Collections.Generic.IEnumerable<Smartflow.Infrastructure.WorkflowXml>
+﻿@model System.Collections.Generic.IEnumerable<Smartflow.Infrastructure.WorkflowStructure>
 @using Smartflow.Infrastructure
 @{
     Layout = null;
@@ -42,13 +42,13 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (WorkflowXml wf in Model)
+                @foreach (WorkflowStructure wf in Model)
                 {
                     <tr>
-                        <td>@wf.NAME</td>
+                        <td>@wf.APPELLATION</td>
                         <td style="width:120px;text-align:center;">
-                            <a class="layui-btn layui-btn-xs" href="javascript:openWin('../../Smartflow.Web.Design/WorkflowDesign/Design?id=@wf.WFID',960,560)">修改</a>
-                            <a class="layui-btn layui-btn-danger layui-btn-xs" href="javascript:delWf('@wf.WFID')">删除</a>
+                            <a class="layui-btn layui-btn-xs" href="javascript:openWin('../../Smartflow.Web.Design/WorkflowDesign/Design?id=@wf.IDENTIFICATION',960,560)">修改</a>
+                            <a class="layui-btn layui-btn-danger layui-btn-xs" href="javascript:delWf('@wf.IDENTIFICATION')">删除</a>
                         </td>
                     </tr>
                 }

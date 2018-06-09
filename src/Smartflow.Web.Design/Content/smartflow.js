@@ -739,11 +739,11 @@
             RC: RC,
             NC: nodeCollection,
             PC: pathCollection
-        }))
+        }));
 
         return {
-            XML: escape(build.toString()),
-            IMAGE: imageData
+            FILESTRUCTURE: escape(build.toString()),
+            JSSTRUCTURE: imageData
         };
     }
 

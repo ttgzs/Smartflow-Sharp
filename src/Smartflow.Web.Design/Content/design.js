@@ -19,8 +19,8 @@
         }
         if (wfName) {
             var data = $.extend(exportToObject, {
-                NAME: wfName,
-                WFID: designConfig.id
+                APPELLATION: wfName,
+                IDENTIFICATION: designConfig.id
             });
 
             var settings = {
@@ -70,8 +70,8 @@
                 url: designConfig.instanceUrl,
                 data: { WFID: designConfig.id },
                 success: function (serverData) {
-                    flowName = serverData.NAME;
-                    SMF.revert(serverData.IMAGE);
+                    flowName = serverData.APPELLATION;
+                    SMF.revert(serverData.JSSTRUCTURE);
                 }
             };
             ajaxService(settings);

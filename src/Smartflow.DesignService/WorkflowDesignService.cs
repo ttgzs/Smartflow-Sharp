@@ -15,23 +15,23 @@ namespace Smartflow.DesignService
             get { return SqlHelper.CreateConnection(); }
         }
 
-        public void Persistent(WorkflowXml workflowXml)
+        public void Persistent(WorkflowStructure workflowStructure)
         {
-            string sql = " INSERT INTO T_FLOWXML(IDENTIFICATION,APPELLATION,XML,IMAGE) VALUES(@IDENTIFICATION,@APPELLATION,@XML,@IMAGE) ";
-            Connection.Execute(sql, workflowXml);
+            string sql = " INSERT INTO T_STRUCTURE(IDENTIFICATION,APPELLATION,FILESTRUCTURE,JSSTRUCTURE) VALUES(@IDENTIFICATION,@APPELLATION,@FILESTRUCTURE,@JSSTRUCTURE) ";
+            Connection.Execute(sql, workflowStructure);
         }
 
-        public void Update(WorkflowXml workflowXml)
+        public void Update(WorkflowStructure workflowStructure)
         {
-            string sql = " UPDATE T_FLOWXML SET APPELLATION=@APPELLATION,XML=@XML,IMAGE=@IMAGE WHERE IDENTIFICATION=@IDENTIFICATION ";
-            Connection.Execute(sql, workflowXml);
+            string sql = " UPDATE T_STRUCTURE SET APPELLATION=@APPELLATION,FILESTRUCTURE=@FILESTRUCTURE,JSSTRUCTURE=@JSSTRUCTURE WHERE IDENTIFICATION=@IDENTIFICATION ";
+            Connection.Execute(sql, workflowStructure);
         }
 
-        public WorkflowXml GetWorkflowXml(string IDENTIFICATION)
+        public WorkflowStructure GetWorkflowStructure(string IDENTIFICATION)
         {
-            string sql = " SELECT * FROM T_FLOWXML WHERE IDENTIFICATION=@IDENTIFICATION ";
-            return Connection.Query<WorkflowXml>(sql, new { IDENTIFICATION = IDENTIFICATION })
-                .FirstOrDefault<WorkflowXml>();
+            string sql = " SELECT * FROM T_STRUCTURE WHERE IDENTIFICATION=@IDENTIFICATION ";
+            return Connection.Query<WorkflowStructure>(sql, new { IDENTIFICATION = IDENTIFICATION })
+                .FirstOrDefault<WorkflowStructure>();
         }
     }
 }

@@ -33,7 +33,7 @@ namespace Smartflow.BussinessService.Services
 
         public DataTable GetStatisticsDataTable()
         {
-            string executeSql = @" SELECT USERNAME,EMPLOYEENAME,Z.NAME FROM DBO.T_UMR X,DBO.T_USER Y,DBO.T_ROLE  Z WHERE X.RID=Z.ID AND Y.ID=X.UUID  ORDER BY Y.ID ";
+            string executeSql = @" SELECT USERNAME,EMPLOYEENAME,Z.APPELLATION FROM T_UMR X,T_USER Y,T_ROLE  Z WHERE X.RID=Z.IDENTIFICATION AND Y.ID=X.UUID  ORDER BY Y.ID ";
             DataTable dt = new DataTable();
             using (IDataReader dr = Connection.ExecuteReader(executeSql))
             {

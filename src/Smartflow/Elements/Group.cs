@@ -22,12 +22,12 @@ namespace Smartflow.Elements
 
         internal override void Persistent()
         {
-            string sql = "INSERT INTO T_GROUP(NID,APPELLATION,RNID,APPELLATION,INSTANCEID) VALUES(@NID,@IDENTIFICATION,@RNID,@APPELLATION,@INSTANCEID)";
+            string sql = "INSERT INTO T_GROUP(NID,IDENTIFICATION,RNID,APPELLATION,INSTANCEID) VALUES(@NID,@IDENTIFICATION,@RNID,@APPELLATION,@INSTANCEID)";
             Connection.Execute(sql, new
             {
                 NID = Guid.NewGuid().ToString(),
-                RNID = RNID,
                 IDENTIFICATION = IDENTIFICATION,
+                RNID = RNID,
                 APPELLATION = APPELLATION,
                 INSTANCEID = INSTANCEID
             });

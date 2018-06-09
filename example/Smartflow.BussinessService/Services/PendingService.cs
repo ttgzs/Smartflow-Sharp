@@ -11,7 +11,7 @@ namespace Smartflow.BussinessService.Services
     {
         public void Persistent(Pending model)
         {
-            string sql = "INSERT INTO T_PENDING(ACTORID,NODEID,INSTANCEID,NAME,ACTION) VALUES (@ACTORID,@NODEID,@INSTANCEID,@NAME,@ACTION)";
+            string sql = "INSERT INTO T_PENDING(ACTORID,NODEID,INSTANCEID,APPELLATION,ACTION) VALUES (@ACTORID,@NODEID,@INSTANCEID,@APPELLATION,@ACTION)";
             Connection.Execute(sql, model);
         }
         public List<Pending> Query(long actorID)

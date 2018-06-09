@@ -51,7 +51,7 @@ namespace Smartflow
         /// </summary>
         /// <param name="flowID">文件ID</param>
         /// <returns>返回实例ID</returns>
-        public string Start(WorkflowXml workflowXml)
+        public string Start(WorkflowStructure workflowXml)
         {
             return workflowService.Start(workflowXml);
         }

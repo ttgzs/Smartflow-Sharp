@@ -9,7 +9,7 @@ using System.Text;
 
 namespace Smartflow.Infrastructure
 {
-    public class WorkflowXml
+    public class WorkflowStructure
     {
         public string IDENTIFICATION
         {
@@ -23,13 +23,13 @@ namespace Smartflow.Infrastructure
             set;
         }
 
-        public string XML
+        public string FILESTRUCTURE
         {
             get;
             set;
         }
 
-        public string IMAGE
+        public string JSSTRUCTURE
         {
             get;
             set;

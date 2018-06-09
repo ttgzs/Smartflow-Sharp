@@ -42,7 +42,7 @@ namespace Smartflow
             set;
         }
 
-        public string Image
+        public string JSSTRUCTURE
         {
             get;
             set;
@@ -58,14 +58,14 @@ namespace Smartflow
             WorkflowInstance workflowInstance = new WorkflowInstance();
             workflowInstance.InstanceID = instanceID;
 
-            string sql = " SELECT X.INSTANCEID,X.RNID,X.IMAGE,Y.NAME,Y.NID,Y.IDENTIFICATION,Y.NODETYPE,Y.INSTANCEID FROM T_INSTANCE X INNER JOIN  T_NODE Y  ON (X.INSTANCEID=Y.INSTANCEID AND X.RNID=Y.IDENTIFICATION) WHERE X.INSTANCEID=@INSTANCEID";
+            string sql = " SELECT X.INSTANCEID,X.RNID,X.JSSTRUCTURE,Y.APPELLATION,Y.NID,Y.IDENTIFICATION,Y.NODETYPE,Y.INSTANCEID FROM T_INSTANCE X INNER JOIN  T_NODE Y  ON (X.INSTANCEID=Y.INSTANCEID AND X.RNID=Y.IDENTIFICATION) WHERE X.INSTANCEID=@INSTANCEID";
 
             workflowInstance = workflowInstance.Connection.Query<WorkflowInstance, ASTNode, WorkflowInstance>(sql, (instance, node) =>
             {
                 instance.Current= WorkflowNode.ConvertToReallyType(node);
                 return instance;
 
-            }, param: new { INSTANCEID = instanceID }, splitOn: "NAME").FirstOrDefault<WorkflowInstance>();
+            }, param: new { INSTANCEID = instanceID }, splitOn: "APPELLATION").FirstOrDefault<WorkflowInstance>();
 
             return workflowInstance;
         }
@@ -104,7 +104,7 @@ namespace Smartflow
         internal static string CreateWorkflowInstance(long nodeID, string flowID,string flowImage)
         {
             string instanceID = Guid.NewGuid().ToString();
-            string sql = "INSERT INTO T_INSTANCE(INSTANCEID,RNID,FLOWID,STATE,IMAGE) VALUES(@INSTANCEID,@RNID,@FLOWID,@STATE,@IMAGE)";
+            string sql = "INSERT INTO T_INSTANCE(INSTANCEID,RNID,FLOWID,STATE,JSSTRUCTURE) VALUES(@INSTANCEID,@RNID,@FLOWID,@STATE,@JSSTRUCTURE)";
 
             DapperFactory.CreateWorkflowConnection().Execute(sql, new
             {
@@ -112,7 +112,7 @@ namespace Smartflow
                 RNID = nodeID,
                 FLOWID = flowID,
                 STATE = WorkflowInstanceState.Running.ToString(),
-                IMAGE=flowImage
+                JSSTRUCTURE = flowImage
             });
 
             return instanceID;
