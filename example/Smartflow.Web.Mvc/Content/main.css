@@ -69,14 +69,17 @@ body {
 .top {
     height: 80px;
     background-color: #259FE5;
-    vertical-align:middle;
-    line-height:80px;
+    /*line-height:80px;*/
 }
-.top span{
-   margin-left:20px;
+.top-header{
    font-size:20px;
    font-weight:bold;
    color:#FFF;
+   vertical-align:middle;
+   display:block;
+   line-height:80px;
+   padding-left:20px;
+   float:left;
 }
 
 .content {

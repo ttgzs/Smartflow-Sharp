@@ -14,6 +14,8 @@ namespace Smartflow.Web.Controllers
     {
         public ActionResult Main()
         {
+            User userInfo = System.Web.HttpContext.Current.Session["user"] as User;
+            ViewBag.EmployeeName = userInfo.EMPLOYEENAME;
             return View();
         }
 
@@ -38,6 +40,13 @@ namespace Smartflow.Web.Controllers
             User userInfo = System.Web.HttpContext.Current.Session["user"] as User;
             return View(new PendingService().Query(userInfo.ID));
         }
+
+        public JsonResult GetPendingCount()
+        {
+            User userInfo = System.Web.HttpContext.Current.Session["user"] as User;
+            return Json(new PendingService().Query(userInfo.ID).Count);
+        }
+
 
         public JsonResult GetUser(string userName)
         {

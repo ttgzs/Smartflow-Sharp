@@ -122,6 +122,7 @@
     <Compile Include="RouteConfig.cs" />
     <Content Include="Content\images\decision.png" />
     <Content Include="Content\images\grid16.png" />
+    <Content Include="Content\images\help.png" />
     <Content Include="Content\images\line.png" />
     <Content Include="Content\images\node.png" />
     <Content Include="Content\images\save.png" />

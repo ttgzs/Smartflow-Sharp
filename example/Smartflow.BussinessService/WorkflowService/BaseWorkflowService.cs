@@ -60,7 +60,7 @@ namespace Smartflow.BussinessService.WorkflowService
                             ACTION = executeContext.Operation.ToString(),
                             INSTANCEID = executeContext.Instance.InstanceID,
                             NODEID = GetCurrentNode(executeContext.Instance.InstanceID).NID,
-                            NAME = string.Format("<a href='../Apply/Apply/{0}'>你有待办任务。</a>", executeContext.Data.bussinessID)
+                            NAME = string.Format("<a href=\"javascript:parent.window.document.getElementById('frmContent').src='../FileApply/FileApply/{0}'\">你有待办任务。</a>", executeContext.Data.bussinessID)
                         });
                     }
                     new PendingService().Delete(executeContext.Instance.Current.NID, executeContext.Instance.InstanceID);
@@ -95,7 +95,7 @@ namespace Smartflow.BussinessService.WorkflowService
                             ACTION = executeContext.Operation.ToString(),
                             INSTANCEID = executeContext.Instance.InstanceID,
                             NODEID = GetCurrentNode(executeContext.Instance.InstanceID).NID,
-                            NAME = string.Format("<a href='../Apply/Apply/{0}'>你有待办任务。</a>", dny.bussinessID)
+                            NAME = string.Format("<a href=\"javascript:;\" onclick=\"parent.window.document.getElementById('frmContent').src='../FileApply/FileApply/{0}'\">你有待办任务。</a>", dny.bussinessID)
                         });
                     }
 
@@ -115,7 +115,7 @@ namespace Smartflow.BussinessService.WorkflowService
                         ACTION = executeContext.Operation.ToString(),
                         INSTANCEID = executeContext.Instance.InstanceID,
                         NODEID = GetCurrentNode(executeContext.Instance.InstanceID).NID,
-                        NAME = string.Format("<a href='../Apply/Apply/{0}'>你有待办任务。</a>", dny.bussinessID)
+                        NAME = string.Format("<a href=\"javascript:;\" onclick=\"parent.window.document.getElementById('frmContent').src='../FileApply/FileApply/{0}'\">你有待办任务。</a>", dny.bussinessID)
                     });
                     new PendingService().Delete(executeContext.Instance.Current.NID, executeContext.Instance.InstanceID);
                  }
@@ -132,7 +132,7 @@ namespace Smartflow.BussinessService.WorkflowService
                             ACTION = executeContext.Operation.ToString(),
                             INSTANCEID = executeContext.Instance.InstanceID,
                             NODEID = GetCurrentNode(executeContext.Instance.InstanceID).NID,
-                            NAME = string.Format("<a href='../Apply/Apply/{0}'>你有待办任务。</a>", dny.bussinessID)
+                            NAME = string.Format("<a href=\"javascript:;\" onclick=\"parent.window.document.getElementById('frmContent').src='../FileApply/FileApply/{0}'\">你有待办任务。</a>", dny.bussinessID)
                         });
                     }
                     new PendingService().Delete(executeContext.Instance.Current.NID, executeContext.Instance.InstanceID);

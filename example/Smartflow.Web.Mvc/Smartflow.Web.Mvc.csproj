@@ -128,6 +128,9 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Content Include="Content\common.js" />
     <Content Include="Content\images\aiwrap.png" />
+    <Content Include="Content\images\message.png" />
+    <Content Include="Content\images\off.png" />
+    <Content Include="Content\images\user.png" />
     <Content Include="Content\images\web_login_bg.jpg" />
     <Content Include="Content\jquery.min.js" />
     <Content Include="Content\json2.js" />

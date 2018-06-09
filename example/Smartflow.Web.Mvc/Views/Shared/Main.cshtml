@@ -6,12 +6,90 @@
 <html>
 <head>
     <title>Smartflow-Sharp工作流管理平台</title>
+    <link href="~/Content/layui/css/layui.css" rel="stylesheet" />
     <link href="~/Content/main.css" rel="stylesheet" />
     <script src="~/Content/jquery.min.js"></script>
+    <script src="~/Content/layui/layui.all.js"></script>
+
+    <style>
+        .top-menu-container {
+            margin-right: 40px;
+        }
+
+        .top-menu {
+            float: right;
+        }
+
+        .top-menu-item {
+            height: 65px;
+            width: 70px;
+            display: inline-block;
+            padding-top: 48px;
+            cursor: pointer;
+            text-align: center;
+        }
+
+            .top-menu-item span {
+                color: #fff;
+                font-weight: 300;
+                font-size: 13px;
+            }
+    </style>
+    <script type="text/javascript">
+        $(function () {
+            $("#off").click(function () {
+                //具体逻辑就不写，仅为演示使用
+                window.location.href = '@Url.Action("Login", "Default")';
+            });
+        });
+
+        $(function () {
+
+            //仅演示:轮询查询待办数量
+            setInterval(function () {
+                $.ajax({
+                    url: '@Url.Action("GetPendingCount", "Default")',
+                    type: 'post',
+                    success: function (data) {
+                        $("#items").text(data);
+                    }
+                });
+            }, 1000 * 5);
+
+            $("#message").click(function () {
+                //iframe窗
+                layer.open({
+                    type: 2,
+                    title: "待办",
+                    closeBtn: 1, //不显示关闭按钮
+                    shade: 0,
+                    //shadeClose: true,
+                    area: ['400px', '400px'],
+                    offset: 'rb', //右下角弹出
+                    //time: 2000, //2秒后自动关闭
+                    anim: 2,
+                    content: ['@Url.Action("Pending","Default")', 'no'] //iframe的url，no代表不显示滚动条
+                });
+            });
+        });
+    </script>
 </head>
 <body class="mainFrame">
     <div class="top">
-        <span>Smartflow-Sharp 工作流管理平台</span>
+        <span class="top-header">Smartflow-Sharp 工作流管理平台</span>
+        <div class="top-menu-container">
+            <div class="top-menu">
+                <div class="top-menu-item" style="background:  url(../Content/images/user.png) no-repeat center center;">
+                    <span>@(ViewBag.EmployeeName)</span>
+                </div>
+                <div class="top-menu-item" style="background:  url(../Content/images/message.png) no-repeat center center;" id="message">
+                    <span>消息(<i style="color:red;padding-right:2px;" id="items">0</i>)</span>
+                </div>
+                <div class="top-menu-item" style="background:  url(../Content/images/off.png) no-repeat center center;" id="off">
+                    <span>注销</span>
+                </div>
+            </div>
+        </div>
     </div>
     <div class="content">
         <div class="left menu">
