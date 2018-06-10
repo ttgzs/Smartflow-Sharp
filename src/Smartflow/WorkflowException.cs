@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Smartflow
 {
-    public class WorkflowException:ApplicationException
+    public class WorkflowException : ApplicationException
     {
         public WorkflowException(Exception innerException)
             : base("Smartflow-Sharp", innerException)
@@ -13,10 +13,10 @@ namespace Smartflow
             WorkflowLogger.WriteLog(innerException.ToString());
         }
 
-        public WorkflowException()
-            : base()
+        public WorkflowException(Exception innerException, string instanceID)
+            : base("Smartflow-Sharp", innerException)
         {
-
+            WorkflowLogger.WriteLog(string.Format("流程实例ID:{0} 异常信息 {1} ", instanceID, innerException));
         }
 
         public WorkflowException(string message)

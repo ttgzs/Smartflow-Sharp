@@ -69,7 +69,7 @@ namespace Smartflow
             }
             catch (Exception ex)
             {
-                throw new WorkflowException(ex);
+                throw new WorkflowException(ex, INSTANCEID);
             }
         }
 
