@@ -51,10 +51,6 @@
         config = $.extend(config, option);
     }
 
-    function initEvent() {
-
-    }
-
     function loadRoleGrid(group) {
 
         var ajaxSettings = { url: config.roleUrl };
@@ -149,10 +145,10 @@
             if (cmdText != '' && cmdText && option.length > 0) {
                 var data = JSON.parse(unescape(option.attr("data")));
                 nx.command = {
-                    id: data.ID,
+                    id: data.IDENTIFICATION,
                     text: cmdText,
-                    connection: data.Connection,
-                    dbcategory: data.DbCategory,
+                    connecte: data.CONNECTE,
+                    dbcategory: data.DBCATEGORY,
                     commandtype: 'text'
                 };
             }
@@ -220,10 +216,10 @@
                      .append('value')
                      .append(config.equal)
                      .append(config.lQuotation)
-                     .append(this.ID)
+                     .append(this.IDENTIFICATION)
                      .append(config.rQuotation)
                      .append(config.end)
-                     .append(this.Name)
+                     .append(this.APPELLATION)
                      .append(config.beforeClose)
                      .append('option')
                      .append(config.afterClose);
