@@ -1,6 +1,7 @@
-﻿/*
+﻿/********************************************************************
  License: https://github.com/chengderen/Smartflow/blob/master/LICENSE 
  Home page: https://www.smartflow-sharp.com
+ ********************************************************************
  */
 using System;
 using System.Collections.Generic;
@@ -49,11 +50,11 @@ namespace Smartflow
         /// <summary>
         /// 启动工作流
         /// </summary>
-        /// <param name="flowID">文件ID</param>
+        /// <param name="workflowStructure">文件</param>
         /// <returns>返回实例ID</returns>
-        public string Start(WorkflowStructure workflowXml)
+        public string Start(WorkflowStructure workflowStructure)
         {
-            return workflowService.Start(workflowXml);
+            return workflowService.Start(workflowStructure);
         }
 
         /// <summary>
