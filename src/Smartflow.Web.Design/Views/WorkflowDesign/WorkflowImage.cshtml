@@ -17,7 +17,7 @@
             var draw = window.SMF.init({container:'drawing'}),
                 serverData=@Html.Raw(ViewBag.Result);
             if (serverData) {
-                SMF.revert(serverData.FILESTRUCTURE, true, serverData.Current.JSSTRUCTURE);
+                SMF.revert(serverData.JSSTRUCTURE, true, serverData.Current.IDENTIFICATION);
             }
         });
 </script>

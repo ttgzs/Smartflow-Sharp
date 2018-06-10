@@ -29,7 +29,7 @@ namespace Smartflow.Elements
         /// <summary>
         /// 连接字符串
         /// </summary>
-        [XmlElement("connection")]
+        [XmlElement("connecte")]
         public string CONNECTE
         {
             get;

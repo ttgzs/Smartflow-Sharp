@@ -145,10 +145,10 @@
             if (cmdText != '' && cmdText && option.length > 0) {
                 var data = JSON.parse(unescape(option.attr("data")));
                 nx.command = {
-                    id: data.IDENTIFICATION,
+                    id: data.Identification,
                     text: cmdText,
-                    connecte: data.CONNECTE,
-                    dbcategory: data.DBCATEGORY,
+                    connecte: data.Connecte,
+                    dbcategory: data.DbCategory,
                     commandtype: 'text'
                 };
             }
@@ -216,10 +216,10 @@
                      .append('value')
                      .append(config.equal)
                      .append(config.lQuotation)
-                     .append(this.IDENTIFICATION)
+                     .append(this.Identification)
                      .append(config.rQuotation)
                      .append(config.end)
-                     .append(this.APPELLATION)
+                     .append(this.Appellation)
                      .append(config.beforeClose)
                      .append('option')
                      .append(config.afterClose);
