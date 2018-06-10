@@ -145,8 +145,8 @@
             if (cmdText != '' && cmdText && option.length > 0) {
                 var data = JSON.parse(unescape(option.attr("data")));
                 nx.command = {
-                    id: data.Identification,
-                    text: cmdText,
+                    identification: data.Identification,
+                    script: cmdText,
                     connecte: data.Connecte,
                     dbcategory: data.DbCategory,
                     commandtype: 'text'
@@ -180,8 +180,8 @@
             }
             if (nx.command) {
                 var cmd = nx.command;
-                $(cmdTextSelector).val(cmd.text);
-                $(ruleSelector).val(cmd.id);
+                $(cmdTextSelector).val(cmd.script);
+                $(ruleSelector).val(cmd.identification);
             }
             loadSelect();
         } else {

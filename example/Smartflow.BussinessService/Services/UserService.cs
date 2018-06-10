@@ -12,7 +12,7 @@ namespace Smartflow.BussinessService.Services
     {
         public List<User> GetUserList(string roleIDs)
         {
-            string executeSql = @"SELECT * FROM T_USER WHERE ID IN (SELECT UUID FROM T_UMR  WHERE RID IN (" + roleIDs + "))";
+            string executeSql = @"SELECT * FROM T_USER WHERE IDENTIFICATION IN (SELECT UUID FROM T_UMR  WHERE RID IN (" + roleIDs + "))";
             return Connection.Query<User>(executeSql).ToList();
         }
 
@@ -33,7 +33,7 @@ namespace Smartflow.BussinessService.Services
 
         public DataTable GetStatisticsDataTable()
         {
-            string executeSql = @" SELECT USERNAME,EMPLOYEENAME,Z.APPELLATION FROM T_UMR X,T_USER Y,T_ROLE  Z WHERE X.RID=Z.IDENTIFICATION AND Y.ID=X.UUID  ORDER BY Y.ID ";
+            string executeSql = @" SELECT USERNAME,EMPLOYEENAME,Z.APPELLATION FROM T_UMR X,T_USER Y,T_ROLE  Z WHERE X.RID=Z.IDENTIFICATION AND Y.IDENTIFICATION=X.UUID  ORDER BY Y.IDENTIFICATION ";
             DataTable dt = new DataTable();
             using (IDataReader dr = Connection.ExecuteReader(executeSql))
             {
@@ -45,7 +45,7 @@ namespace Smartflow.BussinessService.Services
 
         public List<User> GetPendingUserList(string nodeID, string instanceID)
         {
-            string executeSql = @" SELECT * FROM T_USER WHERE ID IN (SELECT ACTORID FROM DBO.T_PENDING WHERE NODEID=@NODEID AND INSTANCEID=@INSTANCEID) ";
+            string executeSql = @" SELECT * FROM T_USER WHERE IDENTIFICATION IN (SELECT ACTORID FROM T_PENDING WHERE NODEID=@NODEID AND INSTANCEID=@INSTANCEID) ";
             return Connection.Query<User>(executeSql, new
             {
                 NODEID = nodeID,

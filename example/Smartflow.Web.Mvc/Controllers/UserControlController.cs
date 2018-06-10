@@ -72,7 +72,7 @@ namespace Smartflow.Web.Controllers
         public JsonResult UndoCheck(string instanceID, string bussinessID)
         {
             User userInfo = System.Web.HttpContext.Current.Session["user"] as User;
-            bwkf.UndoSubmit(instanceID, userInfo.ID,bussinessID);
+            bwkf.UndoSubmit(instanceID, userInfo.IDENTIFICATION,bussinessID);
             return Json(true, JsonRequestBehavior.AllowGet);
         }
 
@@ -94,10 +94,10 @@ namespace Smartflow.Web.Controllers
             switch (action.ToLower())
             {
                 case "rollback":
-                    bwkf.Rollback(instanceID, userInfo.ID, userInfo.EMPLOYEENAME, data);
+                    bwkf.Rollback(instanceID, userInfo.IDENTIFICATION, userInfo.EMPLOYEENAME, data);
                     break;
                 default:
-                    bwkf.Jump(instanceID, transitionID, userInfo.ID, userInfo.EMPLOYEENAME, data);
+                    bwkf.Jump(instanceID, transitionID, userInfo.IDENTIFICATION, userInfo.EMPLOYEENAME, data);
                     break;
             }
             return Json(true);

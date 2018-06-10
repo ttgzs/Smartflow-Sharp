@@ -26,7 +26,7 @@ namespace Smartflow.Web.Controllers
 
         public ActionResult Submit(Apply model)
         {
-            model.INSTANCEID = bwfs.Start(model.WFID);
+            model.INSTANCEID = bwfs.Start(model.STRUCTUREID);
             model.STATUS = 1;
             fileApplyService.Persistent(model);
             return RedirectToAction("FileApplyList");
@@ -54,7 +54,7 @@ namespace Smartflow.Web.Controllers
             {
                 Apply mdl = fileApplyService.GetInstance(long.Parse(id));
                 GenerateSecretViewData(mdl.SECRETGRADE);
-                GenerateWFViewData(mdl.WFID);
+                GenerateWFViewData(mdl.STRUCTUREID);
 
                 if (mdl.STATUS == 1)
                 {

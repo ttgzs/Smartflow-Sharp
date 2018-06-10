@@ -7,7 +7,7 @@ namespace Smartflow.BussinessService.Models
 {
     public class User
     {
-        public long ID
+        public long IDENTIFICATION
         {
             get;
             set;

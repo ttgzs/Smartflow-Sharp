@@ -100,7 +100,7 @@ namespace Smartflow
 
                 long transitionTo =current.Transitions
                                   .FirstOrDefault(e => e.NID == context.TransitionID).DESTINATION;
-
+                
                 current.SetActor(context.ActorID, WorkflowAction.Jump);
                 instance.Jump(transitionTo);
 
@@ -246,7 +246,7 @@ namespace Smartflow
             workflowService.Processing(new WorkflowProcess()
             {
                 RNID = executeContext.To.NID,
-                SOURCE = executeContext.From.IDENTIFICATION,
+                ORIGIN = executeContext.From.IDENTIFICATION,
                 DESTINATION = executeContext.To.IDENTIFICATION,
                 TRANSITIONID = executeContext.TransitionID,
                 INSTANCEID = executeContext.Instance.InstanceID,

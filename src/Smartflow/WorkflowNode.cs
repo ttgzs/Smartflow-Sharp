@@ -70,7 +70,7 @@ namespace Smartflow
         public WorkflowNode GetFromNode()
         {
             if (FromTransition == null) return null;
-            ASTNode node = GetNode(FromTransition.SOURCE);
+            ASTNode node = GetNode(FromTransition.ORIGIN);
             return WorkflowNode.ConvertToReallyType(node);    
         }
 
@@ -96,11 +96,11 @@ namespace Smartflow
             WorkflowProcess process = WorkflowProcess.GetWorkflowProcessInstance(INSTANCEID, NID);
             if (process != null && NodeType != WorkflowNodeCategeory.Start)
             {
-                ASTNode n = GetNode(process.SOURCE);
+                ASTNode n = GetNode(process.ORIGIN);
                 while (n.NodeType == WorkflowNodeCategeory.Decision)
                 {
                     process = WorkflowProcess.GetWorkflowProcessInstance(INSTANCEID, n.NID);
-                    n = GetNode(process.SOURCE);
+                    n = GetNode(process.ORIGIN);
 
                     if (n.NodeType == WorkflowNodeCategeory.Start)
                         break;

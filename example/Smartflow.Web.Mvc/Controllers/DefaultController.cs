@@ -38,13 +38,13 @@ namespace Smartflow.Web.Controllers
         public ActionResult Pending()
         {
             User userInfo = System.Web.HttpContext.Current.Session["user"] as User;
-            return View(new PendingService().Query(userInfo.ID));
+            return View(new PendingService().Query(userInfo.IDENTIFICATION));
         }
 
         public JsonResult GetPendingCount()
         {
             User userInfo = System.Web.HttpContext.Current.Session["user"] as User;
-            return Json(new PendingService().Query(userInfo.ID).Count);
+            return Json(new PendingService().Query(userInfo.IDENTIFICATION).Count);
         }
 
 

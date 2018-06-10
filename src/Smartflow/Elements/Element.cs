@@ -20,7 +20,7 @@ namespace Smartflow.Elements
     [Serializable]
     public abstract class Element
     {
-        [XmlAttribute("id")]
+        [XmlAttribute("identification")]
         public virtual long IDENTIFICATION
         {
             get;
@@ -37,7 +37,7 @@ namespace Smartflow.Elements
             set;
         }
 
-        [XmlAttribute("name")]
+        [XmlAttribute("appellation")]
         public virtual string APPELLATION
         {
             get;

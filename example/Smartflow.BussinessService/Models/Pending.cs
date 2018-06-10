@@ -7,7 +7,7 @@ namespace Smartflow.BussinessService.Models
 {
     public class Pending
     {
-        public long ID
+        public long IDENTIFICATION
         {
             get;
             set;

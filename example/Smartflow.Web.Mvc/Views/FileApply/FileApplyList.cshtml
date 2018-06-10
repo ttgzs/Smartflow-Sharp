@@ -52,8 +52,8 @@
                         <td style="width:70px;text-align:center;">@mdl.SECRETGRADE</td>
                         <td style="text-align:left;">@mdl.DESCRIPTION</td>
                         <td style="width:180px;text-align:center;">
-                            <a class="layui-btn layui-btn-primary layui-btn-xs" href="@Url.Action("FileApply", "FileApply", new { id=mdl.AUTOID })" target="_self">查看</a>
-                            <a class="layui-btn layui-btn-danger layui-btn-xs" href="javascript:delApply('@mdl.AUTOID')">删除</a>
+                            <a class="layui-btn layui-btn-primary layui-btn-xs" href="@Url.Action("FileApply", "FileApply", new { id=mdl.IDENTIFICATION })" target="_self">查看</a>
+                            <a class="layui-btn layui-btn-danger layui-btn-xs" href="javascript:delApply('@mdl.IDENTIFICATION')">删除</a>
                         </td>
                     </tr>
                 }

@@ -7,7 +7,7 @@ namespace Smartflow.BussinessService.Models
 {
     public class Apply
     {
-        public long AUTOID
+        public long IDENTIFICATION
         {
             get;
             set;
@@ -30,8 +30,8 @@ namespace Smartflow.BussinessService.Models
             get;
             set;
         }
-
-        public string WFID
+        
+        public string STRUCTUREID
         {
             get;
             set;

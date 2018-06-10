@@ -3,6 +3,7 @@
  Home page: https://github.com/chengderen/Smartflow
  */
 (function ($) {
+
     var
         util = {
             ie: (!!window.ActiveXObject || "ActiveXObject" in window)
@@ -42,6 +43,12 @@
             from: 'from',
             actor: 'actor',
             transition: 'transition'
+        },
+        attributeMap = {
+            id: 'identification',
+            name: 'appellation',
+            from: 'origin',
+            to: 'destination'
         };
 
     $.extend(Array.prototype, {
@@ -90,7 +97,7 @@
         this.brush = undefined;
         //节点中文名称
         this.name = name;
-        //节点类别（LINE、NODE、START、END）
+        //节点类别（LINE、NODE、START、END,DECISION）
         this.category = category;
         this.uniqueId = undefined;
         //禁用事件
@@ -114,7 +121,7 @@
             this.addClass(className);
         }
     };
-  
+
     function Line() {
         this.x1 = 0;
         this.y1 = 0;
@@ -176,7 +183,7 @@
         this.cy = 10;
         this.disX = 0;
         this.disY = 0;
-        this.vertical = (util.ie ? 6: 0);
+        this.vertical = (util.ie ? 6 : 0);
         this.group = [];
         this.actors = [];
         Node.base.Constructor.call(this, "node", "node");
@@ -278,7 +285,7 @@
                     instance.brush.attr({ x: (instance.x2 - instance.x1) / 2 + instance.x1, y: (instance.y2 - instance.y1) / 2 + instance.y1 });
                 }
             });
-            
+
             setTimeout(function () {
                 //判断ie是否支持
                 if (util.ie) {
@@ -297,7 +304,7 @@
 
             eachAttributs(build, self);
             build.append(config.end);
-           
+
             $.each(self.group, function () {
 
                 build.append(config.start)
@@ -321,24 +328,27 @@
                     build.append(config.start)
                          .append(config.transition)
                          .append(config.space)
-                         .append('name')
+                         .append(attributeMap['name'])
                          .append(config.equal)
                          .append(config.lQuotation)
                          .append(L.name)
                          .append(config.rQuotation)
                          .append(config.space)
-                         .append('to')
+                         .append(attributeMap['to'])
                          .append(config.equal)
                          .append(config.lQuotation)
                          .append(N.uniqueId)
                          .append(config.rQuotation)
-                         .append(config.space)
-                         .append('expression')
-                         .append(config.equal)
-                         .append(config.lQuotation)
-                         .append(L.expression)
-                         .append(config.rQuotation)
-                         .append(config.afterClose);
+                         .append(config.space);
+
+                    if (self.category === 'decision') {
+                        build.append('expression')
+                             .append(config.equal)
+                             .append(config.lQuotation)
+                             .append(L.expression)
+                             .append(config.rQuotation)
+                    }
+                    build.append(config.afterClose);
                 }
             });
 
@@ -359,7 +369,7 @@
                 var propertyName = 'uniqueId'
                 $.each(['id', 'name'], function (i, p) {
                     build.append(config.space)
-                         .append(p)
+                         .append(attributeMap[p])
                          .append(config.equal)
                          .append(config.lQuotation)
                          .append(p === 'id' && (attribute !== 'group' && attribute !== 'actor') ? reference[propertyName] : reference[p])
@@ -375,7 +385,6 @@
                    && findByElementId(this.id, 'from').length > 0);
         }
     });
-
 
     function Decision() {
         Decision.base.Constructor.call(this);
@@ -572,7 +581,7 @@
 
                 if (orientation === 'down' && nf.category === 'decision') {
                     instance.x1 = fromConnect.x;
-                    instance.y1 = fromRect.height()+fromRect.y();
+                    instance.y1 = fromRect.height() + fromRect.y();
                     instance.x2 = toRect.width() / 2 + toRect.x();
                     instance.y2 = toRect.y();
                 }
@@ -611,7 +620,6 @@
         return false;
     }
 
-    
     function initEvent() {
         $(document).unbind('mousedown');
         $(document).unbind('mouseup');

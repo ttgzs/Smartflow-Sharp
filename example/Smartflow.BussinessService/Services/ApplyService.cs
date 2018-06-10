@@ -12,7 +12,7 @@ namespace Smartflow.BussinessService.Services
     {
         public void Persistent(Apply model)
         {
-            if (model.AUTOID == 0)
+            if (model.IDENTIFICATION == 0)
             {
                 Insert(model);
             }
@@ -24,22 +24,22 @@ namespace Smartflow.BussinessService.Services
 
         protected void Insert(Apply model)
         {
-            string sql = "INSERT INTO T_APPLY(STATUS,FNAME,DESCRIPTION,WFID,INSTANCEID,SECRETGRADE) VALUES (@STATUS,@FNAME,@DESCRIPTION,@WFID,@INSTANCEID,@SECRETGRADE)";
+            string sql = "INSERT INTO T_APPLY(STATUS,FNAME,DESCRIPTION,STRUCTUREID,INSTANCEID,SECRETGRADE) VALUES (@STATUS,@FNAME,@DESCRIPTION,@STRUCTUREID,@INSTANCEID,@SECRETGRADE)";
             Connection.Execute(sql, model);
         }
 
         protected void Update(Apply model)
         {
-            string sql = "UPDATE T_APPLY SET FNAME=@FNAME,STATUS=@STATUS,DESCRIPTION=@DESCRIPTION,WFID=@WFID,INSTANCEID=@INSTANCEID,SECRETGRADE=@SECRETGRADE WHERE AUTOID=@AUTOID";
+            string sql = "UPDATE T_APPLY SET FNAME=@FNAME,STATUS=@STATUS,DESCRIPTION=@DESCRIPTION,STRUCTUREID=@STRUCTUREID,INSTANCEID=@INSTANCEID,SECRETGRADE=@SECRETGRADE WHERE IDENTIFICATION=@IDENTIFICATION";
             Connection.Execute(sql, model);
         }
 
-        public void Delete(long autoID)
+        public void Delete(long IDENTIFICATION)
         {
-            string sql = " DELETE FROM T_APPLY WHERE AUTOID=@AUTOID ";
+            string sql = " DELETE FROM T_APPLY WHERE IDENTIFICATION=@IDENTIFICATION ";
             Connection.Execute(sql, new
             {
-                AUTOID = autoID
+                IDENTIFICATION = IDENTIFICATION
             });
         }
 
@@ -49,11 +49,11 @@ namespace Smartflow.BussinessService.Services
             return Connection.Query<Apply>(sql).ToList();
         }
 
-        public Apply GetInstance(long autoID)
+        public Apply GetInstance(long IDENTIFICATION)
         {
-            string sql = "SELECT * FROM T_APPLY WHERE AUTOID=@AUTOID";
+            string sql = "SELECT * FROM T_APPLY WHERE IDENTIFICATION=@IDENTIFICATION";
 
-            return Connection.Query<Apply>(sql, new { AUTOID = autoID })
+            return Connection.Query<Apply>(sql, new { IDENTIFICATION = IDENTIFICATION })
                 .FirstOrDefault<Apply>();
         }
 

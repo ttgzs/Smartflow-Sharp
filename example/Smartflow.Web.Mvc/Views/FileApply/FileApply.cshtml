@@ -77,13 +77,13 @@
 
         function auditApply() {
             var instanceID = document.getElementById("INSTANCEID").value;
-            var bussinessID = document.getElementById("AUTOID").value;
+            var bussinessID = document.getElementById("IDENTIFICATION").value;
             openWin('@Url.Action("WorkflowCheck", "UserControl")' + "?instanceID=" + instanceID + "&bussinessID=" + bussinessID, 600, 300);
         }
 
         function undoCheck() {
             var instanceID = document.getElementById("INSTANCEID").value;
-            var bussinessID = document.getElementById("AUTOID").value;
+            var bussinessID = document.getElementById("IDENTIFICATION").value;
             $.ajax({
                 url: '@Url.Action("UndoCheck", "UserControl")' + "?instanceID=" + instanceID + "&bussinessID=" + bussinessID,
                 dataType: 'json',
@@ -95,14 +95,18 @@
         }
 
         function doRefresh() {
-            window.location.href = window.location.href + '?t=' + new Date().getTime();
+            var url = window.location.href;
+            if (url.indexOf("?") > -1) {
+                url = url.substring(0, url.lastIndexOf("?"));
+            }
+            window.location.href = url + '?t=' + new Date().getTime();
         }
     </script>
 </head>
 <body>
     <div class="layui-container">
         <form id="formFileApply">
-            @Html.HiddenFor(m => m.AUTOID)
+            @Html.HiddenFor(m => m.IDENTIFICATION)
             @Html.HiddenFor(m => m.INSTANCEID)
             @Html.HiddenFor(m => m.STATUS)
             <table class="layui-table">
@@ -115,7 +119,7 @@
                 <tr>
                     <td style="width:100px;text-align:right;">审批流程</td>
                     <td colspan="3">
-                        @Html.DropDownListFor(m => m.WFID, (ViewData["WFiles"] as IEnumerable<SelectListItem>), new { @class = "layui-select" })
+                        @Html.DropDownListFor(m => m.STRUCTUREID, (ViewData["WFiles"] as IEnumerable<SelectListItem>), new { @class = "layui-select" })
                     </td>
                 </tr>
                 <tr>

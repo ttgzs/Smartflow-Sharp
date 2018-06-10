@@ -40,7 +40,7 @@ namespace Smartflow
         /// <summary>
         /// 当前节点
         /// </summary>
-        public long SOURCE
+        public long ORIGIN
         {
             get;
             set;
@@ -100,17 +100,16 @@ namespace Smartflow
             set;
         }
 
-
         /// <summary>
         /// 将数据持久到数据库
         /// </summary>
         public void Persistent()
         {
-            string sql = "INSERT INTO T_PROCESS(NID,SOURCE,DESTINATION,TRANSITIONID,INSTANCEID,NODETYPE,RNID,OPERATION) VALUES(@NID,@SOURCE,@DESTINATION,@TRANSITIONID,@INSTANCEID,@NODETYPE,@RNID,@OPERATION)";
+            string sql = "INSERT INTO T_PROCESS(NID,ORIGIN,DESTINATION,TRANSITIONID,INSTANCEID,NODETYPE,RNID,OPERATION) VALUES(@NID,@ORIGIN,@DESTINATION,@TRANSITIONID,@INSTANCEID,@NODETYPE,@RNID,@OPERATION)";
             Connection.Execute(sql, new
             {
                 NID = Guid.NewGuid().ToString(),
-                SOURCE = SOURCE,
+                ORIGIN = ORIGIN,
                 DESTINATION = DESTINATION,
                 TRANSITIONID = TRANSITIONID,
                 INSTANCEID = INSTANCEID,

@@ -56,7 +56,7 @@ namespace Smartflow.BussinessService.WorkflowService
                     {
                         new PendingService().Persistent(new Pending()
                         {
-                            ACTORID = item.ID,
+                            ACTORID = item.IDENTIFICATION,
                             ACTION = executeContext.Operation.ToString(),
                             INSTANCEID = executeContext.Instance.InstanceID,
                             NODEID = GetCurrentNode(executeContext.Instance.InstanceID).NID,
@@ -91,7 +91,7 @@ namespace Smartflow.BussinessService.WorkflowService
                     {
                         new PendingService().Persistent(new Pending()
                         {
-                            ACTORID = item.ID,
+                            ACTORID = item.IDENTIFICATION,
                             ACTION = executeContext.Operation.ToString(),
                             INSTANCEID = executeContext.Instance.InstanceID,
                             NODEID = GetCurrentNode(executeContext.Instance.InstanceID).NID,
@@ -128,7 +128,7 @@ namespace Smartflow.BussinessService.WorkflowService
                     {
                         new PendingService().Persistent(new Pending()
                         {
-                            ACTORID = item.ID,
+                            ACTORID = item.IDENTIFICATION,
                             ACTION = executeContext.Operation.ToString(),
                             INSTANCEID = executeContext.Instance.InstanceID,
                             NODEID = GetCurrentNode(executeContext.Instance.InstanceID).NID,

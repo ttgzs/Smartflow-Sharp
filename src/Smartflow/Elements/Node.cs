@@ -42,9 +42,11 @@ namespace Smartflow.Elements
                 foreach (Transition transition in Transitions)
                 {
                     transition.RNID = this.NID;
-                    transition.SOURCE = this.IDENTIFICATION;
+                    transition.ORIGIN = this.IDENTIFICATION;
                     transition.INSTANCEID = INSTANCEID;
                     transition.Persistent();
+
+                    
                 }
             }
 

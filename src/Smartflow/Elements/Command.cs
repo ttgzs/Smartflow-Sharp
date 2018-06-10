@@ -19,7 +19,7 @@ namespace Smartflow.Elements
         /// <summary>
         /// 执行SQL语句
         /// </summary>
-        [XmlElement("text")]
+        [XmlElement("script")]
         public string SCRIPT
         {
             get;
