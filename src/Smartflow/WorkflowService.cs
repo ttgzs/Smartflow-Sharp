@@ -28,22 +28,27 @@ namespace Smartflow
 
         public string Start(WorkflowStructure workflowStructure)
         {
-            Workflow workflow = XmlConfiguration.ParseflowXml<Workflow>(workflowStructure.FILESTRUCTURE);
-            List<Element> elements = new List<Element>();
-            elements.Add(workflow.StartNode);
-            elements.AddRange(workflow.ChildNode);
-
-            elements.AddRange(workflow.ChildDecisionNode);
-
-            elements.Add(workflow.EndNode);
-
-            string instaceID = CreateWorkflowInstance(workflow.StartNode.IDENTIFICATION, workflowStructure.IDENTIFICATION, workflowStructure.JSSTRUCTURE);
-            foreach (Element element in elements)
+            try
             {
-                element.INSTANCEID = instaceID;
-                element.Persistent();
+                Workflow workflow = XmlConfiguration.ParseflowXml<Workflow>(workflowStructure.FILESTRUCTURE);
+                List<Element> elements = new List<Element>();
+                elements.Add(workflow.StartNode);
+                elements.AddRange(workflow.ChildNode);
+                elements.AddRange(workflow.ChildDecisionNode);
+                elements.Add(workflow.EndNode);
+
+                string instaceID = CreateWorkflowInstance(workflow.StartNode.IDENTIFICATION, workflowStructure.IDENTIFICATION, workflowStructure.JSSTRUCTURE);
+                foreach (Element element in elements)
+                {
+                    element.INSTANCEID = instaceID;
+                    element.Persistent();
+                }
+                return instaceID;
             }
-            return instaceID;
+            catch (Exception ex)
+            {
+                throw new WorkflowException(ex);
+            }
         }
 
         public void Kill(WorkflowInstance instance)

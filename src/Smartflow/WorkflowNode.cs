@@ -93,21 +93,27 @@ namespace Smartflow
         protected Transition GetHistoryTransition()
         {
             Transition transition = null;
-            WorkflowProcess process = WorkflowProcess.GetWorkflowProcessInstance(INSTANCEID, NID);
-            if (process != null && NodeType != WorkflowNodeCategeory.Start)
+            try
             {
-                ASTNode n = GetNode(process.ORIGIN);
-                while (n.NodeType == WorkflowNodeCategeory.Decision)
+                WorkflowProcess process = WorkflowProcess.GetWorkflowProcessInstance(INSTANCEID, NID);
+                if (process != null && NodeType != WorkflowNodeCategeory.Start)
                 {
-                    process = WorkflowProcess.GetWorkflowProcessInstance(INSTANCEID, n.NID);
-                    n = GetNode(process.ORIGIN);
+                    ASTNode n = GetNode(process.ORIGIN);
+                    while (n.NodeType == WorkflowNodeCategeory.Decision)
+                    {
+                        process = WorkflowProcess.GetWorkflowProcessInstance(INSTANCEID, n.NID);
+                        n = GetNode(process.ORIGIN);
 
-                    if (n.NodeType == WorkflowNodeCategeory.Start)
-                        break;
+                        if (n.NodeType == WorkflowNodeCategeory.Start)
+                            break;
+                    }
+                    transition = GetTransition(process.TRANSITIONID);
                 }
-                transition = GetTransition(process.TRANSITIONID);
             }
-
+            catch (Exception ex)
+            {
+                throw new WorkflowException(ex);
+            }
             return transition;
         }
 

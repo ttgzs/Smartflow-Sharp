@@ -78,6 +78,7 @@
     <Compile Include="WorkflowDecision.cs" />
     <Compile Include="WorkflowEngine.cs" />
     <Compile Include="WorkflowException.cs" />
+    <Compile Include="WorkflowLogger.cs" />
     <Compile Include="WorkflowFactoryProvider.cs" />
     <Compile Include="WorkflowInstance.cs" />
     <Compile Include="WorkflowNode.cs" />

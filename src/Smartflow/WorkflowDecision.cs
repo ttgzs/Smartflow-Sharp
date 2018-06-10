@@ -1,6 +1,7 @@
-﻿/*
+﻿/********************************************************************
  License: https://github.com/chengderen/Smartflow/blob/master/LICENSE 
  Home page: https://www.smartflow-sharp.com
+ ********************************************************************
  */
 using System;
 using System.Collections.Generic;
@@ -42,27 +43,34 @@ namespace Smartflow
         {
             Command CMD = GetExecuteCmd();
             IDbConnection connect = DapperFactory.CreateConnection(CMD.DBCATEGORY, CMD.CONNECTE);
-            DataTable resultSet = new DataTable(Guid.NewGuid().ToString());
-            using (IDataReader reader = connect.ExecuteReader(CMD.SCRIPT, new { INSTANCEID = INSTANCEID }))
+            try
             {
-                resultSet.Load(reader);
-                reader.Close();
-            }
-
-            Transition instance = null;
-            List<Transition> transitions = QueryWorkflowNode(NID);
-            if (resultSet.Rows.Count > 0)
-            {
-                foreach (Transition transition in transitions)
+                DataTable resultSet = new DataTable(Guid.NewGuid().ToString());
+                using (IDataReader reader = connect.ExecuteReader(CMD.SCRIPT, new { INSTANCEID = INSTANCEID }))
                 {
-                    if (resultSet.Select(transition.EXPRESSION).Length > 0)
+                    resultSet.Load(reader);
+                    reader.Close();
+                }
+
+                Transition instance = null;
+                List<Transition> transitions = QueryWorkflowNode(NID);
+                if (resultSet.Rows.Count > 0)
+                {
+                    foreach (Transition transition in transitions)
                     {
-                        instance = transition;
-                        break;
+                        if (resultSet.Select(transition.EXPRESSION).Length > 0)
+                        {
+                            instance = transition;
+                            break;
+                        }
                     }
                 }
+                return instance;
             }
-            return instance;
+            catch (Exception ex)
+            {
+                throw new WorkflowException(ex);
+            }
         }
 
         /// <summary>

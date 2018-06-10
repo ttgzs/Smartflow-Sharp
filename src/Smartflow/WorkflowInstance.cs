@@ -60,14 +60,21 @@ namespace Smartflow
 
             string sql = " SELECT X.INSTANCEID,X.RNID,X.JSSTRUCTURE,Y.APPELLATION,Y.NID,Y.IDENTIFICATION,Y.NODETYPE,Y.INSTANCEID FROM T_INSTANCE X INNER JOIN  T_NODE Y  ON (X.INSTANCEID=Y.INSTANCEID AND X.RNID=Y.IDENTIFICATION) WHERE X.INSTANCEID=@INSTANCEID";
 
-            workflowInstance = workflowInstance.Connection.Query<WorkflowInstance, ASTNode, WorkflowInstance>(sql, (instance, node) =>
+            try
             {
-                instance.Current= WorkflowNode.ConvertToReallyType(node);
-                return instance;
+                workflowInstance = workflowInstance.Connection.Query<WorkflowInstance, ASTNode, WorkflowInstance>(sql, (instance, node) =>
+                {
+                    instance.Current = WorkflowNode.ConvertToReallyType(node);
+                    return instance;
 
-            }, param: new { INSTANCEID = instanceID }, splitOn: "APPELLATION").FirstOrDefault<WorkflowInstance>();
+                }, param: new { INSTANCEID = instanceID }, splitOn: "APPELLATION").FirstOrDefault<WorkflowInstance>();
 
-            return workflowInstance;
+                return workflowInstance;
+            }
+            catch (Exception ex)
+            {
+                throw new WorkflowException(ex);
+            }
         }
 
         /// <summary>
