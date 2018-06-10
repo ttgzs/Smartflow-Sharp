@@ -2,6 +2,7 @@ create database flow
 go
 use flow
 go
+
 if exists (select 1
             from  sysobjects
            where  id = object_id('dbo.t_actor')
@@ -161,7 +162,7 @@ go
 /*==============================================================*/
 create table dbo.t_process (
    NID                  varchar(50)          collate Chinese_PRC_CI_AS not null,
-   SOURCE               bigint               null,
+   ORIGIN               bigint               null,
    DESTINATION          bigint               null,
    TRANSITIONID         varchar(50)          collate Chinese_PRC_CI_AS null,
    INSTANCEID           varchar(50)          collate Chinese_PRC_CI_AS null,
@@ -183,7 +184,7 @@ create table dbo.t_transition (
    RNID                 varchar(50)          collate Chinese_PRC_CI_AS null,
    APPELLATION          varchar(128)         collate Chinese_PRC_CI_AS null,
    DESTINATION          bigint               null,
-   SOURCE               bigint               null,
+   ORIGIN               bigint               null,
    INSTANCEID           varchar(50)          collate Chinese_PRC_CI_AS null,
    EXPRESSION           varchar(50)          collate Chinese_PRC_CI_AS null,
    constraint PK_t_transition_1 primary key (NID)
