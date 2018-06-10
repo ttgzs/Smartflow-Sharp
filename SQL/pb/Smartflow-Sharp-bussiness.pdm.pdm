@@ -42,10 +42,10 @@ RevUserPriv=No
 RevUserOpts=No
 RevGrpePriv=No
 RevRolePriv=No
-RevDtbsOpts=Yes
+RevDtbsOpts=No
 RevDtbsPerm=No
 RevViewIndx=Yes
-RevJidxOpts=Yes
+RevJidxOpts=No
 RevStats=No
 RevCaseSensitive=No
 GenTrgrStdMsg=Yes
@@ -254,9 +254,9 @@ Constraint declaration=Yes
 Physical Options=Yes
 
 [FolderOptions\Physical Objects\Database Generation\Table&amp;&amp;Column\Index\Filter]
-Primary key=Yes
+Primary key=No
 Foreign key=Yes
-Alternate key=Yes
+Alternate key=No
 Cluster=Yes
 Other=Yes
 
