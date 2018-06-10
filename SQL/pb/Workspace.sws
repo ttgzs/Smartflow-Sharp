@@ -4,8 +4,8 @@
 
 <Workspace>
 	<Local Expanded="Yes">
-		<Model ID="{2B433260-6D49-48D0-B777-FA2CCDA08FF4}" Name="flow" Selected="Yes" Type="{CDE44E21-9669-11D1-9914-006097355D9B}" URL="Smartflow-Sharp-flow.pdm"/>
-		<Model ID="{764154A3-3FBB-4969-999C-7CE6F63C886B}" Name="bussiness" Type="{CDE44E21-9669-11D1-9914-006097355D9B}" URL="Smartflow-Sharp-bussiness.pdm.pdm"/>
+		<Model ID="{F0CF5F7C-4B71-43C7-B7D7-5F67DF1F1E71}" Name="flow" Type="{CDE44E21-9669-11D1-9914-006097355D9B}" URL="Smartflow-Sharp-flow.pdm"/>
+		<Model Expanded="Yes" ID="{066903B4-7FFB-4E11-A77C-A5DFED493677}" Name="bussiness" Type="{CDE44E21-9669-11D1-9914-006097355D9B}" URL="Smartflow-Sharp-bussiness.pdm.pdm"/>
 	</Local>
 	<BrowserModule Name="Repository"/>
 </Workspace>
