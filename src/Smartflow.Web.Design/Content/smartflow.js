@@ -212,7 +212,12 @@
 
             n.brush = draw.text(n.name);
             n.brush.attr({ x: n.x + rect.width() / 2, y: n.y + rect.height() / 2 + n.vertical });
-
+         
+            if(n.disable){
+              // var tooltip= draw.element('title').words('审核人：程德忍  时间：2018.06.12');
+               //rect.node.appendChild(tooltip.node);
+            }
+         
             n.id = rect.id();
             NC[n.id] = n;
             return Node.base.Parent.prototype.draw.call(this);
