@@ -184,7 +184,6 @@
         this.cy = 10;
         this.disX = 0;
         this.disY = 0;
-        this.vertical = (util.ie ? 6 : 0);
         this.group = [];
         this.actors = [];
         Node.base.Constructor.call(this, "node", "node");
@@ -211,11 +210,26 @@
                 rect = draw.rect(n.w, n.h).attr({ fill: color, x: n.x, y: n.y });
 
             n.brush = draw.text(n.name);
-            n.brush.attr({ x: n.x + rect.width() / 2, y: n.y + rect.height() / 2 + n.vertical });
+            n.brush.attr({ x: n.x + rect.width() / 2, y: n.y + rect.height() / 2 + n.vertical() });
          
             if(n.disable){
-              // var tooltip= draw.element('title').words('审核人：程德忍  时间：2018.06.12');
-               //rect.node.appendChild(tooltip.node);
+                var tooltip = draw.element('title'),
+                    toolNode = tooltip.node;
+
+                toolNode.appendChild(document.createTextNode("审核人：程德忍"));
+                toolNode.appendChild(document.createElement("br"));
+                toolNode.appendChild(document.createTextNode("时间：2018.06.12"));
+                toolNode.appendChild(document.createElement("br"));
+                toolNode.appendChild(document.createTextNode("操作：审核"));
+
+                toolNode.appendChild(document.createElement("br"));
+                toolNode.appendChild(document.createTextNode("审核人：程德忍"));
+                toolNode.appendChild(document.createElement("br"));
+                toolNode.appendChild(document.createTextNode("时间：2018.06.12"));
+                toolNode.appendChild(document.createElement("br"));
+                toolNode.appendChild(document.createTextNode("操作：撤销"));
+
+                rect.node.appendChild(toolNode);
             }
          
             n.id = rect.id();
@@ -263,7 +277,7 @@
             element.attr({ x: self.x, y: self.y });
 
             if (self.brush) {
-                self.brush.attr({ x: (element.x() + (element.width() / 2)), y: element.y() + (element.height() / 2) + self.vertical });
+                self.brush.attr({ x: (element.x() + (element.width() / 2)), y: element.y() + (element.height() / 2) + self.vertical() });
             }
 
             var toElements = findByElementId(self.id, "to"),
@@ -389,6 +403,9 @@
         validate: function () {
             return (findByElementId(this.id, 'to').length > 0
                    && findByElementId(this.id, 'from').length > 0);
+        },
+        vertical: function () {
+            return util.ie ? 6 : 0;
         }
     });
 
@@ -709,7 +726,7 @@
         });
 
         if (validateCollection.length > 0 || (RC.length === 0)) {
-            alert("该流程图不符合流程定义规则");
+            alert("流程图不符合流程定义规则");
             return;
         }
 
@@ -734,7 +751,7 @@
             var instance = new Node();
             $.extend(instance, this);
 
-            $.each(['brush', 'vertical', 'circles'], function (index, p) {
+            $.each(['brush', 'circles'], function (index, p) {
                 if (instance[p]) {
                     delete instance[p];
                 }
