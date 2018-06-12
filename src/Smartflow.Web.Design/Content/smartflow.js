@@ -211,27 +211,9 @@
 
             n.brush = draw.text(n.name);
             n.brush.attr({ x: n.x + rect.width() / 2, y: n.y + rect.height() / 2 + n.vertical() });
-         
-            if(n.disable){
-                var tooltip = draw.element('title'),
-                    toolNode = tooltip.node;
-
-                toolNode.appendChild(document.createTextNode("审核人：程德忍"));
-                toolNode.appendChild(document.createElement("br"));
-                toolNode.appendChild(document.createTextNode("时间：2018.06.12"));
-                toolNode.appendChild(document.createElement("br"));
-                toolNode.appendChild(document.createTextNode("操作：审核"));
-
-                toolNode.appendChild(document.createElement("br"));
-                toolNode.appendChild(document.createTextNode("审核人：程德忍"));
-                toolNode.appendChild(document.createElement("br"));
-                toolNode.appendChild(document.createTextNode("时间：2018.06.12"));
-                toolNode.appendChild(document.createElement("br"));
-                toolNode.appendChild(document.createTextNode("操作：撤销"));
-
-                rect.node.appendChild(toolNode);
-            }
-         
+       
+            //显示提示
+            n.showToolTip(rect);
             n.id = rect.id();
             NC[n.id] = n;
             return Node.base.Parent.prototype.draw.call(this);
@@ -406,6 +388,29 @@
         },
         vertical: function () {
             return util.ie ? 6 : 0;
+        },
+        showToolTip: function (rect) {
+            var n = this;
+            if (n.disable) {
+              
+                var tooltip = draw.element('title'),
+                    toolNode = tooltip.node;
+
+                toolNode.appendChild(document.createTextNode("审核人：程德忍"));
+                toolNode.appendChild(document.createElement("br"));
+                toolNode.appendChild(document.createTextNode("时间：2018.06.12"));
+                toolNode.appendChild(document.createElement("br"));
+                toolNode.appendChild(document.createTextNode("操作：审核"));
+
+                toolNode.appendChild(document.createElement("br"));
+                toolNode.appendChild(document.createTextNode("审核人：程德忍"));
+                toolNode.appendChild(document.createElement("br"));
+                toolNode.appendChild(document.createTextNode("时间：2018.06.12"));
+                toolNode.appendChild(document.createElement("br"));
+                toolNode.appendChild(document.createTextNode("操作：撤销"));
+
+                rect.node.appendChild(toolNode);
+            }
         }
     });
 
