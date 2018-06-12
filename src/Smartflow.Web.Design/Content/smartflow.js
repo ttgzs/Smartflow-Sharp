@@ -212,8 +212,6 @@
             n.brush = draw.text(n.name);
             n.brush.attr({ x: n.x + rect.width() / 2, y: n.y + rect.height() / 2 + n.vertical() });
        
-            //显示提示
-            n.showToolTip(rect);
             n.id = rect.id();
             NC[n.id] = n;
             return Node.base.Parent.prototype.draw.call(this);
@@ -389,28 +387,22 @@
         vertical: function () {
             return util.ie ? 6 : 0;
         },
-        showToolTip: function (rect) {
-            var n = this;
-            if (n.disable) {
-              
-                var tooltip = draw.element('title'),
-                    toolNode = tooltip.node;
+        showToolTip: function (data) {
+            var n = this,
+                element = SVG.get(n.id),
+                tooltip = draw.element('title'),
+                toolNode = tooltip.node;
 
-                toolNode.appendChild(document.createTextNode("审核人：程德忍"));
+            $.each(data, function () {
+                toolNode.appendChild(document.createTextNode("审核人：" + this.APPELLATION));
                 toolNode.appendChild(document.createElement("br"));
-                toolNode.appendChild(document.createTextNode("时间：2018.06.12"));
+                toolNode.appendChild(document.createTextNode("时间：" + this.CREATEDATETIME));
                 toolNode.appendChild(document.createElement("br"));
-                toolNode.appendChild(document.createTextNode("操作：审核"));
+                toolNode.appendChild(document.createTextNode("操作：" + actionMap[this.OPERATION]));
+                toolNode.appendChild(document.createElement("br"));
+            });
 
-                toolNode.appendChild(document.createElement("br"));
-                toolNode.appendChild(document.createTextNode("审核人：程德忍"));
-                toolNode.appendChild(document.createElement("br"));
-                toolNode.appendChild(document.createTextNode("时间：2018.06.12"));
-                toolNode.appendChild(document.createElement("br"));
-                toolNode.appendChild(document.createTextNode("操作：撤销"));
-
-                rect.node.appendChild(toolNode);
-            }
+            element.node.appendChild(toolNode);
         }
     });
 
@@ -783,8 +775,9 @@
         };
     }
 
-    function revertFlow(data, disable, currentNodeId) {
+    function revertFlow(data, disable, currentNodeId,process) {
 
+        var record = process || [];
         var imageData = JSON.parse(unescape(data)),
             nodeCollection = imageData.NC,
             pathCollection = imageData.PC,
@@ -799,6 +792,11 @@
 
             instance.disable = (disable || false);
             instance.draw(currentNodeId);
+
+            if (instance.disable && record.length > 0) {
+                var toolTipArray = getToolTipData(record, instance.uniqueId);
+                instance.showToolTip(toolTipArray);
+            }
 
             $.each(["to", "from"], function (i, propertyName) {
                 eachNode(instance.id, originId, propertyName);
@@ -825,6 +823,23 @@
                 }
             });
         }
+    }
+
+    var actionMap = {
+        0: '审核',
+        1: '流程撤销',
+        2: '流程退回'
+    }
+
+    //遍历过程记录
+    function getToolTipData(data,id) {
+        var toolArray = [];
+        $.each(data, function () {
+            if (this.IDENTIFICATION == id) {
+                toolArray.push(this);
+            }
+        });
+        return toolArray;
     }
 
     function convertToRealType(category) {

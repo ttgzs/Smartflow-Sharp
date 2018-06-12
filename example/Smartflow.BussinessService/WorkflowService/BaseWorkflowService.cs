@@ -172,7 +172,7 @@ namespace Smartflow.BussinessService.WorkflowService
             return WorkflowInstance.GetInstance(instanceID).Current;
         }
 
-        public void UndoSubmit(string instanceID, long actorID, string bussinessID)
+        public void UndoSubmit(string instanceID, long actorID, string actorName,string bussinessID)
         {
             WorkflowInstance instance = WorkflowInstance.GetInstance(instanceID);
             dynamic dynData = new ExpandoObject();
@@ -182,7 +182,8 @@ namespace Smartflow.BussinessService.WorkflowService
             {
                 Instance = instance,
                 Data = dynData,
-                ActorID = actorID
+                ActorID = actorID,
+                ActorName=actorName
             });
         }
 

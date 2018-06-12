@@ -13,6 +13,7 @@ using Smartflow.DesignService.Models;
 using Smartflow.DesignService;
 using System.Web.Script.Serialization;
 using Smartflow.Infrastructure;
+using System.Data;
 
 namespace Smartflow.Web.Design.Controllers
 {
@@ -52,6 +53,10 @@ namespace Smartflow.Web.Design.Controllers
         {
             JavaScriptSerializer serializer = new JavaScriptSerializer();
             ViewBag.Result = serializer.Serialize(WorkflowInstance.GetInstance(instanceID));
+            
+            DataTable dt = WorkflowActor.GetRecord(instanceID);
+            ViewBag.Record = Newtonsoft.Json.JsonConvert.SerializeObject(dt);
+
             return View();
         }
 

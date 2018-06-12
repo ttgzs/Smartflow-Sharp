@@ -74,6 +74,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SmartflowConfigHandle.cs" />
     <Compile Include="Elements\Actor.cs" />
+    <Compile Include="WorkflowActor.cs" />
     <Compile Include="WorkflowContext.cs" />
     <Compile Include="WorkflowDecision.cs" />
     <Compile Include="WorkflowEngine.cs" />
