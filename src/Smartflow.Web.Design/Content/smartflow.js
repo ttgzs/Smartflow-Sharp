@@ -58,30 +58,33 @@
         }
     });
 
-    //日期格式化
-    util.format = function (fmt, date) {
-        var o = {
-            "M+": date.getMonth() + 1,         
-            "d+": date.getDate(),               
-            "h+": date.getHours(),               
-            "m+": date.getMinutes(),           
-            "s+": date.getSeconds(),           
-            "q+": Math.floor((date.getMonth() + 3) / 3), 
-            "S":  date.getMilliseconds()
-        };
+    //日期格扩展
+    $.extend(util, {
+        format: function (fmt, date) {
+            var o = {
+                "M+": date.getMonth() + 1,
+                "d+": date.getDate(),
+                "h+": date.getHours(),
+                "m+": date.getMinutes(),
+                "s+": date.getSeconds(),
+                "q+": Math.floor((date.getMonth() + 3) / 3),
+                "S": date.getMilliseconds()
+            };
 
-        if (/(y+)/.test(fmt)) {
-            fmt = fmt.replace(RegExp.$1, (date.getFullYear() + "").substr(4 - RegExp.$1.length));
-        }
-
-        for (var k in o) {
-            if (new RegExp("(" + k + ")").test(fmt)) {
-                fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) :
-                      (("00" + o[k]).substr(("" + o[k]).length)));
+            if (/(y+)/.test(fmt)) {
+                fmt = fmt.replace(RegExp.$1, (date.getFullYear() + "").substr(4 - RegExp.$1.length));
             }
+
+            for (var k in o) {
+                if (new RegExp("(" + k + ")").test(fmt)) {
+                    fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) :
+                          (("00" + o[k]).substr(("" + o[k]).length)));
+                }
+            }
+            return fmt;
         }
-        return fmt;
-    }
+    });
+
 
     document.oncontextmenu = function () { return false; }
 
@@ -236,7 +239,7 @@
 
             n.brush = draw.text(n.name);
             n.brush.attr({ x: n.x + rect.width() / 2, y: n.y + rect.height() / 2 + n.vertical() });
-       
+
             n.id = rect.id();
             NC[n.id] = n;
             return Node.base.Parent.prototype.draw.call(this);
@@ -411,31 +414,28 @@
         },
         vertical: function () {
             return util.ie ? 6 : 0;
-        },
-        showToolTip: function (data) {
-            var n = this,
-                element = SVG.get(n.id),
-                tooltip = draw.element('title'),
-                toolNode = tooltip.node;
-
-            $.each(data, function () {
-
-                var date = util.format('yyyy-MM-dd hh:mm', new Date(this.CREATEDATETIME));
-
-                toolNode.appendChild(document.createTextNode("审核人：" + this.APPELLATION));
-                toolNode.appendChild(document.createElement("br"));
-                toolNode.appendChild(document.createTextNode("时间：" + date));
-                toolNode.appendChild(document.createElement("br"));
-                if (n.name == '开始') {
-                    toolNode.appendChild(document.createTextNode("操作：提交"));
-                } else {
-                    toolNode.appendChild(document.createTextNode("操作：" + actionMap[this.OPERATION]));
-                }
-                toolNode.appendChild(document.createElement("br"));
-            });
-            element.node.appendChild(toolNode);
         }
     });
+
+    //显示Tooltip 
+    Node.prototype.showToolTip = function (data) {
+        var n = this,
+            rect= SVG.get(n.id),
+            tooltip = draw.element('title'),
+            tn = tooltip.node;
+
+        $.each(data, function () {
+            var date = util.format('yyyy-MM-dd hh:mm', new Date(this.CREATEDATETIME));
+            tn.appendChild(document.createTextNode("审核人：" + this.APPELLATION));
+            tn.appendChild(document.createElement("br"));
+            tn.appendChild(document.createTextNode("时间：" + date));
+            tn.appendChild(document.createElement("br"));
+            tn.appendChild(document.createTextNode("操作：" + ((n.name == "开始") ? "提交" : actionMap[this.OPERATION])));
+            tn.appendChild(document.createElement("br"));
+        });
+
+        rect.node.appendChild(tn);
+    }
 
     function Decision() {
         Decision.base.Constructor.call(this);
@@ -573,6 +573,33 @@
         draw.each(function (i, child) {
             if (this.type === 'rect') {
                 this.mousedown(OnDrag);
+            }
+        });
+    }
+
+    //添加左对齐方式
+    function alignment() {
+        var sn;
+        for (var p in NC) {
+            if (NC[p].category == 'start') {
+                sn = NC[p];
+                break;
+            }
+        }
+
+        if (!sn) return;
+
+        var ele = SVG.get(sn.id);
+        $.each(NC, function () {
+            if (this.category != 'start') {
+                var element = SVG.get(this.id);
+                this.disX = sn.disX;
+                this.disY = sn.disY;
+
+                this.move.call(this,element, {
+                    clientX:ele.x()+this.cx+this.disX,
+                    clientY: element.y() + this.cy + this.disY
+                });
             }
         });
     }
@@ -806,7 +833,7 @@
         };
     }
 
-    function revertFlow(data, disable, currentNodeId,process) {
+    function revertFlow(data, disable, currentNodeId, process) {
 
         var record = process || [];
         var imageData = JSON.parse(unescape(data)),
@@ -863,7 +890,7 @@
     }
 
     //遍历过程记录
-    function getToolTipData(data,id) {
+    function getToolTipData(data, id) {
         var toolArray = [];
         $.each(data, function () {
             if (this.IDENTIFICATION == id) {
@@ -928,6 +955,7 @@
         //导出到JSON对象，以序列化保存到数据库
         exportToJSON: exportToJSON,
         revert: revertFlow,
+        alignment: alignment,
         create: function (category) {
             var reallType = convertToRealType(category);
 

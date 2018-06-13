@@ -72,7 +72,7 @@ namespace Smartflow.Web.Controllers
         public JsonResult UndoCheck(string instanceID, string bussinessID)
         {
             User userInfo = System.Web.HttpContext.Current.Session["user"] as User;
-            bwkf.UndoSubmit(instanceID, userInfo.IDENTIFICATION, userInfo.USERNAME, bussinessID);
+            bwkf.UndoSubmit(instanceID, userInfo.IDENTIFICATION, userInfo.EMPLOYEENAME, bussinessID);
             return Json(true, JsonRequestBehavior.AllowGet);
         }
 
