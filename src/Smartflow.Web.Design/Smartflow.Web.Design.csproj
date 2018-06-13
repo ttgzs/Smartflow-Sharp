@@ -112,6 +112,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\WorkflowDesignController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -123,6 +124,7 @@
     <Content Include="Content\images\decision.png" />
     <Content Include="Content\images\grid16.png" />
     <Content Include="Content\images\help.png" />
+    <Content Include="Content\images\left.png" />
     <Content Include="Content\images\line.png" />
     <Content Include="Content\images\node.png" />
     <Content Include="Content\images\save.png" />

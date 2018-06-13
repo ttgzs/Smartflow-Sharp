@@ -44,7 +44,14 @@ namespace Smartflow.Web.Controllers
         public JsonResult GetPendingCount()
         {
             User userInfo = System.Web.HttpContext.Current.Session["user"] as User;
-            return Json(new PendingService().Query(userInfo.IDENTIFICATION).Count);
+            if (userInfo == null)
+            {
+                return Json(0);
+            }
+            else
+            {
+                return Json(new PendingService().Query(userInfo.IDENTIFICATION).Count);
+            }
         }
 
 

@@ -9,7 +9,6 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-using Smartflow.DesignService.Models;
 using Smartflow.DesignService;
 using System.Web.Script.Serialization;
 using Smartflow.Infrastructure;
@@ -17,7 +16,7 @@ using System.Data;
 
 namespace Smartflow.Web.Design.Controllers
 {
-    public partial class WorkflowDesignController : Controller
+    public partial class WorkflowDesignController : BaseController
     {
         private WorkflowDesignService designService = new WorkflowDesignService();
 
@@ -53,7 +52,7 @@ namespace Smartflow.Web.Design.Controllers
         {
             JavaScriptSerializer serializer = new JavaScriptSerializer();
             ViewBag.Result = serializer.Serialize(WorkflowInstance.GetInstance(instanceID));
-            
+
             DataTable dt = WorkflowActor.GetRecord(instanceID);
             ViewBag.Record = Newtonsoft.Json.JsonConvert.SerializeObject(dt);
 
@@ -67,12 +66,12 @@ namespace Smartflow.Web.Design.Controllers
 
         public JsonResult GetRole(string roleIds)
         {
-            return Json(designService.GetRole(roleIds));
+            return JsonWrapper(designService.GetRole(roleIds));
         }
 
         public JsonResult GetConfigs()
         {
-            return Json(designService.GetConfigs());
+            return JsonWrapper(designService.GetConfigs());
         }
     }
 }

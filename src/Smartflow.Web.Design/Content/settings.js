@@ -36,6 +36,19 @@
         space: ' ',
     };
 
+    //添加字段映射
+    var roleFieldMap = {
+        id: 'IDENTIFICATION',
+        name: 'APPELLATION'
+    },
+
+    configFieldMap = {
+        id: 'IDENTIFICATION',
+        name: 'APPELLATION',
+        connection: 'CONNECTE',
+        category: 'DBCATEGORY'
+    };
+
     $.extend(String.prototype, {
         format: function () {
             var regexp = /\{(\d+)\}/g;
@@ -81,16 +94,16 @@
                     .append('id')
                     .append(config.equal)
                     .append(config.lQuotation)
-                    .append(this.Identification)
+                    .append(this[roleFieldMap.id])
                     .append(config.rQuotation)
                     .append(config.space)
                     .append('name')
                     .append(config.equal)
                     .append(config.lQuotation)
-                    .append(this.Appellation)
+                    .append(this[roleFieldMap.name])
                     .append(config.rQuotation)
                     .append(config.end)
-                    .append(this.Appellation)
+                    .append(this[roleFieldMap.name])
                     .append(config.beforeClose)
                     .append('li')
                     .append(config.afterClose);
@@ -150,10 +163,10 @@
             if (cmdText != '' && cmdText && option.length > 0) {
                 var data = JSON.parse(unescape(option.attr("data")));
                 nx.command = {
-                    identification: data.Identification,
+                    identification: data[configFieldMap.id],
                     script: cmdText,
-                    connecte: data.Connecte,
-                    dbcategory: data.DbCategory,
+                    connecte: data[configFieldMap.connect],
+                    dbcategory: data[configFieldMap.category],
                     commandtype: 'text'
                 };
             }
@@ -171,6 +184,7 @@
             nx.brush.text(nx.name);
         }
     }
+
     function setNodeToSettings(nx) {
         $("#txtNodeName").val(nx.name);
         if (nx.category === 'decision') {
@@ -199,7 +213,6 @@
         });
     }
 
-
     function loadSelect() {
         var settings = {
             url: config.configUrl
@@ -221,10 +234,10 @@
                      .append('value')
                      .append(config.equal)
                      .append(config.lQuotation)
-                     .append(this.Identification)
+                     .append(this[configFieldMap.id])
                      .append(config.rQuotation)
                      .append(config.end)
-                     .append(this.Appellation)
+                     .append(this.this[configFieldMap.name])
                      .append(config.beforeClose)
                      .append('option')
                      .append(config.afterClose);
