@@ -58,6 +58,31 @@
         }
     });
 
+    //日期格式化
+    util.format = function (fmt, date) {
+        var o = {
+            "M+": date.getMonth() + 1,         
+            "d+": date.getDate(),               
+            "h+": date.getHours(),               
+            "m+": date.getMinutes(),           
+            "s+": date.getSeconds(),           
+            "q+": Math.floor((date.getMonth() + 3) / 3), 
+            "S":  date.getMilliseconds()
+        };
+
+        if (/(y+)/.test(fmt)) {
+            fmt = fmt.replace(RegExp.$1, (date.getFullYear() + "").substr(4 - RegExp.$1.length));
+        }
+
+        for (var k in o) {
+            if (new RegExp("(" + k + ")").test(fmt)) {
+                fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) :
+                      (("00" + o[k]).substr(("" + o[k]).length)));
+            }
+        }
+        return fmt;
+    }
+
     document.oncontextmenu = function () { return false; }
 
     $.extend(Function.prototype, {
@@ -394,14 +419,20 @@
                 toolNode = tooltip.node;
 
             $.each(data, function () {
+
+                var date = util.format('yyyy-MM-dd hh:mm', new Date(this.CREATEDATETIME));
+
                 toolNode.appendChild(document.createTextNode("审核人：" + this.APPELLATION));
                 toolNode.appendChild(document.createElement("br"));
-                toolNode.appendChild(document.createTextNode("时间：" + this.CREATEDATETIME));
+                toolNode.appendChild(document.createTextNode("时间：" + date));
                 toolNode.appendChild(document.createElement("br"));
-                toolNode.appendChild(document.createTextNode("操作：" + actionMap[this.OPERATION]));
+                if (n.name == '开始') {
+                    toolNode.appendChild(document.createTextNode("操作：提交"));
+                } else {
+                    toolNode.appendChild(document.createTextNode("操作：" + actionMap[this.OPERATION]));
+                }
                 toolNode.appendChild(document.createElement("br"));
             });
-
             element.node.appendChild(toolNode);
         }
     });
