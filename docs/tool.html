@@ -1,0 +1,124 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+    <title>Smartflow-Sharp工作流程设计器</title>
+    <link href="./Content/smartflow.css" rel="stylesheet" />
+    <script src="./Content/jquery.min.js"></script>
+    <script src="./Content/svg.js"></script>
+    <script src="./Content/smartflow.js"></script>
+    <script src="./Content/layui/layui.all.js"></script>
+    
+    <script type="text/javascript">
+        $(function () {
+            $(".tools-menu img").mousedown(function () {
+                $(this).css("border", "solid 1px #ad9d9d");
+            });
+            $(".tools-menu img").mouseup(function () {
+                $(this).css("border", "none");
+            });
+
+            init();
+        });
+
+
+        function init() {
+            SMF.init($.extend({
+                container: 'drawing', dblClick: function (nx) {
+                    var nodeName = prompt("请输入节点名称", nx.name);
+                    if (nodeName) {
+                        nx.name = nodeName;
+                        nx.brush.text(nx.name);
+                    }
+                }
+            }));
+            $.each(['start', 'end'], function (i, value) {SMF.create(value);});
+        }
+
+        function saveflow() {
+            var exportToObject = SMF.exportToJSON();
+            alert(unescape(exportToObject.FILESTRUCTURE));
+        }
+
+        function openWin(elementId) {
+            var ht = $("#" + elementId).html();
+            //自定页
+            layer.open({
+                title: '注意事项',
+                type: 1,
+                closeBtn: 1,
+                //skin: 'layui-layer-rim', //加上边框
+                area: ['520px', '300px'], //宽高
+                anim: 2,
+                shadeClose: true, //开启遮罩关闭
+                content: ht
+            });
+        }
+    </script>
+</head>
+<body>
+    <div class="tools">
+        <ul class="tools-menu">
+            <li>
+                <img src="./Content/images/save.png" onclick="saveflow()"
+                     title="保存" />
+            </li>
+            <li>
+                <img src="./Content/images/select.png" onclick="SMF.select()"
+                     title="选择" />
+            </li>
+            <li>
+                <img src="./Content/images/line.png" onclick="SMF.connect()"
+                     title="连接" />
+            </li>
+            <li>
+                <img src="./Content/images/node.png" onclick="SMF.create('node')"
+                     title="节点" />
+            </li>
+            <li>
+                <img src="./Content/images/decision.png" onclick="SMF.create('decision')"
+                     title="决策" />
+            </li>
+            <li>
+                <img src="./Content/images/left.png" onclick="SMF.alignment()"
+                     title="左对齐" />
+            </li>
+            <li>
+                <img src="./Content/images/help.png" onclick="openWin('note')"
+                     title="帮助" />
+            </li>
+        </ul>
+    </div>
+    <div class="container-ctr">
+        <div class="container-draw" id="drawing"></div>
+    </div>
+    <script type="text/html" id="note">
+        <table class="smartflow-table note-table">
+            <tr>
+                <td class="note-column">方向：</td>
+                <td class="note-content">流程设计工具仅支持从上往下</td>
+            </tr>
+            <tr>
+                <td class="note-column">规则：</td>
+                <td class="note-content">开始节点至少有一条出线，但没有进线、结束节点至少有一条进线，但没有出线，普通节点至少有一进一出的连线，决策节点至少有一条进线，两条以上出线</td>
+            </tr>
+            <tr>
+                <td class="note-column">连线：</td>
+                <td class="note-content">先点击左边线条图标，然后选中节点，按下鼠标左键拖动到另一节点，然后再松手，两节点间会出现连接线</td>
+            </tr>
+            <tr>
+                <td class="note-column">移动：</td>
+                <td class="note-content">先点击左边鼠标箭头，然后选择节点元素，按下鼠标左键进行移动</td>
+            </tr>
+            <tr>
+                <td class="note-column">编辑：</td>
+                <td class="note-content">鼠标双击元素，然后弹出编辑页面</td>
+            </tr>
+            <tr>
+                <td class="note-column">删除：</td>
+                <td class="note-content">按住键盘中Ctrl+Alt键，然后鼠标双击元素，元素就会被删除</td>
+            </tr>
+        </table>
+    </script>
+</body>
+</html>

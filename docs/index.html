@@ -14,6 +14,33 @@
     <meta property="og:description" content="基于C#语言研发的Smartflow-Sharp工作流管理平台，该工作流管理平台的特点是简单易用、方便扩展、支持多种数据库访问、高度可定制化，支持用户按需求做功能的定制开发，节省用户的使用成本。" />
     <meta property="og:site_name" content="Smartflow-Sharp 工作流管理平台" />
     <script type="text/javascript" src="https://hm.baidu.com/hm.js?1d12f66f2f6f25504daa528cd96ea7e8"></script>
+<style type="text/css">
+    .main_nav{
+        display:block;
+        line-height:40px;
+        height:40px;
+        background-color:#513c3c;
+    }
+    .navList{
+        overflow:hidden;
+        padding:0;
+    }
+
+    .navList:after{
+        display:block;
+        content:'.';
+        height:1%;
+        clear:both;
+    }
+
+    .navList li{
+        float:left;
+    }
+      .navList li a{
+          padding:10px;
+      }
+</style>
+
 </head>
 <body>
     <!-- HEADER -->
@@ -31,6 +58,12 @@
     <!-- MAIN CONTENT -->
     <div id="main_content_wrap" class="outer">
         <section id="main_content" class="inner">
+            <div class="main_nav">
+                <ul style="list-style:none;" class="navList">
+                    <li><a href="/">intro</a></li>
+                    <li><a href="tool.html">tool</a></li>
+                </ul>
+            </div>
             <h2 id="smartflow" style="display:none;">Smartflow-Sharp</h2>
             <h3>工作流现状分析</h3>
             <p>目前，属于.NET平台下研发的工作流管理平台真是太少，可供选择真心不多，官方我们之前也采用过，没有用好，到处是问题，而且还没有提供在线的流程设计器，使用起来极其不方便。市面上免费开源工作流管理平台又很少，基本都是属于要收取一定的费用。真正免费的又不是很好用，收费的又太高，所以笔者自已闭门造车，打造一款基于.NET平台免费开源工作流管理平台，为开源尽一点自已的绵薄之力。</p>
