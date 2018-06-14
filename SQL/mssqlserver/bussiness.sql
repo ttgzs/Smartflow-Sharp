@@ -11,13 +11,6 @@ go
 
 if exists (select 1
             from  sysobjects
-           where  id = object_id('dbo.t_config')
-            and   type = 'U')
-   drop table dbo.t_config
-go
-
-if exists (select 1
-            from  sysobjects
            where  id = object_id('dbo.t_org')
             and   type = 'U')
    drop table dbo.t_org
@@ -46,9 +39,9 @@ go
 
 if exists (select 1
             from  sysobjects
-           where  id = object_id('dbo.t_structure')
+           where  id = object_id('dbo.t_user')
             and   type = 'U')
-   drop table dbo.t_structure
+   drop table dbo.t_user
 go
 
 if exists (select 1
@@ -56,13 +49,6 @@ if exists (select 1
            where  id = object_id('dbo.t_umr')
             and   type = 'U')
    drop table dbo.t_umr
-go
-
-if exists (select 1
-            from  sysobjects
-           where  id = object_id('dbo.t_user')
-            and   type = 'U')
-   drop table dbo.t_user
 go
 
 execute sp_revokedbaccess dbo
@@ -92,29 +78,7 @@ create table dbo.t_apply (
 on "PRIMARY"
 go
 
-/*==============================================================*/
-/* Table: t_config                                              */
-/*==============================================================*/
-create table dbo.t_config (
-   IDENTIFICATION       bigint               not null,
-   APPELLATION          varchar(50)          collate Chinese_PRC_CI_AS null,
-   CONNECTE             varchar(512)         collate Chinese_PRC_CI_AS null,
-   DBCATEGORY           varchar(50)          collate Chinese_PRC_CI_AS null,
-   constraint PK_t_config primary key (IDENTIFICATION)
-         on "PRIMARY"
-)
-on "PRIMARY"
-go
 
-execute sp_addextendedproperty 'MS_Description', 
-   '连接字符串',
-   'user', 'dbo', 'table', 't_config', 'column', 'CONNECTE'
-go
-
-execute sp_addextendedproperty 'MS_Description', 
-   '数据库类型',
-   'user', 'dbo', 'table', 't_config', 'column', 'DBCATEGORY'
-go
 
 /*==============================================================*/
 /* Table: t_org                                                 */
@@ -174,21 +138,6 @@ create table dbo.t_role (
 )
 on "PRIMARY"
 go
-
-/*==============================================================*/
-/* Table: t_structure                                           */
-/*==============================================================*/
-create table dbo.t_structure (
-   IDENTIFICATION       varchar(50)          collate Chinese_PRC_CI_AS not null,
-   APPELLATION          varchar(50)          collate Chinese_PRC_CI_AS null,
-   FILESTRUCTURE        text                 collate Chinese_PRC_CI_AS null,
-   JSSTRUCTURE          text                 collate Chinese_PRC_CI_AS null,
-   constraint PK_t_flowXml primary key (IDENTIFICATION)
-         on "PRIMARY"
-)
-on "PRIMARY"
-go
-
 /*==============================================================*/
 /* Table: t_umr                                                 */
 /*==============================================================*/

@@ -73,7 +73,11 @@ namespace Smartflow.Web.Controllers
 
         public void GenerateWFViewData(string WFID)
         {
-            List<WorkflowStructure> workflowXmlList = WorkflowStructureService.GetWorkflowStructureList();
+            List<WorkflowStructure> workflowXmlList = WorkflowServiceProvider
+                .OfType<IWorkflowDesignService>()
+                .GetWorkflowStructureList();
+            
+            
             List<SelectListItem> fileList = new List<SelectListItem>();
             foreach (WorkflowStructure item in workflowXmlList)
             {
