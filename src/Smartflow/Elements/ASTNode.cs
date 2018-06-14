@@ -10,7 +10,7 @@ using System.Text;
 using System.Xml.Serialization;
 using System.Data;
 
-using Dapper;
+using Smartflow.Dapper;
 using Smartflow.Enums;
 
 

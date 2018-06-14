@@ -11,8 +11,7 @@ using System.Text;
 using Smartflow.Enums;
 using System.Xml.Serialization;
 using System.Data;
-
-using Dapper;
+using Smartflow.Dapper;
 
 namespace Smartflow.Elements
 {

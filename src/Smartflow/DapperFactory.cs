@@ -14,7 +14,7 @@ using System.Data.OracleClient;
 
 namespace Smartflow
 {
-    internal class DapperFactory
+    public class DapperFactory
     {
         public static IDbConnection CreateWorkflowConnection()
         {

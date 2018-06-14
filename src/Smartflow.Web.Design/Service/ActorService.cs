@@ -8,13 +8,16 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 
-using Dapper;
+using Smartflow.Dapper;
+using Smartflow.Enums;
+using System.Configuration;
 
 namespace Smartflow.Web.Design
 {
     public class ActorService
     {
-        private IDbConnection Connection = DbHelper.CreateConnection();
+        private IDbConnection Connection = DapperFactory.CreateConnection(DatabaseCategory.SQLServer,
+            ConfigurationManager.AppSettings["busConnection"]);
 
         public DataTable GetRole(string roleIds)
         {

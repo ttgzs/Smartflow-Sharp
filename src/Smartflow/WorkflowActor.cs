@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 
-using Dapper;
+using Smartflow.Dapper;
 namespace Smartflow
 {
     public class WorkflowActor

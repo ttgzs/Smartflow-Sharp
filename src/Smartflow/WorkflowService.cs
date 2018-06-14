@@ -10,7 +10,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 
-using Dapper;
+using Smartflow.Dapper;
 using Smartflow.Elements;
 using Smartflow.Enums;
 

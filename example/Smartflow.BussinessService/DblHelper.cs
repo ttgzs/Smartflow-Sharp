@@ -1,17 +1,12 @@
-﻿/********************************************************************
- License: https://github.com/chengderen/Smartflow/blob/master/LICENSE 
- Home page: https://www.smartflow-sharp.com
- ********************************************************************
- */
-using System;
+﻿using System;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Text;
 
-namespace Smartflow.Web.Design
+namespace Smartflow.BussinessService
 {
-    public class DbHelper
+    public class DblHelper
     {
         public static IDbConnection CreateConnection()
         {

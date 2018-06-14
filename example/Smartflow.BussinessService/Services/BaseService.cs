@@ -10,7 +10,7 @@ namespace Smartflow.BussinessService.Services
     {
         public IDbConnection Connection
         {
-            get { return SqlHelper.CreateConnection(); }
+            get { return DblHelper.CreateConnection(); }
         }
     }
 }

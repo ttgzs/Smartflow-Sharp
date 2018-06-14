@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Smartflow.Elements;
-using Dapper;
+using Smartflow.Dapper;
 using System.Data;
 using Smartflow.Enums;
 

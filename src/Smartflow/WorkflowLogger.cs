@@ -24,7 +24,8 @@ namespace Smartflow
         public static void WriteLog(string message)
         {
             EventLog logger = new EventLog();
-            logger.Source = "Smartflow-Sharp";
+
+            logger.Source = WorkflowEnvironment.CONST_SMARTFLOW_SHARP_NAME;
             logger.WriteEntry(message, EventLogEntryType.Error);
         }
     }

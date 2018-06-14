@@ -13,13 +13,13 @@ namespace Smartflow
     public class WorkflowException : ApplicationException
     {
         public WorkflowException(Exception innerException)
-            : base("Smartflow-Sharp", innerException)
+            : base(WorkflowEnvironment.CONST_SMARTFLOW_SHARP_NAME, innerException)
         {
             WorkflowLogger.WriteLog(innerException.ToString());
         }
 
         public WorkflowException(Exception innerException, string instanceID)
-            : base("Smartflow-Sharp", innerException)
+            : base(WorkflowEnvironment.CONST_SMARTFLOW_SHARP_NAME, innerException)
         {
             WorkflowLogger.WriteLog(string.Format("流程实例ID:{0} 异常信息 {1} ", instanceID, innerException));
         }
