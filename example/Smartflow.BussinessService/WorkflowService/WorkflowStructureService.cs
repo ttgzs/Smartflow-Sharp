@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 using Dapper;
-using Smartflow.Infrastructure;
+using Smartflow;
 
 namespace Smartflow.BussinessService.WorkflowService
 {

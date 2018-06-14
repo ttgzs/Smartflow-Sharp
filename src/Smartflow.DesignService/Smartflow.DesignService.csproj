@@ -41,18 +41,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SqlHelper.cs" />
-    <Compile Include="WorkflowDesignService.cs" />
-    <Compile Include="WorkflowDesignService.Infrastructure.cs" />
+    <Compile Include="DbHelper.cs" />
+    <Compile Include="ActorService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Dapper\Dapper.csproj">
       <Project>{97983236-a85f-4da6-8518-5e9a788e08e8}</Project>
       <Name>Dapper</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Smartflow.Infrastructure\Smartflow.Infrastructure.csproj">
-      <Project>{fbf0e9d3-1782-4ea6-80ca-aa6eb63f41d9}</Project>
-      <Name>Smartflow.Infrastructure</Name>
+    <ProjectReference Include="..\Smartflow\Smartflow.csproj">
+      <Project>{c77dd279-74f0-4a0a-b534-2cf858ede21d}</Project>
+      <Name>Smartflow</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

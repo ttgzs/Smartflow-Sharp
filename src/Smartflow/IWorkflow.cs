@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-using Smartflow.Infrastructure;
+using Smartflow;
 
 namespace Smartflow
 {
@@ -20,9 +20,9 @@ namespace Smartflow
         /// <summary>
         /// 启动工作流
         /// </summary>
-        /// <param name="workflowXml"></param>
+        /// <param name="workflowStructure"></param>
         /// <returns></returns>
-        string Start(WorkflowStructure workflowXml);
+        string Start(WorkflowStructure workflowStructure);
 
         /// <summary>
         /// 获取工作流实例

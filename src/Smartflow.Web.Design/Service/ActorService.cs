@@ -7,15 +7,15 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Text;
 
 using Dapper;
-using Smartflow.Infrastructure;
 
-namespace Smartflow.DesignService
+namespace Smartflow.Web.Design
 {
-    public partial class WorkflowDesignService
+    public class ActorService
     {
+        private IDbConnection Connection = DbHelper.CreateConnection();
+
         public DataTable GetRole(string roleIds)
         {
             string query = " SELECT * FROM T_ROLE WHERE 1=1 ";
@@ -30,17 +30,6 @@ namespace Smartflow.DesignService
                 roleData.Load(dr);
             }
             return roleData;
-        }
-
-        public DataTable GetConfigs()
-        {
-            string query = " SELECT * FROM T_CONFIG ";
-            DataTable configData = new DataTable(Guid.NewGuid().ToString());
-            using (IDataReader dr = Connection.ExecuteReader(query))
-            {
-                configData.Load(dr);
-            }
-            return configData;
         }
     }
 }

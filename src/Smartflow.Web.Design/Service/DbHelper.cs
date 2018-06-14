@@ -9,9 +9,9 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Text;
 
-namespace Smartflow.DesignService
+namespace Smartflow.Web.Design
 {
-    public class SqlHelper
+    public class DbHelper
     {
         public static IDbConnection CreateConnection()
         {

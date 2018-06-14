@@ -10,7 +10,6 @@ using System.Text;
 
 using Smartflow.Elements;
 using Smartflow.Enums;
-using Smartflow.Infrastructure;
 
 namespace Smartflow
 {
@@ -19,7 +18,7 @@ namespace Smartflow
     /// </summary>
     public abstract class WorkflowEngine
     {
-        private IWorkflow workflowService = WorkflowFactoryProvider.OfType<IFactory>().CreateWorkflowSerivce();
+        private IWorkflow workflowService = WorkflowServiceProvider.OfType<IWorkflow>();
 
         public static event DelegatingProcessHandle OnProcess;
 
@@ -52,8 +51,10 @@ namespace Smartflow
         /// </summary>
         /// <param name="workflowStructure">文件</param>
         /// <returns>返回实例ID</returns>
-        public string Start(WorkflowStructure workflowStructure)
+        public string Start(string identification)
         {
+            IWorkflowDesignService service = WorkflowServiceProvider.OfType<IWorkflowDesignService>();
+            WorkflowStructure workflowStructure = service.GetWorkflowStructure(identification);
             return workflowService.Start(workflowStructure);
         }
 
@@ -94,15 +95,15 @@ namespace Smartflow
             if (instance.State == WorkflowInstanceState.Running)
             {
                 WorkflowNode current = instance.Current;
-                
-                context.SetOperation (WorkflowAction.Jump);
-                
+
+                context.SetOperation(WorkflowAction.Jump);
+
                 if (CheckAuthorization(context) == false) return;
 
-                long transitionTo =current.Transitions
+                long transitionTo = current.Transitions
                                   .FirstOrDefault(e => e.NID == context.TransitionID).DESTINATION;
-                
-                current.SetActor(context.ActorID, context.ActorName,WorkflowAction.Jump);
+
+                current.SetActor(context.ActorID, context.ActorName, WorkflowAction.Jump);
                 instance.Jump(transitionTo);
 
                 ASTNode to = current.GetNode(transitionTo);
@@ -114,8 +115,8 @@ namespace Smartflow
                     Instance = instance,
                     Data = context.Data,
                     Operation = context.Operation,
-                    ActorID=context.ActorID,
-                    ActorName=context.ActorName
+                    ActorID = context.ActorID,
+                    ActorName = context.ActorName
                 });
 
                 if (to.NodeType == WorkflowNodeCategeory.End)
@@ -162,7 +163,7 @@ namespace Smartflow
 
                 OnExecuteProcess(new ExecutingContext()
                 {
-                    From =  current,
+                    From = current,
                     To = to,
                     TransitionID = instance.Current.FromTransition.NID,
                     Instance = instance,
@@ -211,7 +212,7 @@ namespace Smartflow
 
                 OnExecuteProcess(new ExecutingContext()
                 {
-                    From =instance.Current,
+                    From = instance.Current,
                     To = to,
                     TransitionID = instance.Current.FromTransition.NID,
                     Instance = instance,

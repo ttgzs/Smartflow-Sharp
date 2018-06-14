@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Smartflow.BussinessService.Models;
-using Smartflow.Infrastructure;
+using Smartflow;
 using Smartflow.Elements;
 using System.Dynamic;
 using Smartflow.BussinessService.Services;
@@ -206,8 +206,7 @@ namespace Smartflow.BussinessService.WorkflowService
 
         public string Start(string identification)
         {
-            WorkflowStructure workflowStructure = WorkflowStructureService.GetWorkflowStructure(identification);
-            return context.Start(workflowStructure);
+            return context.Start(identification);
         }
 
         public void Jump(string instanceID, string transitionID, long actorID, string actorName, dynamic data)

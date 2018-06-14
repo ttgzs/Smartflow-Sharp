@@ -9,16 +9,16 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-using Smartflow.DesignService;
 using System.Web.Script.Serialization;
-using Smartflow.Infrastructure;
+using Smartflow;
 using System.Data;
 
 namespace Smartflow.Web.Design.Controllers
 {
     public partial class WorkflowDesignController : BaseController
     {
-        private WorkflowDesignService designService = new WorkflowDesignService();
+        private IWorkflowDesignService designService = WorkflowServiceProvider.OfType<IWorkflowDesignService>(); 
+        private ActorService roleService = new ActorService();
 
         public ActionResult Design(string id)
         {
@@ -66,12 +66,12 @@ namespace Smartflow.Web.Design.Controllers
 
         public JsonResult GetRole(string roleIds)
         {
-            return JsonWrapper(designService.GetRole(roleIds));
+            return JsonWrapper(roleService.GetRole(roleIds));
         }
 
         public JsonResult GetConfigs()
         {
-            return JsonWrapper(designService.GetConfigs());
+            return JsonWrapper(WorkflowEnvironment.GetWorkflowConfigs());
         }
     }
 }

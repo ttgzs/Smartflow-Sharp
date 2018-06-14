@@ -17,10 +17,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Smartflow.BussinessService"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Smartflow.Web.Design", "src\Smartflow.Web.Design\Smartflow.Web.Design.csproj", "{4AEF880E-FFCF-491C-8B3A-B2347612C159}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Smartflow.Infrastructure", "src\Smartflow.Infrastructure\Smartflow.Infrastructure.csproj", "{FBF0E9D3-1782-4EA6-80CA-AA6EB63F41D9}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Smartflow.DesignService", "src\Smartflow.DesignService\Smartflow.DesignService.csproj", "{36312179-F27B-4369-8D21-27B2D09919F2}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -47,14 +43,6 @@ Global
 		{4AEF880E-FFCF-491C-8B3A-B2347612C159}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4AEF880E-FFCF-491C-8B3A-B2347612C159}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4AEF880E-FFCF-491C-8B3A-B2347612C159}.Release|Any CPU.Build.0 = Release|Any CPU
-		{FBF0E9D3-1782-4EA6-80CA-AA6EB63F41D9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FBF0E9D3-1782-4EA6-80CA-AA6EB63F41D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FBF0E9D3-1782-4EA6-80CA-AA6EB63F41D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FBF0E9D3-1782-4EA6-80CA-AA6EB63F41D9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{36312179-F27B-4369-8D21-27B2D09919F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{36312179-F27B-4369-8D21-27B2D09919F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{36312179-F27B-4369-8D21-27B2D09919F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{36312179-F27B-4369-8D21-27B2D09919F2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -65,7 +53,5 @@ Global
 		{C77DD279-74F0-4A0A-B534-2CF858EDE21D} = {FF382A38-0F89-443D-B5A9-18E5EE2DA278}
 		{EB6E0EC6-45DB-4EC2-9539-1ACE0981494D} = {F9CC66D6-9A89-4F48-943F-7040203E9EB1}
 		{4AEF880E-FFCF-491C-8B3A-B2347612C159} = {FF382A38-0F89-443D-B5A9-18E5EE2DA278}
-		{FBF0E9D3-1782-4EA6-80CA-AA6EB63F41D9} = {FF382A38-0F89-443D-B5A9-18E5EE2DA278}
-		{36312179-F27B-4369-8D21-27B2D09919F2} = {FF382A38-0F89-443D-B5A9-18E5EE2DA278}
 	EndGlobalSection
 EndGlobal
