@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.40629.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dapper", "Dapper\Dapper.csproj", "{97983236-A85F-4DA6-8518-5E9A788E08E8}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{FF382A38-0F89-443D-B5A9-18E5EE2DA278}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "example", "example", "{F9CC66D6-9A89-4F48-943F-7040203E9EB1}"
@@ -17,16 +15,14 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Smartflow.BussinessService"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Smartflow.Web.Design", "src\Smartflow.Web.Design\Smartflow.Web.Design.csproj", "{4AEF880E-FFCF-491C-8B3A-B2347612C159}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dapper", "example\Dapper\Dapper.csproj", "{97983236-A85F-4DA6-8518-5E9A788E08E8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{97983236-A85F-4DA6-8518-5E9A788E08E8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{97983236-A85F-4DA6-8518-5E9A788E08E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{97983236-A85F-4DA6-8518-5E9A788E08E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{97983236-A85F-4DA6-8518-5E9A788E08E8}.Release|Any CPU.Build.0 = Release|Any CPU
 		{4D2EACD3-4129-40D4-9534-8EF3505FDA97}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{4D2EACD3-4129-40D4-9534-8EF3505FDA97}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4D2EACD3-4129-40D4-9534-8EF3505FDA97}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -43,15 +39,19 @@ Global
 		{4AEF880E-FFCF-491C-8B3A-B2347612C159}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4AEF880E-FFCF-491C-8B3A-B2347612C159}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4AEF880E-FFCF-491C-8B3A-B2347612C159}.Release|Any CPU.Build.0 = Release|Any CPU
+		{97983236-A85F-4DA6-8518-5E9A788E08E8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{97983236-A85F-4DA6-8518-5E9A788E08E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{97983236-A85F-4DA6-8518-5E9A788E08E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{97983236-A85F-4DA6-8518-5E9A788E08E8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{97983236-A85F-4DA6-8518-5E9A788E08E8} = {F9CC66D6-9A89-4F48-943F-7040203E9EB1}
 		{4D2EACD3-4129-40D4-9534-8EF3505FDA97} = {F9CC66D6-9A89-4F48-943F-7040203E9EB1}
 		{C77DD279-74F0-4A0A-B534-2CF858EDE21D} = {FF382A38-0F89-443D-B5A9-18E5EE2DA278}
 		{EB6E0EC6-45DB-4EC2-9539-1ACE0981494D} = {F9CC66D6-9A89-4F48-943F-7040203E9EB1}
 		{4AEF880E-FFCF-491C-8B3A-B2347612C159} = {FF382A38-0F89-443D-B5A9-18E5EE2DA278}
+		{97983236-A85F-4DA6-8518-5E9A788E08E8} = {F9CC66D6-9A89-4F48-943F-7040203E9EB1}
 	EndGlobalSection
 EndGlobal

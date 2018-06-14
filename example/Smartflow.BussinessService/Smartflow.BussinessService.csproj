@@ -56,13 +56,13 @@
     <Compile Include="WorkflowService\WorkflowStructureService.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Dapper\Dapper.csproj">
-      <Project>{97983236-a85f-4da6-8518-5e9a788e08e8}</Project>
-      <Name>Dapper</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\src\Smartflow\Smartflow.csproj">
       <Project>{c77dd279-74f0-4a0a-b534-2cf858ede21d}</Project>
       <Name>Smartflow</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Dapper\Dapper.csproj">
+      <Project>{97983236-a85f-4da6-8518-5e9a788e08e8}</Project>
+      <Name>Dapper</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />
