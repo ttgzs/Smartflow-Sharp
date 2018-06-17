@@ -7,10 +7,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
     <meta name="baidu-site-verification" content="SBg5l6RhNK" />
-    <meta name="keywords" content="C#工作流,C#工作流引擎,C#工作流平台" />
-    <meta name="description" content="基于C#语言研发的Smartflow-Sharp工作流管理平台，该工作流管理平台的特点是简单易用、方便扩展、支持多种数据库访问、高度可定制化，支持用户按需求做功能的定制开发，节省用户的使用成本。" />
+    <meta name="keywords" content="工作流总体介绍文档" />
+    <meta name="description" content="工作流总体介绍文档" />
     <meta name="author" content="chengderen">
-    <title>Smartflow-Sharp工作流管理平台</title>
+    <title>Smartflow-Sharp文档</title>
     <link href="./css/bootstrap.min.css" rel="stylesheet" />
     <!-- Custom styles for this template -->
     <link href="./css/sticky-footer-navbar.css" rel="stylesheet">
@@ -27,10 +27,10 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarColor01">
                 <ul class="navbar-nav mr-auto">
-                    <li class="nav-item active">
+                    <li class="nav-item">
                         <a class="nav-link" href="index.html">首页</a>
                     </li>
-                    <li class="nav-item dropdown">
+                    <li class="nav-item dropdown active">
                         <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">文档 <span class="caret"></span></a>
                         <div class="dropdown-menu" aria-labelledby="download">
                             <a class="dropdown-item" href="./doc.html">总体介绍</a>
@@ -59,22 +59,36 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
+
                 <div class="jumbotron">
-                    <h1>Hello, Smartflow-Sharp</h1>
-                    <p class="lead text-justify">
-                        基于C#语言研发的Smartflow-Sharp工作流管理平台，该工作流管理平台的特点是简单易用、方便扩展、支持多种数据库访问、高度可定制化，支持用户按需求做功能的定制开发，节省用户的使用成本。
-                        Smartflow-Sharp工作流管理平台目前包含工作流引擎、工作流流程设计器，支持流程在线设计。工作流引擎负责提供对流程的解析，并驱动流程的流转，是工作流平台核心部件。流程设计器是基于SVG研发，支持所有主流浏览器，IE浏览器只支持IE9以上的版本。工作流平台研发所采用的技术框架和工具是Vs2013+ Dapper+ASP.NET MVC4.0+.NETFX4.0。为了便于后续扩展，支持其他的数据库的访问，经过慎重考虑采用Dapper组件。Dapper组件对原生SQL语句支持性比较友好，且支持所有主流数据库系统访问。
+                    <h3>工作流现状分析</h3>
+                    <hr>
+                    <p class="text-justify"> 目前，属于.NET平台下研发的工作流管理平台真是太少，可供选择真心不多，官方我们之前也采用过，没有用好，到处是问题，而且还没有提供在线的流程设计器，使用起来极其不方便。市面上免费开源工作流管理平台又很少，基本都是属于要收取一定的费用。真正免费的又不是很好用，收费的又太高，所以笔者自已闭门造车，打造一款基于.NET平台免费开源工作流管理平台，为开源尽一点自已的绵薄之力。</p>
+                    <h3>Smartflow-Sharp 介绍</h3>
+                    <hr>
+                    <p class="text-justify">
+                        笔者基于.NET平台，研发了Smartflow-Sharp工作流管理平台，Smartflow-Sharp工作流管理平台目前包含工作流引擎、工作流流程设计器，支持流程在线设计。工作流引擎负责提供对流程的解析，并驱动流程的流转，是工作流平台核心部件。流程设计器是基于SVG研发，支持所有主流浏览器，IE浏览器只支持IE9以上的版本。工作流平台研发所采用的技术框架和工具是Vs2013+Dapper+ASP.NET MVC4.0+.NETFX4.0。为了便于后续扩展，支持其他的数据库的访问，笔者经过慎重考虑采用Dapper组件。Dapper组件对原生SQL语句支持比较友好，且支持所有主流数据库系统访问。所以，你不用担心Smartflow-Sharp工作流管理平台对跨库访问能力。目前，默认只支持 MSSQLSERVER数据库，若想支持其他数据库访问，请修改工作流引擎中DapperFactory 工厂类，提供数据库访问接口。工作流平台目前实现功能点如下：
                     </p>
-                    <p>
-                        <a class="btn btn-primary btn-lg " href="https://github.com/chengderen/Smartflow-Sharp/zipball/master" role="button">Get Started</a>
-                    </p>
+                    <ol>
+                        <li>支持流程流转；<br></li>
+                        <li>支持流程分支；<br></li>
+                        <li>支持流程撤销；<br></li>
+                        <li>支持流程原路回退；<br></li>
+                        <li>支持流程节点角色绑定；<br></li>
+                        <li>支持流程在线设计；<br></li>
+                        <li>
+                            提供友好授权验证接口；<br>
+                            …
+                        </li>
+                    </ol>
+                    <h3>Smartflow-Sharp 未来</h3>
+                    <hr>
+                    <p class="text-justify">笔者会对Smartflow-Sharp工作流管理平台，一直维护到底。未来，我会对工作流管理平台增加更多有趣的功能，以便你能将工作流平台更加快速的融入到业务系统中。期望，能打造成符合中国特色工作流管理平台，造福更多企业和开发人员。</p>
+                    <h3>关于作者</h3>
+                    <hr>
+                    <p class="text-justify">入行七年多的时间，一直从事研发工作，主要从事的ERP 管理类型信息系统研发。 七年时间也不短，一直碌碌无为，于是我决定现在要做点什么事情，由于之前接触过工作流研发方面事情，所以我就想做个免费开源工作流管理平台。工作流管理平台的技术含量并不高，但是要想把他做好，也是需要花很大的精力，如果你觉得能帮助到你，欢迎帮忙推荐。</p>
                 </div>
             </div>
-            <!--<div class="col-md-5">
-                <div class="thumbnail">
-                    <img src="./css/tool.png" alt="工作流程图" />
-                </div>
-            </div>-->
         </div>
     </div>
     <footer class="footer">
@@ -92,9 +106,7 @@
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <!-- Placed at the end of the document so the pages load faster -->
     <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
-    <!--<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.js"></script>-->
     <script src="./css/bootstrap.min.js"></script>
 </body>
 </html>

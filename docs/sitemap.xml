@@ -5,16 +5,42 @@
     xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
        http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd"
 >
-<url>
- <loc>https://www.smartflow-sharp.com</loc>
- <priority>0.5</priority>
- <lastmod>2018-06-06</lastmod>
- <changefreq>weekly</changefreq>
-</url>
-<url>
- <loc>https://www.smartflow-sharp.com/</loc>
- <priority>0.5</priority>
- <lastmod>2018-06-06</lastmod>
- <changefreq>weekly</changefreq>
-</url>
+  <url>
+    <loc>https://www.smartflow-sharp.com</loc>
+    <priority>0.5</priority>
+    <lastmod>2018-06-06</lastmod>
+    <changefreq>weekly</changefreq>
+  </url>
+  <url>
+    <loc>https://www.smartflow-sharp.com/</loc>
+    <priority>0.5</priority>
+    <lastmod>2018-06-06</lastmod>
+    <changefreq>weekly</changefreq>
+  </url>
+  <url>
+    <loc>https://www.smartflow-sharp.com/tool.html</loc>
+    <priority>0.5</priority>
+    <lastmod>2018-06-18</lastmod>
+    <changefreq>weekly</changefreq>
+  </url>
+
+  <url>
+    <loc>https://www.smartflow-sharp.com/doc.html</loc>
+    <priority>0.5</priority>
+    <lastmod>2018-06-18</lastmod>
+    <changefreq>weekly</changefreq>
+  </url>
+
+  <url>
+    <loc>https://www.smartflow-sharp.com/integration.html</loc>
+    <priority>0.5</priority>
+    <lastmod>2018-06-18</lastmod>
+    <changefreq>weekly</changefreq>
+  </url>
+  <url>
+    <loc>https://www.smartflow-sharp.com/donate.html</loc>
+    <priority>0.5</priority>
+    <lastmod>2018-06-18</lastmod>
+    <changefreq>weekly</changefreq>
+  </url>
 </urlset>

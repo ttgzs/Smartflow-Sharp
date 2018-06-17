@@ -1,2 +1,6 @@
 ﻿https://www.smartflow-sharp.com
 https://www.smartflow-sharp.com/
+https://www.smartflow-sharp.com/tool.html
+https://www.smartflow-sharp.com/doc.html
+https://www.smartflow-sharp.com/integration.html
+https://www.smartflow-sharp.com/donate.html
