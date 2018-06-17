@@ -11,26 +11,26 @@ using Smartflow;
 
 namespace Smartflow.BussinessService.WorkflowService
 {
-    public class WorkflowStructureService
-    {
+    //public class WorkflowStructureService
+    //{
         
-        public static void Delete(string IDENTIFICATION)
-        {
-            string sql = " DELETE FROM T_STRUCTURE WHERE IDENTIFICATION=@IDENTIFICATION ";
-            DblHelper.CreateConnection().Execute(sql, new { IDENTIFICATION = IDENTIFICATION });
-        }
+    //    public static void Delete(string IDENTIFICATION)
+    //    {
+    //        string sql = " DELETE FROM T_STRUCTURE WHERE IDENTIFICATION=@IDENTIFICATION ";
+    //        DblHelper.CreateConnection().Execute(sql, new { IDENTIFICATION = IDENTIFICATION });
+    //    }
 
-        public static List<WorkflowStructure> GetWorkflowStructureList()
-        {
-            string sql = " SELECT * FROM T_STRUCTURE ";
-            return DblHelper.CreateConnection().Query<WorkflowStructure>(sql).ToList();
-        }
+    //    public static List<WorkflowStructure> GetWorkflowStructureList()
+    //    {
+    //        string sql = " SELECT * FROM T_STRUCTURE ";
+    //        return DblHelper.CreateConnection().Query<WorkflowStructure>(sql).ToList();
+    //    }
 
-        public static WorkflowStructure GetWorkflowStructure(string instanceID)
-        {
-            string sql = "SELECT * FROM T_STRUCTURE WHERE IDENTIFICATION=@IDENTIFICATION";
-            return DblHelper.CreateConnection().Query<WorkflowStructure>(sql, new { IDENTIFICATION = instanceID })
-                .FirstOrDefault<WorkflowStructure>();
-        }
-    }
+    //    public static WorkflowStructure GetWorkflowStructure(string instanceID)
+    //    {
+    //        string sql = "SELECT * FROM T_STRUCTURE WHERE IDENTIFICATION=@IDENTIFICATION";
+    //        return DblHelper.CreateConnection().Query<WorkflowStructure>(sql, new { IDENTIFICATION = instanceID })
+    //            .FirstOrDefault<WorkflowStructure>();
+    //    }
+    //}
 }

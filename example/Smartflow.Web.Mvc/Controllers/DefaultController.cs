@@ -12,6 +12,9 @@ namespace Smartflow.Web.Controllers
 {
     public class DefaultController : Controller
     {
+        private IWorkflowDesignService workflowStructureService=WorkflowServiceProvider.OfType<IWorkflowDesignService>();
+
+
         public ActionResult Main()
         {
             User userInfo = System.Web.HttpContext.Current.Session["user"] as User;
@@ -21,12 +24,12 @@ namespace Smartflow.Web.Controllers
 
         public ActionResult List()
         {
-            return View(WorkflowStructureService.GetWorkflowStructureList());
+            return View(workflowStructureService.GetWorkflowStructureList());
         }
 
         public JsonResult Delete(string WFID)
         {
-            WorkflowStructureService.Delete(WFID);
+            workflowStructureService.Delete(WFID);
             return Json(true);
         }
 
