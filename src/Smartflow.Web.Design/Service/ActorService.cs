@@ -19,7 +19,7 @@ namespace Smartflow.Web.Design
         private IDbConnection Connection = DapperFactory.CreateConnection(DatabaseCategory.SQLServer,
             ConfigurationManager.AppSettings["busConnection"]);
 
-        public DataTable GetRole(string roleIds)
+        public DataTable GetRole(string roleIds, string searchKey)
         {
             string query = " SELECT * FROM T_ROLE WHERE 1=1 ";
             if (!String.IsNullOrEmpty(roleIds))
@@ -27,6 +27,11 @@ namespace Smartflow.Web.Design
                 query = string.Format("{0} AND IDENTIFICATION NOT IN ({1})", query, roleIds);
             }
 
+            if (!String.IsNullOrEmpty(searchKey))
+            {
+                query = string.Format("{0} AND APPELLATION LIKE '%{1}%'", query, searchKey);
+            }
+            
             DataTable roleData = new DataTable(Guid.NewGuid().ToString());
             using (IDataReader dr = Connection.ExecuteReader(query))
             {

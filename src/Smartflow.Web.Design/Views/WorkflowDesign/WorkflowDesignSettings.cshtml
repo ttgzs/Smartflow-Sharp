@@ -16,6 +16,11 @@
                 configUrl: '@Url.Action("GetConfigs", "WorkflowDesign")',
                 roleUrl: '@Url.Action("GetRole", "WorkflowDesign")'
             });
+
+            $("#btnSearch").click(function () {
+                var searchKey = $.trim($(".smartflow-search-input").val());
+                SMF.search(searchKey || '');
+            });
         });
     </script>
 </head>
@@ -29,9 +34,9 @@
             </ul>
             <div class="layui-tab-content">
                 <div class="layui-tab-item layui-show">
-                    <table class="layui-table" lay-size="sm" lay-skin="nob">
+                    <table class="layui-table" lay-skin="nob">
                         <tr>
-                            <td style="width:60px;">名称</td>
+                            <td style="width:60px;" class="layui-text">名称</td>
                             <td>
                                 <input type="text" id="txtNodeName" class="layui-input smartflow-input" />
                             </td>
@@ -41,12 +46,15 @@
                 <div class="layui-tab-item">
                     <div class="layui-row">
                         <div class="layui-col-xs6">
-                            <fieldset class="layui-elem-field layui-elem-field-h" style="margin-right:10px;">
-                                <legend>待选角色</legend>
-                                <div class="layui-field-box">
+                            <div class="smartflow-role-box">
+                                <div style="padding-bottom:5px;position:relative;">
+                                    <input type="text" placeholder="按角色名称搜索" class="layui-input smartflow-input smartflow-search-input" />
+                                    <span class="layui-icon layui-icon-search smartflow-search-icon" id="btnSearch"></span>
+                                </div>
+                                <div class="smartflow-role-list">
                                     <ul id="roleGrid" class="smartflow-list"></ul>
                                 </div>
-                            </fieldset>
+                            </div>
                         </div>
                         <div class="layui-col-xs6">
                             <fieldset class="layui-elem-field layui-elem-field-h" style="margin-left:10px;">
@@ -62,10 +70,10 @@
                     <fieldset class="layui-elem-field layui-field-title layui-field-title-mp">
                         <legend>SQL脚本</legend>
                     </fieldset>
-                    <table class="layui-table smartflow-table-tb" lay-size="sm" lay-skin="nob">
+                    <table class="layui-table smartflow-table-tb" lay-skin="nob">
                         <tbody>
                             <tr>
-                                <td style="width:120px;">
+                                <td style="width:120px;" class="layui-text">
                                     数据源
                                 </td>
                                 <td>
@@ -73,9 +81,9 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td style="width:120px;">SQL脚本</td>
+                                <td style="width:120px;" class="layui-text">SQL脚本</td>
                                 <td>
-                                    <textarea id="txtCommand" class="layui-textarea smartflow-textarea"></textarea>
+                                    <input id="txtCommand" class="layui-input smartflow-input" spellcheck="false" />
                                 </td>
                             </tr>
                         </tbody>
@@ -83,9 +91,11 @@
                     <fieldset class="layui-elem-field  layui-field-title layui-field-title-mp">
                         <legend>表达式配置</legend>
                     </fieldset>
-                    <table class="layui-table smartflow-table-tb" id="transitions" lay-size="sm" lay-skin="nob">
-                        <tbody></tbody>
-                    </table>
+                    <div style="height:200px;overflow: auto;">
+                        <table class="layui-table smartflow-table-tb" id="transitions" lay-skin="nob">
+                            <tbody></tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>

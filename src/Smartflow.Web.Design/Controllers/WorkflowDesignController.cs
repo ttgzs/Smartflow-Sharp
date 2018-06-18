@@ -64,9 +64,9 @@ namespace Smartflow.Web.Design.Controllers
             return View();
         }
 
-        public JsonResult GetRole(string roleIds)
+        public JsonResult GetRole(string roleIds, string searchKey)
         {
-            return JsonWrapper(roleService.GetRole(roleIds));
+            return JsonWrapper(roleService.GetRole(roleIds, searchKey));
         }
 
         public JsonResult GetConfigs()

@@ -11,7 +11,7 @@
         optionSelector = '#ddlRuleConfig option:selected',
         ruleSelector = '#ddlRuleConfig',
         itemTemplate = "<li id=%{0}%>%{1}%</li>",
-        lineTemplate = "<tr><td class='smartflow-header'>%{0}%</td><td><input type='text' value=\"%{1}%\" id=%{2}% class='layui-input smartflow-input' /></td></tr>";
+        lineTemplate = "<tr><td class='layui-text smartflow-header'>%{0}%</td><td><input type='text' value=\"%{1}%\" id=%{2}% class='layui-input smartflow-input' /></td></tr>";
     tabConfig = {
         node: ['#tab li[category=rule]'],
         decision: ['#tab li[category=role]']
@@ -69,7 +69,7 @@
         config = $.extend(config, option);
     }
 
-    function loadRoleGrid(group) {
+    function loadRoleGrid(group, key) {
 
         var ajaxSettings = { url: config.roleUrl };
         if (group.length > 0) {
@@ -83,6 +83,9 @@
                 roleIds: roleIds.join(',')
             };
         }
+
+        ajaxSettings.data = ajaxSettings.data || {};
+        ajaxSettings.data.searchKey = key;
 
         ajaxSettings.success = function (serverData) {
             var build = new StringBuilder(),
@@ -237,7 +240,7 @@
                      .append(this[configFieldMap.id])
                      .append(config.rQuotation)
                      .append(config.end)
-                     .append(this.this[configFieldMap.name])
+                     .append(this[configFieldMap.name])
                      .append(config.beforeClose)
                      .append('option')
                      .append(config.afterClose);
@@ -270,8 +273,18 @@
         }
     }
 
+    function doSearch(searchKey) {
+        var roles = [];
+        $("#roleAssign li").each(function () {
+            var self = $(this);
+            roles.push({ id: self.attr("id"), name: self.attr("name") });
+        });
+        loadRoleGrid(roles, searchKey);
+    }
+
     window.SMF = {
         init: initOption,
+        search: doSearch,
         setNodeToSettings: setNodeToSettings,
         setSettingsToNode: setSettingsToNode
     };
