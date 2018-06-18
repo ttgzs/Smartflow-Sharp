@@ -12,6 +12,9 @@ using System.Text;
 
 namespace Smartflow
 {
+    /// <summary>
+    /// 处理比较复杂的SQL语句、异常、工作流信息
+    /// </summary>
     internal class ResourceManage
     {
         /// <summary>
@@ -19,6 +22,17 @@ namespace Smartflow
         /// </summary>
         public const string CONNECTION_CONFIG = "CONNECTION_CONFIG";
         
+        /// <summary>
+        /// 参与过审批操作信息
+        /// </summary>
+        public const string SQL_ACTOR_RECORD = "SQL_ACTOR_RECORD";
+
+        /// <summary>
+        /// 获取工作流实例
+        /// </summary>
+        public const string SQL_WORKFLOW_INSTANCE = "SQL_WORKFLOW_INSTANCE";
+        
+
         private static readonly ResourceManager resourceManage =new ResourceManager("Smartflow.SmartflowResource",Assembly.GetExecutingAssembly());
         
         public static string GetString(string key)

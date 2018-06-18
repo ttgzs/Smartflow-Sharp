@@ -120,4 +120,12 @@
   <data name="CONNECTION_CONFIG" xml:space="preserve">
     <value>请检查数据库连接配置</value>
   </data>
+  <data name="SQL_ACTOR_RECORD" xml:space="preserve">
+    <value>SELECT Y.IDENTIFICATION,X.APPELLATION,X.CREATEDATETIME,X.OPERATION FROM T_ACTOR X,T_NODE Y WHERE X.INSTANCEID=@INSTANCEID AND X.RNID=Y.NID ORDER BY CREATEDATETIME ASC</value>
+    <comment>获取流程图中的title信息</comment>
+  </data>
+  <data name="SQL_WORKFLOW_INSTANCE" xml:space="preserve">
+    <value>SELECT X.INSTANCEID,X.RNID,X.JSSTRUCTURE,Y.APPELLATION,Y.NID,Y.IDENTIFICATION,Y.NODETYPE,Y.INSTANCEID FROM T_INSTANCE X INNER JOIN  T_NODE Y  ON (X.INSTANCEID=Y.INSTANCEID AND X.RNID=Y.IDENTIFICATION) WHERE X.INSTANCEID=@INSTANCEID</value>
+    <comment>流程实例信息</comment>
+  </data>
 </root>
