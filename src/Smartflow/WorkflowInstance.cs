@@ -58,7 +58,6 @@ namespace Smartflow
         {
             WorkflowInstance workflowInstance = new WorkflowInstance();
             workflowInstance.InstanceID = instanceID;
-            //string sql = " SELECT X.INSTANCEID,X.RNID,X.JSSTRUCTURE,Y.APPELLATION,Y.NID,Y.IDENTIFICATION,Y.NODETYPE,Y.INSTANCEID FROM T_INSTANCE X INNER JOIN  T_NODE Y  ON (X.INSTANCEID=Y.INSTANCEID AND X.RNID=Y.IDENTIFICATION) WHERE X.INSTANCEID=@INSTANCEID";
             string sql=ResourceManage.GetString(ResourceManage.SQL_WORKFLOW_INSTANCE);
             try
             {

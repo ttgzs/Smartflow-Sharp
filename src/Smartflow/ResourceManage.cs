@@ -37,7 +37,6 @@ namespace Smartflow
         /// </summary>
         public const string SQL_WORKFLOW_PROCESS = "SQL_WORKFLOW_PROCESS";
 
-        
 
         private static readonly ResourceManager resourceManage =new ResourceManager("Smartflow.SmartflowResource",Assembly.GetExecutingAssembly());
         
