@@ -123,7 +123,7 @@ namespace Smartflow
         public static WorkflowProcess GetWorkflowProcessInstance(string instanceID, string NID)
         {
             WorkflowProcess instance = new WorkflowProcess();
-            string query = " SELECT * FROM T_PROCESS WHERE INSTANCEID=@INSTANCEID AND RNID=@NID  AND OPERATION=@OPERATION ";
+            string query = ResourceManage.GetString(ResourceManage.SQL_WORKFLOW_PROCESS);
             instance = instance.Connection.Query<WorkflowProcess>(query, new
             {
                 INSTANCEID = instanceID,

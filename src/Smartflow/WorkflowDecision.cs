@@ -51,7 +51,7 @@ namespace Smartflow
                     resultSet.Load(reader);
                     reader.Close();
                 }
-
+                
                 Transition instance = null;
                 List<Transition> transitions = QueryWorkflowNode(NID);
                 if (resultSet.Rows.Count > 0)
@@ -65,6 +65,9 @@ namespace Smartflow
                         }
                     }
                 }
+                
+                Assert.CheckNull(instance, "instance");
+                
                 return instance;
             }
             catch (Exception ex)

@@ -31,6 +31,12 @@ namespace Smartflow
         /// 获取工作流实例
         /// </summary>
         public const string SQL_WORKFLOW_INSTANCE = "SQL_WORKFLOW_INSTANCE";
+
+        /// <summary>
+        /// 审批过程记录
+        /// </summary>
+        public const string SQL_WORKFLOW_PROCESS = "SQL_WORKFLOW_PROCESS";
+
         
 
         private static readonly ResourceManager resourceManage =new ResourceManager("Smartflow.SmartflowResource",Assembly.GetExecutingAssembly());
