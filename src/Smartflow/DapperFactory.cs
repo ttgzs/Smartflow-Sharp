@@ -31,7 +31,7 @@ namespace Smartflow
             }
             else
             {
-                throw new WorkflowException(MessageResource.CONNECTION_CONFIG);
+                throw new WorkflowException(ResourceManage.GetString(ResourceManage.CONNECTION_CONFIG));
             }
         }
 
