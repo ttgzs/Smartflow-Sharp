@@ -7,10 +7,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
     <meta name="baidu-site-verification" content="SBg5l6RhNK" />
-    <meta name="keywords" content="工作流集成文档" />
-    <meta name="description" content="工作流集成文档" />   
+    <meta name="keywords" content="工作流总体介绍文档" />
+    <meta name="description" content="工作流总体介绍文档" />
     <meta name="author" content="chengderen">
-    <title>Smartflow-Sharp工作流管理平台集成文档</title>
+    <title>Smartflow-Sharp文档</title>
     <link href="./css/bootstrap.min.css" rel="stylesheet" />
     <!-- Custom styles for this template -->
     <link href="./css/sticky-footer-navbar.css" rel="stylesheet">
@@ -62,35 +62,29 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="jumbotron">
-                    <h3>Smartflow-Sharp 示例运行</h3>
+                    <h3>Smartflow-Sharp工作流管理平台使用</h3>
                     <hr>
                     <p class="text-justify">
-                        打开项目文件夹，在SQLServer2005中按顺序执行SQL文件夹下SQL脚本，执行完成后会创建flow、bussiness两个数据库。然后，在VS中打开项目解决方案，分别找到example\Smartflow.Web.Mvc\Web.config，src\Smartflow.Web.Design\Web.config 配置文件，修改其访问数据库连接字符串，然后，将这两个项目发布到本地IIS虚拟目录里。部署完成后，直接浏览项目，如果能浏览到登录界面表示部署成功。
+                        通过截图的方式，演示工作流的使用。让你切身体会到工作流管理平台能为你为解决一些什么样痛点，以及工作流管理平台的适用场景。下面的截图列表，就是演示业务系统的使用效果。
                     </p>
-                    <h3>Smartflow-Sharp 集成说明</h3>
-                    <hr>
-                    <p class="text-justify">Smartflow-Sharp工作流管理平台与业务系统集成，由于Smartflow-Sharp工作流管理平台的高度可定制化特点，既是优点也是缺点，优点就是可以很方便的根据用户的需求做定制化研发，缺点是太过灵活，有些功能需要用户自已开发。集成步骤如下：</p>
-                    <p style="color:red;font-weight:bold;">
-                        1、flow是工作流基础库，直接整体拷贝到你业务系统<br />
-                        2、在flow数据库中打开t_config表，在表中增加业务库的连接字符串<br />
-                        3、bussiness是提供的示例库<br />
-                        4、工作流节点要与角色关联，用户必须提供角色表，工作流是依据角色筛选审批人员<br />
-                        5、调整业务系统和Smartflow.Web.Design项目中Web.config配置文件，如下配置信息<br />
-                        <pre><code>&lt;configsections&gt;
-    &lt;section name="smartflowConfig" 
-             type="Smartflow.SmartflowConfigHandle,Smartflow" /&gt;
-&lt;/configsections&gt;
-&lt;smartflowconfig 
-    connectionstring="server=127.0.0.1;database=flow;uid=sa;pwd=123456"
-category="SQLServer" /&gt;
-&lt;add key="busConnection" 
-     value="server=127.0.0.1;database=bussiness;uid=sa;pwd=123456" /&gt;
-</code>
-</pre>
-                    </p>
-                    <p class="text-justify">
-                        以上就是Smartflow-Sharp工作流管理平台完整的集成过程，工作流管理平台还有些工作需要由用户自已来完成如用户、角色等信息，都需要用户自已提供维护界面。通常在集成过程中需要提供待办、审批记录这些请参照示例，按需集成，在此不详细作介绍。
-                    </p>
+                    <div class="list-group">
+                        <a href="#" class="list-group-item">
+                            <p class="list-group-item-text"></p>
+                            <img src="./demo/1.png" class="img-rounded" />
+                        </a>
+                        <a href="#" class="list-group-item">
+                            <p class="list-group-item-text"></p>
+                            <img src="./demo/2.png" class="img-rounded" />
+                        </a>
+                        <a href="#" class="list-group-item">
+                            <p class="list-group-item-text"></p>
+                            <img src="./demo/3.png" class="img-rounded" />
+                        </a>
+                        <a href="#" class="list-group-item">
+                            <p class="list-group-item-text"></p>
+                            <img src="./demo/4.png" class="img-rounded" />
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
