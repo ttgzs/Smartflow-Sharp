@@ -117,6 +117,8 @@ namespace Smartflow.BussinessService.WorkflowService
                         NODEID = GetCurrentNode(executeContext.Instance.InstanceID).NID,
                         APPELLATION = string.Format("<a href=\"javascript:;\" onclick=\"parent.window.document.getElementById('frmContent').src='../FileApply/FileApply/{0}'\">你有待办任务。</a>", dny.bussinessID)
                     });
+
+                    //WorkflowServiceProvider.OfType<IMailService>().Notification()
                     new PendingService().Delete(executeContext.Instance.Current.NID, executeContext.Instance.InstanceID);
                  }
                 else if (executeContext.Operation == Enums.WorkflowAction.Undo)

@@ -52,6 +52,7 @@
     <Compile Include="Elements\Element.cs" />
     <Compile Include="Elements\End.cs" />
     <Compile Include="Enums\WorkflowAction.cs" />
+    <Compile Include="IMailService.cs" />
     <Compile Include="IRelationShip.cs" />
     <Compile Include="Elements\Node.cs" />
     <Compile Include="Elements\Group.cs" />
@@ -65,7 +66,10 @@
     <Compile Include="ITransition.cs" />
     <Compile Include="IPersistent.cs" />
     <Compile Include="IWorkflow.cs" />
+    <Compile Include="IWorkflowConfiguration.cs" />
     <Compile Include="IWorkflowDesignService.cs" />
+    <Compile Include="MailConfiguration.cs" />
+    <Compile Include="MailService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ResourceManage.cs" />
     <Compile Include="SmartflowConfigHandle.cs" />
@@ -76,7 +80,7 @@
     <Compile Include="WorkflowDecision.cs" />
     <Compile Include="WorkflowDesignService.cs" />
     <Compile Include="WorkflowEngine.cs" />
-    <Compile Include="WorkflowEnvironment.cs" />
+    <Compile Include="WorkflowConfiguration.cs" />
     <Compile Include="WorkflowException.cs" />
     <Compile Include="WorkflowLogger.cs" />
     <Compile Include="WorkflowServiceProvider.cs" />

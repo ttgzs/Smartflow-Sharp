@@ -20,6 +20,8 @@ namespace Smartflow
         private static IList<object> _collection = new List<object>() 
         { 
             new WorkflowService(),
+            new MailService(),
+            new WorkflowConfiguration(),
             new WorkflowDesignService()
         };
 

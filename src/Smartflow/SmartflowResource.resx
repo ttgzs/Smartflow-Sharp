@@ -120,6 +120,15 @@
   <data name="CONNECTION_CONFIG" xml:space="preserve">
     <value>请检查数据库连接配置</value>
   </data>
+  <data name="SMARTFLOW_SHARP_NAME" xml:space="preserve">
+    <value>Smartflow-Sharp</value>
+  </data>
+  <data name="SMARTFLOW_SHARP_TITLE" xml:space="preserve">
+    <value>C#工作流管理平台</value>
+  </data>
+  <data name="SMARTFLOW_SHARP_VERSION" xml:space="preserve">
+    <value>1.0</value>
+  </data>
   <data name="SQL_ACTOR_RECORD" xml:space="preserve">
     <value>SELECT Y.IDENTIFICATION,X.APPELLATION,X.CREATEDATETIME,X.OPERATION FROM T_ACTOR X,T_NODE Y WHERE X.INSTANCEID=@INSTANCEID AND X.RNID=Y.NID ORDER BY CREATEDATETIME ASC</value>
     <comment>获取流程图中的title信息</comment>

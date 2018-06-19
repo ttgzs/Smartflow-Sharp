@@ -37,6 +37,11 @@ namespace Smartflow
         /// </summary>
         public const string SQL_WORKFLOW_PROCESS = "SQL_WORKFLOW_PROCESS";
 
+        public const string SMARTFLOW_SHARP_NAME = "SMARTFLOW_SHARP_NAME";
+        public const string SMARTFLOW_SHARP_TITLE = "SMARTFLOW_SHARP_NAME";
+        public const string SMARTFLOW_SHARP_VERSION = "SMARTFLOW_SHARP_NAME";
+
+
 
         private static readonly ResourceManager resourceManage =new ResourceManager("Smartflow.SmartflowResource",Assembly.GetExecutingAssembly());
         

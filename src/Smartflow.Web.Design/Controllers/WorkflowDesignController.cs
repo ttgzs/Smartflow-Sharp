@@ -17,7 +17,7 @@ namespace Smartflow.Web.Design.Controllers
 {
     public partial class WorkflowDesignController : BaseController
     {
-        private IWorkflowDesignService designService = WorkflowServiceProvider.OfType<IWorkflowDesignService>(); 
+        private IWorkflowDesignService designService = WorkflowServiceProvider.OfType<IWorkflowDesignService>();
         private ActorService roleService = new ActorService();
 
         public ActionResult Design(string id)
@@ -71,7 +71,9 @@ namespace Smartflow.Web.Design.Controllers
 
         public JsonResult GetConfigs()
         {
-            return JsonWrapper(WorkflowEnvironment.GetWorkflowConfigs());
+            return JsonWrapper(WorkflowServiceProvider
+                .OfType<IWorkflowConfiguration>()
+                .GetWorkflowConfigs());
         }
     }
 }
