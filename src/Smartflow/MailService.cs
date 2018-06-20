@@ -14,6 +14,9 @@ namespace Smartflow
         private const string CONST_MAIL_URL_EXPRESSION = @"^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+$";
         private SmtpClient _smtp = new SmtpClient();
 
+        private MailConfiguration mailConfiguration =
+                ConfigurationManager.GetSection("mailConfiguration") as MailConfiguration;
+
         public string Account
         {
             get;
@@ -28,16 +31,16 @@ namespace Smartflow
 
         public MailService()
         {
-            MailConfiguration mailConfiguration = 
-                ConfigurationManager.GetSection("mailConfiguration") as MailConfiguration;
             if (mailConfiguration == null) return;
 
             this._smtp.Host = mailConfiguration.Host;
             this._smtp.Port = mailConfiguration.Port;
-            this._smtp.EnableSsl = false;
+            this._smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
+            this._smtp.EnableSsl = mailConfiguration.EnableSsl;
             this.Account = mailConfiguration.Account;
             this.Password = mailConfiguration.Password;
-            this._smtp.Credentials = new NetworkCredential(mailConfiguration.Account, mailConfiguration.Password);
+            //ren421
+            this._smtp.Credentials = new NetworkCredential(mailConfiguration.Account, this.Password);
 
         }
 
@@ -65,7 +68,7 @@ namespace Smartflow
             message.SubjectEncoding = Encoding.UTF8;
             message.Body = body;
             message.BodyEncoding = Encoding.UTF8;
-            message.IsBodyHtml = false;
+            message.IsBodyHtml = true;
             message.Priority = MailPriority.Normal;
             foreach (string recvier in recvierArray)
             {

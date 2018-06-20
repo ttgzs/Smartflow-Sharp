@@ -10,6 +10,7 @@ using Smartflow;
 using Smartflow.Elements;
 using System.Dynamic;
 using Smartflow.BussinessService.Services;
+using System.Threading.Tasks;
 
 namespace Smartflow.BussinessService.WorkflowService
 {
@@ -99,6 +100,10 @@ namespace Smartflow.BussinessService.WorkflowService
                         });
                     }
 
+                    Task.Factory.StartNew(() => {
+                        Smartflow.WorkflowServiceProvider.OfType<IMailService>()
+                            .Notification(new string[] { "ren421@163.com" }, "您有新的待办信息");
+                    });
                     new PendingService().Delete(executeContext.Instance.Current.NID, executeContext.Instance.InstanceID);
                 }
                 else if (executeContext.Operation == Enums.WorkflowAction.Rollback)
