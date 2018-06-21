@@ -39,7 +39,7 @@ namespace Smartflow
         }
 
         /// <summary>
-        /// 发送邮件
+        /// 获取消息列表
         /// </summary>
         /// <param name="from">发件人邮件地址</param>
         /// <param name="sender">发件人显示名称</param>
