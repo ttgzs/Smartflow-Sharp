@@ -120,6 +120,9 @@
   <data name="CONNECTION_CONFIG" xml:space="preserve">
     <value>请检查数据库连接配置</value>
   </data>
+  <data name="MAIL_URL_EXPRESSION" xml:space="preserve">
+    <value>^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+$</value>
+  </data>
   <data name="SMARTFLOW_SHARP_NAME" xml:space="preserve">
     <value>Smartflow-Sharp</value>
   </data>

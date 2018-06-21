@@ -11,8 +11,8 @@ namespace Smartflow
 {
     public class MailService : IMailService
     {
-        private const string CONST_MAIL_URL_EXPRESSION = @"^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+$";
-        private static Lazy<MailConfiguration> mailConfigurationLazy = new Lazy<MailConfiguration>(() => (ConfigurationManager.GetSection("mailConfiguration") as MailConfiguration));
+        private static Lazy<MailConfiguration> mailConfigurationLazy = new
+            Lazy<MailConfiguration>(() => (ConfigurationManager.GetSection("mailConfiguration") as MailConfiguration));
 
         public void Notification(string[] to, string body)
         {
@@ -48,7 +48,7 @@ namespace Smartflow
         /// <param name="body">邮件正文</param>
         protected List<MailMessage> GetSendMessageList(string from, string sender, string[] recvierArray, string subject, string body)
         {
-            if (recvierArray.Any(MAddress => !Regex.IsMatch(MAddress, MailService.CONST_MAIL_URL_EXPRESSION)))
+            if (recvierArray.Any(MAddress => !Regex.IsMatch(MAddress, ResourceManage.GetString(ResourceManage.MAIL_URL_EXPRESSION))))
                 return null;
 
             List<MailMessage> messageList = new List<MailMessage>();

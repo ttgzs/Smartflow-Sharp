@@ -37,6 +37,11 @@ namespace Smartflow
         /// </summary>
         public const string SQL_WORKFLOW_PROCESS = "SQL_WORKFLOW_PROCESS";
 
+        /// <summary>
+        /// 验证MAIL地址，正则表达式
+        /// </summary>
+        public const string MAIL_URL_EXPRESSION = "MAIL_URL_EXPRESSION";
+
         public const string SMARTFLOW_SHARP_NAME = "SMARTFLOW_SHARP_NAME";
         public const string SMARTFLOW_SHARP_TITLE = "SMARTFLOW_SHARP_NAME";
         public const string SMARTFLOW_SHARP_VERSION = "SMARTFLOW_SHARP_NAME";
