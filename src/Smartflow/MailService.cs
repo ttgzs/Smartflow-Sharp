@@ -12,41 +12,29 @@ namespace Smartflow
     public class MailService : IMailService
     {
         private const string CONST_MAIL_URL_EXPRESSION = @"^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+$";
-        private SmtpClient _smtp = new SmtpClient();
+        private MailConfiguration mailConfiguration = ConfigurationManager.GetSection("mailConfiguration") as MailConfiguration;
 
-        private MailConfiguration mailConfiguration =
-                ConfigurationManager.GetSection("mailConfiguration") as MailConfiguration;
-
-        public string Account
+        public void Notification(string[] to, string body)
         {
-            get;
-            set;
-        }
-
-        public string Password
-        {
-            get;
-            set;
-        }
-
-        public MailService()
-        {
-            if (mailConfiguration == null) return;
-
-            this._smtp.Host = mailConfiguration.Host;
-            this._smtp.Port = mailConfiguration.Port;
-            this._smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
-            this._smtp.EnableSsl = mailConfiguration.EnableSsl;
-            this.Account = mailConfiguration.Account;
-            this.Password = mailConfiguration.Password;
-            //ren421
-            this._smtp.Credentials = new NetworkCredential(mailConfiguration.Account, this.Password);
-
-        }
-
-        public void Notification(string[] to,string body)
-        {
-            this.Send(this.Account, this.Account, to, "待办通知", body);
+            SmtpClient _smtp = new SmtpClient();
+            _smtp.Host = mailConfiguration.Host;
+            _smtp.Port = mailConfiguration.Port;
+            _smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
+            _smtp.EnableSsl = mailConfiguration.EnableSsl;
+            _smtp.UseDefaultCredentials = true;
+            _smtp.Credentials = new NetworkCredential(mailConfiguration.Account, mailConfiguration.Password);
+            List<MailMessage> msgList = GetSendMessageList(mailConfiguration.Account, mailConfiguration.Name, to, "待办通知", body);
+            foreach (var item in msgList)
+            {
+                try
+                {
+                    _smtp.Send(item);
+                }
+                catch (Exception ex)
+                {
+                    WorkflowLogger.WriteLog(ex);
+                }
+            }
         }
 
         /// <summary>
@@ -57,31 +45,24 @@ namespace Smartflow
         /// <param name="to">收件人地址</param>
         /// <param name="subject">邮件标题</param>
         /// <param name="body">邮件正文</param>
-        protected void Send(string from, string sender, string[] recvierArray, string subject, string body)
+        protected List<MailMessage> GetSendMessageList(string from, string sender, string[] recvierArray, string subject, string body)
         {
             if (recvierArray.Any(MAddress => !Regex.IsMatch(MAddress, MailService.CONST_MAIL_URL_EXPRESSION)))
-                return;
+                return null;
 
-            MailMessage message = new MailMessage();
-            message.From = new MailAddress(from, sender);
-            message.Subject = subject;
-            message.SubjectEncoding = Encoding.UTF8;
-            message.Body = body;
-            message.BodyEncoding = Encoding.UTF8;
-            message.IsBodyHtml = true;
-            message.Priority = MailPriority.Normal;
+            List<MailMessage> messageList = new List<MailMessage>();
             foreach (string recvier in recvierArray)
             {
-                message.To.Add(recvier);
+                MailMessage message = new MailMessage(new MailAddress(from, sender), new MailAddress(recvier));
+                message.Subject = subject;
+                message.SubjectEncoding = Encoding.UTF8;
+                message.Body = body;
+                message.BodyEncoding = Encoding.UTF8;
+                message.IsBodyHtml = true;
+                message.Priority = MailPriority.Normal;
+                messageList.Add(message);
             }
-            try
-            {
-                this._smtp.Send(message);
-            }
-            catch (Exception ex)
-            {
-                throw new WorkflowException(ex);
-            }
+            return messageList;
         }
     }
 }
