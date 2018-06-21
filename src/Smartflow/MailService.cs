@@ -12,10 +12,11 @@ namespace Smartflow
     public class MailService : IMailService
     {
         private const string CONST_MAIL_URL_EXPRESSION = @"^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+$";
-        private MailConfiguration mailConfiguration = ConfigurationManager.GetSection("mailConfiguration") as MailConfiguration;
+        private static Lazy<MailConfiguration> mailConfigurationLazy = new Lazy<MailConfiguration>(() => (ConfigurationManager.GetSection("mailConfiguration") as MailConfiguration));
 
         public void Notification(string[] to, string body)
         {
+            MailConfiguration mailConfiguration = mailConfigurationLazy.Value;
             SmtpClient _smtp = new SmtpClient();
             _smtp.Host = mailConfiguration.Host;
             _smtp.Port = mailConfiguration.Port;
