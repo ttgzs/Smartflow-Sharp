@@ -122,6 +122,7 @@
   </data>
   <data name="MAIL_URL_EXPRESSION" xml:space="preserve">
     <value>^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+$</value>
+    <comment>验证邮件地址正则表达式</comment>
   </data>
   <data name="SMARTFLOW_SHARP_NAME" xml:space="preserve">
     <value>Smartflow-Sharp</value>
