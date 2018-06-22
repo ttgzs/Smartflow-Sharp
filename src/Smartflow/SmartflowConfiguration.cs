@@ -14,7 +14,7 @@ namespace Smartflow
     /// <summary>
     /// 定义工作流数据库配置节点
     /// </summary>
-    public class SmartflowConfigHandle : ConfigurationSection
+    public class SmartflowConfiguration : ConfigurationSection
     {
         /// <summary>
         /// 工作流数据库连接字符串

@@ -3,7 +3,16 @@ namespace Smartflow
 {
     public interface ILogging
     {
-        void Write(Exception ex);
-        void Write(string message);
+        /// <summary>
+        /// 错误日志
+        /// </summary>
+        /// <param name="ex"></param>
+        void Error(Exception ex);
+
+        /// <summary>
+        /// 信息
+        /// </summary>
+        /// <param name="message"></param>
+        void Info(string message);
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Smartflow.Web.Mvc.Code;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -14,8 +15,14 @@ namespace Smartflow.Web.Mvc
     {
         protected void Application_Start()
         {
-            AreaRegistration.RegisterAllAreas();
+            //WorkflowServiceProvider.Collection
+            //   .Remove(WorkflowServiceProvider.OfType<ILogging>());
 
+            //WorkflowServiceProvider.Collection.Add(new SmartflowLogging());
+
+
+            
+            AreaRegistration.RegisterAllAreas();
             WebApiConfig.Register(GlobalConfiguration.Configuration);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);

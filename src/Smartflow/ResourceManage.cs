@@ -46,8 +46,6 @@ namespace Smartflow
         public const string SMARTFLOW_SHARP_TITLE = "SMARTFLOW_SHARP_NAME";
         public const string SMARTFLOW_SHARP_VERSION = "SMARTFLOW_SHARP_NAME";
 
-
-
         private static readonly ResourceManager resourceManage =new ResourceManager("Smartflow.SmartflowResource",Assembly.GetExecutingAssembly());
         
         public static string GetString(string key)

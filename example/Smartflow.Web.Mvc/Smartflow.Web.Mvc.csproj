@@ -113,6 +113,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Code\CommonMethods.cs" />
+    <Compile Include="Code\SmartflowLogging.cs" />
     <Compile Include="Controllers\DefaultController.cs" />
     <Compile Include="Controllers\FileApplyController.cs" />
     <Compile Include="Controllers\UserControlController.cs" />

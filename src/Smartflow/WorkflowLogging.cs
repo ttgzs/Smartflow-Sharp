@@ -14,7 +14,7 @@ namespace Smartflow
     /// <summary>
     /// 定义统一日志处理
     /// </summary>
-    public class WorkflowLoggingService : Smartflow.ILogging
+    public class WorkflowLoggingService : ILogging
     {
         private EventLog logging = new EventLog();
 
@@ -23,14 +23,14 @@ namespace Smartflow
             logging.Source = ResourceManage.GetString(ResourceManage.SMARTFLOW_SHARP_NAME);
         }
 
-        public void Write(Exception ex)
+        public virtual void Error(Exception ex)
         {
-            this.Write(ex.ToString());
+            logging.WriteEntry(ex.ToString(), EventLogEntryType.Error);
         }
 
-        public void Write(string message)
+        public virtual void Info(string message)
         {
-            logging.WriteEntry(message, EventLogEntryType.Error);
+            logging.WriteEntry(message, EventLogEntryType.Information);
         }
     }
 }

@@ -11,20 +11,21 @@ using System.Text;
 
 namespace Smartflow
 {
-    public sealed  class WorkflowServiceProvider
+    public static class WorkflowServiceProvider
     {
-        private WorkflowServiceProvider()
+        private static IList<object> _collection = new List<object>();
+
+        static WorkflowServiceProvider()
         {
+            _collection.Add(new WorkflowLoggingService());
+            _collection.Add(new WorkflowService());
+            _collection.Add(new MailService());
+            _collection.Add(new WorkflowConfig());
+            _collection.Add(new WorkflowDesignService());
         }
 
-        private static IList<object> _collection = new List<object>() 
-        { 
-            new WorkflowLoggingService(),
-            new WorkflowService(),
-            new MailService(),
-            new WorkflowConfiguration(),
-            new WorkflowDesignService()
-        };
+
+
 
         public static IList<object> Collection
         {

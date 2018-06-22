@@ -18,7 +18,7 @@ namespace Smartflow
     {
         public static IDbConnection CreateWorkflowConnection()
         {
-            SmartflowConfigHandle config = ConfigurationManager.GetSection("smartflowConfig") as SmartflowConfigHandle;
+            SmartflowConfiguration config = ConfigurationManager.GetSection("smartflowConfig") as SmartflowConfiguration;
 
             Assert.CheckNull(config, "SmartflowConfigHandle");
             Assert.StringNull(config.ConnectionString, "ConnectionString");

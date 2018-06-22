@@ -37,7 +37,7 @@ namespace Smartflow
                 }
                 catch (Exception ex)
                 {
-                    logging.Write(ex);
+                    logging.Error(ex);
                 }
             }
         }

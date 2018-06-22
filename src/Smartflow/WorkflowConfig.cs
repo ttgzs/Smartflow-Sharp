@@ -6,7 +6,7 @@ using Smartflow.Dapper;
 
 namespace Smartflow
 {
-    public class WorkflowConfiguration : IWorkflowConfiguration
+    public class WorkflowConfig : IWorkflowConfiguration
     {
         public  DataTable GetWorkflowConfigs()
         {
