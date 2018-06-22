@@ -23,12 +23,12 @@ namespace Smartflow
             logging.Source = ResourceManage.GetString(ResourceManage.SMARTFLOW_SHARP_NAME);
         }
 
-        public void WriteLog(Exception ex)
+        public void Write(Exception ex)
         {
-            this.WriteLog(ex.ToString());
+            this.Write(ex.ToString());
         }
 
-        public void WriteLog(string message)
+        public void Write(string message)
         {
             logging.WriteEntry(message, EventLogEntryType.Error);
         }

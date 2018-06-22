@@ -17,19 +17,19 @@ namespace Smartflow
         public WorkflowException(Exception innerException)
             : base(ResourceManage.GetString(ResourceManage.SMARTFLOW_SHARP_NAME), innerException)
         {
-            logging.WriteLog(innerException.ToString());
+            logging.Write(innerException.ToString());
         }
 
         public WorkflowException(Exception innerException, string instanceID)
             : base(ResourceManage.GetString(ResourceManage.SMARTFLOW_SHARP_NAME), innerException)
         {
-            logging.WriteLog(string.Format("流程实例ID:{0} 异常信息 {1} ", instanceID, innerException));
+            logging.Write(string.Format("流程实例ID:{0} 异常信息 {1} ", instanceID, innerException));
         }
 
         public WorkflowException(string message)
             : base(message)
         {
-            logging.WriteLog(message);
+            logging.Write(message);
         }
     }
 }
