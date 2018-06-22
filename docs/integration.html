@@ -75,10 +75,10 @@
                         4、工作流节点要与角色关联，用户必须提供角色表，工作流是依据角色筛选审批人员<br />
                         5、调整业务系统和Smartflow.Web.Design项目中Web.config配置文件，如下配置信息<br />
                         <pre><code>&lt;configsections&gt;
-    &lt;section name="smartflowConfig" 
-             type="Smartflow.SmartflowConfigHandle,Smartflow" /&gt;
+    &lt;section name="smartflowConfiguration" 
+             type="Smartflow.SmartflowConfiguration,Smartflow" /&gt;
 &lt;/configsections&gt;
-&lt;smartflowconfig 
+&lt;smartflowConfiguration 
     connectionstring="server=127.0.0.1;database=flow;uid=sa;pwd=123456"
 category="SQLServer" /&gt;
 &lt;add key="busConnection" 
