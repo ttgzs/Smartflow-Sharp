@@ -90,24 +90,5 @@ namespace Smartflow
             get;
             internal set;
         }
-
-        /// <summary>
-        /// 设置下一节点审批人
-        /// </summary>
-        /// <param name="wfActors"></param>
-        //public void SetActor(List<WorkflowActor> wfActors)
-        //{
-        //    List<Actor> actors = new List<Actor>();
-        //    foreach (WorkflowActor wfActor in wfActors)
-        //    {
-        //        actors.Add(new Actor()
-        //        {
-        //            NAME = wfActor.Name,
-        //            ID = wfActor.ID
-        //        });
-        //    }
-
-        //    To.SetActor(actors);
-        //}
     }
 }
