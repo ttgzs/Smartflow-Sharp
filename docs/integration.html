@@ -86,6 +86,26 @@ category="SQLServer" /&gt;
 </code>
 </pre>
                     </p>
+                    <h3>Smartflow-Sharp 邮件服务</h3>
+                    <hr>
+                    <p class="text-justify">Smartflow-Sharp 提供邮件服务，在Web.config配置文件，增加如下配置信息</p>
+
+
+                    <pre><code>&lt;configsections&gt;
+    &lt;section name="mailConfiguration" 
+             type="Smartflow.MailConfiguration,Smartflow" /&gt;
+&lt;/configsections&gt;
+&lt;mailConfiguration account="邮件账号（237552006@qq.com）"
+                   password="授权码（非邮箱的登录密码）"
+                   name="显示名称（smartflow-sharp）"
+                   host="服务(smtp.qq.com)"
+                   port="端口"
+                   enablessl="是否启用HTTPS" /&gt;
+</code>
+</pre>
+
+               
+
                     <p class="text-justify">
                         以上就是Smartflow-Sharp工作流管理平台完整的集成过程，工作流管理平台还有些工作需要由用户自已来完成如用户、角色等信息，都需要用户自已提供维护界面。通常在集成过程中需要提供待办、审批记录这些请参照示例，按需集成，在此不详细作介绍。
                     </p>
