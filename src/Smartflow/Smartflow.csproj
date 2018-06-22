@@ -52,6 +52,7 @@
     <Compile Include="Elements\Element.cs" />
     <Compile Include="Elements\End.cs" />
     <Compile Include="Enums\WorkflowAction.cs" />
+    <Compile Include="ILogging.cs" />
     <Compile Include="IMailService.cs" />
     <Compile Include="IRelationShip.cs" />
     <Compile Include="Elements\Node.cs" />
@@ -82,7 +83,7 @@
     <Compile Include="WorkflowEngine.cs" />
     <Compile Include="WorkflowConfiguration.cs" />
     <Compile Include="WorkflowException.cs" />
-    <Compile Include="WorkflowLogger.cs" />
+    <Compile Include="WorkflowLogging.cs" />
     <Compile Include="WorkflowServiceProvider.cs" />
     <Compile Include="WorkflowInstance.cs" />
     <Compile Include="WorkflowNode.cs" />

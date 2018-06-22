@@ -11,6 +11,8 @@ namespace Smartflow
 {
     public class MailService : IMailService
     {
+        private   ILogging logging = WorkflowServiceProvider.OfType<ILogging>();
+
         private static Lazy<MailConfiguration> mailConfigurationLazy = new
             Lazy<MailConfiguration>(() => (ConfigurationManager.GetSection("mailConfiguration") as MailConfiguration));
 
@@ -35,7 +37,7 @@ namespace Smartflow
                 }
                 catch (Exception ex)
                 {
-                    WorkflowLogger.WriteLog(ex);
+                    logging.WriteLog(ex);
                 }
             }
         }
