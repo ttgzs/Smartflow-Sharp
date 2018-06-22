@@ -18,18 +18,20 @@ namespace Smartflow
         {
             MailConfiguration mailConfiguration = mailConfigurationLazy.Value;
             SmtpClient _smtp = new SmtpClient();
+
             _smtp.Host = mailConfiguration.Host;
             _smtp.Port = mailConfiguration.Port;
             _smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
             _smtp.EnableSsl = mailConfiguration.EnableSsl;
             _smtp.UseDefaultCredentials = true;
             _smtp.Credentials = new NetworkCredential(mailConfiguration.Account, mailConfiguration.Password);
+
             List<MailMessage> msgList = GetSendMessageList(mailConfiguration.Account, mailConfiguration.Name, to, "待办通知", body);
-            foreach (var item in msgList)
+            foreach (var message in msgList)
             {
                 try
                 {
-                    _smtp.Send(item);
+                    _smtp.Send(message);
                 }
                 catch (Exception ex)
                 {
@@ -37,6 +39,7 @@ namespace Smartflow
                 }
             }
         }
+
 
         /// <summary>
         /// 获取消息列表
