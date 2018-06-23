@@ -6,8 +6,8 @@ namespace Smartflow
         /// <summary>
         /// 错误日志
         /// </summary>
-        /// <param name="ex"></param>
-        void Error(Exception ex);
+        /// <param name="exception"></param>
+        void Error(string exception);
 
         /// <summary>
         /// 信息

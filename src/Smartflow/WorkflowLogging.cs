@@ -23,9 +23,9 @@ namespace Smartflow
             logging.Source = ResourceManage.GetString(ResourceManage.SMARTFLOW_SHARP_NAME);
         }
 
-        public virtual void Error(Exception ex)
+        public virtual void Error(string exception)
         {
-            logging.WriteEntry(ex.ToString(), EventLogEntryType.Error);
+            logging.WriteEntry(exception, EventLogEntryType.Error);
         }
 
         public virtual void Info(string message)
