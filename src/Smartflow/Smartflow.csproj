@@ -67,6 +67,7 @@
     <Compile Include="ITransition.cs" />
     <Compile Include="IPersistent.cs" />
     <Compile Include="IWorkflow.cs" />
+    <Compile Include="IWorkflowActor.cs" />
     <Compile Include="IWorkflowConfiguration.cs" />
     <Compile Include="IWorkflowDesignService.cs" />
     <Compile Include="MailConfiguration.cs" />

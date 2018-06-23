@@ -22,10 +22,8 @@ namespace Smartflow
             _collection.Add(new MailService());
             _collection.Add(new WorkflowConfig());
             _collection.Add(new WorkflowDesignService());
+            _collection.Add(new WorkflowActor());
         }
-
-
-
 
         public static IList<object> Collection
         {

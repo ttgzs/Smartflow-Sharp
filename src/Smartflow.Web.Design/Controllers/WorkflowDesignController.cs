@@ -53,7 +53,7 @@ namespace Smartflow.Web.Design.Controllers
             JavaScriptSerializer serializer = new JavaScriptSerializer();
             ViewBag.Result = serializer.Serialize(WorkflowInstance.GetInstance(instanceID));
 
-            DataTable dt = WorkflowActor.GetRecord(instanceID);
+            DataTable dt = WorkflowServiceProvider.OfType<IWorkflowActor>().GetRecord(instanceID);
             ViewBag.Record = Newtonsoft.Json.JsonConvert.SerializeObject(dt);
 
             return View();
