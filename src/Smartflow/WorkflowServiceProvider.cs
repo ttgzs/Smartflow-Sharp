@@ -21,18 +21,18 @@ namespace Smartflow
             _collection.Add(new WorkflowService());
             _collection.Add(new MailService());
             _collection.Add(new WorkflowConfig());
-            _collection.Add(new WorkflowDesignService());
             _collection.Add(new WorkflowActor());
+            _collection.Add(new WorkflowDesignService());
         }
 
-        public static IList<object> Collection
+        public static IList<object> Services
         {
             get { return _collection; }
         }
 
         public static T OfType<T>()
         {
-            return (T)Collection.Where(o => (o is T)).FirstOrDefault();
+            return (T)Services.Where(o => (o is T)).FirstOrDefault();
         }
     }
 }
