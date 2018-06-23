@@ -38,7 +38,13 @@ namespace Smartflow
             set;
         }
 
-        public string JSSTRUCTURE
+        public string STRUCTUREID
+        {
+            get;
+            set;
+        }
+
+        public string STRUCTUREXML
         {
             get;
             set;
@@ -77,9 +83,7 @@ namespace Smartflow
         /// <param name="transitionTo">选择跳转路线</param>
         internal void Jump(long transitionTo)
         {
-
             string update = " UPDATE T_INSTANCE SET RNID=@RNID WHERE INSTANCEID=@INSTANCEID ";
-
             Connection.Execute(update, new
             {
                 RNID = transitionTo,
@@ -100,19 +104,19 @@ namespace Smartflow
             });
         }
 
-        internal static string CreateWorkflowInstance(long nodeID, string flowID, string json)
+        internal static string CreateWorkflowInstance(long nodeID, string structureID, string structureXml)
         {
             WorkflowInstance instance = new WorkflowInstance();
             string instanceID = Guid.NewGuid().ToString();
-            string sql = "INSERT INTO T_INSTANCE(INSTANCEID,RNID,FLOWID,STATE,JSSTRUCTURE) VALUES(@INSTANCEID,@RNID,@FLOWID,@STATE,@JSSTRUCTURE)";
+            string sql = "INSERT INTO T_INSTANCE(INSTANCEID,RNID,STRUCTUREID,STATE,STRUCTUREXML) VALUES(@INSTANCEID,@RNID,@STRUCTUREID,@STATE,@STRUCTUREXML)";
 
             instance.Connection.Execute(sql, new
             {
                 INSTANCEID = instanceID,
                 RNID = nodeID,
-                FLOWID = flowID,
+                STRUCTUREID = structureID,
                 STATE = WorkflowInstanceState.Running.ToString(),
-                JSSTRUCTURE = json
+                STRUCTUREXML = structureXml
             });
 
             instance.LogService.Info(string.Format("执行{0}方法创建实例,实例ID:{1}", "CreateWorkflowInstance", instanceID));

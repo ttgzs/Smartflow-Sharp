@@ -829,7 +829,7 @@
 
         return {
             FILESTRUCTURE: escape(build.toString()),
-            JSSTRUCTURE: imageData
+            STRUCTUREXML: imageData
         };
     }
 

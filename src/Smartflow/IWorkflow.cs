@@ -24,12 +24,6 @@ namespace Smartflow
         /// <returns></returns>
         string Start(WorkflowStructure workflowStructure);
 
-        /// <summary>
-        /// 获取工作流实例
-        /// </summary>
-        /// <param name="instanceID">实例ID</param>
-        /// <returns>工作流实例</returns>
-        WorkflowInstance Instance(string instanceID);
 
         /// <summary>
         /// 终结流程

@@ -16,16 +16,8 @@ using Smartflow.Enums;
 
 namespace Smartflow
 {
-    public partial class WorkflowService : IWorkflow
+    public partial class WorkflowService :Infrastructure, IWorkflow
     {
-        private IDbConnection conn = DapperFactory.CreateWorkflowConnection();
-
-        public WorkflowInstance Instance(string instanceID)
-        {
-            WorkflowInstance instance = WorkflowInstance.GetInstance(instanceID);
-            return instance;
-        }
-
         public string Start(WorkflowStructure workflowStructure)
         {
             try
@@ -37,7 +29,7 @@ namespace Smartflow
                 elements.AddRange(workflow.ChildDecisionNode);
                 elements.Add(workflow.EndNode);
 
-                string instaceID = CreateWorkflowInstance(workflow.StartNode.IDENTIFICATION, workflowStructure.IDENTIFICATION, workflowStructure.JSSTRUCTURE);
+                string instaceID = CreateWorkflowInstance(workflow.StartNode.IDENTIFICATION, workflowStructure.IDENTIFICATION, workflowStructure.STRUCTUREXML);
                 foreach (Element element in elements)
                 {
                     element.INSTANCEID = instaceID;
@@ -78,9 +70,9 @@ namespace Smartflow
             }
         }
 
-        protected string CreateWorkflowInstance(long startNID, string flowID,string flowImage)
+        protected string CreateWorkflowInstance(long startNID, string structureID, string structure)
         {
-            return WorkflowInstance.CreateWorkflowInstance(startNID, flowID, flowImage);
+            return WorkflowInstance.CreateWorkflowInstance(startNID, structureID, structure);
         }
     }
 }

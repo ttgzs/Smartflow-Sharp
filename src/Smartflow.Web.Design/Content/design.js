@@ -75,7 +75,7 @@
                 data: { WFID: designConfig.id },
                 success: function (serverData) {
                     flowName = serverData.APPELLATION;
-                    SMF.revert(serverData.JSSTRUCTURE);
+                    SMF.revert(serverData.STRUCTUREXML);
                 }
             };
             ajaxService(settings);

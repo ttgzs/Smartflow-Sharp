@@ -18,7 +18,7 @@
                 serverData=@Html.Raw(ViewBag.Result),
                 processData=@(ViewBag.Record==null?"''":Html.Raw(ViewBag.Record));
             if (serverData) {
-                SMF.revert(serverData.JSSTRUCTURE, true, serverData.Current.IDENTIFICATION,processData);
+                SMF.revert(serverData.STRUCTUREXML, true, serverData.Current.IDENTIFICATION,processData);
             }
         });
 </script>

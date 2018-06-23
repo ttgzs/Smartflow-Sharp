@@ -1,8 +1,3 @@
-create database flow
-go
-use flow
-go
-
 if exists (select 1
             from  sysobjects
            where  id = object_id('dbo.t_actor')
@@ -15,6 +10,13 @@ if exists (select 1
            where  id = object_id('dbo.t_command')
             and   type = 'U')
    drop table dbo.t_command
+go
+
+if exists (select 1
+            from  sysobjects
+           where  id = object_id('dbo.t_config')
+            and   type = 'U')
+   drop table dbo.t_config
 go
 
 if exists (select 1
@@ -47,22 +49,16 @@ go
 
 if exists (select 1
             from  sysobjects
-           where  id = object_id('dbo.t_transition')
+           where  id = object_id('dbo.t_structure')
             and   type = 'U')
-   drop table dbo.t_transition
+   drop table dbo.t_structure
 go
 
 if exists (select 1
             from  sysobjects
-           where  id = object_id('dbo.t_config')
+           where  id = object_id('dbo.t_transition')
             and   type = 'U')
-   drop table dbo.t_config
-go
-if exists (select 1
-            from  sysobjects
-           where  id = object_id('dbo.t_structure')
-            and   type = 'U')
-   drop table dbo.t_structure
+   drop table dbo.t_transition
 go
 
 execute sp_revokedbaccess dbo
@@ -120,6 +116,30 @@ execute sp_addextendedproperty 'MS_Description',
 go
 
 /*==============================================================*/
+/* Table: t_config                                              */
+/*==============================================================*/
+create table dbo.t_config (
+   IDENTIFICATION       bigint               not null,
+   APPELLATION          varchar(50)          collate Chinese_PRC_CI_AS null,
+   CONNECTE             varchar(512)         collate Chinese_PRC_CI_AS null,
+   DBCATEGORY           varchar(50)          collate Chinese_PRC_CI_AS null,
+   constraint PK_t_config primary key (IDENTIFICATION)
+         on "PRIMARY"
+)
+on "PRIMARY"
+go
+
+execute sp_addextendedproperty 'MS_Description', 
+   '连接字符串',
+   'user', 'dbo', 'table', 't_config', 'column', 'CONNECTE'
+go
+
+execute sp_addextendedproperty 'MS_Description', 
+   '数据库类型',
+   'user', 'dbo', 'table', 't_config', 'column', 'DBCATEGORY'
+go
+
+/*==============================================================*/
 /* Table: t_group                                               */
 /*==============================================================*/
 create table dbo.t_group (
@@ -141,9 +161,9 @@ create table dbo.t_instance (
    INSTANCEID           varchar(50)          collate Chinese_PRC_CI_AS not null,
    CREATEDATETIME       datetime             null constraint DF_t_instance_CreateDateTime default getdate(),
    RNID                 bigint               null,
-   FLOWID               varchar(50)          collate Chinese_PRC_CI_AS null,
+   STRUCTUREID          varchar(50)          collate Chinese_PRC_CI_AS null,
    STATE                varchar(50)          collate Chinese_PRC_CI_AS null constraint DF_t_instance_STATUS default 'running',
-   JSSTRUCTURE          text                 collate Chinese_PRC_CI_AS null,
+   STRUCTUREXML         text                 collate Chinese_PRC_CI_AS null,
    constraint PK_t_instance primary key (INSTANCEID)
          on "PRIMARY"
 )
@@ -190,6 +210,19 @@ on "PRIMARY"
 go
 
 /*==============================================================*/
+/* Table: t_structure                                           */
+/*==============================================================*/
+create table dbo.t_structure (
+   IDENTIFICATION       varchar(50)          collate Chinese_PRC_CI_AS not null,
+   APPELLATION          varchar(50)          collate Chinese_PRC_CI_AS null,
+   FILESTRUCTURE        text                 collate Chinese_PRC_CI_AS null,
+   STRUCTUREXML         text                 collate Chinese_PRC_CI_AS null,
+   constraint PK_T_STRUCTURE primary key (IDENTIFICATION)
+)
+on "PRIMARY"
+go
+
+/*==============================================================*/
 /* Table: t_transition                                          */
 /*==============================================================*/
 create table dbo.t_transition (
@@ -201,45 +234,6 @@ create table dbo.t_transition (
    INSTANCEID           varchar(50)          collate Chinese_PRC_CI_AS null,
    EXPRESSION           varchar(50)          collate Chinese_PRC_CI_AS null,
    constraint PK_t_transition_1 primary key (NID)
-         on "PRIMARY"
-)
-on "PRIMARY"
-go
-
-
-/*==============================================================*/
-/* Table: t_config                                              */
-/*==============================================================*/
-create table dbo.t_config (
-   IDENTIFICATION       bigint               not null,
-   APPELLATION          varchar(50)          collate Chinese_PRC_CI_AS null,
-   CONNECTE             varchar(512)         collate Chinese_PRC_CI_AS null,
-   DBCATEGORY           varchar(50)          collate Chinese_PRC_CI_AS null,
-   constraint PK_t_config primary key (IDENTIFICATION)
-         on "PRIMARY"
-)
-on "PRIMARY"
-go
-
-execute sp_addextendedproperty 'MS_Description', 
-   '连接字符串',
-   'user', 'dbo', 'table', 't_config', 'column', 'CONNECTE'
-go
-
-execute sp_addextendedproperty 'MS_Description', 
-   '数据库类型',
-   'user', 'dbo', 'table', 't_config', 'column', 'DBCATEGORY'
-go
-
-/*==============================================================*/
-/* Table: t_structure                                           */
-/*==============================================================*/
-create table dbo.t_structure (
-   IDENTIFICATION       varchar(50)          collate Chinese_PRC_CI_AS not null,
-   APPELLATION          varchar(50)          collate Chinese_PRC_CI_AS null,
-   FILESTRUCTURE        text                 collate Chinese_PRC_CI_AS null,
-   JSSTRUCTURE          text                 collate Chinese_PRC_CI_AS null,
-   constraint PK_t_flowXml primary key (IDENTIFICATION)
          on "PRIMARY"
 )
 on "PRIMARY"

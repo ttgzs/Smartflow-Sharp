@@ -25,7 +25,7 @@ namespace Smartflow
             set;
         }
 
-        public string JSSTRUCTURE
+        public string STRUCTUREXML
         {
             get;
             set;
