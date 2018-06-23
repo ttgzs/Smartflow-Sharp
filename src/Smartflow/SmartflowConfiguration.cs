@@ -19,16 +19,19 @@ namespace Smartflow
         /// <summary>
         /// 工作流数据库连接字符串
         /// </summary>
-        [ConfigurationProperty("connectionString", IsRequired = true)]
+        [ConfigurationProperty("connectionString",
+            IsRequired = true)]
         public string ConnectionString
         {
             get { return this["connectionString"].ToString(); }
         }
-        
+
         /// <summary>
         /// 工作流数据库类别
         /// </summary>
-        [ConfigurationProperty("category", IsRequired = true, DefaultValue = "SQLServer")]
+        [ConfigurationProperty("category",
+            IsRequired = true,
+            DefaultValue = "SQLServer")]
         public string DatabaseCategory
         {
             get { return this["category"].ToString(); }

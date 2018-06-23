@@ -8,13 +8,15 @@ using System.Collections.Generic;
 
 namespace Smartflow
 {
-   public interface IWorkflowDesignService
+    /**
+     *工作流设计器服务 
+     */
+    public interface IWorkflowDesignService
     {
         void Delete(string IDENTIFICATION);
         List<WorkflowStructure> GetWorkflowStructureList();
         void Persistent(WorkflowStructure workflowStructure);
         void Update(WorkflowStructure workflowStructure);
         WorkflowStructure GetWorkflowStructure(string identification);
-
     }
 }

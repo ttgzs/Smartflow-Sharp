@@ -51,7 +51,6 @@ namespace Smartflow
                     resultSet.Load(reader);
                     reader.Close();
                 }
-                
                 Transition instance = null;
                 List<Transition> transitions = QueryWorkflowNode(NID);
                 if (resultSet.Rows.Count > 0)
@@ -67,7 +66,6 @@ namespace Smartflow
                 }
                 
                 Assert.CheckNull(instance, "instance");
-                
                 return instance;
             }
             catch (Exception ex)
@@ -83,7 +81,6 @@ namespace Smartflow
         protected Command GetExecuteCmd()
         {
             string query = "SELECT * FROM T_COMMAND WHERE RNID=@RNID";
-
             return Connection.Query<Command>(query, new { RNID = NID })
                   .FirstOrDefault();
         }

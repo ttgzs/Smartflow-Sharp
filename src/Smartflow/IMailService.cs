@@ -10,7 +10,7 @@ namespace Smartflow
         /// 提供邮件通知接口
         /// </summary>
         /// <param name="to">接收人邮箱地址</param>
-        /// <param name="body">提示内空</param>
+        /// <param name="body">发送内容</param>
         void Notification(string[] to, string body);
     }
 }
