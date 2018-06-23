@@ -83,6 +83,7 @@
     <Compile Include="WorkflowEngine.cs" />
     <Compile Include="WorkflowConfig.cs" />
     <Compile Include="WorkflowException.cs" />
+    <Compile Include="Infrastructure.cs" />
     <Compile Include="WorkflowLogging.cs" />
     <Compile Include="WorkflowServiceProvider.cs" />
     <Compile Include="WorkflowInstance.cs" />

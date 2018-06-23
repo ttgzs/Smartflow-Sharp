@@ -48,14 +48,11 @@ namespace Smartflow.Elements
 
         internal virtual List<Transition> QueryWorkflowNode(string NID)
         {
-            IDbConnection connection = Connection;
             string query = "SELECT * FROM T_TRANSITION WHERE RNID=@RNID";
-
-            return connection.Query<Transition>(query, new { RNID = NID })
+            LogService.Info(string.Format("执行QueryWorkflowNode,查询实例RNID：{0} Query:{1}", NID, query));
+            return Connection.Query<Transition>(query, new { RNID = NID })
                   .ToList();
         }
-
-   
 
         /// <summary>
         /// 记录已经参与过审核人员的信息
@@ -76,6 +73,5 @@ namespace Smartflow.Elements
                 actor.Persistent();
             }
         }
-
     }
 }

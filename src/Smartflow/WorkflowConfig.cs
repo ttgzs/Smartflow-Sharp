@@ -6,13 +6,13 @@ using Smartflow.Dapper;
 
 namespace Smartflow
 {
-    public class WorkflowConfig : IWorkflowConfiguration
+    public class WorkflowConfig : Infrastructure, IWorkflowConfiguration
     {
         public  DataTable GetWorkflowConfigs()
         {
             string query = " SELECT * FROM T_CONFIG ";
             DataTable configData = new DataTable(Guid.NewGuid().ToString());
-            using (IDataReader dr = DapperFactory.CreateWorkflowConnection().ExecuteReader(query))
+            using (IDataReader dr = Connection.ExecuteReader(query))
             {
                 configData.Load(dr);
             }

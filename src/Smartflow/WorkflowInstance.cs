@@ -14,13 +14,8 @@ using Smartflow.Enums;
 
 namespace Smartflow
 {
-    public class WorkflowInstance
+    public class WorkflowInstance : Infrastructure
     {
-        protected IDbConnection Connection
-        {
-            get { return DapperFactory.CreateWorkflowConnection(); }
-        }
-
         protected WorkflowInstance()
         {
         }
@@ -58,7 +53,7 @@ namespace Smartflow
         {
             WorkflowInstance workflowInstance = new WorkflowInstance();
             workflowInstance.InstanceID = instanceID;
-            string sql=ResourceManage.GetString(ResourceManage.SQL_WORKFLOW_INSTANCE);
+            string sql = ResourceManage.GetString(ResourceManage.SQL_WORKFLOW_INSTANCE);
             try
             {
                 workflowInstance = workflowInstance.Connection.Query<WorkflowInstance, ASTNode, WorkflowInstance>(sql, (instance, node) =>
@@ -82,7 +77,7 @@ namespace Smartflow
         /// <param name="transitionTo">选择跳转路线</param>
         internal void Jump(long transitionTo)
         {
-       
+
             string update = " UPDATE T_INSTANCE SET RNID=@RNID WHERE INSTANCEID=@INSTANCEID ";
 
             Connection.Execute(update, new
@@ -97,9 +92,7 @@ namespace Smartflow
         /// </summary>
         internal void Transfer()
         {
-           
             string update = " UPDATE T_INSTANCE SET STATE=@STATE WHERE INSTANCEID=@INSTANCEID ";
-
             Connection.Execute(update, new
             {
                 STATE = State.ToString(),
@@ -107,19 +100,22 @@ namespace Smartflow
             });
         }
 
-        internal static string CreateWorkflowInstance(long nodeID, string flowID,string flowImage)
+        internal static string CreateWorkflowInstance(long nodeID, string flowID, string json)
         {
+            WorkflowInstance instance = new WorkflowInstance();
             string instanceID = Guid.NewGuid().ToString();
             string sql = "INSERT INTO T_INSTANCE(INSTANCEID,RNID,FLOWID,STATE,JSSTRUCTURE) VALUES(@INSTANCEID,@RNID,@FLOWID,@STATE,@JSSTRUCTURE)";
 
-            DapperFactory.CreateWorkflowConnection().Execute(sql, new
+            instance.Connection.Execute(sql, new
             {
                 INSTANCEID = instanceID,
                 RNID = nodeID,
                 FLOWID = flowID,
                 STATE = WorkflowInstanceState.Running.ToString(),
-                JSSTRUCTURE = flowImage
+                JSSTRUCTURE = json
             });
+
+            instance.LogService.Info(string.Format("执行{0}方法创建实例,实例ID:{1}", "CreateWorkflowInstance", instanceID));
 
             return instanceID;
         }

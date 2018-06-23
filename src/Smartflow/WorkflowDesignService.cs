@@ -12,13 +12,8 @@ using Smartflow.Dapper;
 
 namespace Smartflow
 {
-    public class WorkflowDesignService : IWorkflowDesignService
+    public class WorkflowDesignService :Infrastructure, IWorkflowDesignService
     {
-        protected IDbConnection Connection
-        {
-            get { return DapperFactory.CreateWorkflowConnection(); }
-        }
-
         public void Persistent(WorkflowStructure workflowStructure)
         {
             string sql = " INSERT INTO T_STRUCTURE(IDENTIFICATION,APPELLATION,FILESTRUCTURE,JSSTRUCTURE) VALUES(@IDENTIFICATION,@APPELLATION,@FILESTRUCTURE,@JSSTRUCTURE) ";

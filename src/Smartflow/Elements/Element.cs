@@ -18,7 +18,7 @@ namespace Smartflow.Elements
     /// 为兼容其他数据库，对ID、NAME 名称进行调整，与数据库保留关键字进行区分
     /// </summary>
     [Serializable]
-    public abstract class Element
+    public abstract class Element : Infrastructure
     {
         [XmlAttribute("identification")]
         public virtual long IDENTIFICATION
@@ -44,7 +44,6 @@ namespace Smartflow.Elements
             set;
         }
 
-
         [XmlIgnore]
         public virtual string INSTANCEID
         {
@@ -53,11 +52,5 @@ namespace Smartflow.Elements
         }
 
         internal abstract void Persistent();
-
-        protected IDbConnection Connection
-        {
-            get { return DapperFactory.CreateWorkflowConnection(); }
-        }
-
     }
 }

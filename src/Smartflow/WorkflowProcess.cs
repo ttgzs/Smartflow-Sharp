@@ -13,13 +13,8 @@ using System.Data;
 
 namespace Smartflow
 {
-    public class WorkflowProcess : IPersistent, IRelationShip
+    public class WorkflowProcess :Infrastructure,IPersistent, IRelationShip
     {
-        protected IDbConnection Connection
-        {
-            get { return DapperFactory.CreateWorkflowConnection(); }
-        }
-
         /// <summary>
         /// 外键
         /// </summary>
