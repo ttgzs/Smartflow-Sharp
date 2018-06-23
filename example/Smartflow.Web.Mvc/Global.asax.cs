@@ -15,13 +15,6 @@ namespace Smartflow.Web.Mvc
     {
         protected void Application_Start()
         {
-            //WorkflowServiceProvider.Collection
-            //   .Remove(WorkflowServiceProvider.OfType<ILogging>());
-
-            //WorkflowServiceProvider.Collection.Add(new SmartflowLogging());
-
-
-            
             AreaRegistration.RegisterAllAreas();
             WebApiConfig.Register(GlobalConfiguration.Configuration);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);

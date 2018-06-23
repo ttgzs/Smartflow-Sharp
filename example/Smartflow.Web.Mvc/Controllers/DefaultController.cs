@@ -14,7 +14,6 @@ namespace Smartflow.Web.Controllers
     {
         private IWorkflowDesignService workflowStructureService=WorkflowServiceProvider.OfType<IWorkflowDesignService>();
 
-
         public ActionResult Main()
         {
             User userInfo = System.Web.HttpContext.Current.Session["user"] as User;
