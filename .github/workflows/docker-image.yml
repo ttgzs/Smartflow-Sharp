@@ -16,8 +16,8 @@ jobs:
 
     runs-on: ubuntu-latest
     steps:
-    - uses: docker/login@v3.2.2
     - name: login docker hub
+    - uses: docker/login@v3.2.2
       with:
        registry: ${{secrets.TJJS_HARBOR_HOST}} 
        Username: ${{secrets.TJJS_HARBOR_USERNAME}}
