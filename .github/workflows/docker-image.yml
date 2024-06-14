@@ -1,0 +1,26 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+env:
+  # Use docker.io for Docker Hub if empty
+  REGISTRY: ${{ secrets.TJJS_HARBOR_HOST }} 
+  IMAGE_NAME: ${{ github.repository }}
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+    steps:
+    - uses: docker/login@v3.2.2
+    - name: login docker hub
+      with:
+       registry: ${{secrets.TJJS_HARBOR_HOST}} 
+       Username: ${{secrets.TJJS_HARBOR_USERNAME}}
+       password: ${{secrets.TJJS_HARBOR_PWD}}
+       logout: false
+       
