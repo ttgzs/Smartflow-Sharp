@@ -39,6 +39,6 @@ jobs:
         password: ${{ secrets.TJJS_HARBOR_PWD }}
         logout: false
     - name: tag docker image 
-      run: docker tag php:7.3-fpm ${{ secrets.TJJS_HARBOR_HOST }}/library/${{inputs.name}}
+      run: docker tag ${{inputs.name}} ${{ secrets.TJJS_HARBOR_HOST }}/library/${{inputs.name}}
     - name: Push docker image 
       run: docker push ${{ secrets.TJJS_HARBOR_HOST }}/library/${{inputs.name}}
