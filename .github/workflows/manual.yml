@@ -41,4 +41,4 @@ jobs:
     - name: tag docker image 
       run: docker tag php:7.3-fpm ${{ secrets.TJJS_HARBOR_HOST }}/libary/php:7.3-fpm
     - name: Push docker image 
-      run: docker tag php:7.3-fpm ${{ secrets.TJJS_HARBOR_HOST }}/libary/php:7.3-fpm 
+      run: docker push ${{ secrets.TJJS_HARBOR_HOST }}/libary/php:7.3-fpm 
