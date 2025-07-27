@@ -10,9 +10,19 @@ on:
     inputs:
       name:
         # Friendly description to be shown in the UI instead of 'name'
-        description: 'Person to greet'
+        description: 'please input image tag'
         # Default value if no value is explicitly provided
         default: 'World'
+        # Input has to be provided for the workflow to run
+        required: true
+        # The data type of the input
+        type: string
+         
+      arch:
+        # Friendly description to be shown in the UI instead of 'name'
+        description: 'please input image arch'
+        # Default value if no value is explicitly provided
+        default: 'linux/x86_64'
         # Input has to be provided for the workflow to run
         required: true
         # The data type of the input
@@ -30,7 +40,7 @@ jobs:
   
     # Runs a single command using the runners shell
     - name: Get docker greeting
-      run: docker pull ${{inputs.name}}
+      run: docker pull --platform ${{inputs.arch}} ${{inputs.name}}
     - name: login tjjs     
       uses: docker/login-action@v3.2.0
       with:
