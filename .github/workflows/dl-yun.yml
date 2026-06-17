@@ -41,7 +41,7 @@ jobs:
     - name: Get docker greeting
       run: docker pull --platform ${{inputs.arch}} ${{inputs.name}}
     - name: login root     
-      uses: docker/login-action@v3.2.0
+      uses: docker/login-action@v4.2.0
       with:
         registry: ${{ secrets.DLYUN_HARBOR_HOST }}
         Username: ${{ secrets.DLYUN_HARBOR_USERNAME }}
